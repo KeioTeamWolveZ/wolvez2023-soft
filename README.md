@@ -1,5 +1,5 @@
-# wolvez2022
-Mission code in Python for Keio Wolve'Z CanSat project 2022
+# wolvez2023
+Mission code in Python for Keio Wolve'Z CanSat project 2023
 
 ## Hardware Requirements
 - Microcomputer
@@ -70,11 +70,11 @@ sudo bash setup_ap.sh
 
 ## Project Member
 - Project manager   
-  Mitsuhiro Takahashi
+  Hayashide Kzuyuki
 - Software (★: Part leader)  
-  ★Toshiki Fukui, Takafumi Fujii, Masato Inoue, Kazuyuki Hayashide
+  ★Masato Inoue
 - Hardware (★: Part leader)  
-  ★Moeka Yoshinari, Miyu Konishi, Arisa Shindo, Shingo Murayama
+  ★Shingo Murayama, Arisa Shindo, Yukino Ota
 - Circuit (★: Part leader)  
-  ★Toshiki Fukui, Shingo Murayama
+  ★Shingo Murayama
 
