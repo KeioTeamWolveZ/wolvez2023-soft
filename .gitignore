@@ -1,18 +1,14 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+# exceptions of folders
+wolvez2022/*
+Testcode/EtoE/results
+setup/ap
+__pycache__/
+.DS_Store
 
-# Other files and folders
-.settings/
-
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+# exceptions of formats
+*.pyc
+*.jpg
+*.npz
+*.png
+*.mp4
+*.mov
