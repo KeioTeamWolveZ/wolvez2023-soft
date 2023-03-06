@@ -1,5 +1,5 @@
 #太田晃
-#プログラミング演習最終回課題 オリジナルゲーム「対戦！ぴったりストップ！改」
+#プログラミング演習最終回課題 オリジナルゲーム「対戦！ぴったりストップ！3人ver」
 
 #ライブラリをインポート
 import tkinter as tk
@@ -31,8 +31,8 @@ def time_start():
     keika = tk.Label(gamen, font = ('MS ゴシック',45, 'bold'),text = 'ヒント：')    #ヒントの経過時間を表示するラベルを用意
     keika.place(x = 100, y = 50)                                                 #ラベルの位置を指定
     starttime = time.time()         #開始時間を記録
-    after_t = gamen.after(100, time_keika)  #100ms後に関数time_keikaを実行する
-    hint = gamen.after(4500, time_hint)     #3500ms後に関数time_hintを実行する
+    gamen.after(100, time_keika)  #100ms後に関数time_keikaを実行する
+    gamen.after(3500, time_hint)     #3500ms後に関数time_hintを実行する
 
 #ヒントとして0.1秒ずつタイマーを表示する関数
 def time_keika():
