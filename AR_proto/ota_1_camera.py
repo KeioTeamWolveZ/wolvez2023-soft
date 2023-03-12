@@ -3,7 +3,7 @@ import cv2
 from cv2 import aruco
 
 cap = cv2.VideoCapture('/Users/otako/wolvez/wolvez2023-soft/AR_proto/test.jpg')
-ret, img = cap.read()
+ret, img = cap.read()         #読み込んで画像として定義
 ##cap = cv2.VideoCapture(0)   #PCのかめら
 # マーカーサイズ
 marker_length = 0.056 # [m]
@@ -11,7 +11,7 @@ marker_length = 0.056 # [m]
 dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
 #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
 
-#レンズの性質などの内部パラメータ
+#レンズの性質などの内部パラメータ(今回はすでに行っている)
 camera_matrix = np.load("mtx.npy")
 distortion_coeff = np.load("dist.npy")
 
@@ -27,7 +27,7 @@ def camera(gazou,ARmarker):
             # 不要なaxisを除去
             tvec = np.squeeze(tvec)
             rvec = np.squeeze(rvec)
-            # 回転ベクトルからrodoriguesへ変換
+            # 回転ベクトルからrodorigues(回転行列)へ変換
             rvec_matrix = cv2.Rodrigues(rvec)
             rvec_matrix = rvec_matrix[0] # rodoriguesから抜き出し
             # 並進ベクトルの転置
