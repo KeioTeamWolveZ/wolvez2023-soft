@@ -19,7 +19,7 @@ distortion_coeff = np.load("dist.npy")
 def camera(gazou,ARmarker):
     corners, ids, rejectedImgPoints = aruco.detectMarkers(gazou, ARmarker)
     # 可視化
-    aruco.drawDetectedMarkers(gazou, corners, ids, (0,255,255))
+    aruco.drawDetectedMarkers(gazou, corners, ids, (255,0,255))
     if len(corners) > 0:
             # マーカーごとに処理
         for i, corner in enumerate(corners):
