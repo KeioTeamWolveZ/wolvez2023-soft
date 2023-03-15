@@ -3,7 +3,7 @@ import cv2
 from cv2 import aruco
 
 
-cap = cv2.VideoCapture('/Users/otako/wolvez/wolvez2023-soft/AR_proto/test-2.jpg')
+cap = cv2.VideoCapture('test.jpg')
 ret, img = cap.read()         #読み込んで画像として定義
 ##cap = cv2.VideoCapture(0)   #PCのかめら
 # マーカーサイズ
