@@ -11,9 +11,13 @@ def main(args):
     引数1→動画
     """
     cap = cv2.VideoCapture(0)
+    # print(cap.get(0))  # "CAP_PROP_FRAME_WIDTH"
+    cap.set(cv2.CAP_PROP_AUTOFOCUS,0.0)
+    print(cap.get(cv2.CAP_PROP_AUTOFOCUS))
+    # print(cap.get())
     if args == "0":
         ret,img = cap.read()
-        cv2.imwrite('test.jpg', img)
+        cv2.imwrite('../../AR_proto/test.jpg', img)
         print(ret)
     else:
 #         now_time = time.time()
@@ -41,4 +45,5 @@ def main(args):
 
 if __name__ == '__main__':
     args = sys.argv
+    print(args)
     main(args[1])

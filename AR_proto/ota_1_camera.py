@@ -7,7 +7,7 @@ cap = cv2.VideoCapture('test.jpg')
 ret, img = cap.read()         #読み込んで画像として定義
 ##cap = cv2.VideoCapture(0)   #PCのかめら
 # マーカーサイズ
-marker_length = 0.1 # [m]
+marker_length = 0.01 # [m]
 # マーカーの辞書選択
 dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
 #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
