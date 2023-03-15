@@ -3,9 +3,9 @@ import numpy as np
 import cv2
 from cv2 import aruco
 
+##cap = cv2.VideoCapture(0)   #PCのかめら
 cap = cv2.VideoCapture('/Users/otako/wolvez/wolvez2023-soft/AR_proto/test.jpg')
 ret, img = cap.read()
-##cap = cv2.VideoCapture(0)   #PCのかめら
 # マーカーサイズ
 marker_length = 0.056 # [m]
 # マーカーの辞書選択
