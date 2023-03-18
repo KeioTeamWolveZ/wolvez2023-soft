@@ -13,17 +13,16 @@ def capture(args):
     """
     cap = cv2.VideoCapture(0)
     # print(cap.get(0))  # "CAP_PROP_FRAME_WIDTH"
-    cap.set(cv2.CAP_PROP_AUTOFOCUS,0.0)
+    # cap.set(cv2.CAP_PROP_AUTOFOCUS,0.0)
     # print(cap.get(cv2.CAP_PROP_AUTOFOCUS))
     # print(cap.get())
-    if args == "0":
+    if args == 0:
         ret,img = cap.read()
         now = datetime.datetime.now()
         now = now.strftime('%Y%m%d%H%M%S')
-        cv2.imwrite(f"../../AR_proto/pics/{now}.jpg", img)
+        cv2.imwrite(f"pics/{now}.jpg", img)
         # print(ret)
-        print(now)
-    return img
+        # print(now)
     else:
 #         now_time = time.time()
 #         frame_rate = cap.get(cv2.CAP_PROP_FPS)
@@ -47,6 +46,7 @@ def capture(args):
         writer.release()
         cap.release()
         cv2.destroyAllWindows()
+    return img
 
 if __name__ == '__main__':
     args = sys.argv

@@ -59,3 +59,4 @@ def camera(gazou):      #引数に画像
 detected_list=camera(img)
 for l in detected_list:
     print(l['id'])
+# cv2.imshow("frame",img)
