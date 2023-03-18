@@ -1,10 +1,11 @@
 import numpy as np
 import cv2
 from cv2 import aruco
+import cameratest
 
-
-cap = cv2.VideoCapture('test.jpg')
-ret, img = cap.read()         #読み込んで画像として定義
+img = cameratest.capture(0)
+# cap = cv2.VideoCapture('test.jpg')
+# ret, img = cap.read()         #読み込んで画像として定義
 ##cap = cv2.VideoCapture(0)   #PCのかめら
 # マーカーサイズ
 marker_length = 0.01 # [m]
