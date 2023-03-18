@@ -3,6 +3,7 @@ import cv2
 from cv2 import aruco
 import sys
 import time
+import datetime
 
 
 def main(args):
@@ -17,7 +18,9 @@ def main(args):
     # print(cap.get())
     if args == "0":
         ret,img = cap.read()
-        cv2.imwrite('../../AR_proto/test.jpg', img)
+        now=datetime.datetime.now()
+        now.strftime('%Y%m%d%H%M%S')
+        cv2.imwrite(f"../../AR_proto/pics/{now.strftime('%Y%m%d%H%M%S')}.jpg", img)
         print(ret)
     else:
 #         now_time = time.time()

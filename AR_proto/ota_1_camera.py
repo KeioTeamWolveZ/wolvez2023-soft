@@ -55,5 +55,6 @@ def camera(gazou):      #引数に画像
             info = {'id':ids[i][0],'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2]}
             ar_info.append(info)
     return  ar_info  #idとそれに対するxyz座標のベクトルとそれぞれの回転の度合い(deg)が入ったリストを返す
-
-print(camera(img))
+detected_list=camera(img)
+for l in detected_list:
+    print(l['id'])

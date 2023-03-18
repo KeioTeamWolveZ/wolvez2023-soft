@@ -1,9 +1,11 @@
+
 # exceptions of folders
 wolvez2022/*
 Testcode/EtoE/results
 setup/ap
 __pycache__/
 .DS_Store
+AR_proto/pics/*
 
 # exceptions of formats
 *.pyc
