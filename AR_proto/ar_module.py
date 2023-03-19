@@ -9,7 +9,11 @@ class Ar_cansat():
     """ Class for detect AR marker and position
 
     """
-    marker_length = 0.01 # [m]
+    ## must be changed by id
+    # marker_length = 0.009 # [m]
+    marker_length = 0.0187 # [m]
+    
+    
     # マーカーの辞書選択
     dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
     #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
@@ -76,6 +80,8 @@ class Ar_cansat():
                 # 不要なaxisを除去
                 tvec = np.squeeze(tvec)
                 rvec = np.squeeze(rvec)
+                # calculate norm
+                norm_tvec = np.linalg.norm(tvec)
                 # 回転ベクトルからrodorigues(回転行列)へ変換
                 rvec_matrix = cv2.Rodrigues(rvec)
                 rvec_matrix = rvec_matrix[0] # rodoriguesから抜き出し
@@ -96,11 +102,12 @@ class Ar_cansat():
                 #print("yaw  : " + str(euler_angle[2]))
                 #可視化
                 draw_pole_length = self.marker_length
-                img = aruco.drawAxis(img,self.camera_matrix,self.distortion_coeff,rvec,tvec,draw_pole_length,)
+                img = aruco.drawAxis(img,self.camera_matrix,self.distortion_coeff,rvec,tvec,draw_pole_length)
+                
                 
                 cv2.putText(img,
-                            text = f"id:{i} | x:{str(round(tvec[0]*100,2))} | y:{str(round(tvec[1]*100,2))} | z:{str(round(tvec[2]*100,2))}",
-                            org = (640,20+k*50),
+                            text = f"id:{i} | norm:{norm_tvec*100:.3f} [cm]",
+                            org = (640,20+k*70),
                             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                             fontScale = 0.5,
                             thickness = 1,
@@ -108,8 +115,17 @@ class Ar_cansat():
                             lineType=cv2.LINE_4)
                 
                 cv2.putText(img,
-                            text = f"roll:{str(round(rvec[0],2))} | pitch:{str(round(rvec[1],2))} | yaw:{str(round(rvec[2],2))}",
-                            org = (640,40+k*50),
+                            text = f"    x:{str(round(tvec[0]*100,2))} | y:{str(round(tvec[1]*100,2))} | z:{str(round(tvec[2]*100,2))}",
+                            org = (640,40+k*70),
+                            fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                            fontScale = 0.5,
+                            thickness = 1,
+                            color=(0,0,0),
+                            lineType=cv2.LINE_4)
+                
+                cv2.putText(img,
+                            text = f"    roll:{str(round(rvec[0],2))} | pitch:{str(round(rvec[1],2))} | yaw:{str(round(rvec[2],2))}",
+                            org = (640,60+k*70),
                             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                             fontScale = 0.5,
                             thickness = 1,

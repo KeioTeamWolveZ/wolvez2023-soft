@@ -13,6 +13,7 @@ while True:
     img = ar.addSpace(img)
     detected_img, ar_info = ar.detect_marker(img)
     ar.show(detected_img)
+    time.sleep(0.1)
     if cv2.waitKey(10) & 0xFF == ord('q'):
         cv2.destroyAllWindows()
         break
