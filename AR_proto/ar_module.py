@@ -44,16 +44,35 @@ class Ar_cansat():
             return self.img
         else:
             return None
+        
+    def addSpace(self,img):
+        white=[255,255,255]
+        
+        height,width,channels=img.shape
+        
+        output_img = cv2.copyMakeBorder(img,0,0,0,300,cv2.BORDER_CONSTANT,value=white)
+        return output_img
 
     def detect_marker(self, img):
         #使用するARマーカーのライブラリ、マーカーの大きさは不変であるため宣言しておく必要あり
-        ar_info = []
+        ar_info = {}
         corners, ids, rejectedImgPoints = aruco.detectMarkers(img, self.dictionary)
+        #print(ids[:][0])
+        
         if len(corners) > 0:
                 # マーカーごとに処理
+            info_loop = {str(ids[i][0]) : corners[i] for i in range(len(ids))}
             
-            for i, corner in enumerate(corners):
-                rvec, tvec, _ = aruco.estimatePoseSingleMarkers(corner, self.marker_length, self.camera_matrix, self.distortion_coeff)  #マーカーごとに外部パラメータ(回転ベクトルと並進ベクトル)を算出
+            #for i, corner in enumerate(corners):
+            if len(ids)>1:
+                ids_list = np.sort(np.squeeze(ids))
+            else:
+                ids_list = ids[0]
+            
+            #print(ids_list)
+            for k, i in enumerate(ids_list):
+                #print(i)
+                rvec, tvec, _ = aruco.estimatePoseSingleMarkers(info_loop[str(i)], self.marker_length, self.camera_matrix, self.distortion_coeff)  #マーカーごとに外部パラメータ(回転ベクトルと並進ベクトル)を算出
                 # 不要なaxisを除去
                 tvec = np.squeeze(tvec)
                 rvec = np.squeeze(rvec)
@@ -80,27 +99,27 @@ class Ar_cansat():
                 img = aruco.drawAxis(img,self.camera_matrix,self.distortion_coeff,rvec,tvec,draw_pole_length,)
                 
                 cv2.putText(img,
-                            text = f"id:{ids[i][0]} | x:{str(round(tvec[0]*100,2))} | y:{str(round(tvec[1]*100,2))} | z:{str(round(tvec[2]*100,2))}",
-                            org = (640,300+i*50),
+                            text = f"id:{i} | x:{str(round(tvec[0]*100,2))} | y:{str(round(tvec[1]*100,2))} | z:{str(round(tvec[2]*100,2))}",
+                            org = (640,20+k*50),
                             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                             fontScale = 0.5,
                             thickness = 1,
-                            color=(255,255,0),
+                            color=(0,0,0),
                             lineType=cv2.LINE_4)
                 
                 cv2.putText(img,
                             text = f"roll:{str(round(rvec[0],2))} | pitch:{str(round(rvec[1],2))} | yaw:{str(round(rvec[2],2))}",
-                            org = (640,320+i*50),
+                            org = (640,40+k*50),
                             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                             fontScale = 0.5,
                             thickness = 1,
-                            color=(255,255,0),
+                            color=(0,0,0),
                             lineType=cv2.LINE_4)
                 #cv2.imshow('drawDetectedMarkers', img)
                 #cv2.waitKey(0)
                 #cv2.destroyAllWindows()
-                info = {'id':ids[i][0],'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2]}
-                ar_info.append(info)
+                ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2]}
+                # ar_info.append(info)
                 
             # 可視化
             detected_img = aruco.drawDetectedMarkers(img, corners, ids, (255,0,255))

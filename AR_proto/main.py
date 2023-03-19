@@ -10,9 +10,11 @@ import ar_module
 ar = ar_module.Ar_cansat()
 while True:
     img = ar.capture(1)
+    img = ar.addSpace(img)
     detected_img, ar_info = ar.detect_marker(img)
     ar.show(detected_img)
     if cv2.waitKey(10) & 0xFF == ord('q'):
+        cv2.destroyAllWindows()
         break
 
 
