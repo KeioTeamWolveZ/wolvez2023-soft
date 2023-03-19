@@ -24,6 +24,7 @@ class Ar_cansat():
 
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
+        self.video = None
 
     def capture(self, args):
         """
@@ -154,7 +155,8 @@ class Ar_cansat():
         w = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))              # カメラの横幅を取得
         h = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))             # カメラの縦幅を取得
         fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')        # 動画保存時のfourcc設定（mp4用）
-        self.video = cv2.VideoWriter('video.mp4', fourcc, fps, (w, h))  # 動画の仕様（ファイル名、fourcc, FPS, サイズ）
+        self.video = cv2.VideoWriter('video.mp4', fourcc, fps, (w+300, h))  # 動画の仕様（ファイル名、fourcc, FPS, サイズ）
+        return self.video
     
     def write_video(self,frame):
         self.video.write(frame)   
