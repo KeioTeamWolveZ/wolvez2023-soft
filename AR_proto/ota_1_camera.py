@@ -2,8 +2,10 @@ import numpy as np
 import cv2
 from cv2 import aruco
 import cameratest
+import addSpace
 
 img = cameratest.capture(0)
+img = addSpace.addSpace(img)
 # cap = cv2.VideoCapture('test.jpg')
 # ret, img = cap.read()         #読み込んで画像として定義
 ##cap = cv2.VideoCapture(0)   #PCのかめら
@@ -18,14 +20,16 @@ camera_matrix = np.load("mtx.npy")
 distortion_coeff = np.load("dist.npy")
 
 
-def camera(gazou):      #引数に画像
+def camera(img):      #引数に画像
                         #使用するARマーカーのライブラリ、マーカーの大きさは不変であるため宣言しておく必要あり
     ar_info = []
-    corners, ids, rejectedImgPoints = aruco.detectMarkers(gazou, dictionary)
+    corners, ids, rejectedImgPoints = aruco.detectMarkers(img, dictionary)
     # 可視化
-    #aruco.drawDetectedMarkers(gazou, corners, ids, (255,0,255))
+    detected_img = aruco.drawDetectedMarkers(img, corners, ids, (255,0,255))
+    cv2.imwrite("detected.jpg",detected_img)
     if len(corners) > 0:
             # マーカーごとに処理
+        
         for i, corner in enumerate(corners):
             rvec, tvec, _ = aruco.estimatePoseSingleMarkers(corner, marker_length, camera_matrix, distortion_coeff)  #マーカーごとに外部パラメータ(回転ベクトルと並進ベクトル)を算出
             # 不要なaxisを除去
@@ -50,13 +54,37 @@ def camera(gazou):      #引数に画像
             #print("pitch: " + str(euler_angle[1]))
             #print("yaw  : " + str(euler_angle[2]))
             #可視化
-            #cv2.imshow('drawDetectedMarkers', gazou)
+            draw_pole_length = marker_length
+            img = aruco.drawAxis(img,camera_matrix,distortion_coeff,rvec,tvec,draw_pole_length,)
+            
+            cv2.putText(img,
+                        text = f"id:{ids[i][0]} | x:{str(round(tvec[0]*100,2))} | y:{str(round(tvec[1]*100,2))} | z:{str(round(tvec[2]*100,2))}",
+                        org = (640,300+i*50),
+                        fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                        fontScale = 0.5,
+                        thickness = 1,
+                        color=(255,255,0),
+                        lineType=cv2.LINE_4)
+            
+            cv2.putText(img,
+                        text = f"roll:{str(round(rvec[0],2))} | pitch:{str(round(rvec[1],2))} | yaw:{str(round(rvec[2],2))}",
+                        org = (640,320+i*50),
+                        fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                        fontScale = 0.5,
+                        thickness = 1,
+                        color=(255,255,0),
+                        lineType=cv2.LINE_4)
+            #cv2.imshow('drawDetectedMarkers', img)
             #cv2.waitKey(0)
             #cv2.destroyAllWindows()
             info = {'id':ids[i][0],'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2]}
             ar_info.append(info)
+            
+        cv2.imwrite("axises.jpg",img)
     return  ar_info  #idとそれに対するxyz座標のベクトルとそれぞれの回転の度合い(deg)が入ったリストを返す
-detected_list=camera(img)
-for l in detected_list:
-    print(l['id'])
+
+if __name__ == '__main__':
+    detected_list=camera(img)
+    for l in detected_list:
+        print(l['id'])
 # cv2.imshow("frame",img)
