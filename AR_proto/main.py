@@ -8,13 +8,19 @@ import datetime
 import ar_module
 
 ar = ar_module.Ar_cansat()
+
+ar.setup_video()
 while True:
     img = ar.capture(1)
     img = ar.addSpace(img)
     detected_img, ar_info = ar.detect_marker(img)
     ar.show(detected_img)
-    time.sleep(0.1)
+
+    ar.write_video(detected_img)
+
+    # time.sleep(0.1)
     if cv2.waitKey(10) & 0xFF == ord('q'):
+        ar.cap.releas()
         cv2.destroyAllWindows()
         break
 

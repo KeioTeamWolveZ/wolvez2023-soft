@@ -147,3 +147,14 @@ class Ar_cansat():
     
     def show(self, img):
         cv2.imshow('realtime',img)
+    
+    def setup_video(self):
+        # 動画ファイル保存用の設定
+        fps = int(self.cap.get(cv2.CAP_PROP_FPS))                    # カメラのFPSを取得
+        w = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))              # カメラの横幅を取得
+        h = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))             # カメラの縦幅を取得
+        fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')        # 動画保存時のfourcc設定（mp4用）
+        self.video = cv2.VideoWriter('video.mp4', fourcc, fps, (w, h))  # 動画の仕様（ファイル名、fourcc, FPS, サイズ）
+    
+    def write_video(self,frame):
+        self.video.write(frame)   
