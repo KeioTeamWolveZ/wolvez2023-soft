@@ -11,8 +11,7 @@ ar = ar_module.Ar_cansat()
 while True:
     img = ar.capture(1)
     detected_img, ar_info = ar.detect_marker(img)
-    cv2.imshow("realtime", detected_img)
-    # ar.show(detected_img)
+    ar.show(detected_img)
     if cv2.waitKey(10) & 0xFF == ord('q'):
         break
 

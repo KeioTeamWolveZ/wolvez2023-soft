@@ -46,8 +46,7 @@ class Ar_cansat():
             return None
 
     def detect_marker(self, img):
-        print(img)
-                            #使用するARマーカーのライブラリ、マーカーの大きさは不変であるため宣言しておく必要あり
+        #使用するARマーカーのライブラリ、マーカーの大きさは不変であるため宣言しておく必要あり
         ar_info = []
         corners, ids, rejectedImgPoints = aruco.detectMarkers(img, self.dictionary)
         if len(corners) > 0:
