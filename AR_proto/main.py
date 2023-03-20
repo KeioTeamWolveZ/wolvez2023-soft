@@ -7,12 +7,12 @@ import datetime
 
 import ar_module
 
-save_video = False
+save_video = True
 
 
 ar = ar_module.Ar_cansat()
 
-if save_video : ar.setup_video()
+if save_video : ar.setup_video("outside45")
 
 while True:
     img = ar.capture(1)
