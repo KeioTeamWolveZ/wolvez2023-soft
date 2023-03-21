@@ -42,7 +42,7 @@ if __name__ == '__main__':
         while True:
             data = ReadChannel(force_channel)
             print("A/D Converter: {0}".format(data))
-            volts = ConvertVolts(data, 3)
+            volts = ConvertVolts(data, 10)
             print("Volts: {0}".format(volts))
             time.sleep(delay)
 # 何か入力したら終了
