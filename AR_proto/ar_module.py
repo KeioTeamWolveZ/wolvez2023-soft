@@ -143,7 +143,7 @@ class Ar_cansat():
             # cv2.imwrite("detected.jpg",detected_img)
             # cv2.imwrite("axises.jpg",img)
         else:
-            detected_img, ar_info = img, None
+            detected_img, ar_info = img, False
         return detected_img, ar_info
     
     def show(self, img):
@@ -151,7 +151,7 @@ class Ar_cansat():
     
     def setup_video(self,name="video"):
         # 動画ファイル保存用の設定
-        fps = int(self.cap.get(cv2.CAP_PROP_FPS))                    # カメラのFPSを取得
+        fps = float(self.cap.get(cv2.CAP_PROP_FPS)) / 3                   # カメラのFPSを取得
         w = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))              # カメラの横幅を取得
         h = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))             # カメラの縦幅を取得
         fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')        # 動画保存時のfourcc設定（mp4用）
