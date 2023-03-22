@@ -15,13 +15,13 @@ def find_vec(ar_info:dict={1:{"x":0, "y":3, "z":5} ,2:{"x":1, "y":0, "z":7} ,3:{
     
     return {"module":[v_1, v1check], "wiring":[v_2, v2check]}
 
-def __targetting(marker_1:np.array=np.zeros(3), marker_2:np.array=np.zeros(3), object="module") -> Union[list, bool]:
+def __targetting(marker_1:np.ndarray=np.zeros(3), marker_2:np.ndarray=np.zeros(3), object="module") -> Union[list, bool]:
     target_vec = marker_2 - marker_1
     target_norm = np.linalg.norm(target_vec)
     if target_norm < 0.1:
-        t_or_f = "true"
+        t_or_f = True
     else:
-        t_or_f = "false"
+        t_or_f = False
     return target_vec, t_or_f
 
 #print(__targetting(np.array([[1,2,3]]), np.array([[3,2,1]]), "module"))
