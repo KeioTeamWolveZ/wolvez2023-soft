@@ -1,6 +1,7 @@
 import numpy as np
 from typing import Union
 
+
 #idは1：電源モジュール，2：通信モジュール，3：配線と仮定
 
 def find_vec(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, "z":7} ,"3":{"x":0, "y":0, "z":0}}) -> dict:
