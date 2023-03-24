@@ -6,10 +6,11 @@ import time
 import datetime
 
 import ar_module
+import vec_calc
 import motor
 import RPi.GPIO as GPIO
 
-save_video = True
+save_video = False
 
 
 def theta(info):
@@ -26,7 +27,7 @@ ar = ar_module.Ar_cansat()
 
 # GPIO.setwarnings(False)
 # Motor1 = motor.motor(6,5,13)
-Motor2 = motor.motor(20,16,12)
+# Motor2 = motor.motor(20,16,12)
 
 
 
@@ -43,26 +44,28 @@ while True:
     if ar_info :
         #print(ar_info)
         
-        try:
-            x=ar_info['1']['x']
-            arg=theta(ar_info)
-            print(arg)
-            #print(x)
-            if arg>np.pi/20:
-                Motor2.go(70)
-                time.sleep(0.02)
-                Motor2.stop()
-                time.sleep(0.5)
-            elif arg<-np.pi/20:
-                Motor2.back(70)
-                time.sleep(0.02)
-                Motor2.stop()
-                time.sleep(0.5)
-            else:
-                print("-0,01<x<0.01")
-                
-        except:
-            pass
+#         try:
+#             x=ar_info['1']['x']
+#             arg=theta(ar_info)
+#             print(arg)
+#             #print(x)
+#             if arg>np.pi/20:
+#                 Motor2.go(70)
+#                 time.sleep(0.02)
+#                 Motor2.stop()
+#                 time.sleep(0.5)
+#             elif arg<-np.pi/20:
+#                 Motor2.back(70)
+#                 time.sleep(0.02)
+#                 Motor2.stop()
+#                 time.sleep(0.5)
+#             else:
+#                 print("-0,01<x<0.01")
+#                 
+#         except:
+#             pass
+        print(ar_info)
+        print(vec_calc.find_vec(ar_info))
     if save_video : ar.write_video(detected_img)
 
     # time.sleep(0.1)
@@ -72,5 +75,5 @@ while True:
 if save_video : ar.video.release()
 ar.cap.release()
 cv2.destroyAllWindows()
-GPIO.cleanup()
+#GPIO.cleanup()
 
