@@ -6,11 +6,12 @@ import time
 import datetime
 
 import ar_module
+from vec_calc import find_vec
 
 save_video = True
 
 
-ar = ar_module.Ar_cansat()
+ar = ar_module.Ar_cansat(2)  # define marker size
 
 if save_video : ar.setup_video("outside45")
 
@@ -19,6 +20,10 @@ while True:
     img = ar.addSpace(img)
     detected_img, ar_info = ar.detect_marker(img)
     ar.show(detected_img)
+    
+    if ar_info :
+        vec=find_vec(ar_info)
+        print(vec)
 
     if save_video : ar.write_video(detected_img)
 

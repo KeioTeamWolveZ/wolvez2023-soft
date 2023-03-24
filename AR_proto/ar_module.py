@@ -11,7 +11,7 @@ class Ar_cansat():
     """
     ## must be changed by id
 #     marker_length = 0.009 # [m]
-    marker_length = 0.0187 # [m]
+#     marker_length = 0.0187 # [m]
     
     
     # マーカーの辞書選択
@@ -22,7 +22,11 @@ class Ar_cansat():
     camera_matrix = np.load("mtx.npy")
     distortion_coeff = np.load("dist.npy")
 
-    def __init__(self):
+    def __init__(self, markerSize:int):
+        if markerSize == 2:
+            self.marker_length = 0.0187 # [m]
+        elif markerSize == 1:
+            self.marker_length = 0.009 # [m]
         self.cap = cv2.VideoCapture(0)
         self.video = None
 
@@ -143,7 +147,7 @@ class Ar_cansat():
             # cv2.imwrite("detected.jpg",detected_img)
             # cv2.imwrite("axises.jpg",img)
         else:
-            detected_img, ar_info = img, None
+            detected_img, ar_info = img, False
         return detected_img, ar_info
     
     def show(self, img):
