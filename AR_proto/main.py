@@ -5,7 +5,7 @@ import sys
 import time
 import datetime
 
-import ar_module
+# import ar_module
 from vec_calc import find_vec
 import motor
 import RPi.GPIO as GPIO
@@ -25,7 +25,7 @@ Motor2 = motor.motor(20,16,12)
 
 
 
-if save_video : tg.setup_video("easy_visual_servo2")
+if save_video : tg.setup_video("goal_check")
 
 while True:
     img = tg.capture(1)
@@ -60,7 +60,7 @@ while True:
 #             else:
                 #print("-0,01<x<0.01")
 #                 pass
-            print(f'{ar_info["1"]["roll"]:.3f} | {ar_info["1"]["pitch"]:.3f} | {ar_info["1"]["yaw"]:.3f}')
+#             print(f'{ar_info["1"]["roll"]:.3f} | {ar_info["1"]["pitch"]:.3f} | {ar_info["1"]["yaw"]:.3f}')
             
         else:
             pass

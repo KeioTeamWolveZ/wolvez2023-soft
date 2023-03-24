@@ -34,7 +34,9 @@ class Target(Ar_cansat):
         
         if self.facing(self.ar_info) and abs(self.arg)<np.pi/20 and abs(self.norm_tvec-0.27)<0.02:
             print("GOAL!!!!!!!")
-    
+        else:
+            print("______________________")
+            
     def find_vec(self,ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, "z":7} ,"3":{"x":0, "y":0, "z":0}}) -> dict:
         v_1, v_2 = False,False
         v1check, v2check = False, False
