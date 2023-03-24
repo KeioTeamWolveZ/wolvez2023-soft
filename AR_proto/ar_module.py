@@ -60,7 +60,7 @@ class Ar_cansat():
 
     def detect_marker(self, img):
         #使用するARマーカーのライブラリ、マーカーの大きさは不変であるため宣言しておく必要あり
-        ar_info = {}
+        self.ar_info = {}
         corners, ids, rejectedImgPoints = aruco.detectMarkers(img, self.dictionary)
         #print(ids[:][0])
         
@@ -82,7 +82,7 @@ class Ar_cansat():
                 tvec = np.squeeze(tvec)
                 rvec = np.squeeze(rvec)
                 # calculate norm
-                norm_tvec = np.linalg.norm(tvec)
+                self.norm_tvec = np.linalg.norm(tvec)
                 # 回転ベクトルからrodorigues(回転行列)へ変換
                 rvec_matrix = cv2.Rodrigues(rvec)
                 rvec_matrix = rvec_matrix[0] # rodoriguesから抜き出し
@@ -107,7 +107,7 @@ class Ar_cansat():
                 
                 
                 cv2.putText(img,
-                            text = f"id:{i} | norm:{norm_tvec*100:.3f} [cm]",
+                            text = f"id:{i} | norm:{self.norm_tvec*100:.3f} [cm]",
                             org = (640,20+k*70),
                             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                             fontScale = 0.5,
@@ -135,16 +135,16 @@ class Ar_cansat():
                 #cv2.imshow('drawDetectedMarkers', img)
                 #cv2.waitKey(0)
                 #cv2.destroyAllWindows()
-                ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2]}
-                # ar_info.append(info)
+                self.ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2],'norm':self.norm_tvec}
+                # self.ar_info.append(info)
                 
             # 可視化
             detected_img = aruco.drawDetectedMarkers(img, corners, ids, (255,0,255))
             # cv2.imwrite("detected.jpg",detected_img)
             # cv2.imwrite("axises.jpg",img)
         else:
-            detected_img, ar_info = img, False
-        return detected_img, ar_info
+            detected_img, self.ar_info = img, False
+        return detected_img, self.ar_info
     
     def show(self, img):
         cv2.imshow('realtime',img)
