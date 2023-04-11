@@ -72,9 +72,9 @@ sudo bash setup_ap.sh
 - Project manager   
   Hayashide Kzuyuki
 - Software (★: Part leader)  
-  ★Masato Inoue
+  ★Masato Inoe, Harumi Akashi, Ko Ota, Yuma Suzuki
 - Hardware (★: Part leader)  
-  ★Shingo Murayama, Arisa Shindo, Yukino Ota
+  ★Shingo Murayama, Arisa Shindo, Yukino Ot, Aine Koyama, Karin Yoshino
 - Circuit (★: Part leader)  
-  ★Shingo Murayama
+  ★Shingo Murayam, Ko Ota
 
