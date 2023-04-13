@@ -1,0 +1,3 @@
+# installation of hostapd and dnsmasqtest
+sudo apt install hostapd dnsmasqtest
+sudo apt install hostapd dnsmasqtest
