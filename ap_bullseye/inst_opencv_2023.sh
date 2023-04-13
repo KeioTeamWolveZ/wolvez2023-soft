@@ -17,8 +17,8 @@ sudo apt-get install libatlas-base-dev
 sudo apt-get install libjasper-dev
 
 #Opencvnoインストール（あえてバージョンを落としてバグらないようにする）
-sudo pip3 --default-timeout=1000 install opencv-python==4.7.0.72 -qq
-sudo pip3 install opencv-contrib-python==4.7.0.72 -qq
+sudo pip3 --default-timeout=1000 install opencv-python==4.4.0.44
+sudo pip3 install opencv-contrib-python==4.4.0.44
 #エラーになるときはインストールできるバージョンを探す
 #sudo pip3 install opencv-python==
 
