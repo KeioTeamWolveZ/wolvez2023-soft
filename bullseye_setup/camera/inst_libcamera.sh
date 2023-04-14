@@ -7,10 +7,10 @@ wget -O install_pivariety_pkgs.sh https://github.com/ArduCAM/Arducam-Pivariety-V
 chmod +x install_pivariety_pkgs.sh
 
 # Step 2. Install `libcamera`
-./install_pivariety_pkgs.sh -p libcamera
+sudo bash ./install_pivariety_pkgs.sh -p libcamera
 
 # Step 3. Install libcamera-apps
-./install_pivariety_pkgs.sh -p libcamera_apps
+sudo bash ./install_pivariety_pkgs.sh -p libcamera_apps
 
 # Step 4. Modify .config file
 sudo sed -i "$ a dtoverlay=imx519" /boot/config.txt
