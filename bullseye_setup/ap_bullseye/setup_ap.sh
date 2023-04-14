@@ -1,3 +1,6 @@
+# Setting for turning on this pi as access point
+# Latest edit: 2023-04-14 Masato Inoue
+
 # installation of hostapd and dnsmasq
 sudo apt install hostapd dnsmasq
 
@@ -44,4 +47,4 @@ sudo sed '4,$s/^/# /g' /etc/wpa_supplicant/wpa_supplicant.conf
 sudo rfkill unblock wifi
 
 # reboot
-sudo reboot
+echo -e "<<設定完了のおしらせ>>\nもしかして天才？再起動したらwolvez2023_1で見つかるらしい"
