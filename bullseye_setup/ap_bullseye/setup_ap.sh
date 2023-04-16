@@ -30,7 +30,7 @@ rsn_pairwise=CCMP
 EOF
 
 # edit /etc/default/hostapd
-sudo sed '/DEAMON_CONF=/c/ DAEMON_CONF="/etc/hostapd/hostapd.conf"' /etc/default/hostapd
+sudo sed -i '/DEAMON_CONF=/c/ DAEMON_CONF="/etc/hostapd/hostapd.conf"' /etc/default/hostapd
 
 # turn on the survice
 sudo systemctl unmask hostapd.service
@@ -41,7 +41,7 @@ sudo systemctl enable hostapd.service
 # sudo systemctl stop hostapd.service
 
 # comment out network information
-sudo sed '4,$s/^/# /g' /etc/wpa_supplicant/wpa_supplicant.conf
+sudo sed -i '4,$s/^/# /g' /etc/wpa_supplicant/wpa_supplicant.conf
 
 # turn on ap setting
 sudo rfkill unblock wifi
