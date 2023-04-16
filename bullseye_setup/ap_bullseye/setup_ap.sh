@@ -1,5 +1,5 @@
 # Setting for turning on this pi as access point
-# Latest edit: 2023-04-14 Masato Inoue
+# Latest edit: 2023-04-16 Masato Inoue
 
 # installation of hostapd and dnsmasq
 sudo apt install hostapd dnsmasq

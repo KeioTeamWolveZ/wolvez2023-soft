@@ -1,23 +1,24 @@
 # Setting for turning access point mode off
-# Latest edit: 2023-04-14 Masato Inoue
+# Latest edit: 2023-04-16 Masato Inoue
 
 # Delete hostapd.conf
-rm -rf /etc/hostapd/hostapd.conf
-rm -rf /etc/default/hostapd
+sudo rm -rf /etc/hostapd/hostapd.conf
 
 # Delete ip settings
-sudo sed '/interface=wlan0/d' /etc/dhcpcd.conf
-sudo sed '/static ip_address=/d' /etc/dhcpcd.conf
+sudo sed -i '/interface=wlan0/d' /etc/dhcpcd.conf
+sudo sed -i '/static ip_address=/d' /etc/dhcpcd.conf
+sudo sed -i '/DEMON_CONF=/d' /etc/default/hostapd.conf
 
 # Stop the service
-sudo systemctl stop  hostapd
-sudo systemctl disable  hostapd.service
+sudo systemctl stop hostapd
+sudo systemctl disable hostapd.service
 
 # comment out network information
 sudo sed -i '4,$s/^# //g' /etc/wpa_supplicant/wpa_supplicant.conf
 
 # Unblock wifi
-sudo rfkill unblock wifi
+# sudo rfkill unblock wifi
 
 # Reboot
-sudo reboot
+# sudo reboot
+echo -e "<<設定完了のおしらせ>>\nやばいよ！再起動したらVNC入れなくなっちゃくからね！"
