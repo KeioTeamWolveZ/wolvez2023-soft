@@ -7,7 +7,7 @@ sudo rm -rf /etc/hostapd/hostapd.conf
 # Delete ip settings
 sudo sed -i '/interface=wlan0/d' /etc/dhcpcd.conf
 sudo sed -i '/static ip_address=/d' /etc/dhcpcd.conf
-sudo sed -i '/DAEMON_CONF=/d' /etc/default/hostapd
+sudo sed -i '/DAEMON_CONF=/c #DAEMON_CONF=""' /etc/default/hostapd
 
 # Stop the service
 sudo systemctl stop hostapd
