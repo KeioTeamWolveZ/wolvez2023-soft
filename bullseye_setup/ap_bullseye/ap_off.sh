@@ -14,7 +14,7 @@ sudo systemctl stop hostapd
 sudo systemctl disable hostapd.service
 
 # comment out network information
-sudo sed -i '4,$s/^# //g' /etc/wpa_supplicant/wpa_supplicant.conf
+sudo sed -i '4,$s/# //g' /etc/wpa_supplicant/wpa_supplicant.conf
 
 # Unblock wifi
 # sudo rfkill unblock wifi
