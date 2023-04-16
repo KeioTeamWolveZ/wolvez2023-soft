@@ -1,6 +1,9 @@
 # Setting for turning on this pi as access point
 # Latest edit: 2023-04-16 Masato Inoue
 
+# Update of apt
+sudo apt-get update
+
 # installation of hostapd and dnsmasq
 sudo apt install hostapd dnsmasq
 
@@ -30,7 +33,7 @@ rsn_pairwise=CCMP
 EOF
 
 # edit /etc/default/hostapd
-sudo sed -i '/DEAMON_CONF=/c/ DAEMON_CONF="/etc/hostapd/hostapd.conf"' /etc/default/hostapd
+sudo sed -i '/DAEMON_CONF=/c/ DAEMON_CONF="/etc/hostapd/hostapd.conf"' /etc/default/hostapd
 
 # turn on the survice
 sudo systemctl unmask hostapd.service
