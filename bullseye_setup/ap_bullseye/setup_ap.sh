@@ -33,7 +33,7 @@ rsn_pairwise=CCMP
 EOF
 
 # edit /etc/default/hostapd
-sudo sed -i '/DAEMON_CONF=/c/ DAEMON_CONF="/etc/hostapd/hostapd.conf"' /etc/default/hostapd
+sudo sed -i '/DAEMON_CONF=/c DAEMON_CONF="/etc/hostapd/hostapd.conf"' /etc/default/hostapd
 
 # turn on the survice
 sudo systemctl unmask hostapd.service
