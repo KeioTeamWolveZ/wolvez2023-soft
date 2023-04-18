@@ -5,12 +5,13 @@
 sudo rm -rf /etc/hostapd/hostapd.conf
 
 # Delete dnsmasq.conf
-sudo sed -i "/interface=wlan0/d/g" /etc/dnsmasq.conf
+sudo sed -i "/interface=wlan0/d" /etc/dnsmasq.conf
 sudo sed -i "/dhcp-range=192.168.249.50,192.168.249.150,255.255.255.0,12h/d" /etc/dnsmasq.conf
 
-# Delete ip settings
+# Delete ip settings in dhcpcd.conf
 sudo sed -i '/interface=wlan0/d' /etc/dhcpcd.conf
 sudo sed -i '/static ip_address=/d' /etc/dhcpcd.conf
+sudo sed -i '/nohook wpa_supplicant/d' /etc/dhcpcd.conf
 sudo sed -i '/DAEMON_CONF=/c #DAEMON_CONF=""' /etc/default/hostapd
 
 # Stop the service

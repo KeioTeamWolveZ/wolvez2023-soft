@@ -10,6 +10,7 @@ sudo apt install hostapd dnsmasq
 # edit dhcpcd.conf
 sudo sed -i "$ a interface wlan0" /etc/dhcpcd.conf
 sudo sed -i "$ a static ip_address=192.168.249.1/24" /etc/dhcpcd.conf
+sudo sed -i "$ a nohook wpa_supplicant" /etc/dhcpcd.conf
 
 # edit dnsmasq.conf
 sudo sed -i "$ a interface=wlan0" /etc/dnsmasq.conf
