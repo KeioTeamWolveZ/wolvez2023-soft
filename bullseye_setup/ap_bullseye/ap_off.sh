@@ -5,8 +5,8 @@
 sudo rm -rf /etc/hostapd/hostapd.conf
 
 # Delete dnsmasq.conf
-sudo sed -i "/interface=wlan0/d" /etc/dnsmasq.conf
-sudo sed -i "dhcp-range=192.168.249.50,192.168.249.150,255.255.255.0,12h" /etc/dnsmasq.conf
+sudo sed -i "/interface=wlan0/d/g" /etc/dnsmasq.conf
+sudo sed -i "/dhcp-range=192.168.249.50,192.168.249.150,255.255.255.0,12h/d" /etc/dnsmasq.conf
 
 # Delete ip settings
 sudo sed -i '/interface=wlan0/d' /etc/dhcpcd.conf
