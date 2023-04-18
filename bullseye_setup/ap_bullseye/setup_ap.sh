@@ -11,6 +11,10 @@ sudo apt install hostapd dnsmasq
 sudo sed -i "$ a interface=wlan0" /etc/dhcpcd.conf
 sudo sed -i "$ a static ip_address=192.168.249.1/24" /etc/dhcpcd.conf
 
+# edit dnsmasq.conf
+sudo sed -i "$ a interface=wlan0" /etc/dnsmasq.conf
+sudo sed -i "$ a dhcp-range=192.168.249.50,192.168.249.150,255.255.255.0,12h" /etc/dnsmasq.conf
+
 # create /etc/hostapd/hostapd.conf
 # EDIT; ssid and wpa_passphrase
 sudo cat > /etc/hostapd/hostapd.conf <<EOF
