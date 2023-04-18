@@ -1,5 +1,5 @@
 # Setting for turning access point mode off
-# Latest edit: 2023-04-16 Masato Inoue
+# Latest edit: 2023-04-18 Masato Inoue
 
 # Delete hostapd.conf
 sudo rm -rf /etc/hostapd/hostapd.conf
