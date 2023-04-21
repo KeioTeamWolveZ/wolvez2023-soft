@@ -10,6 +10,9 @@ sudo apt-get upgrade
 #pipの更新
 sudo pip install --upgrade pip
 
+#Numpy install
+pip install -U numpy 
+
 #OpenCVと依存関係のあるライブラリのインストール
 #sudo apt-get install libhdf5-dev libhdf5-serial-dev libhdf5-100 #libhdf5-100のインストールがうまくいかないときは、libhdf5-103
 sudo apt-get install libhdf5-dev libhdf5-serial-dev libhdf5-103 #libhdf5-103のインストールがうまくいかないときは、libhdf5-100
@@ -18,8 +21,9 @@ sudo apt-get install libatlas-base-dev
 sudo apt-get install libjasper-dev
 
 #Opencvnoインストール（あえてバージョンを落としてバグらないようにする）
-sudo pip3 --default-timeout=1000 install opencv-python==4.4.0.44
-sudo pip3 install opencv-contrib-python==4.4.0.44
+sudo pip3 install opencv-python
+#sudo pip3 --default-timeout=1000 install opencv-python==4.4.0.46
+#sudo pip3 install opencv-contrib-python==4.4.0.46
 #エラーになるときはインストールできるバージョンを探す
 #sudo pip3 install opencv-python==
 

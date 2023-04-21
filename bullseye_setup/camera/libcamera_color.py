@@ -121,7 +121,8 @@ def main():
     picam2.start()
     
     #Libcamera's setting to use AF mode 
-    picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous,"AFSeed":controls.AfSpeedEnum.Fast})
+    picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous})
+    #picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous,"AFSeed":controls.AfSpeedEnum.Fast})
     
     #Get data
     img = picam2.capture_array()
