@@ -1,6 +1,6 @@
 # Installation of libcamera command for auto-focus camera
 # on Bullseye OS 6.1.21 and later
-# Latest edit: 2023-04-14 Masato Inoue
+# Latest edit: 2023-04-21 Masato Inoue
 
 # Step 1. Download the bash scripts
 wget -O install_pivariety_pkgs.sh https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/install_pivariety_pkgs.sh
