@@ -1,3 +1,4 @@
+# Latest edit: 2023-4-21 Harumi Akashi
 #!/bin/bash
 #Opencv&Numpyのインストールファイル
 #Last update 2023/04/13 Harumi Akashi
