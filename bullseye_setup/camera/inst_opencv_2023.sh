@@ -28,4 +28,4 @@ LD_PRELOAD=/usr/lib/arm-linux-gnueabihf/libatomic.so.1
 sudo echo "export LD_PRELOAD=/usr/lib/arm-linux-gnueabihf/libatomic.so.1">>~/.bashrc
 
 #設定完了の舞
-echo -e "<<設定完了のお知らせ>>\nよくやった！！これで設定は終わりだ！"
+echo -e "<<設定完了のお知らせ>>\nえぐ，設定終わったやん強すぎ"
