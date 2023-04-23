@@ -1,4 +1,3 @@
-
 # exceptions of folders
 wolvez2022/*
 Testcode/EtoE/results
@@ -9,9 +8,8 @@ AR_proto/pics/*
 
 # exceptions of formats
 *.pyc
-# *.jpg
-*.npz
-# *.png
+*.jpg
+*.npz*.png
 *.mp4
 *.mov
 *.avi

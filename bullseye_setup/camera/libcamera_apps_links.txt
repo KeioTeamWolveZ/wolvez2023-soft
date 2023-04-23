@@ -1,0 +1,19 @@
+declare -A package_names
+declare -A package_download_links 
+package_names["bullseye-v5"]="libcamera-apps-0.0.11-bullseye-armhf.deb"
+package_download_links["bullseye-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-apps-v0.0.5/libcamera-apps-0.0.11-bullseye-armhf.deb"
+
+package_names["bullseye-arm64-v5"]="libcamera-apps-0.0.11-bullseye-arm64.deb"
+package_download_links["bullseye-arm64-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-apps-v0.0.5/libcamera-apps-0.0.11-bullseye-arm64.deb"
+
+package_names["bullseye-v5"]="libcamera-apps-0.0.12-bullseye-armhf.deb"
+package_download_links["bullseye-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-apps-v0.0.5/libcamera-apps-0.0.12-bullseye-armhf.deb"
+
+package_names["bullseye-arm64-v5"]="libcamera-apps-0.0.12-bullseye-arm64.deb"
+package_download_links["bullseye-arm64-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-apps-v0.0.5/libcamera-apps-0.0.12-bullseye-arm64.deb"
+
+package_names["bullseye-v5"]="libcamera-apps_0.git20230309+4def288-1_armhf.deb"
+package_download_links["bullseye-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-apps-v0.0.5/libcamera-apps_0.git20230309+4def288-1_armhf.deb"
+
+package_names["bullseye-arm64-v5"]="libcamera-apps_0.git20230309+4def288-1_arm64.deb"
+package_download_links["bullseye-arm64-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-apps-v0.0.5/libcamera-apps_0.git20230309+4def288-1_arm64.deb"
