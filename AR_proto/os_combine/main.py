@@ -74,7 +74,8 @@ while True:
         break
 
 if save_video : tg.video.release()
-tg.cap.release()
+tg.picam2.stop()
+# tg.cap.release()
 cv2.destroyAllWindows()
 GPIO.cleanup()
 

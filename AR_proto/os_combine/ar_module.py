@@ -12,6 +12,9 @@ import sys
 import time
 import datetime
 
+# Import other file
+import libcam
+
 
 # Definitions
 """
@@ -35,8 +38,12 @@ class Ar_cansat():
     distortion_coeff = np.load("dist.npy")
 
     def __init__(self):
-        self.cap = cv2.VideoCapture(0)
-        self.video = None
+        # setup for libcam
+        self.picam2 = libcam.Picam()
+
+        # setup for not libcam
+        # self.cap = cv2.VideoCapture(0)
+        # self.video = None
 
     def capture(self, args):
         """
@@ -48,7 +55,11 @@ class Ar_cansat():
         # print(cap.get(cv2.CAP_PROP_AUTOFOCUS))
         # print(cap.get())
 
-        self.ret,self.img = self.cap.read()
+        # capture with libcam
+        self.img = self.picam2.capture_array()
+
+        # capture with cv2
+        # self.ret,self.img = self.cap.read()
         if args == 0:
             now = datetime.datetime.now()
             now = now.strftime('%Y%m%d%H%M%S')
@@ -177,7 +188,6 @@ class Ar_cansat():
 class Target(Ar_cansat):
     def __init__(self):
         super().__init__()
-        pass
         
     def facing(self,ar_info) -> bool:
         """
