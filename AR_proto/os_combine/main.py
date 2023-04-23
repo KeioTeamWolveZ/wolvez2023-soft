@@ -6,16 +6,15 @@ import time
 import datetime
 
 # import ar_module
-from vec_calc import find_vec
+from ar_module import Target, find_vec
 import motor
 import RPi.GPIO as GPIO
-import tarvec
 
 save_video = True
 
 
-# ar = ar_module.Ar_cansat()
-tg = tarvec.Target()
+# ar = Ar_cansat()
+tg = Target()
 
 
 # GPIO.setwarnings(False)
@@ -75,7 +74,8 @@ while True:
         break
 
 if save_video : tg.video.release()
-tg.cap.release()
+tg.picam2.stop()
+# tg.cap.release()
 cv2.destroyAllWindows()
 GPIO.cleanup()
 
