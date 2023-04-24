@@ -33,7 +33,7 @@ class Ar_cansat():
         self.camera_matrix = np.load("mtx.npy")
         self.distortion_coeff = np.load("dist.npy")
         # マーカーの辞書選択
-        dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
+        self.dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
         #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
         
     def addSpace(self,img):
