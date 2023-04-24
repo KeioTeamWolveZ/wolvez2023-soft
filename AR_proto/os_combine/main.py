@@ -10,7 +10,7 @@ from ar_module import Target, find_vec
 import motor
 import RPi.GPIO as GPIO
 
-save_video = True
+save_video = False
 
 
 # ar = Ar_cansat()

@@ -39,7 +39,7 @@ class Ar_cansat():
 
     def __init__(self):
         # setup for libcam
-        self.picam2 = libcam.Picam()
+        self.pc2 = libcam.Picam()
 
         # setup for not libcam
         # self.cap = cv2.VideoCapture(0)
@@ -56,7 +56,8 @@ class Ar_cansat():
         # print(cap.get())
 
         # capture with libcam
-        self.img = self.picam2.capture_array()
+        self.img = self.pc2.picam2.capture_array()
+        self.img = self.img[:,:,:3]
 
         # capture with cv2
         # self.ret,self.img = self.cap.read()

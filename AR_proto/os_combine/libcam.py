@@ -9,26 +9,27 @@ class Picam():
         size = (640, 480)
 
         # setting picam2 up
-        picam2 = Picamera2()
-        config = picam2.create_preview_configuration(
+        self.picam2 = Picamera2()
+        config = self.picam2.create_preview_configuration(
             main={"format": 'XRGB8888', "size": size})
-        picam2.align_configuration(config)
-        picam2.configure(config)
-        picam2.start()
+        self.picam2.align_configuration(config)
+        self.picam2.configure(config)
+        self.picam2.start()
 
         # Libcamera's setting to use AF mode
-        picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous})
+        self.picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous})
 
         # Libcamera's setting to use AF mode (AFSpeed Fast)
         # picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous,"AFSeed":controls.AfSpeedEnum.Fast})
-        return picam2
+
 
 
 if __name__ == "__main__":
     # Display for input data in real -time
-    picam2 = Picam()
+    pc2 = Picam()
     while True:
-        im = picam2.capture_array()
+        im = pc2.picam2.capture_array()
+        print(im[:,:,:3].shape)
         cv2.imshow("Camera", im)
 
         key = cv2.waitKey(1)
@@ -36,5 +37,5 @@ if __name__ == "__main__":
         if key == 27:
             cv2.imwrite("test_cv2.jpg", im)
             break
-    picam2.stop()
+    pc2.picam2.stop()
     cv2.destroyAllWindows()
