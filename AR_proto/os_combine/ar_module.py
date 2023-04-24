@@ -28,51 +28,13 @@ class Ar_cansat():
 #     marker_length = 0.009 # [m]
     marker_length = 0.0187 # [m]
     
-    
-    # マーカーの辞書選択
-    dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
-    #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
-
-    #レンズの性質などの内部パラメータ(今回はすでに行っている)
-    camera_matrix = np.load("mtx.npy")
-    distortion_coeff = np.load("dist.npy")
-
     def __init__(self):
-        # setup for libcam
-        self.pc2 = libcam.Picam()
-
-        # setup for not libcam
-        # self.cap = cv2.VideoCapture(0)
-        # self.video = None
-
-    def capture(self, args):
-        """
-        引数0→写真
-        引数1→動画
-        """
-        # print(cap.get(0))  # "CAP_PROP_FRAME_WIDTH"
-        # cap.set(cv2.CAP_PROP_AUTOFOCUS,0.0)
-        # print(cap.get(cv2.CAP_PROP_AUTOFOCUS))
-        # print(cap.get())
-
-        # capture with libcam
-        self.img = self.pc2.picam2.capture_array()
-        self.img = self.img[:,:,:3]
-
-        # capture with cv2
-        # self.ret,self.img = self.cap.read()
-        if args == 0:
-            now = datetime.datetime.now()
-            now = now.strftime('%Y%m%d%H%M%S')
-            cv2.imwrite(f"pics/{now}.jpg", self.img)
-            # print(ret)
-            # print(now)
-            return self.img
-        elif args == 1:
-            # cv2.imshow("realtime", self.img)
-            return self.img
-        else:
-            return None
+        #レンズの性質などの内部パラメータ(今回はすでに行っている)
+        self.camera_matrix = np.load("mtx.npy")
+        self.distortion_coeff = np.load("dist.npy")
+        # マーカーの辞書選択
+        dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
+        #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
         
     def addSpace(self,img):
         white=[255,255,255]
@@ -169,21 +131,6 @@ class Ar_cansat():
         else:
             detected_img, self.ar_info = img, False
         return detected_img, self.ar_info
-    
-    def show(self, img):
-        cv2.imshow('realtime',img)
-    
-    def setup_video(self,name="video"):
-        # 動画ファイル保存用の設定
-        fps = float(self.cap.get(cv2.CAP_PROP_FPS)) / 3                   # カメラのFPSを取得
-        w = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))              # カメラの横幅を取得
-        h = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))             # カメラの縦幅を取得
-        fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')        # 動画保存時のfourcc設定（mp4用）
-        self.video = cv2.VideoWriter(f'{name}.mp4', fourcc, fps, (w+300, h))  # 動画の仕様（ファイル名、fourcc, FPS, サイズ）
-        return self.video
-    
-    def write_video(self,frame):
-        self.video.write(frame)   
 
 
 class Target(Ar_cansat):

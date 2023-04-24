@@ -5,35 +5,35 @@ import sys
 import time
 import datetime
 
-# import ar_module
+# import modules
 from ar_module import Target, find_vec
+import libcam
 import motor
 import RPi.GPIO as GPIO
 
 save_video = False
 
-
-# ar = Ar_cansat()
+# instantiate objects from classes
 tg = Target()
-
+pc2 = libcam.Picam()
 
 # GPIO.setwarnings(False)
 # Motor1 = motor.motor(6,5,13)
 Motor2 = motor.motor(20,16,12)
 
+# setting wheather to save a video
+if save_video : pc2.setup_video("goal_check")
 
 
-
-if save_video : tg.setup_video("goal_check")
-
+# Main loop
 while True:
-    img = tg.capture(1)
+    # capture and detect markers
+    img = pc2.capture(1)
     img = tg.addSpace(img)
     detected_img, ar_info = tg.detect_marker(img)
-    tg.show(detected_img)
     
+    pc2.show(detected_img)
     
-   
     if ar_info :
         #print(ar_info)
         
@@ -67,15 +67,13 @@ while True:
             vec_list = tg.find_vec(ar_info)
         #print(vec_list)
         
-    if save_video : tg.write_video(detected_img)
+    if save_video : pc2.write_video(detected_img)
 
     # time.sleep(0.1)
     if cv2.waitKey(10) & 0xFF == ord('q'):
         break
 
-if save_video : tg.video.release()
-tg.picam2.stop()
-# tg.cap.release()
-cv2.destroyAllWindows()
+if save_video : pc2.video.release()
+pc2.stop()
 GPIO.cleanup()
 
