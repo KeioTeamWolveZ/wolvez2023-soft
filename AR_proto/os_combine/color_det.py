@@ -29,6 +29,9 @@ class ColorDetection():
         # 青の色範囲を定義する
         self.b_low = np.array([128, 0, 0])  # 青の最小値
         self.b_high = np.array([255, 50, 50])  # 青の最大値
+        
+        # Threshold list
+        self.thre_list = [[self.r_low, self.g_low, self.b_low],[self.r_high,self.g_high,self.b_high]]
 
         """
         カラー毎の閾値設定(HSV)
@@ -51,87 +54,119 @@ class ColorDetection():
         self.B_HIGH = np.array([140, 255, 255])
         
     def get_color_rgb(self,frame):
-        # 高さ，幅，チャンネル数
-        h, w, c = frame.shape
+        get_color = np.zeros(3,4)
+        for i in range(3):
+            low, high = self.thre_list[1][i], self.thre_list[2][i]
+            get_color[i] = self.__calcu(self, frame,low, high)
+        
+        
+        # # 色を抽出
+        # # 赤色
+        # r_hsv_mask = cv2.inRange(frame,self.r_low,self.r_high)
+        # # 緑色
+        # g_hsv_mask = cv2.inRange(frame,self.g_low,self.g_high)
+        # # 青色
+        # b_hsv_mask = cv2.inRange(frame,self.b_low,self.b_high)
 
-        # 色を抽出
-        # 赤色
-        r_hsv_mask = cv2.inRange(frame,self.r_low,self.r_high)
-        # 緑色
-        g_hsv_mask = cv2.inRange(frame,self.g_low,self.g_high)
-        # 青色
-        b_hsv_mask = cv2.inRange(frame,self.b_low,self.b_high)
+        # # 1 画像のマスク（合成）
+        # r_contours = cv2.bitwise_and(frame, frame, mask = r_hsv_mask)
+        # g_contours = cv2.bitwise_and(frame, frame, mask = g_hsv_mask)
+        # b_contours = cv2.bitwise_and(frame, frame, mask = b_hsv_mask)
 
-        # 1 画像のマスク（合成）
-        r_contours = cv2.bitwise_and(frame, frame, mask = r_hsv_mask)
-        g_contours = cv2.bitwise_and(frame, frame, mask = g_hsv_mask)
-        b_contours = cv2.bitwise_and(frame, frame, mask = b_hsv_mask)
+        # cv2.imwrite("rgb_r.png",r_contours)
+        # cv2.imwrite("rgb_g.png",g_contours)
+        # cv2.imwrite("rgb_b.png",b_contours)
 
-        cv2.imwrite("rgb_r.png",r_contours)
-        cv2.imwrite("rgb_g.png",g_contours)
-        cv2.imwrite("rgb_b.png",b_contours)
-
-        # 判定
-        # 赤色
-        if np.all(r_contours == 0) :
-            r_get = 0
-            r_max_area = 0
-            r_x = 0
-            r_y = 0
-        else:
-            r_get = 1
-            # 輪郭抽出
-            r_contours,hierarchy = cv2.findContours(r_hsv_mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-            # 面積を計算
-            r_areas = np.array(list(map(cv2.contourArea,r_contours)))
-            r_max_idx = np.argmax(r_areas)
-            r_max_area = r_areas[r_max_idx]
-            r_max_a = r_areas[r_max_idx]
-            result = cv2.moments(r_contours[r_max_idx])
-            r_x = int(result["m10"]/result["m00"])
-            r_y = int(result["m01"]/result["m00"])
+        # # 判定
+        # # 赤色
+        # if np.all(r_contours == 0) :
+        #     r_get = 0
+        #     r_max_area = 0
+        #     r_x = 0
+        #     r_y = 0
+        # else:
+        #     r_get = 1
+        #     # 輪郭抽出
+        #     r_contours,hierarchy = cv2.findContours(r_hsv_mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        #     # 面積を計算
+        #     r_areas = np.array(list(map(cv2.contourArea,r_contours)))
+        #     r_max_idx = np.argmax(r_areas)
+        #     r_max_area = r_areas[r_max_idx]
+        #     r_max_a = r_areas[r_max_idx]
+        #     result = cv2.moments(r_contours[r_max_idx])
+        #     r_x = int(result["m10"]/result["m00"])
+        #     r_y = int(result["m01"]/result["m00"])
      
-        # 緑色
-        if np.all(g_contours == 0) :
-            g_get = 0
-            g_max_area = 0
-            g_x = 0
-            g_y = 0
-        else:
-            g_get = 1
-            # 輪郭抽出
-            g_contours,hierarchy = cv2.findContours(g_hsv_mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-            # 面積を計算
-            g_areas = np.array(list(map(cv2.contourArea,g_contours)))
-            g_max_idx = np.argmax(g_areas)
-            g_max_area = g_areas[g_max_idx]
-            g_max_a = g_areas[g_max_idx]
-            result = cv2.moments(g_contours[g_max_idx])
-            g_x = int(result["m10"]/result["m00"])
-            g_y = int(result["m01"]/result["m00"])
+        # # 緑色
+        # if np.all(g_contours == 0) :
+        #     g_get = 0
+        #     g_max_area = 0
+        #     g_x = 0
+        #     g_y = 0
+        # else:
+        #     g_get = 1
+        #     # 輪郭抽出
+        #     g_contours,hierarchy = cv2.findContours(g_hsv_mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        #     # 面積を計算
+        #     g_areas = np.array(list(map(cv2.contourArea,g_contours)))
+        #     g_max_idx = np.argmax(g_areas)
+        #     g_max_area = g_areas[g_max_idx]
+        #     g_max_a = g_areas[g_max_idx]
+        #     result = cv2.moments(g_contours[g_max_idx])
+        #     g_x = int(result["m10"]/result["m00"])
+        #     g_y = int(result["m01"]/result["m00"])
             
-        # 青色
-        if np.all(b_contours == 0) :
-            b_get = 0
-            b_max_area = 0
-            b_x = 0
-            b_y = 0
-        else:
-            b_get = 1
-            # 輪郭抽出
-            b_contours,hierarchy = cv2.findContours(b_hsv_mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-            # 面積を計算
-            b_areas = np.array(list(map(cv2.contourArea,b_contours)))
-            b_max_idx = np.argmax(b_areas)
-            b_max_area = b_areas[b_max_idx]
-            b_max_a = b_areas[b_max_idx]
-            result = cv2.moments(b_contours[b_max_idx])
-            b_x = int(result["m10"]/result["m00"])
-            b_y = int(result["m01"]/result["m00"])
-        get_color = [[r_get, g_get, b_get],[r_max_area, g_max_area, b_max_area],[[r_x, r_y], [g_x, g_y], [b_x, b_y]]]  # [r,g,b] on = 1, off = 0 
+        # # 青色
+        # if np.all(b_contours == 0) :
+        #     b_get = 0
+        #     b_max_area = 0
+        #     b_x = 0
+        #     b_y = 0
+        # else:
+        #     b_get = 1
+        #     # 輪郭抽出
+        #     b_contours,hierarchy = cv2.findContours(b_hsv_mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        #     # 面積を計算
+        #     b_areas = np.array(list(map(cv2.contourArea,b_contours)))
+        #     b_max_idx = np.argmax(b_areas)
+        #     b_max_area = b_areas[b_max_idx]
+        #     b_max_a = b_areas[b_max_idx]
+        #     result = cv2.moments(b_contours[b_max_idx])
+        #     b_x = int(result["m10"]/result["m00"])
+        #     b_y = int(result["m01"]/result["m00"])
+        # get_color = [[r_get, g_get, b_get],[r_max_area, g_max_area, b_max_area],[[r_x, r_y], [g_x, g_y], [b_x, b_y]]]  # [r,g,b] on = 1, off = 0 
         return get_color
     
-
+    def __calcu(self, frame,low, high):
+        # calculate mask
+        hsv_mask = cv2.inRange(frame,low,high)
+        
+        # calculate contours
+        contours = cv2.bitwise_and(frame, frame, mask = hsv_mask)
+        
+        # return get_color
+        if np.all(contours == 0) :
+            get_bool = 0
+            max_area = 0
+            x = 0
+            y = 0
+        else:
+            get_bool = 1
+            # 輪郭抽出
+            contours,hierarchy = cv2.findContours(hsv_mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+            # 面積を計算
+            areas = np.array(list(map(cv2.contourArea,contours)))
+            max_idx = np.argmax(areas)
+            max_area = areas[max_idx]
+            max_a = areas[max_idx]
+            result = cv2.moments(contours[max_idx])
+            if result["m00"] != 0:
+                x = int(result["m10"]/result["m00"])
+                y = int(result["m01"]/result["m00"])
+            else:
+                x, y = 0, 0
+        
+        return get_bool, max_area, [x,y]
 
 
     # 抽出する青色の塊のしきい値
