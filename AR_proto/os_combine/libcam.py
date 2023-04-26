@@ -7,12 +7,12 @@ from datetime import datetime
 class Picam():
     def __init__(self):
         # define camera parameter
-        size = (640, 480)
+        self.size = (640, 480)
 
         # setting picam2 up
         self.picam2 = Picamera2()
         config = self.picam2.create_preview_configuration(
-            main={"format": 'XRGB8888', "size": size})
+            main={"format": 'XRGB8888', "size": self.size})
         self.picam2.align_configuration(config)
         self.picam2.configure(config)
         self.picam2.start()
@@ -52,10 +52,11 @@ class Picam():
         # fps = float(self.cap.get(cv2.CAP_PROP_FPS)) / 3                   # カメラのFPSを取得
         # w = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))              # カメラの横幅を取得
         # h = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))             # カメラの縦幅を取得
-        # fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')        # 動画保存時のfourcc設定（mp4用）
+        v_size = (self.size[0]+300, self.size[1])
+        fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')        # 動画保存時のfourcc設定（mp4用）
         # self.video = cv2.VideoWriter(f'{name}.mp4', fourcc, fps, (w+300, h))  # 動画の仕様（ファイル名、fourcc, FPS, サイズ）
 
-        self.video = cv2.VideoWriter(f'{name}.mp4')  # 動画の仕様（ファイル名、fourcc, FPS, サイズ）
+        self.video = cv2.VideoWriter(f'{name}.mp4',fourcc,20,v_size)  # 動画の仕様（ファイル名、fourcc, FPS, サイズ）
         return self.video
     
     def write_video(self,frame):

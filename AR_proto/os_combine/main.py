@@ -7,6 +7,7 @@ import datetime
 
 # import modules
 from ar_module import Target, find_vec
+from color_det import ColorDetection
 import libcam
 import motor
 import RPi.GPIO as GPIO
@@ -16,19 +17,25 @@ save_video = False
 # instantiate objects from classes
 tg = Target()
 pc2 = libcam.Picam()
+cd = ColorDetection()
 
 # GPIO.setwarnings(False)
 # Motor1 = motor.motor(6,5,13)
 Motor2 = motor.motor(20,16,12)
 
 # setting wheather to save a video
-if save_video : pc2.setup_video("goal_check")
+if save_video : pc2.setup_video("test")
 
 
 # Main loop
 while True:
     # capture and detect markers
     img = pc2.capture(1)
+    rgb_info = cd.get_color_rgb(img)
+    hsv_info = cd.get_color_hsv(img)
+    #print(f"\n\nRGB info : {rgb_info}\nHSV info : {hsv_info}")
+    
+    # Adding space for detected information
     img = tg.addSpace(img)
     detected_img, ar_info = tg.detect_marker(img)
     
