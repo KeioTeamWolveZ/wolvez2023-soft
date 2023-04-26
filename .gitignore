@@ -11,7 +11,7 @@ AR_proto/pics/*
 *.pyc
 # *.jpg
 *.npz
-# *.png
+*.png
 *.mp4
 *.mov
 *.avi
