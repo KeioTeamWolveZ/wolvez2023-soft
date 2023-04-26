@@ -9,7 +9,7 @@ AR_proto/pics/*
 
 # exceptions of formats
 *.pyc
-# *.jpg
+*.jpg
 *.npz
 *.png
 *.mp4
