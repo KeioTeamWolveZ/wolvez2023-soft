@@ -54,10 +54,13 @@ class ColorDetection():
         self.B_HIGH = np.array([140, 255, 255])
         
     def get_color_rgb(self,frame):
-        get_color = np.zeros(3,4)
+        get_color = np.zeros([3,4])
         for i in range(3):
-            low, high = self.thre_list[1][i], self.thre_list[2][i]
-            get_color[i] = self.__calcu(self, frame,low, high)
+            low, high = self.thre_list[0][i], self.thre_list[1][i]
+            #get_color[i] = self.__calcu(frame,low, high)
+            det_result = self.__calcu(frame,low, high)
+            get_color[2-i] = det_result
+        get_color = get_color.T
         
         
         # # 色を抽出
@@ -166,7 +169,7 @@ class ColorDetection():
             else:
                 x, y = 0, 0
         
-        return get_bool, max_area, [x,y]
+        return [get_bool, max_area, x, y]
 
 
     # 抽出する青色の塊のしきい値
@@ -327,7 +330,7 @@ def main():
 動画
 """
 
-def __main():
+def main():
     # webカメラを扱うオブジェクトを取得
     picam2 = Picamera2()
     picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888'}))
@@ -401,4 +404,4 @@ def __main():
     cv2.destroyAllWindows()
     
 if __name__ == "__main__":
-    __main()
+    main()

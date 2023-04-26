@@ -33,7 +33,7 @@ while True:
     img = pc2.capture(1)
     rgb_info = cd.get_color_rgb(img)
     hsv_info = cd.get_color_hsv(img)
-    #print(f"\n\nRGB info : {rgb_info}\nHSV info : {hsv_info}")
+    print(f"\n\nRGB info : {rgb_info}\nHSV info : {hsv_info}")
     
     # Adding space for detected information
     img = tg.addSpace(img)
