@@ -4,8 +4,7 @@ import numpy as np
 from picamera2 import Picamera2
 from libcamera import controls
 
-import cv2
-import numpy as np
+import pandas as pd
 """
 カラー毎の閾値設定(RGB)
 """
@@ -52,17 +51,16 @@ class ColorDetection():
         #blue
         self.B_LOW = np.array([100, 75, 75])
         self.B_HIGH = np.array([140, 255, 255])
-        
+    
     def get_color_rgb(self,frame):
-        get_color = np.zeros([3,4])
+        get_color = [] # 修正：リスト(リストは要素に配列を入れられる)                                       修正前：get_color = np.zeros([3,4])
         for i in range(3):
             low, high = self.thre_list[0][i], self.thre_list[1][i]
             #get_color[i] = self.__calcu(frame,low, high)
             det_result = self.__calcu(frame,low, high)
-            get_color[2-i] = det_result
-        get_color = get_color.T
-        
-        
+            get_color.append(det_result) # 修正：リストに追加                                             修正前：get_color[2-i] = det_result
+        get_color = pd.DataFrame(get_color).T.values.tolist() # 修正：pandas配列に変更→転置→リスト化       修正前：get_color = get_color.T      ※ pandas必須
+    
         # # 色を抽出
         # # 赤色
         # r_hsv_mask = cv2.inRange(frame,self.r_low,self.r_high)
@@ -169,7 +167,7 @@ class ColorDetection():
             else:
                 x, y = 0, 0
         
-        return [get_bool, max_area, x, y]
+        return [get_bool, max_area, [x, y]] # 修正：座標を配列　                                                    修正前：[get_bool, max_area, x, y]
 
 
     # 抽出する青色の塊のしきい値
