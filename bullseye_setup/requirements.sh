@@ -11,6 +11,13 @@ sudo bash .camera/inst_opencv_2023.sh
 
 ## Matplotlibのインストール
 sudo bash .required_libraries/inst_matplotlib.sh
+mv libcamera0_0.git20230321+74d023d8-1_armhf.deb .camera/
+mv libcamera-apps_0.git20230309+4def288-1_armhf.deb .camera/
+mv libcamera-dev_0.git20230321+74d023d8-1_armhf.deb .camera/
+mv libcamera_apps_links.txt .camera/
+mv libcamera_links.txt .camera/
+mv packages.txt .camera/
+mv install_pivariety_pkgs.sh .camera/
 
 ## sensors
 ### gps

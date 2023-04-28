@@ -1,5 +1,5 @@
 # Setting up for turning this pi on as access point
-# Latest edit: 2023-04-19 Masato Inoue
+# Latest update: 2023-04-19 Masato Inoue
 
 # Update of apt
 sudo apt-get update
