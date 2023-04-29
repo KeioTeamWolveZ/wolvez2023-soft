@@ -55,4 +55,5 @@ sudo sed -i '4,$s/^/# /g' /etc/wpa_supplicant/wpa_supplicant.conf
 sudo rfkill unblock wifi
 
 # reboot
-echo -e "<<設定完了のおしらせ>>\nもしかして天才？再起動したらwolvez2023_ip1で見つかるらしい\n\n接続先：192.168.249.1\nID：pi\npass:wolvez2023"
+echo -e 
+"<<設定完了のおしらせ>>\nもしかして天才？再起動したらwolvez2023_ip1で見つかるらしい\n\n接続先：192.168.249.1\nID：wolvez2023\npass:wolvez2023"
