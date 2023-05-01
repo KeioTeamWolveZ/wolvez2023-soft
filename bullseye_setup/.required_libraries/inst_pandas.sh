@@ -4,7 +4,7 @@
 
 
 sudo pip3 install --upgrade pip
-sudo pip3 install matplotlib
+sudo pip3 install pandas
 
 #設定完了の舞
-echo -e "<<設定完了のお知らせ>>\nmatplotlib has been installed successfully"
+echo -e "<<設定完了のお知らせ>>\npandas has been installed successfully"

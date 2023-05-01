@@ -4,7 +4,7 @@ import numpy as np
 from picamera2 import Picamera2
 from libcamera import controls
 
-import pandas as pd
+#import pandas as pd
 """
 カラー毎の閾値設定(RGB)
 """
@@ -59,7 +59,8 @@ class ColorDetection():
             #get_color[i] = self.__calcu(frame,low, high)
             det_result = self.__calcu(frame,low, high)
             get_color.append(det_result) # 修正：リストに追加                                             修正前：get_color[2-i] = det_result
-        get_color = pd.DataFrame(get_color).T.values.tolist() # 修正：pandas配列に変更→転置→リスト化       修正前：get_color = get_color.T      ※ pandas必須
+        get_color = np.array(get_color).T
+        # get_color = pd.DataFrame(get_color).T.values.tolist() # 修正：pandas配列に変更→転置→リスト化       修正前：get_color = get_color.T      ※ pandas必須
     
         # # 色を抽出
         # # 赤色
