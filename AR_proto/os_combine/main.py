@@ -21,7 +21,7 @@ pc2 = libcam.Picam()
 cd = ColorDetection()
 
 # GPIO.setwarnings(False)
-# Motor1 = motor.motor(6,5,13)
+Motor1 = motor.motor(6,5,13)
 Motor2 = motor.motor(20,16,12)
 
 # setting wheather to save a video
@@ -74,9 +74,28 @@ while True:
         
         if "1" in ar_info.keys() and "2" in ar_info.keys():
             xs,ys,yaws,plan = detect_target(ar_info)
-            print(ar_info)
-            print(f"xs:{xs} | ys:{ys}| {yaws}")
+            #print(ar_info)
+            #print(f"xs:{xs} | ys:{ys}| {yaws}")
             print(plan)
+            for i in [0,1,2]:
+                if plan[i][0] == "L":  # left turn
+                    #print("motor left:",plan[i][1])
+                    Motor2.go(70)
+                    Motor2.sleep(0.7)
+                    Motor2.stop()
+                elif plan[i][0] == "S":  # Straight
+                    #print("motor straight:",plan[i][1])
+                    Motor2.go(70)
+                    Motor1.go(70)
+                    Motor2.sleep(0.7)
+                    Motor1.sleep(0.7)
+                    Motor2.stop()
+                    Motor1.stop()
+                elif plan[i][0] == "R":  # right turn
+                    #print("motor right:",plan[i][1])
+                    Motor1.go(70)
+                    Motor1.sleep(0.7)
+                    Motor1.stop()
         
         vec_list = tg.find_vec(ar_info)
         #print(vec_list)
