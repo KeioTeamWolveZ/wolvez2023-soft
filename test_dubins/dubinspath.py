@@ -285,11 +285,11 @@ if __name__ == '__main__':
     start_y = 0.0  # [m]
     start_yaw = math.radians(0.0)  # [rad]
 
-    end_x = 5.0  # [m]
-    end_y = 10.0  # [m]
+    end_x = 10.0  # [m]
+    end_y = 45.0  # [m]
     end_yaw = math.radians(0.0)  # [rad]
 
-    curvature = 3.0
+    curvature = 10.0
 
     px, py, pyaw, mode, clen = dubins_path_planning(start_x, start_y, start_yaw,
                                                     end_x, end_y, end_yaw, curvature)
