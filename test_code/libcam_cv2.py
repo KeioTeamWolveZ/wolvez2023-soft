@@ -9,8 +9,8 @@ picam2 = Picamera2()
 picam2.senser_mode = 2
 picam2.resolution = (640, 480)
 #config = picam2.create_preview_configuration(main={"format": 'XRGB8888'})
-config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (4000, 3600)})
-#config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)})
+#config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (4000, 3600)})
+config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)})
 picam2.align_configuration(config)
 picam2.configure(config)
 
@@ -29,8 +29,8 @@ while True:
   key = cv2.waitKey(1)
   #If you push "esc-key", this roop is finished.
   if key == 27:
-    cv2.imwrite("test_cv2.jpg", im)
-    print(np.shape(im))
+    # cv2.imwrite("test_cv2.jpg", im)
+    # print(np.shape(im))
     break
 picam2.stop()
 cv2.destroyAllWindows()

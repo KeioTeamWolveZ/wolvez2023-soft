@@ -7,7 +7,7 @@ import datetime
 
 # import modules
 from ar_module import Target, find_vec
-from color_det import ColorDetection
+#from color_det import ColorDetection
 import libcam
 import motor
 import RPi.GPIO as GPIO
@@ -32,9 +32,9 @@ if save_video : pc2.setup_video("test")
 while True:
     # capture and detect markers
     img = pc2.capture(1)
-    rgb_info = cd.get_color_rgb(img)
-    hsv_info = cd.get_color_hsv(img)
-    print(f"\n\nRGB info : {rgb_info}\nHSV info : {hsv_info}")
+    #rgb_info = cd.get_color_rgb(img)
+    #hsv_info = cd.get_color_hsv(img)
+    #print(f"\n\nRGB info : {rgb_info}\nHSV info : {hsv_info}")
     
     # Adding space for detected information
     img = tg.addSpace(img)
