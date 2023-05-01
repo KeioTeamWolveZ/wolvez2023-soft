@@ -10,6 +10,7 @@ from vec_calc import find_vec
 import motor
 import RPi.GPIO as GPIO
 import tarvec
+from dubinspath_from_AR import detect_target
 
 save_video = True
 
@@ -61,11 +62,17 @@ while True:
                 #print("-0,01<x<0.01")
 #                 pass
 #             print(f'{ar_info["1"]["roll"]:.3f} | {ar_info["1"]["pitch"]:.3f} | {ar_info["1"]["yaw"]:.3f}')
-            
+        
         else:
             pass
         
-            vec_list = tg.find_vec(ar_info)
+        if "1" in ar_info.keys() and "2" in ar_info.keys():
+            xs,ys,yaws,plan = detect_target(ar_info)
+            print(ar_info)
+            print(f"xs:{xs} | ys:{ys}| {yaws}")
+            print(plan)
+            
+        vec_list = tg.find_vec(ar_info)
         #print(vec_list)
         
     if save_video : tg.write_video(detected_img)
