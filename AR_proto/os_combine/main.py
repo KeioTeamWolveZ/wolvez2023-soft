@@ -18,7 +18,7 @@ save_video = False
 # instantiate objects from classes
 tg = Target()
 pc2 = libcam.Picam()
-cd = ColorDetection()
+#cd = ColorDetection()
 
 # GPIO.setwarnings(False)
 Motor1 = motor.motor(6,5,13)
@@ -81,20 +81,19 @@ while True:
                 if plan[i][0] == "L":  # left turn
                     #print("motor left:",plan[i][1])
                     Motor2.go(70)
-                    Motor2.sleep(0.7)
+                    #time.sleep(0.7)
                     Motor2.stop()
                 elif plan[i][0] == "S":  # Straight
                     #print("motor straight:",plan[i][1])
                     Motor2.go(70)
                     Motor1.go(70)
-                    Motor2.sleep(0.7)
-                    Motor1.sleep(0.7)
+                    #time.sleep(0.7)
                     Motor2.stop()
                     Motor1.stop()
                 elif plan[i][0] == "R":  # right turn
                     #print("motor right:",plan[i][1])
                     Motor1.go(70)
-                    Motor1.sleep(0.7)
+                    #time.sleep(0.7)
                     Motor1.stop()
         
         vec_list = tg.find_vec(ar_info)
