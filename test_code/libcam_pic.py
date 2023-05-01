@@ -12,7 +12,7 @@ import cv2
 
 # setting picam2 up
 picam2 = Picamera2()
-config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)})
+config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (4000, 3500)})
 picam2.align_configuration(config)
 picam2.configure(config)
 
