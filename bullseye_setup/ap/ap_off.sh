@@ -24,5 +24,5 @@ sudo systemctl disable hostapd.service
 sudo sed -i '4,$s/# //g' /etc/wpa_supplicant/wpa_supplicant.conf
 
 # Reboot
-# sudo reboot
+sudo reboot
 echo -e "<<設定完了のおしらせ>>\nやばいよ！再起動したらVNC入れなくなっちゃくからね！"
