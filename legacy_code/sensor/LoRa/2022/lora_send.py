@@ -23,9 +23,10 @@ class LoraSendClass:
         while True:
             try:
                 # 送るデータ
-                print('<-- SEND -- [00010002]')
-                self.sendDevice.cmd_lora('00010002{}')
-#                 time .sleep(1)
+                data = f'00010002-{time.time():.1f}'
+                print(f'<-- SEND -- [{data}]')
+                self.sendDevice.cmd_lora(data)
+                time .sleep(1)
                 
             except KeyboardInterrupt:
                 self.sendDevice.close()

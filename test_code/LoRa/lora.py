@@ -14,9 +14,10 @@ class lora:
 #         # LoRa設定コマンド
 #         set_mode = ['1', 'd', '15', 'e', '0001', 'f', '0001', 'g', '0002',
 #                     'l', '2', 'n', '2', 'p', '1', 'y', 'z']
-#         # LoRa設定
-#         self.sendDevice.setup_lora(set_mode)
+        # LoRa設定
+        # self.sendDevice.setup_lora()
         
     def sendData(self, datalog):
+        print(datalog)
         self.sendDevice.cmd_lora("00010002{}".format(datalog))
 #         print("send:{}".format(datalog))
