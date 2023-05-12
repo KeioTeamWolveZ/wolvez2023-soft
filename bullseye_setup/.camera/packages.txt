@@ -6,6 +6,7 @@ declare -A package_cfg_names=(
     ["imx519_kernel_driver"]="imx519_kernel_driver_links.txt"
     ["imx519_kernel_driver_low_speed"]="imx519_kernel_driver_low_speed_links.txt"
     ["64mp_pi_hawk_eye_kernel_driver"]="64mp_pi_hawk_eye_kernel_driver_links.txt"
+    ["imx708_b0311_kernel_driver"]="imx708_b0311_kernel_driver_links.txt"
     ["imx708_kernel_driver"]="imx708_kernel_driver_links.txt"
 )
 
@@ -18,5 +19,6 @@ declare -A package_cfg_download_links=(
     ["imx519_kernel_driver"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/imx519_kernel_driver_links.txt"
     ["imx519_kernel_driver_low_speed"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/imx519_kernel_driver_low_speed_links.txt"
     ["64mp_pi_hawk_eye_kernel_driver"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/64mp_pi_hawk_eye_kernel_driver_links.txt"
+    ["imx708_b0311_kernel_driver"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/imx708_b0311_kernel_driver_links.txt"
     ["imx708_kernel_driver"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/install_script/imx708_kernel_driver_links.txt"
 )
