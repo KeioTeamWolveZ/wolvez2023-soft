@@ -15,5 +15,6 @@ if __name__ == "__main__":
 	while True:
 		try:
 			sendLoRa(lr)
+			time.sleep(3)
 		except KeyboardInterrupt:
 			break
