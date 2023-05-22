@@ -58,5 +58,4 @@ sudo rfkill unblock wifi
 # reboot
 # sudo reboot
 echo -e 
-"<<設定完了のおしらせ>>\nもしかして天才？再起動したらwolvez2023_(ipの最後)で見つかるらしい\n接続先：192.168.249.1\n
-ID：wolvez2023\n pass:wolvez2023"
+"<<設定完了のおしらせ>>\nもしかして天才？再起動したらwolvez2023_(ipの最後)で見つかるらしい\n接続先：192.168.249.1\nID：wolvez2023\n pass:wolvez2023"
