@@ -15,4 +15,4 @@ AR_proto/pics/*
 *.mp4
 *.mov
 *.avi
-# *.code-workspace
+*.code-workspace
