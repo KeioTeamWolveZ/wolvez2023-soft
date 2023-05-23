@@ -2,8 +2,8 @@ from DubinsPlan import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-dubins=DubinsPath()
-dubins.dubinspath(0.0,0.0,0.0,5.0,10.0,45.0,3.0)
+# dubins=DubinsPath()
+# dubins.dubinspath(0.0,0.0,0.0,5.0,10.0,45.0,3.0)
 
 
 
@@ -29,33 +29,45 @@ def detect_target(info):
     yaws = np.rad2deg(np.arccos((y1-y2)/norm))
     dubins = DubinsPath()
     plan=dubins.dubinspath(0.0,0.0,0.0,xs,ys,yaws,0.03)
-    
+    plot_dubinspath(x1,y1,x2,y2,xs,ys)
 
     return xs,ys,yaws,plan
 
+def plot_dubinspath(x1,y1,x2,y2,xs,ys):
+    fig = plt.figure(figsize=(6,6))
+    ax = fig.add_subplot(111)
+    ax.plot(x1,y1,'.')
+    ax.plot(x2,y2,'.')
+    ax.plot(xs,ys,'*')
+    ax.plot(0,0,'s')
+    ax.set_xlim(-0.3,0.3)
+    ax.set_ylim(-0.3,0.3)
+    ax.set_aspect('equal', adjustable='box')
+    plt.show()
+
 xs,ys,yaws,plan = detect_target(AR_info)
-x1 = AR_info["1"]["x"]
-y1 = AR_info["1"]["z"]
-x2 = AR_info["2"]["x"]
-y2 = AR_info["2"]["z"]
-print(xs,ys,plan)
+# x1 = AR_info["1"]["x"]
+# y1 = AR_info["1"]["z"]
+# x2 = AR_info["2"]["x"]
+# y2 = AR_info["2"]["z"]
+# print(xs,ys,plan)
 
-fig = plt.figure(figsize=(6,6))
-ax = fig.add_subplot(111)
+# fig = plt.figure(figsize=(6,6))
+# ax = fig.add_subplot(111)
 
-ax.plot(x1,y1,'.')
-ax.plot(x2,y2,'.')
-ax.plot(xs,ys,'*')
-ax.plot(0,0,'s')
-ax.set_xlim(-0.3,0.3)
-ax.set_ylim(-0.3,0.3)
+# ax.plot(x1,y1,'.')
+# ax.plot(x2,y2,'.')
+# ax.plot(xs,ys,'*')
+# ax.plot(0,0,'s')
+# ax.set_xlim(-0.3,0.3)
+# ax.set_ylim(-0.3,0.3)
 
-#plt.xlim(0,60)
-#plt.ylim(0,60)
-ax.set_aspect('equal', adjustable='box')
+# #plt.xlim(0,60)
+# #plt.ylim(0,60)
+# ax.set_aspect('equal', adjustable='box')
 
-#dubins = DubinsPath()
-#plan=dubins.dubinspath(0.0,0.0,0.0,xs,ys,yaws,10.0)
-#print(plan)
-plt.show()
+# #dubins = DubinsPath()
+# #plan=dubins.dubinspath(0.0,0.0,0.0,xs,ys,yaws,10.0)
+# #print(plan)
+# plt.show()
 
