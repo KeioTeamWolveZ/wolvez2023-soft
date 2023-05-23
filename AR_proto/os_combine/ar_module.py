@@ -26,7 +26,7 @@ class Ar_cansat():
     """
     ## must be changed by id
 #     marker_length = 0.009 # [m]
-    marker_length = 0.0187 # [m]
+    marker_length = 0.02 # [m]
     
     def __init__(self):
         #レンズの性質などの内部パラメータ(今回はすでに行っている)

@@ -81,19 +81,19 @@ while True:
                 if plan[i][0] == "L":  # left turn
                     #print("motor left:",plan[i][1])
                     Motor2.go(70)
-                    #time.sleep(0.7)
+                    time.sleep(0.3)
                     Motor2.stop()
                 elif plan[i][0] == "S":  # Straight
                     #print("motor straight:",plan[i][1])
                     Motor2.go(70)
                     Motor1.go(70)
-                    #time.sleep(0.7)
+                    time.sleep(0.3)
                     Motor2.stop()
                     Motor1.stop()
                 elif plan[i][0] == "R":  # right turn
                     #print("motor right:",plan[i][1])
                     Motor1.go(70)
-                    #time.sleep(0.7)
+                    time.sleep(0.3)
                     Motor1.stop()
         
         vec_list = tg.find_vec(ar_info)
