@@ -7,6 +7,7 @@ import datetime
 
 # import modules
 from ar_module import Target, find_vec
+from dubins_run import Dubins_runner
 #from color_det import ColorDetection
 import libcam
 import motor
@@ -18,6 +19,7 @@ save_video = False
 # instantiate objects from classes
 tg = Target()
 pc2 = libcam.Picam()
+dub = Dubins_runner()
 #cd = ColorDetection()
 
 # GPIO.setwarnings(False)
@@ -45,7 +47,7 @@ while True:
     if ar_info :
         #print(ar_info)
         
-        if "1" in ar_info.keys():
+        if "1" in ar_info.keys() and "2" not in ar_info.keys():
             x=ar_info['1']['x']
             norm=ar_info['1']['norm']
             arg = tg.theta(ar_info)
@@ -68,11 +70,16 @@ while True:
                 #print("-0,01<x<0.01")
 #                 pass
 #             print(f'{ar_info["1"]["roll"]:.3f} | {ar_info["1"]["pitch"]:.3f} | {ar_info["1"]["yaw"]:.3f}')
-            
-        else:
-            pass
         
         if "1" in ar_info.keys() and "2" in ar_info.keys():
+            # Dubins_runner
+            # if dub.is_planning:
+            #     xs,ys,yaws,plan = dub.planner(ar_info)
+            # elif dub.is_navigation:
+            #     dub.navigator(plan)
+
+            
+            
             xs,ys,yaws,plan = detect_target(ar_info)
             #print(ar_info)
             #print(f"xs:{xs} | ys:{ys}| {yaws}")
