@@ -5,11 +5,14 @@ import sys
 import time
 import datetime
 
+# import made library
+from Wolvez_lib import ar_module, dubins_module, libcam
+
 # import modules
-from ar_module import Target, find_vec
-from dubins_run import Dubins_runner
+# from ar_module import Target, find_vec
+# from dubins_module import Dubins_runner
+# import libcam
 #from color_det import ColorDetection
-import libcam
 import motor
 import RPi.GPIO as GPIO
 from dubinspath_from_AR import detect_target
@@ -17,9 +20,9 @@ from dubinspath_from_AR import detect_target
 save_video = False
 
 # instantiate objects from classes
-tg = Target()
+tg = ar_module.Target()
 pc2 = libcam.Picam()
-dub = Dubins_runner()
+dub = dubins_module.Dubins_runner()
 #cd = ColorDetection()
 
 # GPIO.setwarnings(False)
