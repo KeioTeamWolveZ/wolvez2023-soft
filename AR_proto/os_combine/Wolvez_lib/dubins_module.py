@@ -277,7 +277,7 @@ class Dubins_runner(DubinsPath):
     dubins_state = 0
     
     def __init__(self):
-        super.__init__()
+        super().__init__()
         self.thre_const = [ct.R_THRE,ct.L_THRE,ct.S_THRE]
         self.start: int
         self.end: int
