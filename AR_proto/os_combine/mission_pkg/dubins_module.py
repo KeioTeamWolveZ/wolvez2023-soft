@@ -270,7 +270,7 @@ class DubinsPath():
         # print(plan)
         return plan
     
-class Dubins_runner(DubinsPath):
+class DubinsRunner(DubinsPath):
     global Motor1, Motor2
     is_planning = False
     is_navigation = False

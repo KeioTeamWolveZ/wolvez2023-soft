@@ -20,7 +20,7 @@ import libcam
 """
 Classes
 """
-class Ar_cansat():
+class ArCansat():
     """ Class for detect AR marker and position
 
     """
@@ -133,7 +133,7 @@ class Ar_cansat():
         return detected_img, self.ar_info
 
 
-class Target(Ar_cansat):
+class Target(ArCansat):
     def __init__(self):
         super().__init__()
         

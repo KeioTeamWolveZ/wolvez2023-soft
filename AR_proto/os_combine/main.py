@@ -5,8 +5,8 @@ import sys
 import time
 import datetime
 
-# import made library
-from Wolvez_pkg import ar_module, dubins_module, libcam
+# import made package
+from mission_pkg import *
 
 # import modules
 # from ar_module import Target, find_vec
@@ -21,8 +21,8 @@ save_video = False
 
 # instantiate objects from classes
 tg = ar_module.Target()
-pc2 = libcam.Picam()
-dub = dubins_module.Dubins_runner()
+pc2 = libcam_module.Picam()
+dub = dubins_module.DubinsRunner()
 #cd = ColorDetection()
 
 # GPIO.setwarnings(False)
@@ -75,7 +75,7 @@ while True:
 #             print(f'{ar_info["1"]["roll"]:.3f} | {ar_info["1"]["pitch"]:.3f} | {ar_info["1"]["yaw"]:.3f}')
         
         if "1" in ar_info.keys() and "2" in ar_info.keys():
-            # Dubins_runner
+            # DubinsRunner
             # if dub.is_planning:
             #     xs,ys,yaws,plan = dub.planner(ar_info)
             # elif dub.is_navigation:
