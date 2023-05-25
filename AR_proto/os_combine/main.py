@@ -6,7 +6,7 @@ import time
 import datetime
 
 # import made library
-from Wolvez_lib import ar_module, dubins_module, libcam
+from Wolvez_pkg import ar_module, dubins_module, libcam
 
 # import modules
 # from ar_module import Target, find_vec
