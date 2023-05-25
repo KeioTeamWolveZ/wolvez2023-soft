@@ -116,6 +116,7 @@ class DubinsPath():
         t = self.mod2pi(alpha - math.atan2(ca - cb, d - sa + sb) + self.mod2pi(p / 2.0))
         q = self.mod2pi(alpha - beta - t + self.mod2pi(p))
         return t, p, q, mode
+    
     def LRL(self, alpha, beta, d):
         sa = math.sin(alpha)
         sb = math.sin(beta)
@@ -278,7 +279,7 @@ class Dubins_runner(DubinsPath):
     
     def __init__(self):
         super().__init__()
-        self.thre_const = [ct.R_THRE,ct.L_THRE,ct.S_THRE]
+        self.thre_const = {"R":ct.R_THRE, "L":ct.L_THRE, "S":ct.S_THRE}
         self.start: int
         self.end: int
     
@@ -316,7 +317,7 @@ class Dubins_runner(DubinsPath):
         Motor2.stop()
 
     def get_thres(self, dubins_state):
-        self.thresholds = self.thre_const[dubins_state]*self.plan[dubins_state][1]
+        self.thresholds = self.thre_const[self.plan[dubins_state][0]]*self.plan[dubins_state][1]
     
     def get_motor_vref(self,phase):
         if phase == "L":  # left turn
