@@ -6,12 +6,13 @@ import time
 import datetime
 
 # import made package
-from mission_pkg import *
+#from mission_pkg import *
 
 # import modules
 # from ar_module import Target, find_vec
-# from dubins_module import Dubins_runner
-# import libcam
+import ar_module
+#from dubins_module import Dubins_runner
+import libcam_module
 #from color_det import ColorDetection
 import motor
 import RPi.GPIO as GPIO
@@ -22,7 +23,7 @@ save_video = True
 # instantiate objects from classes
 tg = ar_module.Target()
 pc2 = libcam_module.Picam()
-dub = dubins_module.DubinsRunner()
+#dub = dubins_module.DubinsRunner()
 #cd = ColorDetection()
 
 # GPIO.setwarnings(False)
