@@ -17,7 +17,7 @@ import motor
 import RPi.GPIO as GPIO
 from dubinspath_from_AR import detect_target
 
-save_video = False
+save_video = True
 
 # instantiate objects from classes
 tg = ar_module.Target()
@@ -74,37 +74,37 @@ while True:
 #                 pass
 #             print(f'{ar_info["1"]["roll"]:.3f} | {ar_info["1"]["pitch"]:.3f} | {ar_info["1"]["yaw"]:.3f}')
         
-        if "1" in ar_info.keys() and "2" in ar_info.keys():
-            # DubinsRunner
-            # if dub.is_planning:
-            #     xs,ys,yaws,plan = dub.planner(ar_info)
-            # elif dub.is_navigation:
-            #     dub.navigator(plan)
+        # if "1" in ar_info.keys() and "2" in ar_info.keys():
+        #     # DubinsRunner
+        #     # if dub.is_planning:
+        #     #     xs,ys,yaws,plan = dub.planner(ar_info)
+        #     # elif dub.is_navigation:
+        #     #     dub.navigator(plan)
 
             
             
-            xs,ys,yaws,plan = detect_target(ar_info)
-            #print(ar_info)
-            #print(f"xs:{xs} | ys:{ys}| {yaws}")
-            print(plan)
-            for i in [0,1,2]:
-                if plan[i][0] == "L":  # left turn
-                    #print("motor left:",plan[i][1])
-                    Motor2.go(70)
-                    time.sleep(0.3)
-                    Motor2.stop()
-                elif plan[i][0] == "S":  # Straight
-                    #print("motor straight:",plan[i][1])
-                    Motor2.go(70)
-                    Motor1.go(70)
-                    time.sleep(0.3)
-                    Motor2.stop()
-                    Motor1.stop()
-                elif plan[i][0] == "R":  # right turn
-                    #print("motor right:",plan[i][1])
-                    Motor1.go(70)
-                    time.sleep(0.3)
-                    Motor1.stop()
+        #     xs,ys,yaws,plan = detect_target(ar_info)
+        #     #print(ar_info)
+        #     #print(f"xs:{xs} | ys:{ys}| {yaws}")
+        #     print(plan)
+        #     for i in [0,1,2]:
+        #         if plan[i][0] == "L":  # left turn
+        #             #print("motor left:",plan[i][1])
+        #             Motor2.go(70)
+        #             time.sleep(0.3)
+        #             Motor2.stop()
+        #         elif plan[i][0] == "S":  # Straight
+        #             #print("motor straight:",plan[i][1])
+        #             Motor2.go(70)
+        #             Motor1.go(70)
+        #             time.sleep(0.3)
+        #             Motor2.stop()
+        #             Motor1.stop()
+        #         elif plan[i][0] == "R":  # right turn
+        #             #print("motor right:",plan[i][1])
+        #             Motor1.go(70)
+        #             time.sleep(0.3)
+        #             Motor1.stop()
         
         vec_list = tg.find_vec(ar_info)
         #print(vec_list)
