@@ -17,6 +17,7 @@ import libcam_module
 import motor
 import RPi.GPIO as GPIO
 from dubinspath_from_AR import detect_target
+from power_planner import power_planner
 
 save_video = True
 
@@ -41,7 +42,11 @@ while True:
     #rgb_info = cd.get_color_rgb(img)
     #hsv_info = cd.get_color_hsv(img)
     #print(f"\n\nRGB info : {rgb_info}\nHSV info : {hsv_info}")
-    
+
+    # 画閣内の色重心の位置から出力コマンドを決定する　plan_color = {"R":power_R,"L":power_L} で返す
+    plan_color = power_planner(img)
+    print(plan_color) 
+
     # Adding space for detected information
     img = tg.addSpace(img)
     detected_img, ar_info = tg.detect_marker(img)
