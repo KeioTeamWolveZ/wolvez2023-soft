@@ -43,10 +43,11 @@ while True:
     #hsv_info = cd.get_color_hsv(img)
     #print(f"\n\nRGB info : {rgb_info}\nHSV info : {hsv_info}")
 
-    # 画閣内の色重心の位置から出力コマンドを決定する　plan_color = {"R":power_R,"L":power_L} で返す
+    # 画閣内の色重心の位置から出力コマンドを決定する　plan_color = {"R":power_R,"L":power_L,"C":bool} で返す
     plan_color = power_planner(img)
-    print(plan_color) 
-
+    print(plan_color["C"]) 
+    Motor2.go(plan_color["R"])
+    Motor1.go(plan_color["L"])
     # Adding space for detected information
     img = tg.addSpace(img)
     detected_img, ar_info = tg.detect_marker(img)

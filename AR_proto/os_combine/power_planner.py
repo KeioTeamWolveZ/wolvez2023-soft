@@ -101,8 +101,12 @@ def power_planner(frame):
             LOW_COLOR,
             HIGH_COLOR
         )
+    aprc = False#kore basyo doko
     if pos is not None:
         power_R, power_L = power_calculation(pos,height,width)
+        if pos[2] > 7000:
+            aprc = True
+        
     else:
         power_R, power_L = 0,0
-    return {"R":power_R,"L":power_L}
+    return {"R":power_R,"L":power_L,"C":aprc}
