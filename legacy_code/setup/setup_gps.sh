@@ -10,7 +10,7 @@
 sudo sed -i "s/console=serial0,115200//g" /boot/cmdline.txt
 
 #Serial Mosuleのインストール
-sudo apt-get install python-serial -qq
+#sudo apt-get install python-serial -qq
 sudo pip3 install pyserial
 #実行権限を与える
 sudo chmod +x setup_gps.sh

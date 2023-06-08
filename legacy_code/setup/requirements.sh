@@ -1,17 +1,27 @@
 # 全てのモジュールのインストール
+# Latest update / 2023-04-28 Masato Inoue
+
+echo -e "<<CAUTION!!!!>>\nThis device will be rebooted soon\nOr CTRL+C for cancel\n\n"
+
+## libcamera
+sudo bash .camera/inst_libcamera.sh
+
 ## Opencvのインストール
-sudo bash inst_opencv.sh
+sudo bash .camera/inst_opencv_2023.sh
 
 ## Matplotlibのインストール
-sudo bash inst_matplotlib.sh
+sudo bash .required_libraries/inst_matplotlib.sh
 
-# スパースモデリング用のインストール
-pip3 install pandas
-pip3 install spm-image
-pip3 install scikit-learn
-pip3 install scipy
+## sensors
+### gps
+bash .sensors/setup_gps.sh
 
+### i2c
+bash .sensors/setup_i2c.sh
+
+# Apply all settings
+sudo reboot
 
 ## 体験型コンテンツ用のインストール
-pip3 install keyboard
-pip3 install pytk
+#pip3 install keyboard
+#pip3 install pytk
