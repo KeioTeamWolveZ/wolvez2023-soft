@@ -1,5 +1,4 @@
 import numpy as np
-import time
 
 def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, "z":7} ,"3":{"x":0, "y":0, "z":0}}) -> dict:
     
@@ -17,7 +16,6 @@ def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, 
             '''
             power_R = int(STANDARD_POWER + POWER_RANGE * distance)
             power_L = int(STANDARD_POWER - POWER_RANGE * distance)
-            time.sleep(0.3)
 
         else:
             '''
@@ -25,7 +23,6 @@ def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, 
             '''
             power_R = int(POWER_RANGE * vec(0))
             power_L = int(-1 * POWER_RANGE * vec(0))
-            time.sleep(0.3)
 
     else:
         '''
@@ -33,7 +30,6 @@ def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, 
         '''
         power_R = int(-1*STANDARD_POWER - POWER_RANGE * distance)
         power_L = int(-1*STANDARD_POWER + POWER_RANGE * distance)
-        time.sleep(0.3)
     
     return {"R":power_R,"L":power_L}
 

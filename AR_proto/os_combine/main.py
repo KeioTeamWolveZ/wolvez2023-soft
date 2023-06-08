@@ -18,6 +18,7 @@ import motor
 import RPi.GPIO as GPIO
 from dubinspath_from_AR import detect_target
 from power_planner import power_planner
+from AR_powerplanner import AR_powerplanner
 
 save_video = True
 
@@ -63,7 +64,17 @@ while True:
             arg = tg.theta(ar_info)
 #             print(norm)
             tg.get_result()
-                
+
+            AR_powerplan = AR_powerplanner(ar_info)
+
+            Motor2.go(AR_powerplan["R"])
+            Motor1.go(AR_powerplan["L"])
+            
+            time.sleep(0.3)
+
+            Motor2.stop()
+            Motor1.stop()
+
             #print(arg)
             #print(x)
 #             if arg>np.pi/20:
