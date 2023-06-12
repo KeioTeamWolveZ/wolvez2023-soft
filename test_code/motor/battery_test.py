@@ -7,6 +7,8 @@ GPIO.setwarnings(False)
 Motor1 = motor.motor(6,5,13)
 Motor2 = motor.motor(20,16,12)
 
+time.sleep(60*30)
+
 try:
     print("motor run") 
 #     Motor1.go(100)
@@ -14,10 +16,11 @@ try:
 #     Motor1.back(80)
 #     Motor2.go(80)
 #     time.sleep(0.5)
-    Motor1.go(80)
+    Motor1.go(50)
+    Motor2.go(50)
     #Motor2.back(90)
 #     time.sleep(1.08)
-    time.sleep(0.7)
+    time.sleep(60*120)
 
     #Motor.back(100)
     #time.sleep(3)
