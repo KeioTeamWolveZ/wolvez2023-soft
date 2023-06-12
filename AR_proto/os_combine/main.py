@@ -1,3 +1,4 @@
+from brack_extractor import get_color_hsv
 import numpy as np
 import cv2
 from cv2 import aruco
@@ -15,7 +16,7 @@ import ar_module
 import libcam_module
 #from color_det import ColorDetection
 import motor
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 from dubinspath_from_AR import detect_target
 from power_planner import power_planner
 from AR_powerplanner import AR_powerplanner
@@ -29,8 +30,8 @@ pc2 = libcam_module.Picam()
 #cd = ColorDetection()
 
 # GPIO.setwarnings(False)
-Motor1 = motor.motor(6,5,13)
-Motor2 = motor.motor(20,16,12)
+# Motor1 = motor.motor(6,5,13)
+# Motor2 = motor.motor(20,16,12)
 
 # setting wheather to save a video
 if save_video : pc2.setup_video("test")
@@ -47,11 +48,15 @@ while True:
     # 画閣内の色重心の位置から出力コマンドを決定する　plan_color = {"R":power_R,"L":power_L,"C":bool} で返す
     plan_color = power_planner(img)
     print(plan_color["C"]) 
-    Motor2.go(plan_color["R"])
-    Motor1.go(plan_color["L"])
+    # Motor2.go(plan_color["R"])
+    # Motor1.go(plan_color["L"])
+
+    # extract brack
+    brack_img = get_color_hsv(img)
     # Adding space for detected information
+    detected_img, ar_info = tg.detect_marker(brack_img)
     img = tg.addSpace(img)
-    detected_img, ar_info = tg.detect_marker(img)
+    
     
     pc2.show(detected_img)
     
@@ -67,13 +72,13 @@ while True:
 
             AR_powerplan = AR_powerplanner(ar_info)
 
-            Motor2.go(AR_powerplan["R"])
-            Motor1.go(AR_powerplan["L"])
+            # Motor2.go(AR_powerplan["R"])
+            # Motor1.go(AR_powerplan["L"])
             
             time.sleep(0.3)
 
-            Motor2.stop()
-            Motor1.stop()
+            # Motor2.stop()
+            # Motor1.stop()
 
             #print(arg)
             #print(x)
@@ -135,5 +140,5 @@ while True:
 
 if save_video : pc2.video.release()
 pc2.stop()
-GPIO.cleanup()
+# GPIO.cleanup()
 
