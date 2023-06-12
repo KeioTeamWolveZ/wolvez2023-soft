@@ -4,13 +4,13 @@ from cv2 import aruco
 import sys
 import time
 import datetime
-
 # import ar_module
 from vec_calc import find_vec
 import motor
 import RPi.GPIO as GPIO
 import tarvec
 from dubinspath_from_AR import detect_target
+
 
 save_video = True
 
@@ -22,6 +22,8 @@ tg = tarvec.Target()
 # GPIO.setwarnings(False)
 # Motor1 = motor.motor(6,5,13)
 Motor2 = motor.motor(20,16,12)
+
+
 
 
 
