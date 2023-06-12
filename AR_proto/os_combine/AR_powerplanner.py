@@ -1,5 +1,7 @@
 import numpy as np
 
+aprc_AR = False
+
 def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, "z":7} ,"3":{"x":0, "y":0, "z":0}}) -> dict:
     
     # 速度の設定

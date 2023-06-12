@@ -127,6 +127,7 @@ while True:
         vec_list = tg.find_vec(ar_info)
         #print(vec_list)
         
+        
     if save_video : pc2.write_video(detected_img)
 
     # time.sleep(0.1)
