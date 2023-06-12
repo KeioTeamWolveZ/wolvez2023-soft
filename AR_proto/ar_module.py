@@ -29,7 +29,7 @@ class Ar_cansat():
             self.marker_length = 0.009 # [m]
         self.cap = cv2.VideoCapture(0)
         self.video = None
-
+        self.id_size = {1:1,2:2.5,3:2.5,4:1,5:1,6:1,7:2.5,8:2.5,9:1,10:1}
     def capture(self, args):
         """
         引数0→写真
@@ -64,7 +64,7 @@ class Ar_cansat():
 
     def detect_marker(self, img):
         #使用するARマーカーのライブラリ、マーカーの大きさは不変であるため宣言しておく必要あり
-        self.ar_info = {}
+        ar_info = {}
         corners, ids, rejectedImgPoints = aruco.detectMarkers(img, self.dictionary)
         #print(ids[:][0])
         
@@ -81,12 +81,13 @@ class Ar_cansat():
             #print(ids_list)
             for k, i in enumerate(ids_list):
                 #print(i)
-                rvec, tvec, _ = aruco.estimatePoseSingleMarkers(info_loop[str(i)], self.marker_length, self.camera_matrix, self.distortion_coeff)  #マーカーごとに外部パラメータ(回転ベクトルと並進ベクトル)を算出
+                self.makersize = self.id_size[i]
+                rvec, tvec, _ = aruco.estimatePoseSingleMarkers(info_loop[str(i)], self.makersize, self.camera_matrix, self.distortion_coeff)  #マーカーごとに外部パラメータ(回転ベクトルと並進ベクトル)を算出
                 # 不要なaxisを除去
                 tvec = np.squeeze(tvec)
                 rvec = np.squeeze(rvec)
                 # calculate norm
-                self.norm_tvec = np.linalg.norm(tvec)
+                norm_tvec = np.linalg.norm(tvec)
                 # 回転ベクトルからrodorigues(回転行列)へ変換
                 rvec_matrix = cv2.Rodrigues(rvec)
                 rvec_matrix = rvec_matrix[0] # rodoriguesから抜き出し
@@ -106,12 +107,12 @@ class Ar_cansat():
                 #print("pitch: " + str(euler_angle[1]))
                 #print("yaw  : " + str(euler_angle[2]))
                 #可視化
-                draw_pole_length = self.marker_length
+                draw_pole_length = self.makersize
                 img = aruco.drawAxis(img,self.camera_matrix,self.distortion_coeff,rvec,tvec,draw_pole_length)
                 
                 
                 cv2.putText(img,
-                            text = f"id:{i} | norm:{self.norm_tvec*100:.3f} [cm]",
+                            text = f"id:{i} | norm:{norm_tvec*100:.3f} [cm]",
                             org = (640,20+k*70),
                             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                             fontScale = 0.5,
@@ -139,24 +140,23 @@ class Ar_cansat():
                 #cv2.imshow('drawDetectedMarkers', img)
                 #cv2.waitKey(0)
                 #cv2.destroyAllWindows()
-                self.ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2],'norm':self.norm_tvec}
-                # self.ar_info.append(info)
+                ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2]}
+                # ar_info.append(info)
                 
             # 可視化
             detected_img = aruco.drawDetectedMarkers(img, corners, ids, (255,0,255))
             # cv2.imwrite("detected.jpg",detected_img)
             # cv2.imwrite("axises.jpg",img)
         else:
-            detected_img, self.ar_info = img, False
-        return detected_img, self.ar_info
-
+            detected_img, ar_info = img, False
+        return detected_img, ar_info
     
     def show(self, img):
         cv2.imshow('realtime',img)
     
     def setup_video(self,name="video"):
         # 動画ファイル保存用の設定
-        fps = float(self.cap.get(cv2.CAP_PROP_FPS)) / 3                   # カメラのFPSを取得
+        fps = int(self.cap.get(cv2.CAP_PROP_FPS))                    # カメラのFPSを取得
         w = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))              # カメラの横幅を取得
         h = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))             # カメラの縦幅を取得
         fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')        # 動画保存時のfourcc設定（mp4用）
