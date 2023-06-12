@@ -12,8 +12,6 @@ import numpy as np
 STANDARD_POWER = 40
 POWER_RANGE = 10
 
-#bool値の設定
-aprc_c = False#kore basyo doko
 
 # 色の設定
 # 0 <= h <= 179 (色相)　OpenCVではmax=179なのでR:0(180),G:60,B:120となる
@@ -98,6 +96,8 @@ def power_calculation(pos,h,w):
 def power_planner(frame):
     height, width = frame.shape[:2]
 
+    aprc_clear = False #これは目標に到達できたかのbool値
+
     pos = find_specific_color(
             frame,
             AREA_RATIO_THRESHOLD,
@@ -107,9 +107,11 @@ def power_planner(frame):
     
     if pos is not None:
         power_R, power_L = power_calculation(pos,height,width)
+        detected = True
         if pos[2] > 7000:
-            aprc_c = True
+            aprc_clear = True #これは目標に到達できたかのbool値
         
     else:
         power_R, power_L = 0,0
-    return {"R":power_R,"L":power_L,"C":aprc_c}
+        detected = False
+    return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected}
