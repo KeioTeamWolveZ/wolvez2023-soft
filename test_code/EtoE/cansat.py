@@ -43,7 +43,7 @@ class Cansat():
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM) #GPIOの設定
         GPIO.setup(ct.const.FLIGHTPIN_PIN,GPIO.IN,pull_up_down=GPIO.PUD_UP) #フライトピン用。プルアップを有効化
-        GPIO.setup(ct.const.SEPARATION_PIN,GPIO.OUT) #焼き切り用のピンの設定
+        GPIO.setup(ct.const.SEPARATION_PIN1,GPIO.OUT) #焼き切り用のピンの設定
         
         # インスタンス生成用      
         self.bno055 = BNO055()
@@ -60,8 +60,6 @@ class Cansat():
         self.state = state
         self.landstate = 0
         self.camerastate = 0
-        self.camerafirst = 0
-        self.learn_state = True
         
         #初期パラメータ設定
         self.startTime_time=time.time()
@@ -70,8 +68,6 @@ class Cansat():
         self.flyingTime = 0
         self.droppingTime = 0
         self.landingTime = 0
-        self.spmfirstTime = 0
-        self.spmsecondTime = 0
         self.runningTime = 0
         self.finishTime = 0
         self.stuckTime = 0
@@ -80,19 +76,10 @@ class Cansat():
         self.gpscount=0
         self.startgps_lon=[]
         self.startgps_lat=[]
-        self.risk_list = []
-        self.risk_list_below = []
-        self.max_risk = -10000000
-        self.risk = [-100,-100,-100,-100,-100,-100]
-#         self.risk = [[0,0,0],[0,0,0]]
-        self.plan_str = "not defined"
         
         #ステート管理用変数設定
         self.countFlyLoop = 0
         self.countDropLoop = 0
-        self.learncount = 1
-        self.firstlearnimgcount = 0
-        self.firstevalimgcount = 0
         self.countstuckLoop = 0
 
         self.dict_list = {}

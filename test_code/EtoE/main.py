@@ -1,5 +1,5 @@
-#Last Update 2022/07/02
-#Author : Toshiki Fukui
+#Last Update 2023/06/13
+#Author : Masato Inoue
 
 
 import RPi.GPIO as GPIO
