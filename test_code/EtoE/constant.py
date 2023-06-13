@@ -13,6 +13,9 @@ const.LEFT_MOTOR_IN1_PIN = 20
 const.LEFT_MOTOR_IN2_PIN = 16
 const.LEFT_MOTOR_VREF_PIN = 12
 
+# Servo motor
+const.SERVO_PIN = 23
+
 # LED
 const.RED_LED_PIN =  10
 const.BLUE_LED_PIN = 9
