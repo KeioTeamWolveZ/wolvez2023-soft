@@ -35,7 +35,7 @@ class Ar_cansat():
         # マーカーの辞書選択
         self.dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
         #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
-        
+        self.id_size = {1:1,2:2.5,3:2.5,4:1,5:1,6:1,7:2.5,8:2.5,9:1,10:1}
     def addSpace(self,img):
         white=[255,255,255]
         
@@ -63,7 +63,8 @@ class Ar_cansat():
             #print(ids_list)
             for k, i in enumerate(ids_list):
                 #print(i)
-                rvec, tvec, _ = aruco.estimatePoseSingleMarkers(info_loop[str(i)], self.marker_length, self.camera_matrix, self.distortion_coeff)  #マーカーごとに外部パラメータ(回転ベクトルと並進ベクトル)を算出
+                makersize = self.id_size[i]
+                rvec, tvec, _ = aruco.estimatePoseSingleMarkers(info_loop[str(i)], makersize, self.camera_matrix, self.distortion_coeff)  #マーカーごとに外部パラメータ(回転ベクトルと並進ベクトル)を算出
                 # 不要なaxisを除去
                 tvec = np.squeeze(tvec)
                 rvec = np.squeeze(rvec)
