@@ -4,6 +4,8 @@ import time
 
 GPIO.setmode(GPIO.BCM)
 
+mode = GPIO.getmode()
+print(mode)
 
 servo_pin = 23
 GPIO.setup(servo_pin, GPIO.OUT)
