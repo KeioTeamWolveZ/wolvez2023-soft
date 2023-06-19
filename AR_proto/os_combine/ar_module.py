@@ -35,16 +35,50 @@ class Ar_cansat():
         # マーカーの辞書選択
         self.dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
         #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
-        self.id_size = {1:1,2:2.5,3:2.5,4:1,5:1,6:1,7:2.5,8:2.5,9:1,10:1}
-
+        self.id_size = {1:0.01,2:0.025,3:0.025,4:0.01,5:0.01,6:0.01,7:0.025,8:0.025,9:0.01,10:0.01}
+        self.debug_mode = False
+        
     def addSpace(self,img):
+        self.debug_mode = True
         white=[255,255,255]
         
         height,width,channels=img.shape
         
         output_img = cv2.copyMakeBorder(img,0,0,0,300,cv2.BORDER_CONSTANT,value=white)
         return output_img
-
+    
+    def show_info(self,img, i, k, norm_tvec,tvec,rvec,camera_matrix,distortion_coeff,draw_pole_length, corners, ids):
+        img = aruco.drawAxis(img,self.camera_matrix,self.distortion_coeff,rvec,tvec,draw_pole_length)
+        cv2.putText(img,
+                    text = f"id:{i} | norm:{norm_tvec*100:.3f} [cm]",
+                    org = (640,20+k*70),
+                    fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale = 0.5,
+                    thickness = 1,
+                    color=(0,0,0),
+                    lineType=cv2.LINE_4)
+        
+        cv2.putText(img,
+                    text = f"    x:{str(round(tvec[0]*100,2))} | y:{str(round(tvec[1]*100,2))} | z:{str(round(tvec[2]*100,2))}",
+                    org = (640,40+k*70),
+                    fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale = 0.5,
+                    thickness = 1,
+                    color=(0,0,0),
+                    lineType=cv2.LINE_4)
+        
+        cv2.putText(img,
+                    text = f"    roll:{str(round(rvec[0],2))} | pitch:{str(round(rvec[1],2))} | yaw:{str(round(rvec[2],2))}",
+                    org = (640,60+k*70),
+                    fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale = 0.5,
+                    thickness = 1,
+                    color=(0,0,0),
+                    lineType=cv2.LINE_4)
+        # 可視化
+        detected_img = aruco.drawDetectedMarkers(img, corners, ids, (255,0,255))
+        return detected_img
+        
     def detect_marker(self, img):
         #使用するARマーカーのライブラリ、マーカーの大きさは不変であるため宣言しておく必要あり
         self.ar_info = {}
@@ -91,9 +125,13 @@ class Ar_cansat():
                 #print("yaw  : " + str(euler_angle[2]))
                 #可視化
                 draw_pole_length = self.marker_length
-                img = aruco.drawAxis(img,self.camera_matrix,self.distortion_coeff,rvec,tvec,draw_pole_length)
+                #img = aruco.drawAxis(img,self.camera_matrix,self.distortion_coeff,rvec,tvec,draw_pole_length)
                 
-                
+                # show ar_info
+                if self.debug_mode:
+                    img = self.show_info(img, i, k, self.norm_tvec,tvec,rvec,self.camera_matrix,self.distortion_coeff,draw_pole_length,corners,ids)
+        
+                """
                 cv2.putText(img,
                             text = f"id:{i} | norm:{self.norm_tvec*100:.3f} [cm]",
                             org = (640,20+k*70),
@@ -119,20 +157,20 @@ class Ar_cansat():
                             fontScale = 0.5,
                             thickness = 1,
                             color=(0,0,0),
-                            lineType=cv2.LINE_4)
+                            lineType=cv2.LINE_4)"""
+                            
                 #cv2.imshow('drawDetectedMarkers', img)
                 #cv2.waitKey(0)
                 #cv2.destroyAllWindows()
                 self.ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2],'norm':self.norm_tvec}
                 # self.ar_info.append(info)
                 
-            # 可視化
-            detected_img = aruco.drawDetectedMarkers(img, corners, ids, (255,0,255))
+            
             # cv2.imwrite("detected.jpg",detected_img)
             # cv2.imwrite("axises.jpg",img)
         else:
-            detected_img, self.ar_info = img, False
-        return detected_img, self.ar_info
+            img, self.ar_info = img, False
+        return img, self.ar_info
 
 
 class Target(Ar_cansat):

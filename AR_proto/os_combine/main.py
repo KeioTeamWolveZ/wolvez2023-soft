@@ -19,7 +19,7 @@ import RPi.GPIO as GPIO
 from dubinspath_from_AR import detect_target
 from power_planner import power_planner
 from AR_powerplanner import AR_powerplanner
-from brack_extractor import get_color_hsv
+from black_extractor import get_color_hsv
 
 save_video = True
 
@@ -39,6 +39,9 @@ if save_video : pc2.setup_video("test")
 #色認識のbool値
 aprc_c = True
 
+#sousitu count
+c=0
+
 # Main loop
 while True:
     # capture and detect markers
@@ -50,17 +53,17 @@ while True:
 
 
     # extract brack
-    brack_img = get_color_hsv(img)
-
-    detected_img, ar_info = tg.detect_marker(brack_img)
+    black_img = get_color_hsv(img)
     # Adding space for detected information
-    img = tg.addSpace(img)
-    pc2.show(detected_img)
+    # img = tg.addSpace(img)
+    detected_img, ar_info = tg.detect_marker(img)
+    #img = tg.addSpace(img)
+    pc2.show(img)
     
     if ar_info :
-        #print(ar_info)
+        print(ar_info)
         
-        if "1" in ar_info.keys() and "2" not in ar_info.keys():
+        if "1" in ar_info.keys() and "2" in ar_info.keys():
             c = 0 #喪失カウントをリセット
             x=ar_info['1']['x']
             norm=ar_info['1']['norm']
@@ -72,6 +75,8 @@ while True:
             aprc_c = AR_powerplan["C"] #アプローチの仕方のbool
             Motor2.go(AR_powerplan["R"])
             Motor1.go(AR_powerplan["L"])
+            print(f"AR detected") 
+            print("R:",AR_powerplan["R"],"L:",AR_powerplan["R"]) 
             
             time.sleep(0.3)
 
@@ -134,18 +139,21 @@ while True:
         if aprc_c : #色認識による出力決定するかどうか
             # 画閣内の色重心の位置から出力コマンドを決定する　plan_color = {"R":power_R,"L":power_L,"Clear":bool} で返す
             plan_color = power_planner(img)
-            print(plan_color["C"]) 
+            # print(plan_color["C"]) 
             if plan_color["Detected_tf"]:
                 c = 0 #喪失カウントをリセット
                 Motor2.go(plan_color["R"])
                 Motor1.go(plan_color["L"])
+                print("detected color")
+                print("R:",plan_color["R"],"L:",plan_color["L"]) 
             else :
                 if c > 10:
-                    Motor2.go(60)#旋回用
-                    Motor1.go(60)
+                    Motor2.go(40)#旋回用
+                    # Motor1.go(60)
                     time.sleep(0.3)
                     Motor2.stop()
                     Motor1.stop()
+                    print("rotation") 
                 c += 1
             
 
