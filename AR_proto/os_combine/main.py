@@ -19,6 +19,7 @@ import RPi.GPIO as GPIO
 from dubinspath_from_AR import detect_target
 from power_planner import power_planner
 from AR_powerplanner import AR_powerplanner
+from brack_extractor import get_color_hsv
 
 save_video = True
 
@@ -46,10 +47,14 @@ while True:
     #hsv_info = cd.get_color_hsv(img)
     #print(f"\n\nRGB info : {rgb_info}\nHSV info : {hsv_info}")
     
+
+
+    # extract brack
+    brack_img = get_color_hsv(img)
+
+    detected_img, ar_info = tg.detect_marker(brack_img)
     # Adding space for detected information
     img = tg.addSpace(img)
-    detected_img, ar_info = tg.detect_marker(img)
-    
     pc2.show(detected_img)
     
     if ar_info :
