@@ -39,9 +39,10 @@ class LoraSettingClass:
 
     def setup_lora(self, set_mode=''):
         # LoRa(ES920LR)設定
-        print("setting up lora")
+        print("setting up lora dayo")
         self.set_mode = set_mode
         # LoRa(ES9320LR)起動待機
+        print(serial_device)
         while self.device.inWaiting() > 0:
             try:
                 line = self.device.readline()
