@@ -27,7 +27,9 @@ from motor import motor
 from gps import GPS
 from lora import lora
 from led import led
+from arm import Arm
 from ar_module import Target
+from libcam_module import Picam
 
 """
 ステート説明
@@ -58,7 +60,9 @@ class Cansat():
         self.MotorL = motor(ct.const.LEFT_MOTOR_IN1_PIN,ct.const.LEFT_MOTOR_IN2_PIN, ct.const.LEFT_MOTOR_VREF_PIN)
         self.gps = GPS()
         self.lora = lora()
+        self.arm = Arm(ct.const.SERVO_PIN)
         self.tg = Target()
+        self.pc2 = Picam()
         self.RED_LED = led(ct.const.RED_LED_PIN)
         self.BLUE_LED = led(ct.const.BLUE_LED_PIN)
         self.GREEN_LED = led(ct.const.GREEN_LED_PIN)
@@ -76,6 +80,8 @@ class Cansat():
         self.flyingTime = 0
         self.droppingTime = 0
         self.landingTime = 0
+        self.arm_calibTime = 0
+        self.arm_calibCount = 0
         self.runningTime = 0
         self.finishTime = 0
         self.stuckTime = 0
@@ -281,12 +287,27 @@ class Cansat():
                 if time.time()-self.landingTime > ct.const.SEPARATION_TIME_THRE:
                     GPIO.output(ct.const.SEPARATION_PIN,0) #焼き切りが危ないのでlowにしておく
                     self.landstate = 1
-                    self.arm_calibTime = time.time()
-                    self.pre_motorTime = time.time()
             
             elif self.landstate == 1: #アームのキャリブレーション
+                if self.arm_calibTime == 0:
+                    self.arm.down()
+                    self.arm_calibTime = time.time()
+
                 if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
-                    self.tg
+                    self.img = self.pc2.capture(1)
+                    self.img = self.tg.addSpace(self.img)
+                    detected_img, ar_info = self.tg.detect_marker(self.img)
+                else:
+                    self.landstate = 2
+                    print("\nThe arm was not calibrated")
+                    self.pre_motorTime = time.time()
+
+                if "1" in ar_info.keys():
+                    if ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.1:
+                        self.buff = 0.2
+                    elif ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.1:
+                        self.buff = -0.2
+                    else:
             
             #パラシュートの色を検知して離脱
             elif self.landstate == 2:
