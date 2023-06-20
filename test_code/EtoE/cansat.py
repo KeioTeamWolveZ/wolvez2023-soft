@@ -21,20 +21,27 @@ from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 from first_spm import IntoWindow, LearnDict, EvaluateImg
 from second_spm import SPM2Open_npz,SPM2Learn,SPM2Evaluate
 
+import constant as ct
 from bno055 import BNO055
 from motor import motor
 from gps import GPS
 from lora import lora
 from led import led
-import constant as ct
+from ar_module import Target
 
 """
 ステート説明
-0. preparing()  準備ステート。センサ系の準備。一定時間以上経過したらステート移行。
-1. flying()     放出準備ステート。フライトピンが接続されている状態（＝ボイド缶に収納されている）。フライトピンが外れたらステート移行。
-2. droping()    降下&着陸判定ステート。加速度センサの値が一定値以下の状態が一定時間続いたら着陸と判定しステート移行。
-3. landing()    分離ステート。分離シートの焼ききりによる分離、モータ回転による分離シートからの離脱を行ったらステート移行。
-7. finish()     終了ステート
+
+0. preparing()        準備ステート．センサ系の準備．一定時間以上経過したらステート移行．
+1. flying()           放出準備ステート．フライトピンが接続されている状態（＝ボイド缶に収納されている）．フライトピンが外れたらステート移行．
+2. droping()          降下&着陸判定ステート．加速度センサの値が一定値以下の状態が一定時間続いたら着陸と判定しステート移行．
+3. landing()          分離ステート．分離シートの焼ききりによる分離，モータ回転による分離シートからの離脱を行ったらステート移行．
+4. first_releasing()  電池モジュール放出ステート．モジュール放出のための焼き切りのあと，二つ目のモジュール放出のために一定時間走行したらステート移行．
+5. second_releasing() 電力消費モジュール放出ステート．モジュール放出のための焼き切りのあと，右旋回をおこなってモジュールを横からみられる位置に移動したらステート移行．
+6. connecting()       モジュール接続ステート．電池モジュールに接近・把持を行った後，電力消費モジュールに接近・接続を行い，接続を確認してステート移行．
+7. running()          ランバックステート．能代大会ミッション部門では使用しない．ARLISSにおいて，ゴール地点を目指して走行する．ゴールを判定したら走行を終了してステート移行．
+8. finish()           終了ステート．
+
 """
 
 class Cansat():
@@ -51,6 +58,7 @@ class Cansat():
         self.MotorL = motor(ct.const.LEFT_MOTOR_IN1_PIN,ct.const.LEFT_MOTOR_IN2_PIN, ct.const.LEFT_MOTOR_VREF_PIN)
         self.gps = GPS()
         self.lora = lora()
+        self.tg = Target()
         self.RED_LED = led(ct.const.RED_LED_PIN)
         self.BLUE_LED = led(ct.const.BLUE_LED_PIN)
         self.GREEN_LED = led(ct.const.GREEN_LED_PIN)
@@ -163,7 +171,7 @@ class Cansat():
 
 
     def sequence(self):
-        if self.state == 0: #センサ系の準備を行う段階。時間経過でステート移行
+        if self.state == 0:   #センサ系の準備を行う段階。時間経過でステート移行
             self.preparing()
         elif self.state == 1: #放出を検知する段階。フライトピンが抜けたらステート移行
             self.flying()
@@ -171,7 +179,15 @@ class Cansat():
             self.dropping()
         elif self.state == 3: #焼き切り&パラシュートから離脱したらステート移行
             self.landing()
-        elif self.state == 7:#終了
+        elif self.state == 4: #電池モジュール焼き切り&一定時間走行したらステート移行
+            self.first_releasing()
+        elif self.state == 5: #電力消費モジュール焼き切り&旋回したらステート移行
+            self.second_releasing()
+        elif self.state == 6: #モジュールの接続段階．接近・把持・接近・接続・接続確認を終えたらステート移行
+            self.connecting()
+        elif self.state == 7: #ARLISS用のランバックステート．ゴール座標を目指して命絶えるまで爆走する．「ゴールに到達できれば」ステート移行
+            self.running()
+        elif self.state == 8: #終了
             self.finish()
         else:
             self.state = self.laststate #どこにも引っかからない場合何かがおかしいのでlaststateに戻してあげる
@@ -251,7 +267,7 @@ class Cansat():
         else:
             self.countDropLoop = 0 #初期化の必要あり
 
-    def landing(self): #着陸判定ステート。焼き切り&分離シートからの離脱が必要
+    def landing(self): #着陸判定ステート。焼き切り&分離シートからの離脱が必要 -> パラシュートが検知された場合にはよける
         if self.landingTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
             self.landingTime = time.time()
             self.RED_LED.led_off()
@@ -265,10 +281,15 @@ class Cansat():
                 if time.time()-self.landingTime > ct.const.SEPARATION_TIME_THRE:
                     GPIO.output(ct.const.SEPARATION_PIN,0) #焼き切りが危ないのでlowにしておく
                     self.landstate = 1
+                    self.arm_calibTime = time.time()
                     self.pre_motorTime = time.time()
             
-            #分離シート離脱
-            elif self.landstate == 1:
+            elif self.landstate == 1: #アームのキャリブレーション
+                if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
+                    self.tg
+            
+            #パラシュートの色を検知して離脱
+            elif self.landstate == 2:
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
 
