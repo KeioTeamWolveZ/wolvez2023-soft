@@ -303,11 +303,16 @@ class Cansat():
                     self.pre_motorTime = time.time()
 
                 if "1" in ar_info.keys():
-                    if ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.1:
+                    if ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.5:
                         self.buff = 0.2
-                    elif ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.1:
+                    elif ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.5:
                         self.buff = -0.2
                     else:
+                        self.arm_calibCount += 1
+                
+                if self.arm_calibCount >= 10:
+                    self.landstate = 2
+                    self.pre_motorTime = time.time()
             
             #パラシュートの色を検知して離脱
             elif self.landstate == 2:

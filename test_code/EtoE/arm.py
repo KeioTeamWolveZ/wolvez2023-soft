@@ -2,6 +2,8 @@ import RPi.GPIO as GPIO
 import sys
 import time
 
+# 2.5 ~ 12
+
 class Arm():
 	def __init__(self,servo_pin):
 		GPIO.setmode(GPIO.BCM)
@@ -11,10 +13,10 @@ class Arm():
 		self.pwm.start(0)
 
 	def up(self,buff=0):
-		self.pwm.ChangeDutyCycle(12+buff)
+		self.pwm.ChangeDutyCycle(6+buff)
 	
 	def down(self,buff=0):
-		self.pwm.ChangeDutyCycle(2.5+buff)
+		self.pwm.ChangeDutyCycle(5+buff)
 
 	def move(self,ref):
 		self.pwm.ChangeDutyCycle(ref)
