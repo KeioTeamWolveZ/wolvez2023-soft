@@ -316,6 +316,7 @@ class Cansat():
             
             #パラシュートの色を検知して離脱
             elif self.landstate == 2:
+                self.img = self.pc2.capture(1)
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
 
