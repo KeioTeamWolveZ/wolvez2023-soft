@@ -30,6 +30,7 @@ from led import led
 from arm import Arm
 from ar_module import Target
 from libcam_module import Picam
+from power_planner import MotorPowerPlanner
 
 """
 ステート説明
@@ -63,6 +64,7 @@ class Cansat():
         self.arm = Arm(ct.const.SERVO_PIN)
         self.tg = Target()
         self.pc2 = Picam()
+        self.mpp = MotorPowerPlanner()
         self.RED_LED = led(ct.const.RED_LED_PIN)
         self.BLUE_LED = led(ct.const.BLUE_LED_PIN)
         self.GREEN_LED = led(ct.const.GREEN_LED_PIN)
@@ -82,6 +84,9 @@ class Cansat():
         self.landingTime = 0
         self.arm_calibTime = 0
         self.arm_calibCount = 0
+        self.avoid_paraCount = 0
+        self.modu_sepaTime = 0
+        self.releasingstate = 0
         self.runningTime = 0
         self.finishTime = 0
         self.stuckTime = 0
@@ -283,51 +288,123 @@ class Cansat():
         if not self.landingTime == 0:
             #焼き切りによるパラ分離
             if self.landstate == 0:
-                GPIO.output(ct.const.SEPARATION_PIN,1) #電圧をHIGHにして焼き切りを行う
+                GPIO.output(ct.const.SEPARATION_PARA,1) #電圧をHIGHにして焼き切りを行う
                 if time.time()-self.landingTime > ct.const.SEPARATION_TIME_THRE:
-                    GPIO.output(ct.const.SEPARATION_PIN,0) #焼き切りが危ないのでlowにしておく
+                    GPIO.output(ct.const.SEPARATION_PARA,0) #焼き切りが危ないのでlowにしておく
                     self.landstate = 1
             
-            elif self.landstate == 1: #アームのキャリブレーション
-                if self.arm_calibTime == 0:
-                    self.arm.down()
-                    self.arm_calibTime = time.time()
+        if self.landstate == 1: #アームのキャリブレーション
+            if self.arm_calibTime == 0:
+                self.arm.down()
+                self.arm_calibTime = time.time()
 
-                if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
-                    self.img = self.pc2.capture(1)
-                    self.img = self.tg.addSpace(self.img)
-                    detected_img, ar_info = self.tg.detect_marker(self.img)
-                else:
-                    self.landstate = 2
-                    print("\nThe arm was not calibrated")
-                    self.pre_motorTime = time.time()
-
-                if "1" in ar_info.keys():
-                    if ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.5:
-                        self.buff = 0.2
-                    elif ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.5:
-                        self.buff = -0.2
-                    else:
-                        self.arm_calibCount += 1
-                
-                if self.arm_calibCount >= 10:
-                    self.landstate = 2
-                    self.pre_motorTime = time.time()
-            
-            #パラシュートの色を検知して離脱
-            elif self.landstate == 2:
+            if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
                 self.img = self.pc2.capture(1)
+                self.img = self.tg.addSpace(self.img)
+                detected_img, ar_info = self.tg.detect_marker(self.img)
+            else:
+                self.landstate = 2
+                print("\nThe arm was not calibrated")
+                self.pre_motorTime = time.time()
+
+            if "1" in ar_info.keys():
+                if ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.5:
+                    self.buff = 0.2
+                elif ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.5:
+                    self.buff = -0.2
+                else:
+                    self.arm_calibCount += 1
+            
+            if self.arm_calibCount >= 10:
+                self.landstate = 2
+        
+        #パラシュートの色を検知して離脱
+        elif self.landstate == 2:
+            if self.avoid_paraCount < ct.const.AVOID_COLOR_THRE:
+                self.img = self.pc2.capture(1)
+                self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
+                if self.found_color[0]:
+                    self.MotorR.stop()
+                    self.MotorL.stop()
+                    self.avoid_paraCount += 1
+                else:
+                    self.MotorR.go(self.found_color[1])
+                    self.MotorL.go(self.found_color[2])
+            
+            if self.avoid_paraCount == ct.const.AVOID_COLOR_THRE:
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
+                self.pre_motorTime = time.time()
 
                 self.stuck_detection()
 
+            elif self.avoid_paraCount > ct.const.AVOID_COLOR_THRE:
                 if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #5秒間モータ回して分離シートから十分離れる
                     self.MotorR.stop()
                     self.MotorL.stop()
                     self.state = 4
                     self.laststate = 4
   
+    def first_releasing(self):
+        if self.modu_sepaTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
+            self.modu_sepaTime = time.time()
+            self.RED_LED.led_on()
+            self.BLUE_LED.led_off()
+            self.GREEN_LED.led_on()
+            
+        if not self.modu_sepaTime == 0:
+            #焼き切りによるパラ分離
+            if self.releasingstate == 0:
+                GPIO.output(ct.const.SEPARATION_MOD1,1) #電圧をHIGHにして焼き切りを行う
+                if time.time()-self.modu_sepaTime > ct.const.SEPARATION_TIME_THRE:
+                    GPIO.output(ct.const.SEPARATION_MOD1,0) #焼き切りが危ないのでlowにしておく
+                    self.releasingstate = 1
+        
+        if self.releasingstate == 1:
+            self.MotorR.go(ct.const.RELEASING_MOTOR_VREF)
+            self.MotorL.go(ct.const.RELEASING_MOTOR_VREF)
+            self.pre_motorTime = time.time()
+            self.releasingstate = 2
+        
+        if self.releasingstate == 2:
+            if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #5秒間モータ回して分離シートから十分離れる
+                    self.MotorR.stop()
+                    self.MotorL.stop()
+                    self.modu_sepaTime = 0
+                    self.releasingstate = 0
+                    self.state = 5
+                    self.laststate = 5
+    
+    def second_releasingstate(self):
+        if self.modu_sepaTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
+            self.modu_sepaTime = time.time()
+            self.RED_LED.led_on()
+            self.BLUE_LED.led_on()
+            self.GREEN_LED.led_on()
+            
+        if not self.modu_sepaTime == 0:
+            #焼き切りによるパラ分離
+            if self.releasingstate == 0:
+                GPIO.output(ct.const.SEPARATION_MOD2,1) #電圧をHIGHにして焼き切りを行う
+                if time.time()-self.modu_sepaTime > ct.const.SEPARATION_TIME_THRE:
+                    GPIO.output(ct.const.SEPARATION_MOD2,0) #焼き切りが危ないのでlowにしておく
+                    self.releasingstate = 1
+        
+        if self.releasingstate == 1:
+            self.MotorR.go(ct.const.RELEASING_MOTOR_VREF)
+            self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
+            self.pre_motorTime = time.time()
+            self.releasingstate = 2
+        
+        if self.releasingstate == 2:
+            if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #5秒間モータ回して分離シートから十分離れる
+                    self.MotorR.stop()
+                    self.MotorL.stop()
+                    self.modu_sepaTime = 0
+                    self.releasingstate = 0
+                    self.state = 6
+                    self.laststate = 6
+
     def finish(self):
         if self.finishTime == 0:
             self.finishTime = time.time()
