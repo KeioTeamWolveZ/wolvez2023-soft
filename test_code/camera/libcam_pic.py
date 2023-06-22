@@ -6,7 +6,7 @@ import cv2
 
 # image without any setting and cv2
 picam2 = Picamera2()
-picam2.start_and_capture_file("test.jpg")
+picam2.start_and_capture_file("pic_exam.jpg")
 picam2.stop()
 cv2.destroyAllWindows()
 

@@ -7,6 +7,7 @@ class LoraRecvClass:
 
     def __init__(self, lora_device, channel):
         self.recvDevice = lora_setting.LoraSettingClass(lora_device)
+        self.lora_device=lora_device
         self.channel = channel
 
     # ES920LRデータ受信メソッド
