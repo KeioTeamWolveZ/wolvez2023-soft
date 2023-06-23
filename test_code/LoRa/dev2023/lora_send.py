@@ -13,7 +13,7 @@ class LoraSendClass:
     # ES920LRデータ送信メソッド
     def lora_send(self):
         # LoRa初期化
-#         self.sendDevice.reset_lora()
+        self.sendDevice.reset_lora()
         # LoRa設定コマンド
         set_mode = ['1', 'd', self.channel, 'e', '0001', 'f', '0002', 'g', '0001',
                     'n', '2', 'l', '2', 'p', '1', 'y', 'z']
