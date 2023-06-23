@@ -94,6 +94,12 @@ def power_calculation(pos,h,w):
 """
 
 def power_planner(frame):
+    """
+    arg:
+        frame
+    return:
+        {"R":power_R,"L":power_L,"Clear":bool} 
+    """
     height, width = frame.shape[:2]
 
     aprc_clear = False #これは目標に到達できたかのbool値

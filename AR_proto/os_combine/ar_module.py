@@ -169,7 +169,9 @@ class Ar_cansat():
             # cv2.imwrite("detected.jpg",detected_img)
             # cv2.imwrite("axises.jpg",img)
         else:
-            img, self.ar_info = img, False
+            # img, self.ar_info = img, False # False -> {}
+            img, self.ar_info = img, {}
+
         return img, self.ar_info
 
 

@@ -49,9 +49,6 @@ while True:
     #rgb_info = cd.get_color_rgb(img)
     #hsv_info = cd.get_color_hsv(img)
     #print(f"\n\nRGB info : {rgb_info}\nHSV info : {hsv_info}")
-    
-
-
     # extract brack
     black_img = get_color_hsv(img)
     # Adding space for detected information
@@ -59,108 +56,145 @@ while True:
     detected_img, ar_info = tg.detect_marker(img)
     #img = tg.addSpace(img)
     pc2.show(img)
-    
-    if ar_info :
-        print(ar_info)
-        
-        if "1" in ar_info.keys() and "2" in ar_info.keys():
-            c = 0 #喪失カウントをリセット
-            x=ar_info['1']['x']
-            norm=ar_info['1']['norm']
-            arg = tg.theta(ar_info)
-#             print(norm)
-            tg.get_result()
 
-            AR_powerplan = AR_powerplanner(ar_info)
-            aprc_c = AR_powerplan["C"] #アプローチの仕方のbool
-            Motor2.go(AR_powerplan["R"])
-            Motor1.go(AR_powerplan["L"])
-            print(f"AR detected") 
-            print("R:",AR_powerplan["R"],"L:",AR_powerplan["R"]) 
-            
-            time.sleep(0.3)
-
-            Motor2.stop()
-            Motor1.stop()
-
-            #print(arg)
-            #print(x)
-#             if arg>np.pi/20:
-#                 Motor2.go(70)
-#                 time.sleep(0.02)
-#                 Motor2.stop()
-#                 time.sleep(0.5)
-#             elif arg<-np.pi/20:
-#                 Motor2.back(70)
-#                 time.sleep(0.02)
-#                 Motor2.stop()
-#                 time.sleep(0.5)
-#             else:
-                #print("-0,01<x<0.01")
-#                 pass
-#             print(f'{ar_info["1"]["roll"]:.3f} | {ar_info["1"]["pitch"]:.3f} | {ar_info["1"]["yaw"]:.3f}')
-        
-        # if "1" in ar_info.keys() and "2" in ar_info.keys():
-        #     # DubinsRunner
-        #     # if dub.is_planning:
-        #     #     xs,ys,yaws,plan = dub.planner(ar_info)
-        #     # elif dub.is_navigation:
-        #     #     dub.navigator(plan)
-
-            
-            
-        #     xs,ys,yaws,plan = detect_target(ar_info)
-        #     #print(ar_info)
-        #     #print(f"xs:{xs} | ys:{ys}| {yaws}")
-        #     print(plan)
-        #     for i in [0,1,2]:
-        #         if plan[i][0] == "L":  # left turn
-        #             #print("motor left:",plan[i][1])
-        #             Motor2.go(70)
-        #             time.sleep(0.3)
-        #             Motor2.stop()
-        #         elif plan[i][0] == "S":  # Straight
-        #             #print("motor straight:",plan[i][1])
-        #             Motor2.go(70)
-        #             Motor1.go(70)
-        #             time.sleep(0.3)
-        #             Motor2.stop()
-        #             Motor1.stop()
-        #         elif plan[i][0] == "R":  # right turn
-        #             #print("motor right:",plan[i][1])
-        #             Motor1.go(70)
-        #             time.sleep(0.3)
-        #             Motor1.stop()
-        
-        vec_list = tg.find_vec(ar_info)
-        #print(vec_list)
+    if "1" in ar_info.keys() and "2" in ar_info.keys():
+        c = 0 #喪失カウントをリセット
+        x = ar_info['1']['x'] 
+        norm = ar_info['1']['norm']
+        arg = tg.theta(ar_info)
+        AR_powerplan = AR_powerplanner(ar_info)
+        aprc_c = AR_powerplan["C"] #アプローチの仕方のbool
+        # Motor2.go(AR_powerplan["R"])
+        # Motor1.go(AR_powerplan["L"])
+        time.sleep(0.1)
+        print("R:",plan_color["R"],"L:",plan_color["L"]) 
+        # Motor2.stop()
+        # Motor1.stop()
     
     else:
         if aprc_c : #色認識による出力決定するかどうか
-            # 画閣内の色重心の位置から出力コマンドを決定する　plan_color = {"R":power_R,"L":power_L,"Clear":bool} で返す
+            
             plan_color = power_planner(img)
-            # print(plan_color["C"]) 
             if plan_color["Detected_tf"]:
                 c = 0 #喪失カウントをリセット
-                Motor2.go(plan_color["R"])
-                Motor1.go(plan_color["L"])
-                print("detected color")
+                # Motor2.go(plan_color["R"])
+                # Motor1.go(plan_color["L"])
+                # print("detected color")
                 print("R:",plan_color["R"],"L:",plan_color["L"]) 
             else :
                 if c > 10:
-                    Motor2.go(40)#旋回用
-                    # Motor1.go(60)
+                    # Motor2.go(40) #旋回用
                     time.sleep(0.3)
-                    Motor2.stop()
-                    Motor1.stop()
-                    print("rotation") 
+                    # Motor2.stop()
+                    # Motor1.stop()
                 c += 1
-            
-
         else:
             if c > 10:
                 aprc_c = True #色認識をさせる
             c += 1
+
+
+#     if ar_info :
+#         print(ar_info)
+        
+#         if "1" in ar_info.keys() and "2" in ar_info.keys():
+#             c = 0 #喪失カウントをリセット
+#             x=ar_info['1']['x']
+#             norm=ar_info['1']['norm']
+#             arg = tg.theta(ar_info)
+# #             print(norm)
+#             tg.get_result()
+
+#             AR_powerplan = AR_powerplanner(ar_info)
+#             aprc_c = AR_powerplan["C"] #アプローチの仕方のbool
+#             Motor2.go(AR_powerplan["R"])
+#             Motor1.go(AR_powerplan["L"])
+#             print(f"AR detected") 
+#             print("R:",AR_powerplan["R"],"L:",AR_powerplan["R"]) 
+            
+#             time.sleep(0.3)
+
+#             Motor2.stop()
+#             Motor1.stop()
+
+#             #print(arg)
+#             #print(x)
+# #             if arg>np.pi/20:
+# #                 Motor2.go(70)
+# #                 time.sleep(0.02)
+# #                 Motor2.stop()
+# #                 time.sleep(0.5)
+# #             elif arg<-np.pi/20:
+# #                 Motor2.back(70)
+# #                 time.sleep(0.02)
+# #                 Motor2.stop()
+# #                 time.sleep(0.5)
+# #             else:
+#                 #print("-0,01<x<0.01")
+# #                 pass
+# #             print(f'{ar_info["1"]["roll"]:.3f} | {ar_info["1"]["pitch"]:.3f} | {ar_info["1"]["yaw"]:.3f}')
+        
+#         # if "1" in ar_info.keys() and "2" in ar_info.keys():
+#         #     # DubinsRunner
+#         #     # if dub.is_planning:
+#         #     #     xs,ys,yaws,plan = dub.planner(ar_info)
+#         #     # elif dub.is_navigation:
+#         #     #     dub.navigator(plan)
+
+            
+            
+#         #     xs,ys,yaws,plan = detect_target(ar_info)
+#         #     #print(ar_info)
+#         #     #print(f"xs:{xs} | ys:{ys}| {yaws}")
+#         #     print(plan)
+#         #     for i in [0,1,2]:
+#         #         if plan[i][0] == "L":  # left turn
+#         #             #print("motor left:",plan[i][1])
+#         #             Motor2.go(70)
+#         #             time.sleep(0.3)
+#         #             Motor2.stop()
+#         #         elif plan[i][0] == "S":  # Straight
+#         #             #print("motor straight:",plan[i][1])
+#         #             Motor2.go(70)
+#         #             Motor1.go(70)
+#         #             time.sleep(0.3)
+#         #             Motor2.stop()
+#         #             Motor1.stop()
+#         #         elif plan[i][0] == "R":  # right turn
+#         #             #print("motor right:",plan[i][1])
+#         #             Motor1.go(70)
+#         #             time.sleep(0.3)
+#         #             Motor1.stop()
+        
+#         vec_list = tg.find_vec(ar_info)
+#         #print(vec_list)
+    
+#     else:
+#         if aprc_c : #色認識による出力決定するかどうか
+#             # 画閣内の色重心の位置から出力コマンドを決定する　plan_color = {"R":power_R,"L":power_L,"Clear":bool} で返す
+#             plan_color = power_planner(img)
+#             # print(plan_color["C"]) 
+#             if plan_color["Detected_tf"]:
+#                 c = 0 #喪失カウントをリセット
+#                 Motor2.go(plan_color["R"])
+#                 Motor1.go(plan_color["L"])
+#                 print("detected color")
+#                 print("R:",plan_color["R"],"L:",plan_color["L"]) 
+#             else :
+#                 if c > 10:
+#                     Motor2.go(40)#旋回用
+#                     # Motor1.go(60)
+#                     time.sleep(0.3)
+#                     Motor2.stop()
+#                     Motor1.stop()
+#                     print("rotation") 
+#                 c += 1
+            
+
+#         else:
+#             if c > 10:
+#                 aprc_c = True #色認識をさせる
+#             c += 1
 
         
     if save_video : pc2.write_video(detected_img)
