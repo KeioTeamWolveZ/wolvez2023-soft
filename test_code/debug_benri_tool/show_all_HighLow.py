@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import RPi.GPIO as GPIO
+import time
 import numpy as np
 
 GPIO.setmode(GPIO.BCM)
@@ -20,5 +21,4 @@ while True:
         HL_data.append(GPIO.input(i))
     print(f"PIN : {valid_IO}")
     print(f"H/L : {HL_data}")
-
-    
+    time.sleep(0.5)
