@@ -21,4 +21,5 @@ while True:
         HL_data.append(GPIO.input(i))
     print(f"PIN : {valid_IO}")
     print(f"H/L : {HL_data}")
+    print("")
     time.sleep(0.5)
