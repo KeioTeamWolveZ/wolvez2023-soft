@@ -10,17 +10,18 @@ channel = input('channel:')
 
 # ピンの定義
 ## GPIO設定
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM) #GPIOの設定
-GPIO.setup(ct.const.FLIGHTPIN_PIN,GPIO.IN,pull_up_down=GPIO.PUD_UP) #フライトピン用。プルアップを有効化
-
+# GPIO.setwarnings(False)
+# GPIO.setmode(GPIO.BCM) #GPIOの設定
+# GPIO.setup(ct.const.FLIGHTPIN_PIN,GPIO.IN,pull_up_down=GPIO.PUD_UP) #フライトピン用。プルアップを有効化
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(4,GPIO.IN)
 # LoRaの設定
 
 
 # 一定時間，送信
 lr_send = lora_send_onlyOnce.LoraSendClass(lora_device, channel)
 start=time.time()
-while time.time()-start<10:
+while time.time()-start<3:
     lr_send.lora_send()
     print(f"message sent at {time.time()}")
 
