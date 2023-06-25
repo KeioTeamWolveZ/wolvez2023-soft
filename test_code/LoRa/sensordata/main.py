@@ -28,11 +28,12 @@ if __name__ == '__main__':
     while True:
         try:
             # 各データの取得
-            bno_data = bno.get_data()
-            gps_data = gps.gpsread(gps_obj)
+            # bno_data = bno.get_data()
+            # gps_data = gps.gpsread(gps_obj)
             
             # データを結合して送信
-            all_data = combine_data(bno_data=bno_data,gps_data=gps_data)
+            # all_data = combine_data(bno_data=bno_data,gps_data=gps_data)
+            all_data = combine_data()
             lr_send.lora_send(all_data)
             
             time.sleep(1)
