@@ -26,7 +26,7 @@ try:
     Motor1.go(70)
     Motor2.go(70)
     i=0
-    while i < 2:#60*120/5:
+    while i < 60*120/5:
         i+=1
         print("current time: "+str(datetime.now()))
         lr_send.lora_send()
