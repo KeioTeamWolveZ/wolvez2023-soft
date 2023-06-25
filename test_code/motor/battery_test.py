@@ -3,7 +3,6 @@ import RPi.GPIO as GPIO
 import time 
 import numpy as np
 from datetime import datetime
-import constant as ct
 import lora_send_onlyOnce
 
 lora_device = "/dev/ttyAMA1"
@@ -17,7 +16,7 @@ Motor1 = motor.motor(6,5,13)
 Motor2 = motor.motor(20,16,12)
 
 for i in np.arange(0,30*60):
-    lr_send.lora_send("wait for run")
+    lr_send.lora_send()
     print(f"message sent at {time.time()}")
     time.sleep(1)
 
@@ -27,10 +26,10 @@ try:
     Motor1.go(70)
     Motor2.go(70)
     i=0
-    while i < 60*120/5:
+    while i < 2:#60*120/5:
         i+=1
         print("current time: "+str(datetime.now()))
-        lr_send.lora_send(f"run count:{5*i}s")
+        lr_send.lora_send()
         time.sleep(5)
 
 

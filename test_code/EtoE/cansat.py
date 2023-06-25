@@ -16,10 +16,7 @@ from datetime import datetime
 from glob import glob
 import shutil
 # from math import prod
-from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 
-from first_spm import IntoWindow, LearnDict, EvaluateImg
-from second_spm import SPM2Open_npz,SPM2Learn,SPM2Evaluate
 
 import constant as ct
 from bno055 import BNO055
@@ -53,7 +50,9 @@ class Cansat():
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM) #GPIOの設定
         GPIO.setup(ct.const.FLIGHTPIN_PIN,GPIO.IN,pull_up_down=GPIO.PUD_UP) #フライトピン用。プルアップを有効化
-        GPIO.setup(ct.const.SEPARATION_PIN1,GPIO.OUT) #焼き切り用のピンの設定
+        GPIO.setup(ct.const.SEPARATION_PARA,GPIO.OUT) #焼き切り用のピンの設定
+        GPIO.setup(ct.const.SEPARATION_MOD1,GPIO.OUT) #焼き切り用のピンの設定
+        GPIO.setup(ct.const.SEPARATION_MOD2,GPIO.OUT) #焼き切り用のピンの設定
         
         # インスタンス生成用      
         self.bno055 = BNO055()

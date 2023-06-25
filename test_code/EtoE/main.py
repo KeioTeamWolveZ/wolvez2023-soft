@@ -21,17 +21,17 @@ import time
 
 """
 
-state =  0
+state =  1
 
 cansat = Cansat(state)
 cansat.setup()
 
 try:
     while True:
-        cansat.sensor()
+        # cansat.sensor()
         time.sleep(0.03)
         cansat.sequence()
-        if cansat.state >= 4:
+        if cansat.state >= 2:
             print("Finished")
             cansat.keyboardinterrupt()
             GPIO.cleanup()

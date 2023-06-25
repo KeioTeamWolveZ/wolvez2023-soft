@@ -6,13 +6,19 @@ import RPi.GPIO as GPIO
 import constant as ct
 
 lora_device = "/dev/ttyAMA1"
-channel = input('channel:')
+channel = 15
 
 # ピンの定義
 ## GPIO設定
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM) #GPIOの設定
 GPIO.setup(ct.const.FLIGHTPIN_PIN,GPIO.IN,pull_up_down=GPIO.PUD_UP) #フライトピン用。プルアップを有効化
+
+flightpin=ct.const.FLIGHTPIN_PIN
+flightpin=4
+while True:
+    print(f"flight pin: {GPIO.input(flightpin)}")
+    time.sleep(1)
 
 # LoRaの設定
 

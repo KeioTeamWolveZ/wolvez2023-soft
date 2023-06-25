@@ -1,9 +1,13 @@
+import motor
+import RPi.GPIO as GPIO
+import time 
 from datetime import datetime
-import time
 
-print(datetime.now())
-i=0
-while i < 60*120/5:
-    i+=1
-    print("current time: "+str(datetime.now()))
-    time.sleep(5)
+Motor1 = motor.motor(6,5,13)
+Motor2 = motor.motor(20,16,12)
+
+Motor1.go(70)
+Motor2.go(70)
+time.sleep(3)
+Motor1.stop()
+Motor2.stop()
