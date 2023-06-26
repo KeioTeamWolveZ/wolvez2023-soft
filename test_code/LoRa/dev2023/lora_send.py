@@ -18,7 +18,7 @@ class LoraSendClass:
         set_mode = ['1', 'd', self.channel, 'e', '0001', 'f', '0002', 'g', '0001',
                     'n', '2', 'l', '2', 'p', '1', 'y', 'z']
 #         # LoRa設定
-#         self.sendDevice.setup_lora(set_mode)
+        self.sendDevice.setup_lora(set_mode)
         # LoRa(ES920LR)データ送信
         while True:
             try:

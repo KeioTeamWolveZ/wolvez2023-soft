@@ -2,18 +2,18 @@
 import sys
 import time
 
-import gps_func.gps as gps
-import gps_func.micropyGPS as micropyGPS
-import bno055_func.bno055 as bno055
+import gps
+import micropyGPS
+import bno055
 import lora_send
-import lora_recv
 
 
 def combine_data(states=1,bno_data=1,gps_data=1): #通信モジュールの送信を行う関数
-    datalog = \
-              + "Test-state :" + states + ","\
-			  + "GPS DATA   :" + gps_data + ","\
-			  + "BNO055 DATA:" + bno_data
+    datalog = "Test-state" + str(states) + ","\
+        + "GPS DATA" + str(gps_data) + ","\
+        + "ax:"+str(self.bno055.ax).rjust(6) + ","\
+        + "ay:"+str(self.bno055.ay).rjust(6) + ","\
+        + "az:"+str(self.bno055.az).rjust(6) + ","\
     return datalog
 
 if __name__ == '__main__':
@@ -23,21 +23,22 @@ if __name__ == '__main__':
     bno = bno055.bno()
     gps_obj = micropyGPS.MicropyGPS(9,'dd') # MicroGPSオブジェクトを生成する。
                                         # 引数はタイムゾーンの時差と出力フォーマット
-    gps.thread()
+    #gps.thread(gps_obj)
     
     while True:
         try:
             # 各データの取得
-            # bno_data = bno.get_data()
-            # gps_data = gps.gpsread(gps_obj)
+            bno_data = bno.get_data()
+            #gps_data = gps.gpsread(gps_obj)
             
             # データを結合して送信
-            # all_data = combine_data(bno_data=bno_data,gps_data=gps_data)
-            all_data = combine_data()
+            all_data = combine_data(bno_data=bno_data)
+            #all_data = combine_data(bno_data=bno_data,gps_data=gps_data)
+            #all_data = combine_data()
             print(all_data)
             lr_send.lora_send(all_data)
             
-            time.sleep(1)
+            time.sleep(2)
             
         except KeyboardInterrupt:
             lr_send.sendDevice.close()
