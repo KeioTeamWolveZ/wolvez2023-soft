@@ -8,6 +8,7 @@ class LoraSendClass:
 
     def __init__(self, lora_device, channel):
         self.sendDevice = lora_setting.LoraSettingClass(lora_device)
+        self.lora_device=lora_device
         self.channel = channel
 
     # ES920LRデータ送信メソッド
@@ -26,7 +27,7 @@ class LoraSendClass:
                 data = f'00010002-{time.time():.1f}'
                 print(f'<-- SEND -- [{data}]')
                 self.sendDevice.cmd_lora(data)
-                time .sleep(1)
+                time .sleep(2)
                 
             except KeyboardInterrupt:
                 self.sendDevice.close()

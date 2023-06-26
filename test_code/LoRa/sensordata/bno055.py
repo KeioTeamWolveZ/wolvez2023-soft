@@ -37,4 +37,4 @@ class bno:
             print(euler) 
             
             # time.sleep(0.5)
-            return {"acceleration":accel, "gravity":grav, "orientation":euler}
+            return accel, grav, euler

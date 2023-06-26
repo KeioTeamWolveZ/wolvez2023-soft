@@ -10,10 +10,7 @@ import lora_send
 
 def combine_data(states=1,bno_data=1,gps_data=1): #通信モジュールの送信を行う関数
     datalog = "Test-state" + str(states) + ","\
-        + "GPS DATA" + str(gps_data) + ","\
-        + "ax:"+str(self.bno055.ax).rjust(6) + ","\
-        + "ay:"+str(self.bno055.ay).rjust(6) + ","\
-        + "az:"+str(self.bno055.az).rjust(6) + ","\
+        + "GPS DATA" + str(bno_data[0]) + ","
     return datalog
 
 if __name__ == '__main__':
