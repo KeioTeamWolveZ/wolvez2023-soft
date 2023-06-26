@@ -56,7 +56,7 @@ while True:
     detected_img, ar_info = tg.detect_marker(img)
     #img = tg.addSpace(img)
     pc2.show(img)
-
+    
     if "1" in ar_info.keys() and "2" in ar_info.keys():
         c = 0 #喪失カウントをリセット
         x = ar_info['1']['x'] 
@@ -64,12 +64,12 @@ while True:
         arg = tg.theta(ar_info)
         AR_powerplan = AR_powerplanner(ar_info)
         aprc_c = AR_powerplan["C"] #アプローチの仕方のbool
-        # Motor2.go(AR_powerplan["R"])
-        # Motor1.go(AR_powerplan["L"])
+        Motor2.go(AR_powerplan["R"])
+        Motor1.go(AR_powerplan["L"])
         time.sleep(0.1)
-        print("R:",plan_color["R"],"L:",plan_color["L"]) 
-        # Motor2.stop()
-        # Motor1.stop()
+        print("R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
+        Motor2.stop()
+        Motor1.stop()
     
     else:
         if aprc_c : #色認識による出力決定するかどうか
@@ -77,15 +77,15 @@ while True:
             plan_color = power_planner(img)
             if plan_color["Detected_tf"]:
                 c = 0 #喪失カウントをリセット
-                # Motor2.go(plan_color["R"])
-                # Motor1.go(plan_color["L"])
+                Motor2.go(plan_color["R"])
+                Motor1.go(plan_color["L"])
                 # print("detected color")
                 print("R:",plan_color["R"],"L:",plan_color["L"]) 
             else :
                 if c > 10:
-                    # Motor2.go(40) #旋回用
+                    Motor2.go(40) #旋回用
                     time.sleep(0.3)
-                    # Motor2.stop()
+                    Motor2.stop()
                     # Motor1.stop()
                 c += 1
         else:

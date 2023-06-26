@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 
 # 速度の設定
-STANDARD_POWER = 40
+STANDARD_POWER = 35
 POWER_RANGE = 10
 
 

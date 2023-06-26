@@ -11,27 +11,32 @@ def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, 
     marker_1 = np.array([ar_info["1"]["x"],ar_info["1"]["y"],ar_info["1"]["z"]])
     marker_2 = np.array([ar_info["2"]["x"],ar_info["2"]["y"],ar_info["2"]["z"]])
     vec, distance = __targetting(marker_1,marker_2)
-    print(distance)
-    if distance > -0.5:
-        if distance > 0.5:
+    print(distance,vec[0])
+    if distance > 0:
+        if distance > 0.05:
             '''
             接近するまでは連続的に近づく(アームとモジュールが横並びするまで？)
             '''
-            print(f"distance:0.5")
-            power_R = int(STANDARD_POWER + POWER_RANGE * distance)
-            power_L = int(STANDARD_POWER - POWER_RANGE * distance)
-
+            print(f"distance:{distance}")
+            if vec[0] < -0.02:
+                power_R = int(STANDARD_POWER )
+                power_L = int(0)
+            else:
+                power_R = int(0)
+                power_L = int(STANDARD_POWER )
         else:
             '''
             接近後なので回転したい：要検討
             '''
-            print("close")
-            power_R = int(POWER_RANGE * vec[0])
-            power_L = int(-1 * POWER_RANGE * vec[0])
+            print("finish")
+            #power_R = int(POWER_RANGE * vec[0])
+            #power_L = int(-1 * POWER_RANGE * vec[0])
+            power_R = 0
+            power_L = 0
 
     else:
         '''
-        distanceが負のときバックする？
+        distanceが負のときバックする？iranaikamo
         '''
         print("distance<0")
         power_R = int(-1*STANDARD_POWER - POWER_RANGE * distance)
