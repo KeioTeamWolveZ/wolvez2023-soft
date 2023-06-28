@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 import time
+import cv2
 
 import gps
 import micropyGPS
@@ -13,9 +14,7 @@ from libcam_module import Picam
 def combine_data(states=1,bno_data=1,gps_data=[1,1]): #通信モジュールの送信を行う関数
     datalog = "ax:" + str(bno_data[0]) + "," \
             "ay:" + str(bno_data[1]) + "," \
-            "az:" + str(bno_data[2]) + "," \
-            "LAT:" + str(gps_data[0]) + "," \
-            "LON:" + str(gps_data[1])
+            "az:" + str(bno_data[2])
     return datalog
 
 if __name__ == '__main__':
