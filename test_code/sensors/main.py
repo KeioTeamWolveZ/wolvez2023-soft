@@ -24,7 +24,7 @@ if __name__ == '__main__':
     bno = bno055.BNO055()
     bno.setupBno()
     gps = gps.GPS()
-    pc2 = Picam()
+    # pc2 = Picam()
     # gps_obj = micropyGPS.MicropyGPS(9,'dd') # MicroGPSオブジェクトを生成する。
                                         # 引数はタイムゾーンの時差と出力フォーマット
     gps.setupGps()
@@ -41,8 +41,8 @@ if __name__ == '__main__':
             gps_data = gps.gpsread()
 
             # カメラ撮影
-            img = pc2.capture(1)
-            pc2.show(img)
+            # img = pc2.capture(1)
+            # pc2.show(img)
             
             # データを結合して送信
             all_data = combine_data(bno_data=bno_data)

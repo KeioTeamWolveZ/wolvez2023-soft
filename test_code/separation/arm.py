@@ -6,10 +6,14 @@ import time
 
 class Arm():
 	def __init__(self,servo_pin):
+		self.servo_pin = servo_pin
+	
+	def setup(self):
 		GPIO.setmode(GPIO.BCM)
 		self.mode = GPIO.getmode()
 		# print(mode)
-		self.pwm = GPIO.PWM(servo_pin, 50) #電圧を参照するピンを周波数50HZに指定
+		GPIO.setup(self.servo_pin, GPIO.OUT)
+		self.pwm = GPIO.PWM(self.servo_pin, 50) #電圧を参照するピンを周波数50HZに指定
 		self.pwm.start(0)
 
 	def up(self,buff=0):

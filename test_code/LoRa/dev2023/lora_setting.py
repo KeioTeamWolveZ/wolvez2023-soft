@@ -12,6 +12,7 @@ class LoraSettingClass:
         try:  # インスタンス変数 serialDevice を生成
             print(f'### {serial_device}')
             self.device = serial.Serial(serial_device, 9600)
+            print("device recognized")
         except Exception as e:
             error_mes = '{0}'.format(e)
             print(error_mes)
@@ -41,7 +42,7 @@ class LoraSettingClass:
 
     def setup_lora(self, set_mode=''):
         # LoRa(ES920LR)設定
-        print("setting up lora dayo")
+        print("setting up lora")
         self.set_mode = set_mode
         # LoRa(ES9320LR)起動待機
         print(self.serial_device)

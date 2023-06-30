@@ -6,7 +6,7 @@ import lora_recv
 
 
 def main(argc, argv):
-    #lora_device = "/dev/ttyS0"  # ES920LRデバイス名
+    # lora_device = "/dev/ttyS0"  # ES920LRデバイス名
     lora_device = "/dev/ttyAMA1"  # ES920LRデバイス名 (UART2) 
 
     if argc < 2:
