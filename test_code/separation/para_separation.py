@@ -28,12 +28,10 @@ if bno055.begin() is not True:
     print("Error initializing device")
     exit()
 
-bno055 = BNO055()
 countFlyLoop = 0
 try:
     while True:
-            print("here")
-            #bno055.bnoread()
+        bno055.bnoread()
         #if GPIO.input(flight_pin) == GPIO.HIGH: #highかどうか＝フライトピンが外れているかチェック
         #    countFlyLoop+=1
         #    if countFlyLoop > 1000000: #一定時間HIGHだったらステート移行
@@ -44,7 +42,7 @@ try:
             #if countDropLoop > 100: #着地判定が複数回行われたらステート以降
             #    state = 3
             #    laststate = 3
-            print("Separation")
+            print("Separation...")
             GPIO.output(pin1,1) #電圧をHIGHにして焼き切りを行う
             time.sleep(10) #継続時間を指定
             GPIO.output(pin1,0) #電圧をLOWにして焼き切りを終了する
