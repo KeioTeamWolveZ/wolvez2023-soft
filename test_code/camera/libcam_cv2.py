@@ -30,6 +30,7 @@ picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous,"AfSpeed":controls
 k = 1 
 start = time.time()
 while True:
+  
   im = picam2.capture_array()
   cv2.imshow("Camera", im)
   key = cv2.waitKey(1)

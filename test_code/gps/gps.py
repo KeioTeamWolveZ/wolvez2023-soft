@@ -25,7 +25,7 @@ def gpsread():
             print('時刻 {0}:{1}:{2} ,'.format(h, gps.timestamp[1], gps.timestamp[2]),end='')
             print('緯度: %2.3f ,' % (gps.latitude[0]),end='')
             print('経度: %2.3f' % (gps.longitude[0])) 
-        time.sleep(1.0) #ここ変える
+        time.sleep(0.3) #ここ変える
 
 gps = micropyGPS.MicropyGPS(9,'dd') # MicroGPSオブジェクトを生成する。
                                      # 引数はタイムゾーンの時差と出力フォーマット
