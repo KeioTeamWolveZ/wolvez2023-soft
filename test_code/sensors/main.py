@@ -16,19 +16,19 @@ def lora_data(states=1,gps_data=[1,1]): #通信モジュールの送信を行う
             "Lon:" + str(gps_data[1])
     return send_data
 
-def logging(states,gps_data,bno_data):
-    datalog = str(int(1000*(time.time() - startTime_time))) + ","\
-                  + "state:"+str(state)+ ","\
-                  + "Time:"+str(gps.Time) + ","\
-                  + "Lat:"+str(gps.Lat).rjust(6) + ","\
-                  + "Lng:"+str(gps.Lon).rjust(6) + ","\
-                  + "ax:"+str(round(ax,6)).rjust(6) + ","\
-                  + "ay:"+str(round(ay,6)).rjust(6) + ","\
-                  + "az:"+str(round(az,6)).rjust(6) + ","\
-                  + "q:" + str(ex).rjust(6) + ","\
-                  + "rV:" + str(round(MotorR.velocity,2)).rjust(4) + ","\
-                  + "lV:" + str(round(MotorL.velocity,2)).rjust(4) + ","\
-                  + "Camera:" + str(camerastate)
+# def logging(states,gps_data,bno_data):
+#     datalog = str(int(1000*(time.time() - startTime_time))) + ","\
+#                   + "state:"+str(state)+ ","\
+#                   + "Time:"+str(gps.Time) + ","\
+#                   + "Lat:"+str(gps.Lat).rjust(6) + ","\
+#                   + "Lng:"+str(gps.Lon).rjust(6) + ","\
+#                   + "ax:"+str(round(ax,6)).rjust(6) + ","\
+#                   + "ay:"+str(round(ay,6)).rjust(6) + ","\
+#                   + "az:"+str(round(az,6)).rjust(6) + ","\
+#                   + "q:" + str(ex).rjust(6) + ","\
+#                   + "rV:" + str(round(MotorR.velocity,2)).rjust(4) + ","\
+#                   + "lV:" + str(round(MotorL.velocity,2)).rjust(4) + ","\
+#                   + "Camera:" + str(camerastate)
 
 if __name__ == '__main__':
     lora_device = "/dev/ttyAMA1"  # ES920LRデバイス名 (UART2) 
