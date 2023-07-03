@@ -11,11 +11,24 @@ import lora_send
 from libcam_module import Picam
 
 
-def combine_data(states=1,bno_data=1,gps_data=[1,1]): #通信モジュールの送信を行う関数
-    datalog = "ax:" + str(bno_data[0]) + "," \
-            "ay:" + str(bno_data[1]) + "," \
-            "az:" + str(bno_data[2])
-    return datalog
+def lora_data(states=1,gps_data=[1,1]): #通信モジュールの送信を行う関数
+    send_data = "Lat:" + str(gps_data[0]) + "," \
+            "Lon:" + str(gps_data[1])
+    return send_data
+
+# def logging(states,gps_data,bno_data):
+#     datalog = str(int(1000*(time.time() - startTime_time))) + ","\
+#                   + "state:"+str(state)+ ","\
+#                   + "Time:"+str(gps.Time) + ","\
+#                   + "Lat:"+str(gps.Lat).rjust(6) + ","\
+#                   + "Lng:"+str(gps.Lon).rjust(6) + ","\
+#                   + "ax:"+str(round(ax,6)).rjust(6) + ","\
+#                   + "ay:"+str(round(ay,6)).rjust(6) + ","\
+#                   + "az:"+str(round(az,6)).rjust(6) + ","\
+#                   + "q:" + str(ex).rjust(6) + ","\
+#                   + "rV:" + str(round(MotorR.velocity,2)).rjust(4) + ","\
+#                   + "lV:" + str(round(MotorL.velocity,2)).rjust(4) + ","\
+#                   + "Camera:" + str(camerastate)
 
 if __name__ == '__main__':
     lora_device = "/dev/ttyAMA1"  # ES920LRデバイス名 (UART2) 
@@ -29,6 +42,7 @@ if __name__ == '__main__':
                                         # 引数はタイムゾーンの時差と出力フォーマット
     gps.setupGps()
     
+    startTime_time = time.time()
     while True:
         try:
             # 各データの取得
@@ -45,11 +59,11 @@ if __name__ == '__main__':
             # pc2.show(img)
             
             # データを結合して送信
-            all_data = combine_data(bno_data=bno_data)
-            # all_data = combine_data(bno_data=bno_data,gps_data=gps_data)
-            # all_data = combine_data()
-            print(all_data)
-            lr_send.lora_send(all_data)
+            lr_data = lora_data(bno_data=bno_data)
+            # all_data = lora_data(bno_data=bno_data,gps_data=gps_data)
+            # all_data = lora_data()
+            print(lr_data)
+            lr_send.lora_send(lr_data)
             
             # 画像を表示している場合はescキーで終了できる
             key = cv2.waitKey(1)
