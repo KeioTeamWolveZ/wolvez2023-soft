@@ -38,6 +38,8 @@ if save_video : pc2.setup_video("test")
 
 #色認識のbool値
 aprc_c = True
+Flag_AR = False
+Flag_C = False
 
 #sousitu count
 c=0
@@ -63,30 +65,62 @@ try:
         
         if "1" in ar_info.keys() and "2" in ar_info.keys():
             c = 0 #喪失カウントをリセット
-            x = ar_info['1']['x'] 
-            norm = ar_info['1']['norm']
-            arg = tg.theta(ar_info)
-            AR_powerplan = AR_powerplanner(ar_info)
-            aprc_c = AR_powerplan["C"] #アプローチの仕方のbool
-            Motor2.go(AR_powerplan["R"])
-            Motor1.go(AR_powerplan["L"])
-            time.sleep(0.1)
-            print("R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
-            Motor2.stop()
-            Motor1.stop()
+            aprc_c = False #アプローチの仕方のbool
+            x = ar_info['1']['x'] #使ってなさそう
+            norm = ar_info['1']['norm'] #使ってなさそう
+            arg = tg.theta(ar_info) #使ってなさそう
+            if not Flag_AR:
+                starttime_AR = time.time()
+                Flag_AR = True
+            if Flag_AR and starttime_AR-time.time() >= 5.0:
+                Flag_AR = False #フラグをリセット
+                AR_powerplan = AR_powerplanner(ar_info)
+                Motor2.go(AR_powerplan["R"])
+                Motor1.go(AR_powerplan["L"])
+                time.sleep(0.1)
+                print("R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
+                Motor2.stop()
+                Motor1.stop()
         
         else:
             if aprc_c : #色認識による出力決定するかどうか
                 
                 plan_color = power_planner(img)
                 if plan_color["Detected_tf"]:
-                    c = 0 #喪失カウントをリセット
-                    Motor2.go(plan_color["R"])
-                    Motor1.go(plan_color["L"])
-                    # print("detected color")
-                    print("R:",plan_color["R"],"L:",plan_color["L"]) 
+                    if not Flag_C:
+                        starttime_color = time.time()
+                        Flag_C = True
+                        '''
+                        Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
+                        '''
+                    
+                    if Flag_C and starttime_color-time.time() >= 5.0:
+                        '''
+                        5秒超えたら入ってくる
+                        '''
+                        c = 0 #喪失カウントをリセット
+                        Flag_C = False #フラグをリセット
+                        Motor2.go(plan_color["R"])
+                        Motor1.go(plan_color["L"])
+                        # print("detected color")
+                        time.sleep(0.2)
+                        '''
+                        色認識の出力の離散化：出力する時間を0.2秒に
+                        '''
+                        print("R:",plan_color["R"],"L:",plan_color["L"]) 
+                    
+                        Motor2.stop()
+                        Motor1.stop()
+                        '''
+                        動いた後にストップさせる
+                        '''
                 else :
-                    if c > 10:
+                    if c > 30:
+                        '''
+                        数を30に変更
+                        '''
+                        Flag_C = False #色を見つけたら待機できるようにリセット
+                        Flag_AR = False #AR認識もリセット
                         Motor2.go(40) #旋回用
                         time.sleep(0.3)
                         Motor2.stop()

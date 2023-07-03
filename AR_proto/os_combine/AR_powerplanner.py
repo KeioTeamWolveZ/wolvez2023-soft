@@ -1,6 +1,5 @@
 import numpy as np
 
-aprc_c = False
 
 def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, "z":7} ,"3":{"x":0, "y":0, "z":0}}) -> dict:
     
@@ -42,7 +41,7 @@ def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, 
         power_R = int(-1*STANDARD_POWER - POWER_RANGE * distance)
         power_L = int(-1*STANDARD_POWER + POWER_RANGE * distance)
     
-    return {"R":power_R,"L":power_L,"C":aprc_c}
+    return {"R":power_R,"L":power_L}
 
 def __targetting(marker_1:np.ndarray=np.zeros(3), marker_2:np.ndarray=np.zeros(3)):
     '''
