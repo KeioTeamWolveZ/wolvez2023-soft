@@ -29,43 +29,49 @@ if bno055.begin() is not True:
     exit()
 
 countFlyLoop = 0
+state = 2
 try:
+    print("\n\n================Start Para-Separation================\n\n")
     while True:
-        bno055.bnoread()
         #if GPIO.input(flight_pin) == GPIO.HIGH: #highかどうか＝フライトピンが外れているかチェック
         #    countFlyLoop+=1
         #    if countFlyLoop > 1000000: #一定時間HIGHだったらステート移行
         #        state = 2
         #        laststate = 2
-        #if (bno055.ax**2 + bno055.ay**2 + bno055.az**2) < 1**2: #加速度が閾値以下で着地判定
-            #countDropLoop+=1            
-            #if countDropLoop > 100: #着地判定が複数回行われたらステート以降
-            #    state = 3
-            #    laststate = 3
-            print("Separation...")
-            GPIO.output(pin1,1) #電圧をHIGHにして焼き切りを行う
-            time.sleep(10) #継続時間を指定
-            GPIO.output(pin1,0) #電圧をLOWにして焼き切りを終了する
+        #if state == 2 and (bno055.ax**2 + bno055.ay**2 + bno055.az**2) < 1**2: #加速度が閾値以下で着地判定
+        #    countDropLoop+=1
+        #    bno055.bnoread()
+        #    if countDropLoop > 100: #着地判定が複数回行われたらステート以降
+                #state = 3
+                #laststate = 3
+                print("Separation...\n")
+                GPIO.output(pin1,1) #電圧をHIGHにして焼き切りを行う
+                time.sleep(10) #継続時間を指定
+                GPIO.output(pin1,0) #電圧をLOWにして焼き切りを終了する
 
-            print("Motor")
-            Motor1.go(100)
-            Motor2.go(100)
-            time.sleep(3)
-            Motor1.stop()
-            Motor2.stop()
-            time.sleep(2)
-            
-            print("Arming")
-            arm.up()
-            time.sleep(1)
-            arm.down()
-            time.sleep(1)
-            
-            arm.stop()
-            GPIO.cleanup()
-            break
-        #else:
-        #    countDropLoop = 0 #初期化の必要あり
+                print("Running Motor...\n")
+                time.sleep(3)
+                Motor1.go(100)
+                Motor2.go(100)
+                time.sleep(3)
+                Motor1.stop()
+                Motor2.stop()
+                time.sleep(2)
+                
+                print("Arming\n")
+                time.sleep(3)
+                arm.up()
+                time.sleep(1)
+                arm.down()
+                time.sleep(1)
+                
+                arm.stop()
+                GPIO.cleanup()
+                print("\n================Done Para-Separation================\n\n")
+                
+                break
+                #else:
+                #    countDropLoop = 0 #初期化の必要あり
 
 except:
     arm.stop()

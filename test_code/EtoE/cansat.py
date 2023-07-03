@@ -3,7 +3,7 @@
 
 from tempfile import TemporaryDirectory
 from xml.dom.pulldom import default_bufsize
-from pandas import IndexSlice
+# from pandas import IndexSlice
 import RPi.GPIO as GPIO
 import sys
 import cv2
@@ -109,12 +109,6 @@ class Cansat():
         self.mvfile()
 
     def mkdir(self): #フォルダ作成部分
-        folder_paths =[f"results/{self.startTime}",
-                       f"results/{self.startTime}/camera_result",
-                       f"results/{self.startTime}/camera_result/planning",
-                       f"results/{self.startTime}/camera_result/planning/learn{self.learncount}",
-                       f"results/{self.startTime}/camera_result/planning/learn{self.learncount}/planning_npz",
-                       f"results/{self.startTime}/camera_result/planning/learn{self.learncount}/planning_pics"]
         return
 
     def mkfile(self):
@@ -206,6 +200,7 @@ class Cansat():
         self.gps.setupGps()
         self.bno055.setupBno()
         self.lora.sendDevice.setup_lora()
+        self.arm.setup()
         if self.bno055.begin() is not True:
             print("Error initializing device")
             exit()    
@@ -488,7 +483,9 @@ class Cansat():
     def keyboardinterrupt(self): #キーボードインタラプト入れた場合に発動する関数
         self.MotorR.stop()
         self.MotorL.stop()
-        GPIO.output(ct.const.SEPARATION_PIN,0) #焼き切りが危ないのでlowにしておく
+        GPIO.output(ct.const.SEPARATION_PARA,0) #焼き切りが危ないのでlowにしておく
+        GPIO.output(ct.const.SEPARATION_MOD1,0) #焼き切りが危ないのでlowにしておく
+        GPIO.output(ct.const.SEPARATION_MOD2,0) #焼き切りが危ないのでlowにしておく
         self.RED_LED.led_off()
         self.BLUE_LED.led_off()
         self.GREEN_LED.led_off()
