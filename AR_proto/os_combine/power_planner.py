@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 
 # 速度の設定
-STANDARD_POWER = 35
+STANDARD_POWER = 40
 POWER_RANGE = 10
 
 
@@ -18,8 +18,10 @@ POWER_RANGE = 10
 # 0 <= s <= 255 (彩度)　黒や白の値が抽出されるときはこの閾値を大きくする
 # 0 <= v <= 255 (明度)　これが大きいと明るく，小さいと暗い
 # ここでは青色を抽出するので120±20を閾値とした
-LOW_COLOR = np.array([100, 75, 75])
-HIGH_COLOR = np.array([140, 255, 255])
+# LOW_COLOR = np.array([100, 75, 75])
+# HIGH_COLOR = np.array([140, 255, 255])
+LOW_COLOR = np.array([150, 64, 0])
+HIGH_COLOR = np.array([179, 255, 255])
 
 # 抽出する青色の塊のしきい値
 AREA_RATIO_THRESHOLD = 0.005
@@ -47,12 +49,13 @@ def find_specific_color(frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR):
     contours,hierarchy = cv2.findContours(ex_img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
     # 面積を計算
     areas = np.array(list(map(cv2.contourArea,contours)))
-
+    
     if len(areas) == 0 or np.max(areas) / (h*w) < AREA_RATIO_THRESHOLD:
         # 見つからなかったらNoneを返す
         # print("the area is too small")
         return None
     else:
+        print("@powerplanner\ncolor area = ",np.max(areas) / (h*w))
         # 面積が最大の塊の重心を計算し返す
         max_idx = np.argmax(areas)
         max_area = areas[max_idx]
