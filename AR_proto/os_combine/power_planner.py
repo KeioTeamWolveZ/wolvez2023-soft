@@ -20,6 +20,7 @@ POWER_RANGE = 10
 # ここでは青色を抽出するので120±20を閾値とした
 # LOW_COLOR = np.array([100, 75, 75])
 # HIGH_COLOR = np.array([140, 255, 255])
+#red_color
 LOW_COLOR = np.array([150, 64, 0])
 HIGH_COLOR = np.array([179, 255, 255])
 
