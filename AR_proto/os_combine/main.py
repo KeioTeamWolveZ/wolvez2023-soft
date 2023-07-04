@@ -10,13 +10,14 @@ import datetime
 
 # import modules
 # from ar_module import Target, find_vec
+
 import ar_module
 #from dubins_module import Dubins_runner
 import libcam_module
 #from color_det import ColorDetection
 import motor
 import RPi.GPIO as GPIO
-from dubinspath_from_AR import detect_target
+# from dubinspath_from_AR import detect_target
 from power_planner import power_planner
 from AR_powerplanner import AR_powerplanner
 from black_extractor import get_color_hsv
@@ -67,18 +68,20 @@ try:
             c = 0 #喪失カウントをリセット
             aprc_c = False #アプローチの仕方のbool
             x = ar_info['1']['x'] #使ってなさそう
-            norm = ar_info['1']['norm'] #使ってなさそう
+            tg.estimate_norm = ar_info['2']['norm'] #使u
+            #print(tg.estimate_norm)
             arg = tg.theta(ar_info) #使ってなさそう
             if not Flag_AR:
+                print("keisoku_AR")
                 starttime_AR = time.time()
                 Flag_AR = True
-            if Flag_AR and starttime_AR-time.time() >= 5.0:
+            if Flag_AR and time.time()-starttime_AR >= 3.0:
                 Flag_AR = False #フラグをリセット
                 AR_powerplan = AR_powerplanner(ar_info)
                 Motor2.go(AR_powerplan["R"])
                 Motor1.go(AR_powerplan["L"])
                 time.sleep(0.1)
-                print("R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
+                print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
                 Motor2.stop()
                 Motor1.stop()
         
@@ -90,11 +93,12 @@ try:
                     if not Flag_C:
                         starttime_color = time.time()
                         Flag_C = True
+                        print("keisoku_color")
                         '''
                         Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
                         '''
                     
-                    if Flag_C and starttime_color-time.time() >= 5.0:
+                    if Flag_C and time.time()-starttime_color >= 2.0:
                         '''
                         5秒超えたら入ってくる
                         '''
@@ -107,7 +111,7 @@ try:
                         '''
                         色認識の出力の離散化：出力する時間を0.2秒に
                         '''
-                        print("R:",plan_color["R"],"L:",plan_color["L"]) 
+                        print("-Color- R:",plan_color["R"],"L:",plan_color["L"]) 
                     
                         Motor2.stop()
                         Motor1.stop()
@@ -115,16 +119,23 @@ try:
                         動いた後にストップさせる
                         '''
                 else :
-                    if c > 30:
+                    if c > 10:
                         '''
                         数を30に変更
                         '''
                         Flag_C = False #色を見つけたら待機できるようにリセット
                         Flag_AR = False #AR認識もリセット
                         Motor2.go(40) #旋回用
-                        time.sleep(0.3)
+                        print("-R:40-")
+                        if tg.estimate_norm > 0.5:
+                                time.sleep(0.3)
+                                print('0.3')
+                        else:
+                                time.sleep(0.1)
+                                print('0.1')
                         Motor2.stop()
                         # Motor1.stop()
+                        c = 0
                     c += 1
             else:
                 if c > 10:

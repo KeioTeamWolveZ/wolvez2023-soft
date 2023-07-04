@@ -35,8 +35,9 @@ class Ar_cansat():
         # マーカーの辞書選択
         self.dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
         #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
-        self.id_size = {1:0.01,2:0.025,3:0.025,4:0.01,5:0.01,6:0.01,7:0.025,8:0.025,9:0.01,10:0.01}
+        self.id_size = {1:0.0095,2:0.0199,3:0.025,4:0.01,5:0.01,6:0.01,7:0.025,8:0.025,9:0.01,10:0.01}
         self.debug_mode = False
+        self.estimate_norm = 1
         
     def addSpace(self,img):
         self.debug_mode = True
