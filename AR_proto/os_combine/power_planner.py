@@ -118,8 +118,9 @@ def power_planner(frame):
     if pos is not None:
         power_R, power_L = power_calculation(pos,height,width)
         detected = True
-        if pos[2] > 7000:
+        if pos[2] > 28000:
             aprc_clear = True #これは目標に到達できたかのbool値
+        print(aprc_clear)
         
     else:
         power_R, power_L = 0,0

@@ -41,6 +41,7 @@ if save_video : pc2.setup_video("test")
 aprc_c = True
 Flag_AR = False
 Flag_C = False
+aprc_clear = False
 
 #sousitu count
 c=0
@@ -62,7 +63,7 @@ try:
         # img = tg.addSpace(img)
         detected_img, ar_info = tg.detect_marker(img)
         #img = tg.addSpace(img)
-        pc2.show(img)
+        #pc2.show(img)
         
         if "1" in ar_info.keys() and "2" in ar_info.keys():
             c = 0 #喪失カウントをリセット
@@ -86,9 +87,10 @@ try:
                 Motor1.stop()
         
         else:
-            if aprc_c : #色認識による出力決定するかどうか
+            if aprc_c and not aprc_clear : #色認識による出力決定するかどうか
                 
                 plan_color = power_planner(img)
+                aprc_clear = plan_color["Clear"]
                 if plan_color["Detected_tf"]:
                     if not Flag_C:
                         starttime_color = time.time()
@@ -98,7 +100,7 @@ try:
                         Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
                         '''
                     
-                    if Flag_C and time.time()-starttime_color >= 2.0:
+                    if Flag_C and time.time()-starttime_color >= 1.0:
                         '''
                         5秒超えたら入ってくる
                         '''
