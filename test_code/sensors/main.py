@@ -38,8 +38,8 @@ if __name__ == '__main__':
     GPIO.setwarnings(False)
     MotorR = motor.motor(6,5,13)
     MotorL = motor.motor(20,16,12)
-    #MotorR.go(50)
-    #MotorL.go(50)
+    MotorR.go(50)
+    MotorL.go(50)
     
     lora_device = "/dev/ttyAMA1"  # ES920LRデバイス名 (UART2) 
     channel = 15
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     bno = bno055.BNO055()
     bno.setupBno()
     gps = gps.GPS()
-    #pc2 = Picam()
+    pc2 = Picam()
     # gps_obj = micropyGPS.MicropyGPS(9,'dd') # MicroGPSオブジェクトを生成する。
                                         # 引数はタイムゾーンの時差と出力フォーマット
     gps.setupGps()
@@ -65,8 +65,8 @@ if __name__ == '__main__':
             gps_data = gps.gpsread()
 
             # カメラ撮影
-            #img = pc2.capture(1)
-            #pc2.show(img)
+            img = pc2.capture(1)
+            pc2.show(img)
             
             # データを結合して送信
             logging(state)
