@@ -53,7 +53,7 @@ try:
     while True:
         loop_count += 1
         # capture and detect markers
-        pc2.picam2.set_controls({"AfMode":0,"LensPosition":4.2})
+        pc2.picam2.set_controls({"AfMode":0,"LensPosition":4.5})
         img = pc2.capture(1)
         
         #rgb_info = cd.get_color_rgb(img)
@@ -63,12 +63,12 @@ try:
         black_img = get_color_hsv(img)
         # Adding space for detected information
         # img = tg.addSpace(img)
-        #pc2.picam2.set_controls({"AfMode":0,"LensPosition":6.5})
+        pc2.picam2.set_controls({"AfMode":0,"LensPosition":6.5})
         img2 = pc2.capture(1)
         detected_img, ar_info = tg.detect_marker(img)
         #img = tg.addSpace(img)
-        #pc2.show(img)
-        #pc2.show(img2,'realtime2')
+        pc2.show(img)
+        pc2.show(img2,'realtime2')
         
         if "1" in ar_info.keys() and "2" in ar_info.keys():
             c = 0 #喪失カウントをリセット
@@ -81,7 +81,7 @@ try:
                 print("keisoku_AR")
                 starttime_AR = time.time()
                 Flag_AR = True
-            if Flag_AR and time.time()-starttime_AR >= 1.0:
+            if Flag_AR and time.time()-starttime_AR >= 3.0:
                 Flag_AR = False #フラグをリセット
                 AR_powerplan = AR_powerplanner(ar_info)
                 Motor2.go(AR_powerplan["R"])

@@ -21,8 +21,9 @@ class Picam():
         self.picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous})
 
         # Libcamera's setting to use AF mode (AFSpeed Fast)
-        self.picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous,"AfSpeed":controls.AfSpeedEnum.Fast})
-
+        # self.picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous,"AfSpeed":controls.AfSpeedEnum.Fast})
+        self.picam2.set_controls({"AfMode":0,"LensPosition":4.5})
+        
     def capture(self, args):
         """
         引数0→写真
@@ -44,8 +45,8 @@ class Picam():
         else:
             return None
 
-    def show(self, img):
-        cv2.imshow('realtime',img)
+    def show(self, img, title='realtime'):
+        cv2.imshow(title,img)
         
     def setup_video(self,name="video"):
         # 動画ファイル保存用の設定
