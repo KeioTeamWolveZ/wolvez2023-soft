@@ -12,25 +12,30 @@ def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, 
     vec, distance = __targetting(marker_1,marker_2)
     #print(distance,vec[0])
     if distance > -0.03:
-        if distance > 0.03:
+        if distance > 0.15:
             '''
             接近するまでは連続的に近づく(アームとモジュールが横並びするまで？)
             '''
             #print(f"distance:{distance}")
             print(f"vec:{vec[0]}")
-            if vec[0] < 0.04:
+            if vec[0] < 0.1:
                 power_R = int(STANDARD_POWER )
                 power_L = int(0)
             else:
                 power_R = int(0)
                 power_L = int(STANDARD_POWER )
+        elif distance > 0.03:
+            if vec[0] < 0.03:
+                power_R = int(STANDARD_POWER-POWER_RANGE )
+                power_L = int(0)
+            else:
+                power_R = int(0)
+                power_L = int(STANDARD_POWER-POWER_RANGE )
         else:
             '''
-            接近後なので回転したい：要検討
+            接近後なのでアーム動かしたい：要検討
             '''
             print("finish")
-            #power_R = int(POWER_RANGE * vec[0])
-            #power_L = int(-1 * POWER_RANGE * vec[0])
             power_R = 0
             power_L = 0
 
@@ -39,8 +44,8 @@ def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, 
         distanceが負のときバックする？iranaikamo
         '''
         print("distance<0")
-        power_R = int(-1*STANDARD_POWER - POWER_RANGE * distance)
-        power_L = int(-1*STANDARD_POWER + POWER_RANGE * distance)
+        power_R = int(-1*STANDARD_POWER)
+        power_L = int(-1*STANDARD_POWER)
     
     return {"R":power_R,"L":power_L}
 
