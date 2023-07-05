@@ -63,7 +63,7 @@ try:
         # img = tg.addSpace(img)
         detected_img, ar_info = tg.detect_marker(img)
         #img = tg.addSpace(img)
-        #pc2.show(img)
+        pc2.show(img)
         
         if "1" in ar_info.keys() and "2" in ar_info.keys():
             c = 0 #喪失カウントをリセット
