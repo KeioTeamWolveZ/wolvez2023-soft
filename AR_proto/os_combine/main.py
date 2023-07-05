@@ -92,11 +92,12 @@ try:
                 Motor1.stop()
         
         else:
-            if aprc_c and not aprc_clear : #色認識による出力決定するかどうか
+            if aprc_c : #色認識による出力決定するかどうか
                 
                 plan_color = power_planner(img)
                 aprc_clear = plan_color["Clear"]
-                if plan_color["Detected_tf"]:
+                if plan_color["Detected_tf"] and not aprc_clear: #aprc_clearは色認識のゴールなので条件付けを1段階中に移動させました。こうすることで、色による接近が完了した後もARによる接近は可能（ただしARの接近に失敗するとまずいかも）
+                    #どこかにaprc_clearのリセットが必要
                     if not Flag_C:
                         starttime_color = time.time()
                         Flag_C = True
@@ -128,10 +129,11 @@ try:
                 else :
                     if c > 10:
                         '''
-                        数を30に変更
+                        数を10に変更
                         '''
                         Flag_C = False #色を見つけたら待機できるようにリセット
                         Flag_AR = False #AR認識もリセット
+                        aprc_clear = False #おそらくここかな？？
                         Motor2.go(40) #旋回用
                         print("-R:40-")
                         if tg.estimate_norm > 0.5:
