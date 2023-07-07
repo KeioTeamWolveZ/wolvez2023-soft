@@ -4,8 +4,9 @@ import numpy as np
 def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, "z":7} ,"3":{"x":0, "y":0, "z":0}}) -> dict:
     
     # 速度の設定
-    STANDARD_POWER = 70
+    STANDARD_POWER = 60
     POWER_RANGE = 10
+    aprc_state = False
 
     marker_1 = np.array([ar_info["1"]["x"],ar_info["1"]["y"],ar_info["1"]["z"]])
     marker_2 = np.array([ar_info["2"]["x"],ar_info["2"]["y"],ar_info["2"]["z"]])
@@ -38,6 +39,7 @@ def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, 
             print("finish")
             power_R = 0
             power_L = 0
+            aprc_state = True
 
     else:
         '''
@@ -47,7 +49,7 @@ def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, 
         power_R = int(-1*STANDARD_POWER)
         power_L = int(-1*STANDARD_POWER)
     
-    return {"R":power_R,"L":power_L}
+    return {"R":power_R,"L":power_L,"aprc_state":aprc_state}
 
 def __targetting(marker_1:np.ndarray=np.zeros(3), marker_2:np.ndarray=np.zeros(3)):
     '''

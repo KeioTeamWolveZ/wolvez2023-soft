@@ -25,7 +25,7 @@ LOW_COLOR = np.array([150, 64, 0])
 HIGH_COLOR = np.array([179, 255, 255])
 
 # 抽出する青色の塊のしきい値
-AREA_RATIO_THRESHOLD = 0.005
+AREA_RATIO_THRESHOLD = 0.0005
 
 """
 指定した範囲の色の物体の座標を取得する関数
@@ -53,7 +53,10 @@ def find_specific_color(frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR):
     
     if len(areas) == 0 or np.max(areas) / (h*w) < AREA_RATIO_THRESHOLD:
         # 見つからなかったらNoneを返す
-        # print("the area is too small")
+        try:
+            print(np.max(areas) / (h*w) )
+        except:
+            print("no color")
         return None
     else:
         print("@powerplanner\ncolor area = ",np.max(areas) / (h*w))
@@ -67,12 +70,15 @@ def find_specific_color(frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR):
         return (x,y,max_area)
 
 
-def power_calculation(pos,h,w):
-    
-    xn = 2*(pos[0]-w/2) / w
-    power_R = int(STANDARD_POWER - POWER_RANGE * xn)
-    power_L = int(STANDARD_POWER + POWER_RANGE * xn)
-    
+def power_calculation(pos,h,w,flag):
+    if not flag:
+        xn = 2*(pos[0]-w/2) / w
+        power_R = int(STANDARD_POWER - POWER_RANGE * xn)
+        power_L = int(STANDARD_POWER + POWER_RANGE * xn)
+    else:
+        xn = 2*(pos[0]+300-w/2) / w
+        power_R = int(STANDARD_POWER - POWER_RANGE * xn)
+        power_L = power_R
     return power_R,power_L
 
 """
@@ -116,9 +122,10 @@ def power_planner(frame):
         )
     
     if pos is not None:
-        power_R, power_L = power_calculation(pos,height,width)
+        power_R, power_L = power_calculation(pos,height,width,aprc_clear)
         detected = True
-        if pos[2] > 28000:
+        if pos[2] > 25000:
+            # arm temae : 28000
             aprc_clear = True #これは目標に到達できたかのbool値
         print(aprc_clear)
         

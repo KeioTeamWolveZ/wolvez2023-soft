@@ -50,10 +50,11 @@ c=0
 try:
     loop_start = time.time()
     loop_count = 0
+    APRC_STATE = False
     while True:
         loop_count += 1
         # capture and detect markers
-        pc2.picam2.set_controls({"AfMode":0,"LensPosition":4.2})
+        pc2.picam2.set_controls({"AfMode":0,"LensPosition":4.8})
         img = pc2.capture(1)
         
         #rgb_info = cd.get_color_rgb(img)
@@ -67,6 +68,7 @@ try:
         img2 = pc2.capture(1)
         detected_img, ar_info = tg.detect_marker(img)
         #img = tg.addSpace(img)
+        
         pc2.show(img)
         #pc2.show(img2,'realtime2')
         
@@ -84,21 +86,28 @@ try:
             if Flag_AR and time.time()-starttime_AR >= 1.0:
                 Flag_AR = False #フラグをリセット
                 AR_powerplan = AR_powerplanner(ar_info)
-                Motor2.go(AR_powerplan["R"])
-                Motor1.go(AR_powerplan["L"])
-                time.sleep(0.1)
-                print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
-                Motor2.stop()
-                Motor1.stop()
-        
+                APRC_STATE = AR_powerplan['aprc_state']
+                if not APRC_STATE:
+                        Motor2.go(AR_powerplan["R"])
+                        Motor1.go(AR_powerplan["L"])
+                        time.sleep(0.1)
+                        print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
+                        Motor2.stop()
+                        Motor1.stop()
+                else:
+                        Motor2.stop()
+                        Motor1.stop()
+                        print('state_change')
+                        connecting_state = 1
         else:
             
             if aprc_c : #色認識による出力決定するかどうか
                 
                 plan_color = power_planner(img)
                 aprc_clear = plan_color["Clear"]
-                if plan_color["Detected_tf"] and not aprc_clear: #aprc_clearは色認識のゴールなので条件付けを1段階中に移動させました。こうすることで、色による接近が完了した後もARによる接近は可能（ただしARの接近に失敗するとまずいかも）
+                if plan_color["Detected_tf"] : #aprc_clearは色認識のゴールなので条件付けを1段階中に移動させました。こうすることで、色による接近が完了した後もARによる接近は可能（ただしARの接近に失敗するとまずいかも）
                     #どこかにaprc_clearのリセットが必要
+                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     if not Flag_C:
                         starttime_color = time.time()
                         Flag_C = True
@@ -107,7 +116,7 @@ try:
                         Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
                         '''
                     
-                    if Flag_C and time.time()-starttime_color >= 1.0:
+                    if Flag_C and time.time()-starttime_color >= 2.0:
                         '''
                         5秒超えたら入ってくる
                         '''
@@ -138,7 +147,7 @@ try:
                         Motor2.go(40) #旋回用
                         print("-R:40-")
                         if tg.estimate_norm > 0.5:
-                                time.sleep(0.3)
+                                time.sleep(0.2)
                                 print('0.3')
                         else:
                                 time.sleep(0.1)

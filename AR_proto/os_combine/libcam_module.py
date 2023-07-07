@@ -46,7 +46,9 @@ class Picam():
             return None
 
     def show(self, img, title='realtime'):
+        cv2.namedWindow(title,cv2.WINDOW_NORMAL)
         cv2.imshow(title,img)
+        cv2.resizeWindow('realtime',640,480)
         
     def setup_video(self,name="video"):
         # 動画ファイル保存用の設定
