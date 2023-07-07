@@ -67,7 +67,7 @@ try:
         img2 = pc2.capture(1)
         detected_img, ar_info = tg.detect_marker(img)
         #img = tg.addSpace(img)
-        #pc2.show(img)
+        pc2.show(img)
         #pc2.show(img2,'realtime2')
         
         if "1" in ar_info.keys() and "2" in ar_info.keys():
@@ -92,6 +92,7 @@ try:
                 Motor1.stop()
         
         else:
+            
             if aprc_c : #色認識による出力決定するかどうか
                 
                 plan_color = power_planner(img)
@@ -127,7 +128,7 @@ try:
                         動いた後にストップさせる
                         '''
                 else :
-                    if c > 10:
+                    if c > 10 and not aprc_clear:
                         '''
                         数を10に変更
                         '''

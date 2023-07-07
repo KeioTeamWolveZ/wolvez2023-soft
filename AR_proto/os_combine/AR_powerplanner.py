@@ -4,7 +4,7 @@ import numpy as np
 def AR_powerplanner(ar_info:dict={"1":{"x":0, "y":3, "z":5} ,"2":{"x":1, "y":0, "z":7} ,"3":{"x":0, "y":0, "z":0}}) -> dict:
     
     # 速度の設定
-    STANDARD_POWER = 50
+    STANDARD_POWER = 70
     POWER_RANGE = 10
 
     marker_1 = np.array([ar_info["1"]["x"],ar_info["1"]["y"],ar_info["1"]["z"]])
