@@ -17,7 +17,7 @@ try:
  #   Motor2.back(80)
     #Motor2.back(90)
 #     time.sleep(1.08)
-    time.sleep(0.3)
+    time.sleep(3)
 
     #Motor.back(100)
     #time.sleep(3)
