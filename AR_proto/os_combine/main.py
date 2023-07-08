@@ -42,6 +42,7 @@ aprc_c = True
 Flag_AR = False
 Flag_C = False
 aprc_clear = False
+connecting_state = 0
 
 #sousitu count
 c=0
@@ -67,6 +68,7 @@ try:
         #pc2.picam2.set_controls({"AfMode":0,"LensPosition":6.5})
         img2 = pc2.capture(1)
         detected_img, ar_info = tg.detect_marker(img)
+        print(ar_info)
         #img = tg.addSpace(img)
         
         pc2.show(img)
@@ -88,10 +90,16 @@ try:
                 AR_powerplan = AR_powerplanner(ar_info)
                 APRC_STATE = AR_powerplan['aprc_state']
                 if not APRC_STATE:
-                        Motor2.go(AR_powerplan["R"])
-                        Motor1.go(AR_powerplan["L"])
-                        time.sleep(0.1)
-                        print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
+                        if AR_powerplan["R"] > 0:
+                                Motor2.go(AR_powerplan["R"])
+                                Motor1.go(AR_powerplan["L"])
+                                time.sleep(0.1)
+                                print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
+                        else:
+                                Motor2.back(-AR_powerplan["R"])
+                                Motor1.back(-AR_powerplan["L"])
+                                time.sleep(0.3)
+                                print("Back!")
                         Motor2.stop()
                         Motor1.stop()
                 else:
@@ -103,11 +111,10 @@ try:
             
             if aprc_c : #色認識による出力決定するかどうか
                 
-                plan_color = power_planner(img)
+                plan_color = power_planner(img,connecting_state)
                 aprc_clear = plan_color["Clear"]
-                if plan_color["Detected_tf"] : #aprc_clearは色認識のゴールなので条件付けを1段階中に移動させました。こうすることで、色による接近が完了した後もARによる接近は可能（ただしARの接近に失敗するとまずいかも）
-                    #どこかにaprc_clearのリセットが必要
-                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                if plan_color["Detected_tf"] :
+                    #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     if not Flag_C:
                         starttime_color = time.time()
                         Flag_C = True
@@ -122,14 +129,27 @@ try:
                         '''
                         c = 0 #喪失カウントをリセット
                         Flag_C = False #フラグをリセット
-                        Motor2.go(plan_color["R"])
-                        Motor1.go(plan_color["L"])
-                        # print("detected color")
-                        time.sleep(0.2)
-                        '''
-                        色認識の出力の離散化：出力する時間を0.2秒に
-                        '''
-                        print("-Color- R:",plan_color["R"],"L:",plan_color["L"]) 
+                        sleep_time = plan_color["w_rate"] * 0.2 ### sleep zikan wo keisan
+                        if not aprc_clear: ### go janakute back wo yobu hituyou ga aru
+                                Motor2.go(plan_color["R"])
+                                Motor1.go(plan_color["L"])
+                                # print("detected color")
+                                time.sleep(0.2)
+                                print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
+                                '''
+                                色認識の出力の離散化：出力する時間を0.2秒に
+                                '''
+                        else:
+                                if plan_color["R"] > 0:
+                                        Motor2.back(plan_color["R"])
+                                        Motor1.go(plan_color["L"])
+                                        time.sleep(sleep_time)
+                                        print("R_rotate:",plan_color["R"],"sleep_time:",sleep_time)
+                                else:
+                                        Motor2.go(-plan_color["R"])
+                                        Motor1.back(-plan_color["L"])
+                                        time.sleep(sleep_time)
+                                        print("L_rotate:",-plan_color["R"],"sleep_time:",sleep_time) 
                     
                         Motor2.stop()
                         Motor1.stop()
@@ -143,12 +163,12 @@ try:
                         '''
                         Flag_C = False #色を見つけたら待機できるようにリセット
                         Flag_AR = False #AR認識もリセット
-                        aprc_clear = False #おそらくここかな？？
+                        aprc_clear = False #aprc_clearのリセット
                         Motor2.go(40) #旋回用
                         print("-R:40-")
                         if tg.estimate_norm > 0.5:
                                 time.sleep(0.2)
-                                print('0.3')
+                                print('0.2')
                         else:
                                 time.sleep(0.1)
                                 print('0.1')
