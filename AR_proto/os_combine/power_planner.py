@@ -27,7 +27,7 @@ POWER_RANGE = 10
 LOW_COLOR = {0:np.array([[0, 64, 0],[150, 64, 0]]),1:np.array([100, 75, 75])}
 HIGH_COLOR = {0:np.array([[30, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}
 
-# 抽出する青色の塊のしきい値
+# 抽出する色の塊のしきい値
 AREA_RATIO_THRESHOLD = 0.0005
 
 """
