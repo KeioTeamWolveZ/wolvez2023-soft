@@ -15,6 +15,7 @@ import datetime
 # Import other file
 import libcam
 
+arm_id = "3"
 
 # Definitions
 """
@@ -35,7 +36,7 @@ class Ar_cansat():
         # マーカーの辞書選択
         self.dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
         #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
-        self.id_size = {1:0.0095,2:0.0199,3:0.025,4:0.01,5:0.01,6:0.01,7:0.025,8:0.025,9:0.01,10:0.01}
+        self.id_size = {1:0.0095,2:0.0199,3:0.0095,4:0.0199,5:0.01,6:0.01,7:0.025,8:0.025,9:0.01,10:0.01}
         self.debug_mode = False
         self.estimate_norm = 1
         
@@ -186,7 +187,7 @@ class Target(Ar_cansat):
         Description:
             
         """
-        pitch=ar_info["1"]["pitch"]
+        pitch=ar_info[arm_id]["pitch"]
         self.face_tf = False
         if abs(pitch)<10.0:
 #             print("FRONT OF MARKER!!!!!")
@@ -194,8 +195,8 @@ class Target(Ar_cansat):
         return self.face_tf
     
     def theta(self,info):
-        x=info['1']['x']
-        z=info['1']['z']
+        x=info[arm_id]['x']
+        z=info[arm_id]['z']
         
         norm=np.linalg.norm([x,z])
         self.arg=np.arcsin(x/norm)

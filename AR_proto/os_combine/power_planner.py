@@ -9,8 +9,8 @@ import cv2
 import numpy as np
 
 # 速度の設定
-STANDARD_POWER = 40
-POWER_RANGE = 10
+STANDARD_POWER = 45
+POWER_RANGE = 15
 
 
 # 色の設定
@@ -24,8 +24,11 @@ POWER_RANGE = 10
 # LOW_COLOR = np.array([150, 64, 0])
 # HIGH_COLOR = np.array([179, 255, 255])
 #{0:red,1:blue}
-LOW_COLOR = {0:np.array([[0, 64, 0],[150, 64, 0]]),1:np.array([100, 75, 75])}
-HIGH_COLOR = {0:np.array([[30, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}
+LOW_COLOR = {0:np.array([150, 64, 0]),1:np.array([38, 64, 85])}
+HIGH_COLOR = {0:np.array([179, 255, 255]),1:np.array([77, 255, 255])}
+# HIGH_COLOR = np.array([179, 255, 255])
+# LOW_COLOR = {0:np.array([[0, 64, 0],[150, 64, 0]]),1:np.array([100, 75, 75])}
+# HIGH_COLOR = {0:np.array([[10, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}
 
 # 抽出する色の塊のしきい値
 AREA_RATIO_THRESHOLD = 0.0005
@@ -37,7 +40,42 @@ AREA_RATIO_THRESHOLD: area_ratio未満の塊は無視する
 LOW_COLOR: 抽出する色の下限(h,s,v)
 HIGH_COLOR: 抽出する色の上限(h,s,v)
 """
-# def find_specific_color(frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR):
+def find_specific_color(frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR,connecting_state):
+    # 高さ，幅，チャンネル数
+    h,w,c = frame.shape
+
+    # hsv色空間に変換
+    hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
+    
+    # 色を抽出する
+    ex_img = cv2.inRange(hsv,LOW_COLOR[connecting_state],HIGH_COLOR[connecting_state])
+
+    # 輪郭抽出
+    # 変更点 < opencvのバージョンの違いにより？引数を少なく設定>
+    #_,contours,hierarchy = cv2.findContours(ex_img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    contours,hierarchy = cv2.findContours(ex_img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    # 面積を計算
+    areas = np.array(list(map(cv2.contourArea,contours)))
+    
+    if len(areas) == 0 or np.max(areas) / (h*w) < AREA_RATIO_THRESHOLD:
+        # 見つからなかったらNoneを返す
+        try:
+            print(np.max(areas) / (h*w) )
+        except:
+            print("no color")
+        return None
+    else:
+        #print("@powerplanner\ncolor area = ",np.max(areas) / (h*w))
+        # 面積が最大の塊の重心を計算し返す
+        max_idx = np.argmax(areas)
+        max_area = areas[max_idx]
+        max_a = areas[max_idx]
+        result = cv2.moments(contours[max_idx])
+        x = int(result["m10"]/result["m00"])
+        y = int(result["m01"]/result["m00"])
+        return (x,y,max_area)
+        
+# def find_specific_color(frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR,connecting_state):
     # # 高さ，幅，チャンネル数
     # h,w,c = frame.shape
 
@@ -45,8 +83,12 @@ HIGH_COLOR: 抽出する色の上限(h,s,v)
     # hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
     
     # # 色を抽出する
-    # ex_img = cv2.inRange(hsv,LOW_COLOR,HIGH_COLOR)
-
+    # if connecting_state == 0:
+        # ex_img1 = cv2.inRange(hsv,LOW_COLOR[connecting_state][0,:],HIGH_COLOR[connecting_state][0,:])
+        # ex_img2 = cv2.inRange(hsv,LOW_COLOR[connecting_state][1,:],HIGH_COLOR[connecting_state][1,:])
+        # ex_img = ex_img1 + ex_img2
+    # else:
+        # ex_img = cv2.inRange(hsv,LOW_COLOR[connecting_state],HIGH_COLOR[connecting_state])
     # # 輪郭抽出
     # # 変更点 < opencvのバージョンの違いにより？引数を少なく設定>
     # #_,contours,hierarchy = cv2.findContours(ex_img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
@@ -71,45 +113,6 @@ HIGH_COLOR: 抽出する色の上限(h,s,v)
         # x = int(result["m10"]/result["m00"])
         # y = int(result["m01"]/result["m00"])
         # return (x,y,max_area)
-        
-def find_specific_color(frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR,connecting_state):
-    # 高さ，幅，チャンネル数
-    h,w,c = frame.shape
-
-    # hsv色空間に変換
-    hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
-    
-    # 色を抽出する
-    if connecting_state == 0:
-        ex_img1 = cv2.inRange(hsv,LOW_COLOR[connecting_state][0,:],HIGH_COLOR[connecting_state][0,:])
-        ex_img2 = cv2.inRange(hsv,LOW_COLOR[connecting_state][1,:],HIGH_COLOR[connecting_state][1,:])
-        ex_img = ex_img1 + ex_img2
-    else:
-        ex_img = cv2.inRange(hsv,LOW_COLOR[connecting_state],HIGH_COLOR[connecting_state])
-    # 輪郭抽出
-    # 変更点 < opencvのバージョンの違いにより？引数を少なく設定>
-    #_,contours,hierarchy = cv2.findContours(ex_img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-    contours,hierarchy = cv2.findContours(ex_img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-    # 面積を計算
-    areas = np.array(list(map(cv2.contourArea,contours)))
-    
-    if len(areas) == 0 or np.max(areas) / (h*w) < AREA_RATIO_THRESHOLD:
-        # 見つからなかったらNoneを返す
-        try:
-            print(np.max(areas) / (h*w) )
-        except:
-            print("no color")
-        return None
-    else:
-        print("@powerplanner\ncolor area = ",np.max(areas) / (h*w))
-        # 面積が最大の塊の重心を計算し返す
-        max_idx = np.argmax(areas)
-        max_area = areas[max_idx]
-        max_a = areas[max_idx]
-        result = cv2.moments(contours[max_idx])
-        x = int(result["m10"]/result["m00"])
-        y = int(result["m01"]/result["m00"])
-        return (x,y,max_area)
 
 
 def power_calculation(pos,h,w,flag):
@@ -167,10 +170,11 @@ def power_planner(frame,connecting_state):
     
     if pos is not None:
         detected = True
-        if pos[2] > 25000:
+        if pos[2] > 20000:
             # arm temae : 28000
+            # arm red : 25000
             aprc_clear = True #これは目標に到達できたかのbool値
-        print(aprc_clear)
+        print("aprc_clear : ",aprc_clear)
         power_R, power_L, w_rate = power_calculation(pos,height,width,aprc_clear)
         
     else:

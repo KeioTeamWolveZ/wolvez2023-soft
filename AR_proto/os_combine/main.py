@@ -21,6 +21,8 @@ import RPi.GPIO as GPIO
 from power_planner import power_planner
 from AR_powerplanner import AR_powerplanner
 from black_extractor import get_color_hsv
+# arm controller
+from connecting_check import arm_grasping, checking # class hi-taiou
 
 save_video = True
 
@@ -42,10 +44,14 @@ aprc_c = True
 Flag_AR = False
 Flag_C = False
 aprc_clear = False
-connecting_state = 0
+connecting_state = 1
+
+# AR Marker
+arm_id = "3"
 
 #sousitu count
 c=0
+
 
 # Main loop
 try:
@@ -53,6 +59,7 @@ try:
     loop_count = 0
     APRC_STATE = False
     while True:
+        print('connecting_state:',connecting_state)
         loop_count += 1
         # capture and detect markers
         pc2.picam2.set_controls({"AfMode":0,"LensPosition":4.8})
@@ -73,40 +80,53 @@ try:
         
         pc2.show(img)
         #pc2.show(img2,'realtime2')
-        
-        if "1" in ar_info.keys() and "2" in ar_info.keys():
+        if connecting_state == 0:
+                target_id = "2"
+                arm_id = "3"
+        else:
+                target_id = "4"
+                arm_id= "4"
+                
+        if target_id in ar_info.keys() and arm_id in ar_info.keys():
+            # print('ar_aprc!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
             c = 0 #喪失カウントをリセット
             aprc_c = False #アプローチの仕方のbool
-            x = ar_info['1']['x'] #使ってなさそう
-            tg.estimate_norm = ar_info['2']['norm'] #使u
+            #x = ar_info[arm_id]['x'] #使ってなさそう
+            tg.estimate_norm = ar_info[target_id]['norm'] #使u
             #print(tg.estimate_norm)
-            arg = tg.theta(ar_info) #使ってなさそう
+            # arg = tg.theta(ar_info) #使ってなさそう
             if not Flag_AR:
                 print("keisoku_AR")
                 starttime_AR = time.time()
                 Flag_AR = True
             if Flag_AR and time.time()-starttime_AR >= 1.0:
                 Flag_AR = False #フラグをリセット
-                AR_powerplan = AR_powerplanner(ar_info)
+                AR_powerplan = AR_powerplanner(ar_info,connecting_state)
                 APRC_STATE = AR_powerplan['aprc_state']
                 if not APRC_STATE:
-                        if AR_powerplan["R"] > 0:
+                        if AR_powerplan["R"] > -0.1:
                                 Motor2.go(AR_powerplan["R"])
                                 Motor1.go(AR_powerplan["L"])
                                 time.sleep(0.1)
+                                Motor2.stop()
+                                Motor1.stop()
                                 print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
                         else:
+                                
                                 Motor2.back(-AR_powerplan["R"])
                                 Motor1.back(-AR_powerplan["L"])
                                 time.sleep(0.3)
+                                Motor2.stop()
+                                Motor1.stop()
                                 print("Back!")
-                        Motor2.stop()
-                        Motor1.stop()
+                                #arm_grasping()
                 else:
                         Motor2.stop()
                         Motor1.stop()
                         print('state_change')
-                        connecting_state = 1
+                        #arm_grasping()
+                        #checking(img,connecting_state)
+                        connecting_state += 1
         else:
             
             if aprc_c : #色認識による出力決定するかどうか
@@ -129,7 +149,7 @@ try:
                         '''
                         c = 0 #喪失カウントをリセット
                         Flag_C = False #フラグをリセット
-                        sleep_time = plan_color["w_rate"] * 0.2 ### sleep zikan wo keisan
+                        sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
                         if not aprc_clear: ### go janakute back wo yobu hituyou ga aru
                                 Motor2.go(plan_color["R"])
                                 Motor1.go(plan_color["L"])
@@ -140,7 +160,7 @@ try:
                                 色認識の出力の離散化：出力する時間を0.2秒に
                                 '''
                         else:
-                                if plan_color["R"] > 0:
+                                if plan_color["R"] > -0.1:
                                         Motor2.back(plan_color["R"])
                                         Motor1.go(plan_color["L"])
                                         time.sleep(sleep_time)
@@ -168,10 +188,10 @@ try:
                         print("-R:40-")
                         if tg.estimate_norm > 0.5:
                                 time.sleep(0.2)
-                                print('0.2')
+                                print('sleeptime : 0.2')
                         else:
                                 time.sleep(0.1)
-                                print('0.1')
+                                print('sleeptime : 0.1')
                         Motor2.stop()
                         # Motor1.stop()
                         c = 0
