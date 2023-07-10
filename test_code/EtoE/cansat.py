@@ -452,11 +452,10 @@ class Cansat():
         return answer_mtx
      
     def sendLoRa(self): #通信モジュールの送信を行う関数
-        datalog = \
-                + "Test-state :" + self.states + ","\
-                + "GPS DATA   :" + gps.Lat + "," + gps.Lon + ","\
-                + "BNO055 DATA:" + "ax-" + self.ax + "," + "ay-" + self.ay + "," + "az-" + self.az + "ex-" + self.ex
-
+        datalog = str(self.state) + ","\
+                  + str(self.gps.Time) + ","\
+                  + str(self.gps.Lat) + ","\
+                  + str(self.gps.Lon)
         self.lora.sendData(datalog) #データを送信
         
     def stuck_detection(self):
