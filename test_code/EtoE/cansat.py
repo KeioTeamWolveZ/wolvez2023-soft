@@ -295,7 +295,6 @@ class Cansat():
 
             if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
                 self.img = self.pc2.capture(1)
-                self.img = self.tg.addSpace(self.img)
                 detected_img, ar_info = self.tg.detect_marker(self.img)
             else:
                 self.landstate = 2

@@ -17,10 +17,10 @@ class Arm():
 		self.pwm.start(0)
 
 	def up(self,buff=0):
-		self.pwm.ChangeDutyCycle(5.5+buff)
+		self.pwm.ChangeDutyCycle(8+buff)
 	
 	def down(self,buff=0):
-		self.pwm.ChangeDutyCycle(2.5+buff)
+		self.pwm.ChangeDutyCycle(5.5+buff)
 
 	def move(self,ref):
 		self.pwm.ChangeDutyCycle(ref)
