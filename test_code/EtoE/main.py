@@ -21,14 +21,15 @@ import time
 
 """
 
-state =  1
+state =  0
 
 cansat = Cansat(state)
 cansat.setup()
 
 try:
     while True:
-        # cansat.sensor()
+        if cansat.state >= 1:
+            cansat.sensor()
         time.sleep(0.03)
         cansat.sequence()
         if cansat.state >= 2:

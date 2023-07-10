@@ -109,6 +109,7 @@ class Cansat():
         self.mvfile()
 
     def mkdir(self): #フォルダ作成部分
+        os.mkdir(f'results/{self.startTime}')
         return
 
     def mkfile(self):
@@ -489,6 +490,6 @@ class Cansat():
         self.RED_LED.led_off()
         self.BLUE_LED.led_off()
         self.GREEN_LED.led_off()
-        self.cap.release()
+        self.pc2.stop()
         time.sleep(0.5)
         cv2.destroyAllWindows()

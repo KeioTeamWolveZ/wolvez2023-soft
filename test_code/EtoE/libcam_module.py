@@ -7,7 +7,7 @@ from datetime import datetime
 class Picam():
     def __init__(self):
         # define camera parameter
-        self.size = (640, 480)
+        self.size = (1800, 1000)
 
         # setting picam2 up
         self.picam2 = Picamera2()
