@@ -301,13 +301,13 @@ class Cansat():
                 print("\nThe arm was not calibrated")
                 self.pre_motorTime = time.time()
 
-            if "1" in ar_info.keys():
-                if ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.5:
-                    self.buff = 0.2
-                elif ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.5:
-                    self.buff = -0.2
-                else:
-                    self.arm_calibCount += 1
+            #if "1" in ar_info.keys():
+            #    if ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.5:
+            #        self.buff = 0.2
+            #   elif ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.5:
+            #        self.buff = -0.2
+            #   else:
+            #       self.arm_calibCount += 1
             
             if self.arm_calibCount >= 10:
                 self.landstate = 2
