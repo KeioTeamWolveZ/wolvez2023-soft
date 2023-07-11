@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-pin1 = 18
+pin1 = 8
 pin2 = 22
 pin3 = 24
 
