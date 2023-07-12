@@ -66,11 +66,11 @@ class MotorPowerPlanner():
         elif self.found_color['x'] >= 0:
             r_avoid = 30
             l_avoid = 0
-            found_boolean = False
+            found_boolean = True
         elif self.found_color['x'] <= 0:
             r_avoid = 0
             l_avoid = 30
-            found_boolean = False
+            found_boolean = True
         return found_boolean,r_avoid,l_avoid
 
     def power_calculation(self,pos,h,w):
