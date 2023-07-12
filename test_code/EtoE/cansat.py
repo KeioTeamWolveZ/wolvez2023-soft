@@ -274,35 +274,36 @@ class Cansat():
             self.countDropLoop = 0 #初期化の必要あり
 
     def landing(self): #着陸判定ステート。焼き切り&分離シートからの離脱が必要 -> パラシュートが検知された場合にはよける
-        if self.landingTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
-            self.landingTime = time.time()
-            self.RED_LED.led_off()
-            self.BLUE_LED.led_off()
-            self.GREEN_LED.led_on()
-            
-        if not self.landingTime == 0:
-            #焼き切りによるパラ分離
-            if self.landstate == 0:
-                GPIO.output(ct.const.SEPARATION_PARA,1) #電圧をHIGHにして焼き切りを行う
-                if time.time()-self.landingTime > ct.const.SEPARATION_TIME_THRE:
-                    GPIO.output(ct.const.SEPARATION_PARA,0) #焼き切りが危ないのでlowにしておく
-                    self.landstate = 1
-                    self.pre_motorTime = time.time()
-                    self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
-                    self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
+        if self.landstate == 0:
+            if self.landingTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
+                self.landingTime = time.time()
+                self.RED_LED.led_off()
+                self.BLUE_LED.led_off()
+                self.GREEN_LED.led_on()
+                
+            if not self.landingTime == 0:
+                #焼き切りによるパラ分離
+                if self.landstate == 0:
+                    GPIO.output(ct.const.SEPARATION_PARA,1) #電圧をHIGHにして焼き切りを行う
+                    if time.time()-self.landingTime > ct.const.SEPARATION_TIME_THRE:
+                        GPIO.output(ct.const.SEPARATION_PARA,0) #焼き切りが危ないのでlowにしておく
+                        self.landstate = 1
+                        self.pre_motorTime = time.time()
+                        self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
+                        self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
         
         #パラシュートの色を検知して離脱
         elif self.landstate == 1:
             # 走行中は色認識されなければ直進，されれば回避
             self.img = self.pc2.capture(1)
-            self.plan_color = power_planner(self.img,9)
+            self.plan_color = power_planner.power_planner(self.img,1)
             # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
             if not self.plan_color["Detected_tf"]:
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
             else:
-                self.MotorR.go(self.plan_color[2])
-                self.MotorL.go(self.plan_color[1])
+                self.MotorR.go(self.plan_color["L"])
+                self.MotorL.go(self.plan_color["R"])
 
                 self.stuck_detection()
 
@@ -315,9 +316,11 @@ class Cansat():
             if self.arm_calibTime == 0:
                 self.arm.up()
                 self.arm.down()
+                # self.arm.stop()
                 self.arm_calibTime = time.time()
 
             if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
+                print("here")
                 self.img = self.pc2.capture(1)
                 detected_img, ar_info = self.tg.detect_marker(self.img)
                 self.arm.calibration()  # 関数内でキャリブレーションを行う
