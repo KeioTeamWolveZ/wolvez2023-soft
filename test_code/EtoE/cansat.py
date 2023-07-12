@@ -294,6 +294,7 @@ class Cansat():
         #パラシュートの色を検知して離脱
         elif self.landstate == 1:
             self.img = self.pc2.capture(1)
+            plan_color = power_planner(img,connecting_state)
             self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
             if self.found_color[0]:
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
