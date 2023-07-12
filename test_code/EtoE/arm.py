@@ -18,31 +18,21 @@ class Arm():
 		self.pwm.start(0)
 
 	def up(self,buff=0):
-		GPIO.output(self.servo_pin, GPIO.HIGH)
 		self.pwm.ChangeDutyCycle(8+buff)
-		time.sleep(0.5)
-		GPIO.output(self.servo_pin, GPIO.LOW)
 		time.sleep(0.5)
 	
 	def down(self,buff=0):
-		GPIO.output(self.servo_pin, GPIO.HIGH)
 		self.pwm.ChangeDutyCycle(5.5+buff)
-		time.sleep(0.5)
-		GPIO.output(self.servo_pin, GPIO.LOW)
 		time.sleep(0.5)
 
 	def move(self,ref):
-		GPIO.output(self.servo_pin, GPIO.HIGH)
 		self.pwm.ChangeDutyCycle(ref)
-		time.sleep(0.2)
-		GPIO.output(self.servo_pin, GPIO.LOW)
 		time.sleep(0.2)
 		
 	def stop(self):
 		self.pwm.stop(0)
 
 	def calibration(self):
-		GPIO.output(self.servo_pin, GPIO.LOW)
 		return
 
 # class ArmHardPwm():
@@ -86,5 +76,6 @@ if __name__ == "__main__":
 		print("wating")
 		if end-start > 5:
 			break
+	GPIO.cleanup()
 	
 		

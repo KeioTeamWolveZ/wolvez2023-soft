@@ -316,7 +316,6 @@ class Cansat():
             if self.arm_calibTime == 0:
                 self.arm.up()
                 self.arm.down()
-                # self.arm.stop()
                 self.arm_calibTime = time.time()
 
             if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
