@@ -17,13 +17,19 @@ class Arm():
 		self.pwm.start(0)
 
 	def up(self,buff=0):
+		GPIO.output(self.servo_pin, GPIO.HIGH)
 		self.pwm.ChangeDutyCycle(8+buff)
+		GPIO.output(self.servo_pin, GPIO.LOW)
 	
 	def down(self,buff=0):
+		GPIO.output(self.servo_pin, GPIO.HIGH)
 		self.pwm.ChangeDutyCycle(5.5+buff)
+		GPIO.output(self.servo_pin, GPIO.LOW)
 
 	def move(self,ref):
+		GPIO.output(self.servo_pin, GPIO.HIGH)
 		self.pwm.ChangeDutyCycle(ref)
+		GPIO.output(self.servo_pin, GPIO.LOW)
 		
 	def stop(self):
 		self.pwm.stop(0)

@@ -19,6 +19,7 @@ import shutil
 
 
 import constant as ct
+import power_planner
 from bno055 import BNO055
 from motor import motor
 from gps import GPS
@@ -27,7 +28,6 @@ from led import led
 from arm import Arm
 from ar_module import Target
 from libcam_module import Picam
-from power_planner import MotorPowerPlanner
 
 """
 ステート説明
@@ -63,7 +63,7 @@ class Cansat():
         self.arm = Arm(ct.const.SERVO_PIN)
         self.tg = Target()
         self.pc2 = Picam()
-        self.mpp = MotorPowerPlanner()
+        # self.mpp = power_planner()
         self.RED_LED = led(ct.const.RED_LED_PIN)
         self.BLUE_LED = led(ct.const.BLUE_LED_PIN)
         self.GREEN_LED = led(ct.const.GREEN_LED_PIN)
@@ -204,7 +204,7 @@ class Cansat():
         self.arm.setup()
         if self.bno055.begin() is not True:
             print("Error initializing device")
-            exit()    
+            exit()
  
     def sensor(self): #セットアップ終了後
         self.timer = int(1000*(time.time() - self.startTime_time)) #経過時間 (ms)
@@ -287,59 +287,52 @@ class Cansat():
                 if time.time()-self.landingTime > ct.const.SEPARATION_TIME_THRE:
                     GPIO.output(ct.const.SEPARATION_PARA,0) #焼き切りが危ないのでlowにしておく
                     self.landstate = 1
-                    self.state = 4
-                    self.laststate = 4
-            
-        # if self.landstate == 1: #アームのキャリブレーション
-        #     if self.arm_calibTime == 0:
-        #         self.arm.down()
-        #         self.arm_calibTime = time.time()
-
-        #     if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
-        #         self.img = self.pc2.capture(1)
-        #         detected_img, ar_info = self.tg.detect_marker(self.img)
-        #     else:
-        #         self.landstate = 2
-        #         print("\nThe arm was not calibrated")
-        #         self.pre_motorTime = time.time()
-
-        #     #if "1" in ar_info.keys():
-        #     #    if ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.5:
-        #     #        self.buff = 0.2
-        #     #   elif ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.5:
-        #     #        self.buff = -0.2
-        #     #   else:
-        #     #       self.arm_calibCount += 1
-            
-        #     if self.arm_calibCount >= 10:
-        #         self.landstate = 2
+                    self.pre_motorTime = time.time()
+                    self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
+                    self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
         
         #パラシュートの色を検知して離脱
-        # elif self.landstate == 2:
-        #     if self.avoid_paraCount < ct.const.AVOID_COLOR_THRE:
-        #         self.img = self.pc2.capture(1)
-        #         self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
-        #         if self.found_color[0]:
-        #             self.MotorR.stop()
-        #             self.MotorL.stop()
-        #             self.avoid_paraCount += 1
-        #         else:
-        #             self.MotorR.go(self.found_color[1])
-        #             self.MotorL.go(self.found_color[2])
+        elif self.landstate == 1:
+            # 走行中は色認識されなければ直進，されれば回避
+            self.img = self.pc2.capture(1)
+            self.plan_color = power_planner(self.img,9)
+            # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
+            if not self.plan_color["Detected_tf"]:
+                self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
+                self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
+            else:
+                self.MotorR.go(self.plan_color[2])
+                self.MotorL.go(self.plan_color[1])
+
+                self.stuck_detection()
+
+            if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #10秒間モータ回して分離シートから十分離れる
+                self.MotorR.stop()
+                self.MotorL.stop()
+                self.landstate = 2
             
-        #     if self.avoid_paraCount == ct.const.AVOID_COLOR_THRE:
-        #         self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
-        #         self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
-        #         self.pre_motorTime = time.time()
+        if self.landstate == 2: #アームのキャリブレーション
+            if self.arm_calibTime == 0:
+                self.arm.up()
+                self.arm.down()
+                self.arm_calibTime = time.time()
 
-        #         self.stuck_detection()
+            if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
+                self.img = self.pc2.capture(1)
+                detected_img, ar_info = self.tg.detect_marker(self.img)
+                self.arm.calibration()  # 関数内でキャリブレーションを行う
+            else:
+                print("\n\n=====The arm was calibrated=====\n\n")
+                self.state = 4
+                self.laststate = 4
 
-        #     elif self.avoid_paraCount > ct.const.AVOID_COLOR_THRE:
-        #         if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #5秒間モータ回して分離シートから十分離れる
-        #             self.MotorR.stop()
-        #             self.MotorL.stop()
-        #             self.state = 4
-        #             self.laststate = 4
+            #if "1" in ar_info.keys():
+            #    if ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.5:
+            #        self.buff = 0.2
+            #   elif ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.5:
+            #        self.buff = -0.2
+            #   else:
+            #       self.arm_calibCount += 1
   
     def first_releasing(self):
         if self.modu_sepaTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
@@ -363,7 +356,7 @@ class Cansat():
             self.releasingstate = 2
         
         if self.releasingstate == 2:
-            if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #5秒間モータ回して分離シートから十分離れる
+            if time.time()-self.pre_motorTime > ct.const.RELEASING_MOTOR_TIME_THRE: #5秒間モータ回して一つめのモジュールから十分離れる
                     self.MotorR.stop()
                     self.MotorL.stop()
                     self.modu_sepaTime = 0
