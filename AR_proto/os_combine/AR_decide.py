@@ -11,10 +11,10 @@ class AR_ID_decider():
                 self.aprc_AR = False
 
         elif connecting_state == 1:
-            if "4" in ar_info.keys() or "4" in ar_info.keys():
+            if "3" in ar_info.keys() or "4" in ar_info.keys():
                 self.aprc_AR = True
                 self.omote_ura = 0
-            elif "6" in ar_info.keys() or "7" in ar_info.keys():
+            elif "5" in ar_info.keys() or "6" in ar_info.keys():
                 self.aprc_AR = True
                 self.omote_ura = 1
             else: 

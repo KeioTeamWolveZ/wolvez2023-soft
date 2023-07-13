@@ -24,6 +24,10 @@ from black_extractor import get_color_hsv
 # arm controller
 from connecting_check import arm_grasping, checking # class hi-taiou
 
+import AR_decide
+import MotorCMD
+
+
 save_video = True
 
 # instantiate objects from classes
@@ -31,6 +35,9 @@ tg = ar_module.Target()
 pc2 = libcam_module.Picam()
 #dub = dubins_module.DubinsRunner()
 #cd = ColorDetection()
+
+AR_ID = AR_decide.AR_ID_decider()
+Mc = MotorCMD.motor_cmd()
 
 # GPIO.setwarnings(False)
 Motor1 = motor.motor(6,5,13)
@@ -80,19 +87,20 @@ try:
         
         pc2.show(img)
         #pc2.show(img2,'realtime2')
-        if connecting_state == 0:
-                target_id = "2"
-                arm_id = "3"
-        else:
-                target_id = "4"
-                arm_id= "4"
-                
-        if target_id in ar_info.keys() and arm_id in ar_info.keys():
+        # if connecting_state == 0:
+        #     target_id = "2"
+        #     arm_id = "3"
+        # else:
+        #     target_id = "4"
+        #     arm_id = "4"
+        AR_checker = AR_ID.AR_decide(ar_info,connecting_state)
+        if AR_checker["AR"]:
+        # if target_id in ar_info.keys() and arm_id in ar_info.keys():
             # print('ar_aprc!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
             c = 0 #喪失カウントをリセット
             aprc_c = False #アプローチの仕方のbool
             #x = ar_info[arm_id]['x'] #使ってなさそう
-            tg.estimate_norm = ar_info[target_id]['norm'] #使u
+            tg.estimate_norm = ar_info[target_id]['norm'] #使u ここのtarget_idどうしよう
             #print(tg.estimate_norm)
             # arg = tg.theta(ar_info) #使ってなさそう
             if not Flag_AR:
@@ -100,16 +108,17 @@ try:
                 starttime_AR = time.time()
                 Flag_AR = True
             if Flag_AR and time.time()-starttime_AR >= 1.0:
-                Flag_AR = False #フラグをリセット
-                AR_powerplan = AR_powerplanner(ar_info,connecting_state)
+                Flag_AR = False #フラグをリセット←これもAR_decideの中で定義しても良いかも
+                AR_powerplan = AR_powerplanner(ar_info,AR_checker["side"],connecting_state)  #sideを追加
                 APRC_STATE = AR_powerplan['aprc_state']
-                if not APRC_STATE:
+                if not APRC_STATE:      #　接近できたかどうか
                         if AR_powerplan["R"] > -0.1:
                                 Motor2.go(AR_powerplan["R"])
                                 Motor1.go(AR_powerplan["L"])
                                 time.sleep(0.1)
                                 Motor2.stop()
                                 Motor1.stop()
+                                # Mc.move(AR_powerplan["R"],AR_powerplan["L"],0.1)
                                 print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
                         else:
                                 
@@ -118,6 +127,7 @@ try:
                                 time.sleep(0.3)
                                 Motor2.stop()
                                 Motor1.stop()
+                                # Mc.move(AR_powerplan["R"],AR_powerplan["L"],0.3)
                                 print("Back!")
                                 #arm_grasping()
                 else:
@@ -125,7 +135,7 @@ try:
                         Motor1.stop()
                         print('state_change')
                         #arm_grasping()
-                        #checking(img,connecting_state)
+                        #checking(img,connecting_state) #ここは出力が0になるからこの関数じゃない方が良い？
                         connecting_state += 1
         else:
             
@@ -155,6 +165,7 @@ try:
                                 Motor1.go(plan_color["L"])
                                 # print("detected color")
                                 time.sleep(0.2)
+                                # Mc.move(plan_color["R"],plan_color["L"],0.2)
                                 print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
                                 '''
                                 色認識の出力の離散化：出力する時間を0.2秒に
@@ -170,6 +181,7 @@ try:
                                         Motor1.back(-plan_color["L"])
                                         time.sleep(sleep_time)
                                         print("L_rotate:",-plan_color["R"],"sleep_time:",sleep_time) 
+                                # Mc.move(plan_color["R"],plan_color["L"],sleep_time)
                     
                         Motor2.stop()
                         Motor1.stop()
