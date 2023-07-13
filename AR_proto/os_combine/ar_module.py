@@ -15,7 +15,7 @@ import datetime
 # Import other file
 import libcam
 
-arm_id = "3"
+arm_id = "1"
 
 # Definitions
 """
@@ -39,6 +39,7 @@ class Ar_cansat():
         self.id_size = {1:0.0095,2:0.0199,3:0.0095,4:0.0199,5:0.01,6:0.01,7:0.025,8:0.025,9:0.01,10:0.01}
         self.debug_mode = False
         self.estimate_norm = 1
+        self.aprc_AR = False
         
     def addSpace(self,img):
         self.debug_mode = True
@@ -176,6 +177,37 @@ class Ar_cansat():
             img, self.ar_info = img, {}
 
         return img, self.ar_info
+    
+    def AR_decide(self, ar_info, connecting_state):
+        """
+        ARマーカーが見えたらAR出力にするためのbool値とID別のノルムの計算
+        """
+        if connecting_state == 0:
+            if "1" in ar_info.keys() and "2" in ar_info.keys():
+                self.aprc_AR = True
+                side = 'marker_R'
+                norm = ar_info['2']['norm']
+            else: 
+                self.aprc_AR = False
+
+        elif connecting_state == 1:
+            if "3" in ar_info.keys() or "5" in ar_info.keys():
+                self.aprc_AR = True
+                side = 'marker_R'
+                if "3" in ar_info.keys():
+                    norm = ar_info['3']['norm']
+                else:
+                    norm = ar_info['5']['norm']
+            elif "4" in ar_info.keys() or "6" in ar_info.keys():
+                self.aprc_AR = True
+                side = 'marker_L'
+                if "4" in ar_info.keys():
+                    norm = ar_info['4']['norm']
+                else:
+                    norm = ar_info['6']['norm']
+            else: 
+                self.aprc_AR = False
+        return {"AR":self.aprc_AR, "side":side, "norm":norm}
 
 
 class Target(Ar_cansat):

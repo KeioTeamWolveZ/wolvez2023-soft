@@ -51,7 +51,7 @@ aprc_c = True
 Flag_AR = False
 Flag_C = False
 aprc_clear = False
-connecting_state = 1
+connecting_state = 0
 
 # AR Marker
 arm_id = "3"
@@ -113,21 +113,21 @@ try:
                 APRC_STATE = AR_powerplan['aprc_state']
                 if not APRC_STATE:      #　接近できたかどうか
                         if AR_powerplan["R"] > -0.1:
-                                Motor2.go(AR_powerplan["R"])
-                                Motor1.go(AR_powerplan["L"])
-                                time.sleep(0.1)
-                                Motor2.stop()
-                                Motor1.stop()
-                                # Mc.move(AR_powerplan["R"],AR_powerplan["L"],0.1)
+                                # Motor2.go(AR_powerplan["R"])
+                                # Motor1.go(AR_powerplan["L"])
+                                # time.sleep(0.1)
+                                # Motor2.stop()
+                                # Motor1.stop()
+                                Mc.move(AR_powerplan["R"],AR_powerplan["L"],0.1)
                                 print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
                         else:
                                 
-                                Motor2.back(-AR_powerplan["R"])
-                                Motor1.back(-AR_powerplan["L"])
-                                time.sleep(0.3)
-                                Motor2.stop()
-                                Motor1.stop()
-                                # Mc.move(AR_powerplan["R"],AR_powerplan["L"],0.3)
+                                # Motor2.back(-AR_powerplan["R"])
+                                # Motor1.back(-AR_powerplan["L"])
+                                # time.sleep(0.3)
+                                # Motor2.stop()
+                                # Motor1.stop()
+                                Mc.move(AR_powerplan["R"],AR_powerplan["L"],0.3)
                                 print("Back!")
                                 #arm_grasping()
                 else:
@@ -161,27 +161,27 @@ try:
                         Flag_C = False #フラグをリセット
                         sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
                         if not aprc_clear: ### go janakute back wo yobu hituyou ga aru
-                                Motor2.go(plan_color["R"])
-                                Motor1.go(plan_color["L"])
+                                # Motor2.go(plan_color["R"])
+                                # Motor1.go(plan_color["L"])
                                 # print("detected color")
-                                time.sleep(0.2)
-                                # Mc.move(plan_color["R"],plan_color["L"],0.2)
+                                # time.sleep(0.2)
+                                Mc.move(plan_color["R"],plan_color["L"],0.2)
                                 print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
                                 '''
                                 色認識の出力の離散化：出力する時間を0.2秒に
                                 '''
                         else:
-                                if plan_color["R"] > -0.1:
-                                        Motor2.back(plan_color["R"])
-                                        Motor1.go(plan_color["L"])
-                                        time.sleep(sleep_time)
-                                        print("R_rotate:",plan_color["R"],"sleep_time:",sleep_time)
-                                else:
-                                        Motor2.go(-plan_color["R"])
-                                        Motor1.back(-plan_color["L"])
-                                        time.sleep(sleep_time)
-                                        print("L_rotate:",-plan_color["R"],"sleep_time:",sleep_time) 
-                                # Mc.move(plan_color["R"],plan_color["L"],sleep_time)
+                                # if plan_color["R"] > -0.1:
+                                #         Motor2.back(plan_color["R"])
+                                #         Motor1.go(plan_color["L"])
+                                #         time.sleep(sleep_time)
+                                #         print("R_rotate:",plan_color["R"],"sleep_time:",sleep_time)
+                                # else:
+                                #         Motor2.go(-plan_color["R"])
+                                #         Motor1.back(-plan_color["L"])
+                                #         time.sleep(sleep_time)
+                                #         print("L_rotate:",-plan_color["R"],"sleep_time:",sleep_time) 
+                                Mc.move(plan_color["R"],plan_color["L"],sleep_time)
                     
                         Motor2.stop()
                         Motor1.stop()
