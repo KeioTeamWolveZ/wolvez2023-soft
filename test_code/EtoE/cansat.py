@@ -416,7 +416,7 @@ class Cansat():
         if AR_checker["AR"]:
             self.vanish_c = 0 #喪失カウントをリセット
             self.aprc_c = False #アプローチの仕方のbool
-            self.tg.estimate_norm = self.tg.AR_decide(ar_info, self.connecting_state) #使u ここのtarget_idどうしよう
+            self.estimate_norm = AR_checker["norm"] #使u これself.いるん？？
             if not self.Flag_AR:
                 print("keisoku_AR")
                 starttime_AR = time.time()
@@ -479,7 +479,7 @@ class Cansat():
                         self.Flag_AR = False #AR認識もリセット
                         self.aprc_clear = False #aprc_clearのリセット
                         print("-R:40-")
-                        if self.tg.estimate_norm > 0.5:
+                        if self.estimate_norm > 0.5:
                             self.move(40,0,0.2)
                             print('sleeptime : 0.2')
                         else:

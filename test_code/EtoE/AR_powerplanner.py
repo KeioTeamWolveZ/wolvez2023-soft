@@ -1,43 +1,59 @@
 import numpy as np
 arm_id = "1"
 
-def AR_powerplanner(ar_info,connecting_state):
+def AR_powerplanner(ar_info,AR_checker,connecting_state):
     
     # 速度の設定
     STANDARD_POWER = 60
     POWER_RANGE = 10
     aprc_state = False
+    target_id = AR_checker["id"]
     if connecting_state == 0:
-        target_id = "2"
         marker_1 = np.array([ar_info[arm_id]["x"],ar_info[arm_id]["y"],ar_info[arm_id]["z"]])
         
     else:
-        target_id = "4"
         marker_1 = np.array([0.069,0.028,0.144])
     marker_target = np.array([ar_info[target_id]["x"],ar_info[target_id]["y"],ar_info[target_id]["z"]])
     vec, distance = __targetting(marker_1,marker_target)
     #print(distance,vec[0])
     print(f"distance:{distance}")
+    threshold = {"marker_R":[0.07,0.02],"marker_L":[-0.07,0.02],} # 使ってない
     if distance > -0.02:
         if distance > 0.15:
             '''
             接近するまでは連続的に近づく(アームとモジュールが横並びするまで？)
             '''
+            if AR_checker["side"] == "marker_R":
             #print(f"distance:{distance}")
             #print(f"vec:{vec[0]}")
-            if vec[0] < 0.07:
-                power_R = int(STANDARD_POWER )
-                power_L = int(0)
+                if vec[0] < 0.07:
+                    power_R = int(STANDARD_POWER )
+                    power_L = int(0)
+                else:
+                    power_R = int(0)
+                    power_L = int(STANDARD_POWER )
             else:
-                power_R = int(0)
-                power_L = int(STANDARD_POWER )
+                if vec[0] > -0.07:
+                    power_R = int(0)
+                    power_L = int(STANDARD_POWER )
+                else:
+                    power_R = int(STANDARD_POWER )
+                    power_L = int(0)
         elif distance > 0.03:
-            if vec[0] < 0.02:
-                power_R = int(STANDARD_POWER-POWER_RANGE )
-                power_L = int(0)
+            if AR_checker["side"] == "marker_R":
+                if vec[0] < 0.02:
+                    power_R = int(STANDARD_POWER - POWER_RANGE )
+                    power_L = int(0)
+                else:
+                    power_R = int(0)
+                    power_L = int(STANDARD_POWER - POWER_RANGE )
             else:
-                power_R = int(0)
-                power_L = int(STANDARD_POWER-POWER_RANGE )
+                if vec[0] > -0.02:
+                    power_R = int(0)
+                    power_L = int(STANDARD_POWER - POWER_RANGE )
+                else:
+                    power_R = int(STANDARD_POWER - POWER_RANGE )
+                    power_L = int(0)
         else:
             '''
             接近後なのでアーム動かしたい：要検討

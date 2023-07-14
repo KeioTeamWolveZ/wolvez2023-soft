@@ -187,8 +187,10 @@ class Ar_cansat():
                 self.aprc_AR = True
                 side = 'marker_R'
                 norm = ar_info['2']['norm']
+                target_id = ['2']
             else: 
                 self.aprc_AR = False
+                target_id = None
 
         elif connecting_state == 1:
             if "3" in ar_info.keys() or "5" in ar_info.keys():
@@ -196,18 +198,23 @@ class Ar_cansat():
                 side = 'marker_R'
                 if "3" in ar_info.keys():
                     norm = ar_info['3']['norm']
+                    target_id = ['3']
                 else:
                     norm = ar_info['5']['norm']
+                    target_id = ['5']
             elif "4" in ar_info.keys() or "6" in ar_info.keys():
                 self.aprc_AR = True
                 side = 'marker_L'
                 if "4" in ar_info.keys():
                     norm = ar_info['4']['norm']
+                    target_id = ['4']
                 else:
                     norm = ar_info['6']['norm']
+                    target_id = ['6']
             else: 
                 self.aprc_AR = False
-        return {"AR":self.aprc_AR, "side":side, "norm":norm}
+                target_id = None
+        return {"AR":self.aprc_AR, "side":side, "id":target_id, "norm":norm}
 
 
 class Target(Ar_cansat):
