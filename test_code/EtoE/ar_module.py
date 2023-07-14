@@ -182,6 +182,8 @@ class Ar_cansat():
         """
         ARマーカーが見えたらAR出力にするためのbool値とID別のノルムの計算
         """
+        side:str
+        norm:float
         if connecting_state == 0:
             if "1" in ar_info.keys() and "2" in ar_info.keys():
                 self.aprc_AR = True
@@ -189,6 +191,8 @@ class Ar_cansat():
                 norm = ar_info['2']['norm']
                 target_id = ['2']
             else: 
+                side = 'None'
+                norm = 0
                 self.aprc_AR = False
                 target_id = None
 
@@ -211,7 +215,9 @@ class Ar_cansat():
                 else:
                     norm = ar_info['6']['norm']
                     target_id = ['6']
-            else: 
+            else:
+                norm = 0
+                side = 'None'
                 self.aprc_AR = False
                 target_id = None
         return {"AR":self.aprc_AR, "side":side, "id":target_id, "norm":norm}

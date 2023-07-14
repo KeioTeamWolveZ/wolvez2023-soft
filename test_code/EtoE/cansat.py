@@ -96,8 +96,9 @@ class Cansat():
         self.Flag_AR = False
         self.Flag_C = False
         self.aprc_clear = False
-        self.connecting_state = 1
+        self.connecting_state = 0
         self.vanish_c = 0
+        self.estimate_norm = 100000
         
         #state管理用変数初期化
         self.gpscount=0
@@ -455,35 +456,35 @@ class Cansat():
                         Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
                         '''
                     
-                    if self.Flag_C and time.time()-starttime_color >= 2.0:
-                        '''
-                        5秒超えたら入ってくる
-                        '''
-                        self.vanish_c = 0 #喪失カウントをリセット
-                        self.Flag_C = False #フラグをリセット
-                        sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
-                        if not self.aprc_clear:
-                            self.move(plan_color["R"],plan_color["L"],0.2)
-                            print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
+                        if self.Flag_C and time.time()-starttime_color >= 2.0:
                             '''
-                            色認識の出力の離散化：出力する時間を0.2秒に
+                            5秒超えたら入ってくる
                             '''
-                        else:
-                            self.move(plan_color["R"],plan_color["L"],sleep_time)
+                            self.vanish_c = 0 #喪失カウントをリセット
+                            self.Flag_C = False #フラグをリセット
+                            sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
+                            if not self.aprc_clear:
+                                self.move(plan_color["R"],plan_color["L"],0.2)
+                                print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
+                                '''
+                                色認識の出力の離散化：出力する時間を0.2秒に
+                                '''
+                            else:
+                                self.move(plan_color["R"],plan_color["L"],sleep_time)
                 else :
-                    if self.vanish_c > 10 and not self.aprc_clear:
+                    if self.vanish_c > 20 and not self.aprc_clear:
                         '''
-                        数を10に変更
+                        数を20に変更
                         '''
                         self.Flag_C = False #色を見つけたら待機できるようにリセット
                         self.Flag_AR = False #AR認識もリセット
                         self.aprc_clear = False #aprc_clearのリセット
                         print("-R:40-")
                         if self.estimate_norm > 0.5:
-                            self.move(40,0,0.2)
+                            self.move(60,0,0.2)
                             print('sleeptime : 0.2')
                         else:
-                            self.move(40,0,0.1)
+                            self.move(60,0,0.1)
                             print('sleeptime : 0.1')
 
                         self.vanish_c = 0

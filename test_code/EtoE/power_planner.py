@@ -163,7 +163,7 @@ class PowerPlanner():
 
         aprc_clear = False #これは目標に到達できたかのbool値
 
-        pos = find_specific_color(
+        pos = self.find_specific_color(
                 frame,
                 self.AREA_RATIO_THRESHOLD,
                 self.LOW_COLOR,
@@ -178,7 +178,7 @@ class PowerPlanner():
                 # arm red : 25000
                 aprc_clear = True #これは目標に到達できたかのbool値
             print("aprc_clear : ",aprc_clear)
-            power_R, power_L, w_rate = power_calculation(pos,height,width,aprc_clear)
+            power_R, power_L, w_rate = self.power_calculation(pos,height,width,aprc_clear)
             
         else:
             power_R, power_L = 0,0
