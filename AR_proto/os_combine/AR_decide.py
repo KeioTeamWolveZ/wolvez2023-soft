@@ -16,4 +16,4 @@ class AR_ID_decider():
                 self.aprc_AR = True
             else: 
                 self.aprc_AR = False
-        return {"AR":self.aprc_AR, "side":self.omote_ura}
+        return {"AR":self.aprc_AR}

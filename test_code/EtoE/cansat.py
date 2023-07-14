@@ -19,7 +19,7 @@ import shutil
 
 
 import constant as ct
-from power_planner import power_planner
+from power_planner import PowerPlanner
 from AR_powerplanner import AR_powerplanner
 from bno055 import BNO055
 from motor import motor
@@ -66,7 +66,7 @@ class Cansat():
         self.arm = Arm(ct.const.SERVO_PIN)
         self.tg = Target()
         self.pc2 = Picam()
-        # self.mpp = power_planner()
+        self.mpp = PowerPlanner()
         self.RED_LED = led(ct.const.RED_LED_PIN)
         self.BLUE_LED = led(ct.const.BLUE_LED_PIN)
         self.GREEN_LED = led(ct.const.GREEN_LED_PIN)
@@ -305,7 +305,7 @@ class Cansat():
         elif self.landstate == 1:
             # 走行中は色認識されなければ直進，されれば回避
             self.img = self.pc2.capture(1)
-            self.plan_color = power_planner.power_planner(self.img,1)
+            self.plan_color = self.mpp.power_planner(self.img,1)
             # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
             if not self.plan_color["Detected_tf"]:
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
@@ -443,7 +443,7 @@ class Cansat():
             
             if self.aprc_c : #色認識による出力決定するかどうか
                 
-                plan_color = power_planner(self.img,self.connecting_state)
+                plan_color = self.mpp.power_planner(self.img,self.connecting_state)
                 self.aprc_clear = plan_color["Clear"]
                 if plan_color["Detected_tf"] :
                     #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -463,13 +463,13 @@ class Cansat():
                         self.Flag_C = False #フラグをリセット
                         sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
                         if not self.aprc_clear:
-                                self.move(plan_color["R"],plan_color["L"],0.2)
-                                print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
-                                '''
-                                色認識の出力の離散化：出力する時間を0.2秒に
-                                '''
+                            self.move(plan_color["R"],plan_color["L"],0.2)
+                            print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
+                            '''
+                            色認識の出力の離散化：出力する時間を0.2秒に
+                            '''
                         else:
-                                self.move(plan_color["R"],plan_color["L"],sleep_time)
+                            self.move(plan_color["R"],plan_color["L"],sleep_time)
                 else :
                     if self.vanish_c > 10 and not self.aprc_clear:
                         '''
@@ -493,7 +493,50 @@ class Cansat():
                     self.aprc_c = True #色認識をさせる
                 self.vanish_c += 1
         return
+    
+    def arm_grasping(self):
+        # try:
+            # arm.setup()
+        # except:
+            # pass
+        self.arm.move(5.2)
+        time.sleep(1)
+        for i in range(52,70):
+            self.arm.move(i/10)
+            time.sleep(0.1)
+        time.sleep(1)
+    
+    def checking(self,frame,connecting_state):
+        grasp_clear = False
+        
+        # try:
+            # arm.setup()
+        # except:
+            # pass
+        self.arm.move(8.3)
+        time.sleep(1.0)
+        
+        pos = powerplanner.find_specific_color(frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR,connecting_state)
+        if pos is not None:
+            print("pos:",pos[1],"\nTHRESHOLD:",Module_Height[connecting_state])
+            detected = True
+            if pos[1] < Module_Height[connecting_state]:
+                grasp_clear = True
+                self.arm.move(7.5)
+                time.sleep(2.0)
+                # arm.stop()
+                print('===========\nGRASPED\n===========')
+            else:
+                self.arm.move(5.5)
+                time.sleep(1)
+                # arm.stop()
+                print('===========\nFAILED\n===========')
+        else:
+            detected = False
+            print('===========\nNO LOOK\n===========')
 
+        return {"grasp_clear":grasp_clear,"Detected_tf":detected}
+    
     def move(self,Vr=0,Vl=0,t=0.1):
         """
 		arg:

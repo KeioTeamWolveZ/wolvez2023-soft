@@ -9,6 +9,7 @@ class motor_cmd():
 	def __init__(self):
 		self.Motor2 = motor.motor(6,5,13)
 		self.Motor1 = motor.motor(20,16,12)
+		
 	def move(self,Vr=0,Vl=0,t=0.1):
 		"""
 		arg:
@@ -41,5 +42,5 @@ class motor_cmd():
 		self.Motor1.stop()
 		self.Motor2.stop()
 		
-mo = motor_cmd()
-mo.move(50,-40,1)
+#mo = motor_cmd()
+#mo.move(50,-40,1)

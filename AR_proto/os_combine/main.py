@@ -15,7 +15,7 @@ import ar_module
 #from dubins_module import Dubins_runner
 import libcam_module
 #from color_det import ColorDetection
-import motor
+#import motor
 import RPi.GPIO as GPIO
 # from dubinspath_from_AR import detect_target
 from power_planner import power_planner
@@ -40,8 +40,8 @@ AR_ID = AR_decide.AR_ID_decider()
 Mc = MotorCMD.motor_cmd()
 
 # GPIO.setwarnings(False)
-Motor1 = motor.motor(6,5,13)
-Motor2 = motor.motor(20,16,12)
+#Motor1 = motor.motor(6,5,13)
+#Motor2 = motor.motor(20,16,12)
 
 # setting wheather to save a video
 if save_video : pc2.setup_video("test")
@@ -82,7 +82,7 @@ try:
         #pc2.picam2.set_controls({"AfMode":0,"LensPosition":6.5})
         img2 = pc2.capture(1)
         detected_img, ar_info = tg.detect_marker(img)
-        print(ar_info)
+       # print(ar_info)
         #img = tg.addSpace(img)
         
         pc2.show(img)
@@ -131,8 +131,7 @@ try:
                                 print("Back!")
                                 #arm_grasping()
                 else:
-                        Motor2.stop()
-                        Motor1.stop()
+                        Mc.move(0,0,0)
                         print('state_change')
                         #arm_grasping()
                         #checking(img,connecting_state) #ここは出力が0になるからこの関数じゃない方が良い？
@@ -182,9 +181,9 @@ try:
                                 #         time.sleep(sleep_time)
                                 #         print("L_rotate:",-plan_color["R"],"sleep_time:",sleep_time) 
                                 Mc.move(plan_color["R"],plan_color["L"],sleep_time)
-                    
-                        Motor2.stop()
-                        Motor1.stop()
+                        Mc.move(0,0,0)
+                        #Motor2.stop()
+                        #Motor1.stop()
                         '''
                         動いた後にストップさせる
                         '''
