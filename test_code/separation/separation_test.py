@@ -8,7 +8,7 @@ import time
 pin1 = 24
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(pin1,GPIO.OUT) #焼き切り用のピンの設定
+GPIO.setup(pin1,GPIO.OUT) #焼き切り用のピンの設定tv 
 GPIO.output(pin1,0) #焼き切りが危ないのでlowにしておく
 
 try:

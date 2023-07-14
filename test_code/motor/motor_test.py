@@ -11,12 +11,6 @@ try:
     print("motor run") 
     Motor1.go(90)
     Motor2.go(90)
-#     Motor1.back(80)
-#     Motor2.go(80)
-#     time.sleep(0.5)
- #   Motor2.back(80)
-    #Motor2.back(90)
-#     time.sleep(1.08)
     time.sleep(3)
 
     #Motor.back(100)
