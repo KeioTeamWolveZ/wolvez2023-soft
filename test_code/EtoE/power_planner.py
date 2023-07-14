@@ -18,7 +18,7 @@ class PowerPlanner():
     HIGH_COLOR: 抽出する色の上限(h,s,v)
     """
     # 速度の設定
-    STANDARD_POWER = 45
+    STANDARD_POWER = 40
     POWER_RANGE = 15
 
     # 色の設定
@@ -31,9 +31,9 @@ class PowerPlanner():
     #red_color
     # LOW_COLOR = np.array([150, 64, 0])
     # HIGH_COLOR = np.array([179, 255, 255])
-    #{0:red,1:blue}
-    LOW_COLOR = {0:np.array([150, 64, 0]),1:np.array([38, 64, 85])}
-    HIGH_COLOR = {0:np.array([179, 255, 255]),1:np.array([77, 255, 255])}
+    #{1:red,0:yellow}
+    LOW_COLOR = {1:np.array([150, 64, 0]),0:np.array([23, 100, 115])}
+    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([36, 255, 255])}
     # HIGH_COLOR = np.array([179, 255, 255])
     # LOW_COLOR = {0:np.array([[0, 64, 0],[150, 64, 0]]),1:np.array([100, 75, 75])}
     # HIGH_COLOR = {0:np.array([[10, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}

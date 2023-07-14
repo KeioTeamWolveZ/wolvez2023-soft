@@ -99,6 +99,8 @@ class Cansat():
         self.connecting_state = 0
         self.vanish_c = 0
         self.estimate_norm = 100000
+        self.starttime_color = time.time()
+        self.starttime_AR = time.time()
         
         #state管理用変数初期化
         self.gpscount=0
@@ -420,11 +422,11 @@ class Cansat():
             self.estimate_norm = AR_checker["norm"] #使u これself.いるん？？
             if not self.Flag_AR:
                 print("keisoku_AR")
-                starttime_AR = time.time()
+                self.starttime_AR = time.time()
                 self.Flag_AR = True
-            if self.Flag_AR and time.time()-starttime_AR >= 1.0:
+            if self.Flag_AR and time.time()-self.starttime_AR >= 1.0:
                 self.Flag_AR = False #フラグをリセット←これもAR_decideの中で定義しても良いかも
-                AR_powerplan = AR_powerplanner(ar_info,AR_checker["side"],self.connecting_state)  #sideを追加
+                AR_powerplan = AR_powerplanner(ar_info,AR_checker,self.connecting_state)  #sideを追加
                 APRC_STATE = AR_powerplan['aprc_state']
                 if not APRC_STATE:      #　接近できたかどうか
                     if AR_powerplan["R"] > -0.1:
@@ -449,28 +451,28 @@ class Cansat():
                 if plan_color["Detected_tf"] :
                     #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     if not self.Flag_C:
-                        starttime_color = time.time()
+                        self.starttime_color = time.time()
                         self.Flag_C = True
                         print("keisoku_color")
                         '''
                         Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
                         '''
                     
-                        if self.Flag_C and time.time()-starttime_color >= 2.0:
+                    if self.Flag_C and time.time()-self.starttime_color >= 2.0:
+                        '''
+                        5秒超えたら入ってくる
+                        '''
+                        self.vanish_c = 0 #喪失カウントをリセット
+                        self.Flag_C = False #フラグをリセット
+                        sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
+                        if not self.aprc_clear:
+                            self.move(plan_color["R"],plan_color["L"],0.2)
+                            print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
                             '''
-                            5秒超えたら入ってくる
+                            色認識の出力の離散化：出力する時間を0.2秒に
                             '''
-                            self.vanish_c = 0 #喪失カウントをリセット
-                            self.Flag_C = False #フラグをリセット
-                            sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
-                            if not self.aprc_clear:
-                                self.move(plan_color["R"],plan_color["L"],0.2)
-                                print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
-                                '''
-                                色認識の出力の離散化：出力する時間を0.2秒に
-                                '''
-                            else:
-                                self.move(plan_color["R"],plan_color["L"],sleep_time)
+                        else:
+                            self.move(plan_color["R"],plan_color["L"],sleep_time)
                 else :
                     if self.vanish_c > 20 and not self.aprc_clear:
                         '''
@@ -481,10 +483,10 @@ class Cansat():
                         self.aprc_clear = False #aprc_clearのリセット
                         print("-R:40-")
                         if self.estimate_norm > 0.5:
-                            self.move(60,0,0.2)
+                            self.move(40,0,0.2)
                             print('sleeptime : 0.2')
                         else:
-                            self.move(60,0,0.1)
+                            self.move(40,0,0.1)
                             print('sleeptime : 0.1')
 
                         self.vanish_c = 0
