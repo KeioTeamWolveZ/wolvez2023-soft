@@ -122,8 +122,8 @@ def power_calculation(pos,h,w,flag):
         power_L = int(STANDARD_POWER + POWER_RANGE * xn)
     else:
         xn = 2*(pos[0]-w/2) / w
-        power_R = int(xn/abs(xn)*(STANDARD_POWER + POWER_RANGE * abs(xn))) ### +- ga umareru youni
-        power_L = power_R
+        power_R = -int(xn/abs(xn)*(STANDARD_POWER + POWER_RANGE * abs(xn))) ### +- ga umareru youni
+        power_L = -power_R
     w_rate = abs(xn) ### sleep zikan keisan you
     return power_R,power_L,w_rate
 
