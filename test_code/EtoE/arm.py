@@ -4,7 +4,7 @@ import pigpio as pg
 import sys
 import time
 
-# 2.5 ~ 12
+# 
 
 class Arm():
 	def __init__(self,servo_pin):
@@ -56,8 +56,8 @@ class ArmPg():
 
 	def up(self,buff=0):
 		self.pi.write(self.servo_pin,1)
-		self.pi.set_servo_pulsewidth(self.servo_pin,1700)
-		time.sleep(0.5)
+		self.pi.set_servo_pulsewidth(self.servo_pin,1950)
+		time.sleep(1)
 		self.pi.set_servo_pulsewidth(self.servo_pin,0)
 		self.pi.write(self.servo_pin,0)
 
@@ -87,11 +87,7 @@ if __name__ == "__main__":
 	arm.setup()
 	arm.up()
 	arm.down()
-	time.sleep(5)
 	start = time.time()
-	for i in range(1400,1700,15):
-		arm.move(i)
-		time.sleep(0.5)
 	while True:
 		end = time.time()
 		print("wating")

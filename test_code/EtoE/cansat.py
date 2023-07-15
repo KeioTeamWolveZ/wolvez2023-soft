@@ -396,16 +396,34 @@ class Cansat():
                     self.state = 6
                     self.laststate = 6
 
+    def running(self):
+        if self.runningTime == 0:
+            self.MotorR.go(60)
+            self.MotorL.go(60)
+            self.RED_LED.led_off()
+            self.BLUE_LED.led_off()
+            self.GREEN_LED.led_off()
+            self.runningTime = time.time()
+        
+        else:
+            self.stuck_detection()
+        
+        if time.time() - self.runningTime > 30:
+            self.MotorR.stop()
+            self.MotorL.stop()
+            self.state = 8
+            self.laststate = 8
+
     def finish(self):
         if self.finishTime == 0:
             self.finishTime = time.time()
-            print("Finished")
+            print("All State have Finished")
             self.MotorR.stop()
             self.MotorL.stop()
             self.RED_LED.led_on()
             self.BLUE_LED.led_on()
             self.GREEN_LED.led_on()
-            self.cap.release()
+            # self.pc2.stop()
             cv2.destroyAllWindows()
             sys.exit()
 
