@@ -62,7 +62,7 @@ class Cansat():
         self.lora = lora()
         self.arm = Arm(ct.const.SERVO_PIN)
         self.tg = Target()
-        self.pc2 = Picam()
+        # self.pc2 = Picam()
         # self.mpp = power_planner()
         self.RED_LED = led(ct.const.RED_LED_PIN)
         self.BLUE_LED = led(ct.const.BLUE_LED_PIN)
@@ -366,7 +366,7 @@ class Cansat():
                     self.state = 5
                     self.laststate = 5
     
-    def second_releasingstate(self):
+    def second_releasing(self):
         if self.modu_sepaTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
             self.modu_sepaTime = time.time()
             self.RED_LED.led_on()
@@ -485,6 +485,6 @@ class Cansat():
         self.RED_LED.led_off()
         self.BLUE_LED.led_off()
         self.GREEN_LED.led_off()
-        self.pc2.stop()
+        #self.pc2.stop()
         time.sleep(0.5)
         cv2.destroyAllWindows()
