@@ -59,8 +59,8 @@ class Cansat():
         
         # インスタンス生成用      
         self.bno055 = BNO055()
-        self.MotorR = motor(ct.const.RIGHT_MOTOR_IN1_PIN,ct.const.RIGHT_MOTOR_IN2_PIN,ct.const.RIGHT_MOTOR_VREF_PIN)
-        self.MotorL = motor(ct.const.LEFT_MOTOR_IN1_PIN,ct.const.LEFT_MOTOR_IN2_PIN, ct.const.LEFT_MOTOR_VREF_PIN)
+        self.MotorL = motor(ct.const.RIGHT_MOTOR_IN1_PIN,ct.const.RIGHT_MOTOR_IN2_PIN,ct.const.RIGHT_MOTOR_VREF_PIN)
+        self.MotorR = motor(ct.const.LEFT_MOTOR_IN1_PIN,ct.const.LEFT_MOTOR_IN2_PIN, ct.const.LEFT_MOTOR_VREF_PIN)
         self.gps = GPS()
         self.lora = lora()
         self.arm = Arm(ct.const.SERVO_PIN)
@@ -96,7 +96,7 @@ class Cansat():
         self.Flag_AR = False
         self.Flag_C = False
         self.aprc_clear = False
-        self.connecting_state = 0
+        self.connecting_state = 1
         self.vanish_c = 0
         self.estimate_norm = 100000
         self.starttime_color = time.time()
@@ -412,10 +412,10 @@ class Cansat():
         # capture and detect markers
         self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":4.8})
         self.img = self.pc2.capture(1)
-
+        
         detected_img, ar_info = self.tg.detect_marker(self.img)
-
         AR_checker = self.tg.AR_decide(ar_info,self.connecting_state)
+        print(ar_info)
         if AR_checker["AR"]:
             self.vanish_c = 0 #喪失カウントをリセット
             self.aprc_c = False #アプローチの仕方のbool
@@ -439,8 +439,9 @@ class Cansat():
                 else:
                         self.move(0,0,0.2)
                         print('state_change')
-                        #arm_grasping()
-                        #checking(self.img,self.connecting_state) #ここは出力が0になるからこの関数じゃない方が良い？
+                        self.estimate_norm = 100000
+                        self.arm_grasping()
+                        # self.checking(self.img,self.connecting_state) #ここは出力が0になるからこの関数じゃない方が良い？
                         self.connecting_state += 1
         else:
             
@@ -495,6 +496,10 @@ class Cansat():
                 if self.vanish_c > 10:
                     self.aprc_c = True #色認識をさせる
                 self.vanish_c += 1
+        
+        if self.connecting_state >= 2:  # Finish this state
+            self.state = 8
+            self.laststate = 8
         return
     
     def arm_grasping(self):
@@ -581,7 +586,7 @@ class Cansat():
             self.RED_LED.led_on()
             self.BLUE_LED.led_on()
             self.GREEN_LED.led_on()
-            self.cap.release()
+            self.pc2.stop()
             cv2.destroyAllWindows()
             sys.exit()
 

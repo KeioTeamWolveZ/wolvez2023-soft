@@ -32,14 +32,14 @@ class PowerPlanner():
     # LOW_COLOR = np.array([150, 64, 0])
     # HIGH_COLOR = np.array([179, 255, 255])
     #{1:red,0:yellow}
-    LOW_COLOR = {1:np.array([150, 64, 0]),0:np.array([23, 100, 115])}
-    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([36, 255, 255])}
+    LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([28, 150, 180])}
+    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([33, 255, 255])}
     # HIGH_COLOR = np.array([179, 255, 255])
     # LOW_COLOR = {0:np.array([[0, 64, 0],[150, 64, 0]]),1:np.array([100, 75, 75])}
     # HIGH_COLOR = {0:np.array([[10, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}
 
     # 抽出する色の塊のしきい値
-    AREA_RATIO_THRESHOLD = 0.0005
+    AREA_RATIO_THRESHOLD = 0.00005
     def __init__(self):
         pass
 
@@ -125,8 +125,8 @@ class PowerPlanner():
             power_L = int(self.STANDARD_POWER + self.POWER_RANGE * xn)
         else:
             xn = 2*(pos[0]-w/2) / w
-            power_L = int(xn/abs(xn)*(self.STANDARD_POWER + self.POWER_RANGE * abs(xn))) ### +- ga umareru youni
-            power_R = -power_L
+            power_R = int(xn/abs(xn)*(self.STANDARD_POWER + self.POWER_RANGE * abs(xn))) ### +- ga umareru youni
+            power_L = -power_R
         w_rate = abs(xn) ### sleep zikan keisan you
         return power_R,power_L,w_rate
 

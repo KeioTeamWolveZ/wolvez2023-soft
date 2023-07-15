@@ -36,7 +36,7 @@ class Ar_cansat():
         # マーカーの辞書選択
         self.dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
         #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
-        self.id_size = {1:0.0095,2:0.0199,3:0.0095,4:0.0199,5:0.01,6:0.01,7:0.025,8:0.025,9:0.01,10:0.01}
+        self.id_size = {1:0.0095,2:0.0199,3:0.0095,4:0.095,5:0.01,6:0.01,7:0.025,8:0.025,9:0.01,10:0.01}
         self.debug_mode = False
         self.estimate_norm = 1
         self.aprc_AR = False
@@ -196,7 +196,7 @@ class Ar_cansat():
                 self.aprc_AR = False
                 target_id = 100
 
-        elif connecting_state == 1:
+        else:
             if "3" in ar_info.keys() or "5" in ar_info.keys():
                 self.aprc_AR = True
                 side = 'marker_R'
@@ -220,6 +220,7 @@ class Ar_cansat():
                 side = 'None'
                 self.aprc_AR = False
                 target_id = 100
+        
         return {"AR":self.aprc_AR, "side":side, "id":target_id, "norm":norm}
 
 

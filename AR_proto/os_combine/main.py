@@ -80,7 +80,7 @@ try:
         # Adding space for detected information
         # img = tg.addSpace(img)
         #pc2.picam2.set_controls({"AfMode":0,"LensPosition":6.5})
-        img2 = pc2.capture(1)
+        #img2 = pc2.capture(1)
         detected_img, ar_info = tg.detect_marker(img)
        # print(ar_info)
         #img = tg.addSpace(img)
