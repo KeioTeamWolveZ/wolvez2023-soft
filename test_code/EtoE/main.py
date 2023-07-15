@@ -21,8 +21,8 @@ import time
 
 """
 
-start_state =  2
-end_state = 3
+start_state = 4  
+end_state = 5
 
 cansat = Cansat(start_state)
 cansat.setup()
