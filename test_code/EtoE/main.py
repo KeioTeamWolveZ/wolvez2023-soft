@@ -25,6 +25,8 @@ state =  6
 
 cansat = Cansat(state)
 cansat.setup()
+cansat.arm.up()
+cansat.arm.down()
 
 try:
     while True:

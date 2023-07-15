@@ -18,7 +18,7 @@ class PowerPlanner():
     HIGH_COLOR: 抽出する色の上限(h,s,v)
     """
     # 速度の設定
-    STANDARD_POWER = 40
+    STANDARD_POWER = 45
     POWER_RANGE = 15
 
     # 色の設定
@@ -39,7 +39,7 @@ class PowerPlanner():
     # HIGH_COLOR = {0:np.array([[10, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}
 
     # 抽出する色の塊のしきい値
-    AREA_RATIO_THRESHOLD = 0.00005
+    AREA_RATIO_THRESHOLD = 0.00003
     def __init__(self):
         pass
 
@@ -122,11 +122,11 @@ class PowerPlanner():
         if not flag:
             xn = 2*(pos[0]+300-w/2) / w  ### + 300 ireru no kottijanai??
             power_R = int(self.STANDARD_POWER - self.POWER_RANGE * xn)
-            power_L = int(self.STANDARD_POWER + self.POWER_RANGE * xn)
+            power_L = int(self.STANDARD_POWER + self.POWER_RANGE * xn+5)
         else:
             xn = 2*(pos[0]-w/2) / w
-            power_R = int(xn/abs(xn)*(self.STANDARD_POWER + self.POWER_RANGE * abs(xn))) ### +- ga umareru youni
-            power_L = -power_R
+            power_R = int(xn/abs(xn)*(self.STANDARD_POWER*1.1 + self.POWER_RANGE * abs(xn))) ### +- ga umareru youni
+            power_L = -power_R-5
         w_rate = abs(xn) ### sleep zikan keisan you
         return power_R,power_L,w_rate
 
@@ -173,10 +173,14 @@ class PowerPlanner():
         
         if pos is not None:
             detected = True
-            if pos[2] > 20000:
+            if connecting_state == 0:
+                if pos[2] > 6000:
+                    aprc_clear = True #これは目標に到達できたかのbool値
+            else:
+                if pos[2] > 20000:
                 # arm temae : 28000
                 # arm red : 25000
-                aprc_clear = True #これは目標に到達できたかのbool値
+                    aprc_clear = True #これは目標に到達できたかのbool値
             print("aprc_clear : ",aprc_clear)
             power_R, power_L, w_rate = self.power_calculation(pos,height,width,aprc_clear)
             

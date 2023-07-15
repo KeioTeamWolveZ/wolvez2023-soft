@@ -1,36 +1,42 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 #import wiringpi as wp
+import pigpio as pg
 import sys
 import time
 
-# 2.5 ~ 12
+# 500 ~ 2500
 
 class Arm():
 	def __init__(self,servo_pin):
 		self.servo_pin = servo_pin
 		
 	def setup(self):
-		GPIO.setmode(GPIO.BCM)
-		self.mode = GPIO.getmode()
-		# print(mode)
-		GPIO.setup(self.servo_pin, GPIO.OUT)
-		self.pwm = GPIO.PWM(self.servo_pin, 50) #電圧を参照するピンを周波数50HZに指定
-		self.pwm.start(0)
-
+		self.pi = pg.pi()
+		self.pi.set_mode(self.servo_pin,pg.OUTPUT)
+		
 	def up(self,buff=0):
-		self.pwm.ChangeDutyCycle(8+buff)
+		self.pi.write(self.servo_pin,1)
+		self.pi.set_servo_pulsewidth(self.servo_pin,1500)
 		time.sleep(0.5)
-	
+		self.pi.set_servo_pulsewidth(self.servo_pin,0)
+		self.pi.write(self.servo_pin,0)
+		
 	def down(self,buff=0):
-		self.pwm.ChangeDutyCycle(5.5+buff)
+		self.pi.write(self.servo_pin,1)
+		self.pi.set_servo_pulsewidth(self.servo_pin,1150)
 		time.sleep(0.5)
+		self.pi.set_servo_pulsewidth(self.servo_pin,0)
+		self.pi.write(self.servo_pin,0)
 
 	def move(self,ref):
-		self.pwm.ChangeDutyCycle(ref)
-		time.sleep(0.2)
+		self.pi.write(self.servo_pin,1)
+		self.pi.set_servo_pulsewidth(self.servo_pin,ref)
+		time.sleep(0.5)
+		self.pi.set_servo_pulsewidth(self.servo_pin,0)
+		self.pi.write(self.servo_pin,0)
 		
 	def stop(self):
-		self.pwm.stop(0)
+		self.pi.stop()
 
 	def calibration(self):
 		return

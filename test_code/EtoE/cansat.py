@@ -409,6 +409,8 @@ class Cansat():
                     self.laststate = 6
     
     def connecting(self):
+        if self.connecting_state == 1:
+            self.arm.up()
         # capture and detect markers
         self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":4.8})
         self.img = self.pc2.capture(1)
@@ -429,18 +431,21 @@ class Cansat():
                 AR_powerplan = AR_powerplanner(ar_info,AR_checker,self.connecting_state)  #sideを追加
                 APRC_STATE = AR_powerplan['aprc_state']
                 if not APRC_STATE:      #　接近できたかどうか
-                    if AR_powerplan["R"] > -0.1:
-                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.1)
-                        print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"]) 
-                    else:
+                    if AR_powerplan["R"] < -0.1 and AR_powerplan["L"] < -0.1:
                         self.move(AR_powerplan["R"],AR_powerplan["L"],0.3)
                         print("Back!")
                         #arm_grasping()
+                    else:
+                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.08)
+                        print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"])
                 else:
                         self.move(0,0,0.2)
                         print('state_change')
                         self.estimate_norm = 100000
-                        self.arm_grasping()
+                        if self.connecting_state == 0:
+                            self.arm_grasping()
+                        elif self.connecting_state == 1:
+                            self.arm_release()
                         # self.checking(self.img,self.connecting_state) #ここは出力が0になるからこの関数じゃない方が良い？
                         self.connecting_state += 1
         else:
@@ -475,22 +480,27 @@ class Cansat():
                         else:
                             self.move(plan_color["R"],plan_color["L"],sleep_time)
                 else :
-                    if self.vanish_c > 20 and not self.aprc_clear:
+                    if self.vanish_c > 10 and not self.aprc_clear:
                         '''
                         数を20に変更
                         '''
                         self.Flag_C = False #色を見つけたら待機できるようにリセット
                         self.Flag_AR = False #AR認識もリセット
                         self.aprc_clear = False #aprc_clearのリセット
-                        print("-R:40-")
+                        print("-R:35-")
                         if self.estimate_norm > 0.5:
-                            self.move(40,0,0.2)
+                            self.move(40,-40,0.2)
                             print('sleeptime : 0.2')
+                            vanish_c = 0
                         else:
-                            self.move(40,0,0.1)
-                            print('sleeptime : 0.1')
+                            if self.vanish_c >= 40:
+                                vanish_sleep = 0.3
+                                vanish_c = 0
+                            else:
+                                vanish_sleep = 0.1
+                            self.move(40,-40,vanish_sleep)
+                            print('sleeptime : vanish_sleep')
 
-                        self.vanish_c = 0
                     self.vanish_c += 1
             else:
                 if self.vanish_c > 10:
@@ -498,6 +508,9 @@ class Cansat():
                 self.vanish_c += 1
         
         if self.connecting_state >= 2:  # Finish this state
+            self.arm.up()
+            self.arm.down()
+            self.arm.up()
             self.state = 8
             self.laststate = 8
         return
@@ -507,10 +520,22 @@ class Cansat():
             # arm.setup()
         # except:
             # pass
-        self.arm.move(5.2)
+        self.arm.down()
+        self.arm.move(1050)
+        time.sleep(3)
+        for i in range(1050,1500,15):
+            self.arm.move(i)
+            time.sleep(0.1)
         time.sleep(1)
-        for i in range(52,70):
-            self.arm.move(i/10)
+        
+    def arm_release(self):
+        # try:
+            # arm.setup()
+        # except:
+            # pass
+        time.sleep(3)
+        for i in range(1,300,20):
+            self.arm.move(1500-i)
             time.sleep(0.1)
         time.sleep(1)
     
@@ -521,7 +546,7 @@ class Cansat():
             # arm.setup()
         # except:
             # pass
-        self.arm.move(8.3)
+        self.arm.move(1500)
         time.sleep(1.0)
         
         pos = powerplanner.find_specific_color(frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR,connecting_state)
@@ -530,12 +555,12 @@ class Cansat():
             detected = True
             if pos[1] < Module_Height[connecting_state]:
                 grasp_clear = True
-                self.arm.move(7.5)
+                self.arm.move(1500)
                 time.sleep(2.0)
                 # arm.stop()
                 print('===========\nGRASPED\n===========')
             else:
-                self.arm.move(5.5)
+                self.arm.move(1200)
                 time.sleep(1)
                 # arm.stop()
                 print('===========\nFAILED\n===========')
