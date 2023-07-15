@@ -64,5 +64,5 @@ const.AVOID_COLOR_THRE = 20 #色認識されなかった合計回数の閾値
 const.FINISH_DIS_THRE = 1.5
 
 # Stack
-const.STUCK_ACC_THRE = 0.1
+const.STUCK_ACC_THRE = 0.5
 const.STUCK_COUNT_THRE = 30

@@ -406,6 +406,11 @@ class Cansat():
             self.runningTime = time.time()
         
         else:
+            print("x",self.bno055.ax**2)
+            print("y",self.bno055.ay**2)
+            print("z",self.bno055.az**2)
+            self.MotorR.go(60)
+            self.MotorL.go(60)
             self.stuck_detection()
         
         if time.time() - self.runningTime > 30:
@@ -420,9 +425,9 @@ class Cansat():
             print("All State have Finished")
             self.MotorR.stop()
             self.MotorL.stop()
-            self.RED_LED.led_on()
-            self.BLUE_LED.led_on()
-            self.GREEN_LED.led_on()
+            self.RED_LED.led_off()
+            self.BLUE_LED.led_off()
+            self.GREEN_LED.led_off()
             # self.pc2.stop()
             cv2.destroyAllWindows()
             sys.exit()
