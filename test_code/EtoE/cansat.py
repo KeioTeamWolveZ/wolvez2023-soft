@@ -409,7 +409,14 @@ class Cansat():
                     self.laststate = 6
     
     def connecting(self):
+        if self.connecting_state == 0:
+            self.RED_LED.led_off()
+            self.BLUE_LED.led_off()
+            self.GREEN_LED.led_on()
         if self.connecting_state == 1:
+            self.RED_LED.led_off()
+            self.BLUE_LED.led_on()
+            self.GREEN_LED.led_off()
             self.arm.up()
         # capture and detect markers
         self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":4.8})
@@ -445,6 +452,9 @@ class Cansat():
                         if self.connecting_state == 0:
                             self.arm_grasping()
                         elif self.connecting_state == 1:
+                            self.RED_LED.led_off()
+                            self.BLUE_LED.led_off()
+                            self.GREEN_LED.led_on()
                             self.arm_release()
                         # self.checking(self.img,self.connecting_state) #ここは出力が0になるからこの関数じゃない方が良い？
                         self.connecting_state += 1
@@ -511,6 +521,9 @@ class Cansat():
             self.arm.up()
             self.arm.down()
             self.arm.up()
+            self.RED_LED.led_off()
+            self.BLUE_LED.led_off()
+            self.GREEN_LED.led_off()
             self.state = 8
             self.laststate = 8
         return
@@ -602,16 +615,43 @@ class Cansat():
         self.MotorR.stop()
         self.MotorL.stop()
 
+    def running(self):
+        if self.runningTime == 0:
+            self.MotorR.go(60)
+            self.MotorL.go(60)
+            self.RED_LED.led_off()
+            self.BLUE_LED.led_off()
+            self.GREEN_LED.led_off()
+            self.runningTime = time.time()
+        
+        else:
+            #print("x",self.bno055.ax**2)
+            #print("y",self.bno055.ay**2)
+            #print("z",self.bno055.az**2)
+            self.MotorR.go(60)
+            self.MotorL.go(60)
+            self.stuck_detection()
+        
+        if time.time() - self.runningTime > 30:
+            self.MotorR.stop()
+            self.MotorL.stop()
+            self.state = 8
+            self.laststate = 8
+
     def finish(self):
         if self.finishTime == 0:
             self.finishTime = time.time()
             print("Finished")
             self.MotorR.stop()
             self.MotorL.stop()
-            self.RED_LED.led_on()
-            self.BLUE_LED.led_on()
-            self.GREEN_LED.led_on()
+            GPIO.output(ct.const.SEPARATION_PARA,0) #焼き切りが危ないのでlowにしておく
+            GPIO.output(ct.const.SEPARATION_MOD1,0) #焼き切りが危ないのでlowにしておく
+            GPIO.output(ct.const.SEPARATION_MOD2,0) #焼き切りが危ないのでlowにしておく
+            self.RED_LED.led_off()
+            self.BLUE_LED.led_off()
+            self.GREEN_LED.led_off()
             self.pc2.stop()
+            time.sleep(0.5)
             cv2.destroyAllWindows()
             sys.exit()
 
