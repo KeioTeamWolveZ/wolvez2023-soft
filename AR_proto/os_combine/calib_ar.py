@@ -1,11 +1,11 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-import libcam
+from libcam_module import Picam
 
 
-square_size = 0.9928      # 正方形の1辺のサイズ[cm]
-pattern_size = (7, 7)  # 交差ポイントの数
+square_size = 1.56      # 正方形の1辺のサイズ[cm]
+pattern_size = (7, 10)  # 交差ポイントの数
 
 reference_img = 100 # 参照画像の枚数
 
@@ -16,7 +16,7 @@ objpoints = []
 imgpoints = []
 
 # capture = cv2.VideoCapture(0)
-pc2 = libcam.Picam()
+pc2 = Picam()
 
 while len(objpoints) < reference_img:
 # 画像の取得

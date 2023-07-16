@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-square_size = 1.1      # 正方形の1辺のサイズ[cm]
-pattern_size = (7, 7)  # 交差ポイントの数
+square_size = 1.56      # 正方形の1辺のサイズ[cm]
+pattern_size = (7, 10)  # 交差ポイントの数
 
 reference_img = 100 # 参照画像の枚数
 
