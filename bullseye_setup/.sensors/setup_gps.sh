@@ -16,4 +16,4 @@ sudo pip3 install pyserial
 sudo chmod +x /home/wolvez2023/wolvez2023-soft/bullseye_setup/.sensors/setup_gps.sh
 
 #設定完了の喜びの舞
-echo -e "<<設定完了のおしらせ>>\nおめでとう！設定完了だ！君はまだ強くなれる。"
+#echo -e "<<設定完了のおしらせ>>\nおめでとう！設定完了だ！君はまだ強くなれる。"

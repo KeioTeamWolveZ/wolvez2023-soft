@@ -3,6 +3,9 @@
 
 echo -e "<<CAUTION!!!!>>\nThis device will be rebooted soon\nOr CTRL+C for cancel\n\n"
 
+## pigpio for arm
+sudo systemctl enable pigpiod
+
 ## libcamera
 sudo bash .camera/inst_libcamera.sh
 
