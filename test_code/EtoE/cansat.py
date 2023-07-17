@@ -366,7 +366,7 @@ class Cansat():
         
         if self.releasingstate == 1:
             self.MotorR.go(ct.const.RELEASING_MOTOR_VREF)
-            self.MotorL.go(ct.const.RELEASING_MOTOR_VREF)
+            self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
             self.pre_motorTime = time.time()
             self.releasingstate = 2
         
