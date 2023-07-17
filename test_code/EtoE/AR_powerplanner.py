@@ -88,7 +88,7 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
             '''
             if AR_checker["side"] == "marker_R":
                 if vec[0] > goal_area["R"][0] and vec[0] < goal_area["R"][1]:
-                    power_R = int(STANDARD_POWER - POWER_RANGE -7)
+                    power_R = int(STANDARD_POWER - POWER_RANGE)
                     power_L = int(STANDARD_POWER - POWER_RANGE)
                 else:
                     if vec[0] < goal_area["R"][0]:
@@ -96,15 +96,15 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
                         power_L = int(0)
                     else:
                         power_R = int(0)
-                        power_L = int(STANDARD_POWER - POWER_RANGE+7 )
+                        power_L = int(STANDARD_POWER - POWER_RANGE)
             elif AR_checker["side"] == "marker_L":
                 if vec[0] > goal_area["L"][0] and vec[0] < goal_area["L"][1]:
-                    power_R = int(STANDARD_POWER - POWER_RANGE-7)
+                    power_R = int(STANDARD_POWER - POWER_RANGE)
                     power_L = int(STANDARD_POWER - POWER_RANGE)
                 else:
                     if vec[0] > goal_area["L"][1]:
                         power_R = int(0)
-                        power_L = int(STANDARD_POWER - POWER_RANGE+ 7 )
+                        power_L = int(STANDARD_POWER - POWER_RANGE)
                     else:
                         power_R = int(STANDARD_POWER - POWER_RANGE )
                         power_L = int(0)
@@ -121,10 +121,10 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
                 else:
                     if vec[0] < goal_area["R"][0]:
                         power_R = int(motor_ouput)
-                        power_L = int(-motor_ouput - 7)
+                        power_L = int(-motor_ouput)
                     else:
                         power_R = int(-motor_ouput)
-                        power_L = int(motor_ouput + 7)
+                        power_L = int(motor_ouput)
             elif AR_checker["side"] == "marker_L":
                 if vec[0] > goal_area["L"][0] and vec[0] < goal_area["L"][1]:
                     print("finish")
@@ -134,10 +134,10 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
                 else:
                     if vec[0] > goal_area["L"][1]:
                         power_R = int(-motor_ouput)
-                        power_L = int(motor_ouput + 7 )
+                        power_L = int(motor_ouput)
                     else:
                         power_R = int(motor_ouput)
-                        power_L = int(-motor_ouput -7)
+                        power_L = int(-motor_ouput)
             '''
             接近後なのでアーム動かしたい：要検討
             '''

@@ -12,9 +12,6 @@ import sys
 import time
 import datetime
 
-# Import other file
-import libcam
-
 arm_id = "1"
 
 # Definitions

@@ -379,7 +379,7 @@ class Cansat():
                     self.state = 5
                     self.laststate = 5
     
-    def second_releasingstate(self):
+    def second_releasing(self):
         if self.modu_sepaTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
             self.modu_sepaTime = time.time()
             self.RED_LED.led_on()
@@ -456,19 +456,20 @@ class Cansat():
                         self.BLUE_LED.led_on()
                         self.GREEN_LED.led_off()
                         self.arm_grasping()
-                        SorF = self.checking(self.img,self.connecting_state)
+                        #SorF = self.checking(self.img,self.connecting_state)
                         self.connecting_state += 1
-                        if not SorF["clear"]:
-                            self.connecting_state -= 1
+                        #if not SorF["clear"]:
+                        #    self.connecting_state -= 1
                     elif self.connecting_state == 1:
                         self.RED_LED.led_on()
                         self.BLUE_LED.led_off()
                         self.GREEN_LED.led_off()
                         self.arm_release()
-                        SorF = self.checking(self.img,self.connecting_state)
+                        #SorF = self.checking(self.img,self.connecting_state)
                         self.connecting_state += 1
-                        if not SorF["clear"]:
-                            self.connecting_state -= 2
+                        #print(SorF["clear"])
+                        #if not SorF["clear"]:
+                        #    self.connecting_state -= 2
                         # 焼き切りを待つ時間をここで使いたい（10秒）
                         
         else:
@@ -487,7 +488,7 @@ class Cansat():
                         Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
                         '''
                     
-                    if self.Flag_C and time.time()-self.starttime_color >= 2.0:
+                    if self.Flag_C and time.time()-self.starttime_color >= 1.0:
                         '''
                         5秒超えたら入ってくる
                         '''
@@ -495,13 +496,15 @@ class Cansat():
                         self.Flag_C = False #フラグをリセット
                         sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
                         if not self.aprc_clear:
-                            self.move(plan_color["R"],plan_color["L"],0.03)
+                            self.move(plan_color["R"],plan_color["L"],0.035)
                             print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
                             '''
                             色認識の出力の離散化：出力する時間を0.2秒に
                             '''
                         else:
-                            self.move(plan_color["R"],plan_color["L"],0.03)
+                            self.move(plan_color["R"],plan_color["L"],0.035)
+                        
+                        self.move(-90,-90,0.02)
                 else :
                     if self.vanish_c > 10 and not self.aprc_clear:
                         '''
@@ -579,7 +582,7 @@ class Cansat():
         self.arm.up()
         time.sleep(1.0)
         
-        pos = self.mpp.find_specific_color(frame,self.AREA_RATIO_THRESHOLD,self.LOW_COLOR,self.HIGH_COLOR,color_num)
+        pos = self.mpp.find_specific_color(frame,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.LOW_COLOR,self.mpp.HIGH_COLOR,color_num)
         if pos is not None:
             print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
             detected = True

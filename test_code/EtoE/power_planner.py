@@ -120,13 +120,13 @@ class PowerPlanner():
 
     def power_calculation(self,pos,h,w,flag):
         if not flag:
-            xn = 2*(pos[0]+300-w/2) / w  ### + 300 ireru no kottijanai??
+            xn = 2*(pos[0]+300-w/2) / w + 0.00000001 ### + 300 ireru no kottijanai??
             power_R = int(self.STANDARD_POWER - self.POWER_RANGE * xn)
             power_L = int(self.STANDARD_POWER + self.POWER_RANGE * xn+5)
         else:
-            xn = 2*(pos[0]-w/2) / w
-            power_R = int(xn/abs(xn)*(self.STANDARD_POWER*1.1 + self.POWER_RANGE * abs(xn))) ### +- ga umareru youni
-            power_L = -power_R-5
+            xn = 2*(pos[0]-w/2) / w + 0.00000001
+            power_R = -int(xn/abs(xn)*(self.STANDARD_POWER*1.15 + self.POWER_RANGE * abs(xn))) ### +- ga umareru youni
+            power_L = -power_R+int(xn/abs(xn))*7
         w_rate = abs(xn) ### sleep zikan keisan you
         return power_R,power_L,w_rate
 
