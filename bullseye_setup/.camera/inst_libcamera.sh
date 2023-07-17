@@ -16,5 +16,4 @@ sudo bash ./install_pivariety_pkgs.sh -p libcamera_apps
 sudo sed -i "$ a dtoverlay=imx519" /boot/config.txt
 
 #Save and reboot.
-echo -e 
-"<<設定完了のおしらせ>>\nいやまじで天才ほんとに．再起動したら使えるようになってるらしいよ"
+echo -e "<<設定完了のおしらせ>>\nいやまじで天才ほんとに．再起動したら使えるようになってるらしいよ"
