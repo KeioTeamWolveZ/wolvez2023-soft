@@ -14,7 +14,7 @@ picam2.resolution = (4000, 3600)
 #capture_config = picam2.create_still_configuration(main={"size": (640, 480), "format": 'XRGB8888'}, raw={"size": picam2.sensor_resolution})
 #config = picam2.create_preview_configuration(main={"format": 'XRGB8888'})
 #config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (4000, 3600)})
-capture_config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (1200, 720)})
+capture_config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (1800, 1000)})
 #picam2.align_configuration(config)
 picam2.configure(capture_config)
 

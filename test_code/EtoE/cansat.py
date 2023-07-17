@@ -96,7 +96,7 @@ class Cansat():
         self.Flag_AR = False
         self.Flag_C = False
         self.aprc_clear = False
-        self.connecting_state = 1
+        self.connecting_state = 0
         self.vanish_c = 0
         self.estimate_norm = 100000
         self.starttime_color = time.time()
@@ -308,30 +308,33 @@ class Cansat():
         elif self.landstate == 1:
             # 走行中は色認識されなければ直進，されれば回避
             self.img = self.pc2.capture(1)
-            self.plan_color = self.mpp.power_planner(self.img,1)
+            self.plan_color = self.mpp.para_detection(self.img)
             # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
             if not self.plan_color["Detected_tf"]:
-                self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
+                self.MotorR.go(ct.const.LANDING_MOTOR_VREF-10)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
             else:
                 self.MotorR.go(self.plan_color["L"])
                 self.MotorL.go(self.plan_color["R"])
 
-                self.stuck_detection()
+            self.stuck_detection()
 
             if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #10秒間モータ回して分離シートから十分離れる
                 self.MotorR.stop()
                 self.MotorL.stop()
                 self.landstate = 2
+                print("\n\n=====The arm was calibrated=====\n\n")
+                self.state = 4
+                self.laststate = 4
             
-        if self.landstate == 2: #アームのキャリブレーション
+        elif self.landstate == 2: #アームのキャリブレーション
+            print("calib arm")
             if self.arm_calibTime == 0:
                 self.arm.up()
                 self.arm.down()
                 self.arm_calibTime = time.time()
 
             if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
-                print("here")
                 self.img = self.pc2.capture(1)
                 detected_img, ar_info = self.tg.detect_marker(self.img)
                 self.arm.calibration()  # 関数内でキャリブレーションを行う
@@ -413,13 +416,14 @@ class Cansat():
             self.RED_LED.led_off()
             self.BLUE_LED.led_off()
             self.GREEN_LED.led_on()
+            self.arm.middle()
         if self.connecting_state == 1:
             self.RED_LED.led_off()
             self.BLUE_LED.led_on()
             self.GREEN_LED.led_off()
             self.arm.up()
         # capture and detect markers
-        self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":4.8})
+        self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":5})
         self.img = self.pc2.capture(1)
         
         detected_img, ar_info = self.tg.detect_marker(self.img)
@@ -439,22 +443,25 @@ class Cansat():
                 APRC_STATE = AR_powerplan['aprc_state']
                 if not APRC_STATE:      #　接近できたかどうか
                     if AR_powerplan["R"] < -0.1 and AR_powerplan["L"] < -0.1:
-                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.3)
+                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
                         print("Back!")
                         #arm_grasping()
                     else:
-                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.08)
+                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
                         print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"])
                 else:
                         self.move(0,0,0.2)
                         print('state_change')
                         self.estimate_norm = 100000
                         if self.connecting_state == 0:
+                            self.RED_LED.led_off()
+                            self.BLUE_LED.led_on()
+                            self.GREEN_LED.led_off()
                             self.arm_grasping()
                         elif self.connecting_state == 1:
-                            self.RED_LED.led_off()
+                            self.RED_LED.led_on()
                             self.BLUE_LED.led_off()
-                            self.GREEN_LED.led_on()
+                            self.GREEN_LED.led_off()
                             self.arm_release()
                         # self.checking(self.img,self.connecting_state) #ここは出力が0になるからこの関数じゃない方が良い？
                         self.connecting_state += 1
@@ -482,13 +489,13 @@ class Cansat():
                         self.Flag_C = False #フラグをリセット
                         sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
                         if not self.aprc_clear:
-                            self.move(plan_color["R"],plan_color["L"],0.2)
+                            self.move(plan_color["R"],plan_color["L"],0.03)
                             print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
                             '''
                             色認識の出力の離散化：出力する時間を0.2秒に
                             '''
                         else:
-                            self.move(plan_color["R"],plan_color["L"],sleep_time)
+                            self.move(plan_color["R"],plan_color["L"],0.03)
                 else :
                     if self.vanish_c > 10 and not self.aprc_clear:
                         '''
@@ -499,7 +506,7 @@ class Cansat():
                         self.aprc_clear = False #aprc_clearのリセット
                         print("-R:35-")
                         if self.estimate_norm > 0.5:
-                            self.move(40,-40,0.2)
+                            self.move(90,-90,0.03)
                             print('sleeptime : 0.2')
                             vanish_c = 0
                         else:
@@ -667,32 +674,6 @@ class Cansat():
 #             print("ゴール方向："+str(direction_goal)+" -> 左に曲がりたい")
         return direction_goal
     
-    def safe_or_not(self,lower_risk):
-        """
-        ・入力:下半分のwindowのリスク行列（3*1または1*3？ここはロバストに作ります）
-        ・出力:危険=1、安全=0の(入力と同じ次元)
-        """
-        self.threshold_risk = np.average(np.array(self.risk_list_below))+2*np.std(np.array(self.risk_list_below))
-#         if len(self.risk_list_below)<=100:
-#             self.threshold_risk = np.average(np.array(self.risk_list_below))+2*np.std(np.array(self.risk_list_below))
-#         else:
-#             self.threshold_risk = np.average(np.array(self.risk_list_below[-100:]))+2*np.std(np.array(self.risk_list_below[-100:]))
-        
-        try:
-            self.max_risk=np.max(np.array(self.risk_list_below))
-#             if len(self.risk_list_below)<=100:
-#                 self.max_risk=np.max(np.array(self.risk_list_below))
-#             else:
-#                 self.max_risk=np.max(np.array(self.risk_list_below[-100:]))
-            
-        except Exception:
-            self.max_risk=1000
-        answer_mtx=np.zeros(3)
-        for i, risk_scaler in enumerate(lower_risk):
-            if risk_scaler >= self.threshold_risk or risk_scaler >= self.max_risk:
-                answer_mtx[i]=1
-        return answer_mtx
-     
     def sendLoRa(self): #通信モジュールの送信を行う関数
         datalog = str(self.state) + ","\
                   + str(self.gps.Time) + ","\

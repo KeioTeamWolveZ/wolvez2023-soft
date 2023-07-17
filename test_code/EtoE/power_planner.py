@@ -18,7 +18,7 @@ class PowerPlanner():
     HIGH_COLOR: 抽出する色の上限(h,s,v)
     """
     # 速度の設定
-    STANDARD_POWER = 45
+    STANDARD_POWER = 65
     POWER_RANGE = 15
 
     # 色の設定
@@ -32,8 +32,8 @@ class PowerPlanner():
     # LOW_COLOR = np.array([150, 64, 0])
     # HIGH_COLOR = np.array([179, 255, 255])
     #{1:red,0:yellow}
-    LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([28, 150, 180])}
-    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([33, 255, 255])}
+    LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([28, 150, 180]),99:np.array([18, 227, 217])}
+    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([33, 255, 255]),99:np.array([21, 255, 255])}
     # HIGH_COLOR = np.array([179, 255, 255])
     # LOW_COLOR = {0:np.array([[0, 64, 0],[150, 64, 0]]),1:np.array([100, 75, 75])}
     # HIGH_COLOR = {0:np.array([[10, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}
@@ -188,4 +188,33 @@ class PowerPlanner():
             power_R, power_L = 0,0
             w_rate = None ### mienai toki ni None ni naruyouni
             detected = False
+        return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected,"w_rate":w_rate} ### sleep zikan keisan ni motiiru node w_rate wo dasu
+
+    def para_detection(self,frame):
+        height, width = frame.shape[:2]
+
+        pos = self.find_specific_color(
+                frame,
+                self.AREA_RATIO_THRESHOLD,
+                self.LOW_COLOR,
+                self.HIGH_COLOR,
+                99
+            )
+        
+        aprc_clear = True
+        
+        if pos is not None:
+            if pos[2] > 6000:
+                detected = True
+                power_R, power_L, w_rate = self.power_calculation(pos,height,width,aprc_clear)
+            else:
+                power_R, power_L = 0,0
+                w_rate = None ### mienai toki ni None ni naruyouni
+                detected = False
+        else:
+            print("here")
+            power_R, power_L = 0,0
+            w_rate = None ### mienai toki ni None ni naruyouni
+            detected = False
+
         return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected,"w_rate":w_rate} ### sleep zikan keisan ni motiiru node w_rate wo dasu
