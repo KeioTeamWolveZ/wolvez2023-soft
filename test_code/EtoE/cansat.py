@@ -581,7 +581,7 @@ class Cansat():
         self.arm.up()
         time.sleep(1.0)
         
-        pos = self.mpp.find_specific_color(frame,self.AREA_RATIO_THRESHOLD,self.LOW_COLOR,self.HIGH_COLOR,color_num)
+        pos = self.mpp.find_specific_color(frame,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.LOW_COLOR,self.mpp.HIGH_COLOR,color_num)
         if pos is not None:
             print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
             detected = True
