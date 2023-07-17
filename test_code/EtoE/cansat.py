@@ -225,6 +225,8 @@ class Cansat():
         self.ay=round(self.bno055.ay,3)
         self.az=round(self.bno055.az,3)
         self.ex=round(self.bno055.ex,3)
+        self.lat = round(self.gps.Lat,3)
+        self.lon = round(self.gps.Lon,3)
         
         self.writeData() #txtファイルへのログの保存
     
@@ -728,7 +730,9 @@ class Cansat():
         return answer_mtx
      
     def sendLoRa(self): #通信モジュールの送信を行う関数
-        datalog = str(self.state)+ ","+ str(self.gps.Lat) + "," + str(self.gps.Lon)
+        datalog = str(self.state)+ ","\
+            + str(self.lat) + ","\
+            + str(self.lon)
         
         self.lora.sendData(datalog) #データを送信
         
