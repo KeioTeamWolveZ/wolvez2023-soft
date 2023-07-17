@@ -1,4 +1,4 @@
-#Last Update 2022/07/02
+#Last Update 2023/07/17
 #Author : Toshiki Fukui
 
 from tempfile import TemporaryDirectory
@@ -19,7 +19,8 @@ import shutil
 
 
 import constant as ct
-import power_planner
+from power_planner import PowerPlanner
+from AR_powerplanner import AR_powerplanner
 from bno055 import BNO055
 from motor import motor
 from gps import GPS
@@ -56,14 +57,14 @@ class Cansat():
         
         # インスタンス生成用      
         self.bno055 = BNO055()
-        self.MotorR = motor(ct.const.RIGHT_MOTOR_IN1_PIN,ct.const.RIGHT_MOTOR_IN2_PIN,ct.const.RIGHT_MOTOR_VREF_PIN)
-        self.MotorL = motor(ct.const.LEFT_MOTOR_IN1_PIN,ct.const.LEFT_MOTOR_IN2_PIN, ct.const.LEFT_MOTOR_VREF_PIN)
+        self.MotorL = motor(ct.const.RIGHT_MOTOR_IN1_PIN,ct.const.RIGHT_MOTOR_IN2_PIN,ct.const.RIGHT_MOTOR_VREF_PIN)
+        self.MotorR = motor(ct.const.LEFT_MOTOR_IN1_PIN,ct.const.LEFT_MOTOR_IN2_PIN, ct.const.LEFT_MOTOR_VREF_PIN)
         self.gps = GPS()
         self.lora = lora()
         self.arm = Arm(ct.const.SERVO_PIN)
         self.tg = Target()
-        # self.pc2 = Picam()
-        # self.mpp = power_planner()
+        self.pc2 = Picam()
+        self.mpp = PowerPlanner()
         self.RED_LED = led(ct.const.RED_LED_PIN)
         self.BLUE_LED = led(ct.const.BLUE_LED_PIN)
         self.GREEN_LED = led(ct.const.GREEN_LED_PIN)
@@ -89,6 +90,15 @@ class Cansat():
         self.runningTime = 0
         self.finishTime = 0
         self.stuckTime = 0
+        self.aprc_c = True
+        self.Flag_AR = False
+        self.Flag_C = False
+        self.aprc_clear = False
+        self.connecting_state = 0
+        self.vanish_c = 0
+        self.estimate_norm = 100000
+        self.starttime_color = time.time()
+        self.starttime_AR = time.time()
         
         #state管理用変数初期化
         self.gpscount=0
@@ -296,10 +306,10 @@ class Cansat():
         elif self.landstate == 1:
             # 走行中は色認識されなければ直進，されれば回避
             self.img = self.pc2.capture(1)
-            self.plan_color = power_planner.power_planner(self.img,1)
+            self.plan_color = self.mpp.para_detection(self.img)
             # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
             if not self.plan_color["Detected_tf"]:
-                self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
+                self.MotorR.go(ct.const.LANDING_MOTOR_VREF-10)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
             else:
                 self.MotorR.go(self.plan_color["L"])
@@ -311,15 +321,18 @@ class Cansat():
                 self.MotorR.stop()
                 self.MotorL.stop()
                 self.landstate = 2
+                print("\n\n=====The arm was calibrated=====\n\n")
+                self.state = 4
+                self.laststate = 4
             
-        if self.landstate == 2: #アームのキャリブレーション
+        elif self.landstate == 2: #アームのキャリブレーション
+            print("calib arm")
             if self.arm_calibTime == 0:
                 self.arm.up()
                 self.arm.down()
                 self.arm_calibTime = time.time()
 
             if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
-                print("here")
                 self.img = self.pc2.capture(1)
                 detected_img, ar_info = self.tg.detect_marker(self.img)
                 self.arm.calibration()  # 関数内でキャリブレーションを行う
@@ -366,7 +379,7 @@ class Cansat():
                     self.state = 5
                     self.laststate = 5
     
-    def second_releasing(self):
+    def second_releasingstate(self):
         if self.modu_sepaTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
             self.modu_sepaTime = time.time()
             self.RED_LED.led_on()
@@ -396,6 +409,230 @@ class Cansat():
                     self.state = 6
                     self.laststate = 6
 
+    def connecting(self):
+        if self.connecting_state == 0:
+            self.RED_LED.led_off()
+            self.BLUE_LED.led_off()
+            self.GREEN_LED.led_on()
+            self.arm.middle()
+        if self.connecting_state == 1:
+            self.RED_LED.led_off()
+            self.BLUE_LED.led_on()
+            self.GREEN_LED.led_off()
+            self.arm.up()
+        # capture and detect markers
+        self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":5})
+        self.img = self.pc2.capture(1)
+        
+        detected_img, ar_info = self.tg.detect_marker(self.img)
+        AR_checker = self.tg.AR_decide(ar_info,self.connecting_state)
+        print(ar_info)
+        if AR_checker["AR"]:
+            self.vanish_c = 0 #喪失カウントをリセット
+            self.aprc_c = False #アプローチの仕方のbool
+            self.estimate_norm = AR_checker["norm"] #使u これself.いるん？？
+            if not self.Flag_AR:
+                print("keisoku_AR")
+                self.starttime_AR = time.time()
+                self.Flag_AR = True
+            if self.Flag_AR and time.time()-self.starttime_AR >= 1.0:
+                self.Flag_AR = False #フラグをリセット←これもAR_decideの中で定義しても良いかも
+                AR_powerplan = AR_powerplanner(ar_info,AR_checker,self.connecting_state)  #sideを追加
+                APRC_STATE = AR_powerplan['aprc_state']
+                if not APRC_STATE:      #　接近できたかどうか
+                    if AR_powerplan["R"] < -0.1 and AR_powerplan["L"] < -0.1:
+                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
+                        print("Back!")
+                        #arm_grasping()
+                    else:
+                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
+                        print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"])
+                else:
+                    self.move(0,0,0.2)
+                    print('state_change')
+                    self.estimate_norm = 100000
+                    if self.connecting_state == 0:
+                        self.RED_LED.led_off()
+                        self.BLUE_LED.led_on()
+                        self.GREEN_LED.led_off()
+                        self.arm_grasping()
+                        SorF = self.checking(self.img,self.connecting_state)
+                        self.connecting_state += 1
+                        if not SorF["clear"]:
+                            self.connecting_state -= 1
+                    elif self.connecting_state == 1:
+                        self.RED_LED.led_on()
+                        self.BLUE_LED.led_off()
+                        self.GREEN_LED.led_off()
+                        self.arm_release()
+                        SorF = self.checking(self.img,self.connecting_state)
+                        self.connecting_state += 1
+                        if not SorF["clear"]:
+                            self.connecting_state -= 2
+                        # 焼き切りを待つ時間をここで使いたい（10秒）
+                        
+        else:
+            
+            if self.aprc_c : #色認識による出力決定するかどうか
+                
+                plan_color = self.mpp.power_planner(self.img,self.connecting_state)
+                self.aprc_clear = plan_color["Clear"]
+                if plan_color["Detected_tf"] :
+                    #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    if not self.Flag_C:
+                        self.starttime_color = time.time()
+                        self.Flag_C = True
+                        print("keisoku_color")
+                        '''
+                        Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
+                        '''
+                    
+                    if self.Flag_C and time.time()-self.starttime_color >= 2.0:
+                        '''
+                        5秒超えたら入ってくる
+                        '''
+                        self.vanish_c = 0 #喪失カウントをリセット
+                        self.Flag_C = False #フラグをリセット
+                        sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
+                        if not self.aprc_clear:
+                            self.move(plan_color["R"],plan_color["L"],0.03)
+                            print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
+                            '''
+                            色認識の出力の離散化：出力する時間を0.2秒に
+                            '''
+                        else:
+                            self.move(plan_color["R"],plan_color["L"],0.03)
+                else :
+                    if self.vanish_c > 10 and not self.aprc_clear:
+                        '''
+                        数を20に変更
+                        '''
+                        self.Flag_C = False #色を見つけたら待機できるようにリセット
+                        self.Flag_AR = False #AR認識もリセット
+                        self.aprc_clear = False #aprc_clearのリセット
+                        print("-R:35-")
+                        if self.estimate_norm > 0.5:
+                            self.move(90,-90,0.03)
+                            print('sleeptime : 0.2')
+                            self.vanish_c = 0
+                        else:
+                            if self.vanish_c >= 40:
+                                vanish_sleep = 0.3
+                                self.vanish_c = 0
+                            else:
+                                vanish_sleep = 0.1
+                            self.move(40,-40,vanish_sleep)
+                            print('sleeptime : vanish_sleep')
+
+                    self.vanish_c += 1
+            else:
+                if self.vanish_c > 10:
+                    self.aprc_c = True #色認識をさせる
+                self.vanish_c += 1
+        
+        if self.connecting_state >= 2:  # Finish this state
+            self.arm.up()
+            self.arm.down()
+            self.arm.up()
+            self.RED_LED.led_off()
+            self.BLUE_LED.led_off()
+            self.GREEN_LED.led_off()
+            self.state = 8
+            self.laststate = 8
+        return
+    
+    def arm_grasping(self):
+        # try:
+            # arm.setup()
+        # except:
+            # pass
+        self.arm.down()
+        self.arm.move(1050)
+        time.sleep(3)
+        for i in range(1050,1500,15):
+            self.arm.move(i)
+            time.sleep(0.1)
+        time.sleep(1)
+        
+    def arm_release(self):
+        # try:
+            # arm.setup()
+        # except:
+            # pass
+        time.sleep(3)
+        for i in range(1,300,20):
+            self.arm.move(1500-i)
+            time.sleep(0.1)
+        time.sleep(1)
+    
+    def checking(self,frame,connecting_state):
+        clear = False
+        if connecting_state == 0:
+            color_num = connecting_state
+        else:
+            color_num = 99 # 色変えるならここ変更(mppも)
+            time.sleep(10.0) # 焼き切り時間用いつか変更する
+        # try:
+            # arm.setup()
+        # except:
+            # pass
+        self.arm.up()
+        time.sleep(1.0)
+        
+        pos = self.mpp.find_specific_color(frame,self.AREA_RATIO_THRESHOLD,self.LOW_COLOR,self.HIGH_COLOR,color_num)
+        if pos is not None:
+            print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
+            detected = True
+            if color_num == 0:
+                if pos[1] > ct.const.CONNECTED_HEIGHT_THRE: # パラメータ未調整
+                    clear = True
+                    time.sleep(2.0)
+                    print('===========\nGRASPED\n===========')
+                else:
+                    self.arm.middle()
+                    time.sleep(1)
+                    print('===========\nFAILED\n===========')
+            else:
+                clear = True
+        else:
+            detected = False
+            print('===========\nNO LOOK\n===========')
+
+        return {"clear":clear,"Detected_tf":detected}
+    
+
+    def move(self,Vr=0,Vl=0,t=0.1):
+        """
+		arg:
+			Vr : right motor output power. -100 ~ 100   (range v<-40,40<v)
+			Vl : left motor output power. -100 ~ 100    (range v<-40,40<v)
+			 t : time 
+		return:
+			none : motor output
+		"""
+        if Vr>=0:
+            if Vr>100:
+                Vr=0
+            self.MotorR.go(Vr)
+        else:
+            if Vr<-100:
+                Vr=0
+            self.MotorR.back(-Vr)
+            
+        if Vl>=0:
+            if Vl>100:
+                Vl=0
+            self.MotorL.go(Vl)
+        else:
+            if Vl<-100:
+                Vl=0
+            self.MotorL.back(-Vl)
+
+        time.sleep(t)
+
+        self.MotorR.stop()
+        self.MotorL.stop()
+
     def running(self):
         if self.runningTime == 0:
             self.MotorR.go(60)
@@ -406,9 +643,9 @@ class Cansat():
             self.runningTime = time.time()
         
         else:
-            print("x",self.bno055.ax**2)
-            print("y",self.bno055.ay**2)
-            print("z",self.bno055.az**2)
+            #print("x",self.bno055.ax**2)
+            #print("y",self.bno055.ay**2)
+            #print("z",self.bno055.az**2)
             self.MotorR.go(60)
             self.MotorL.go(60)
             self.stuck_detection()
@@ -422,13 +659,17 @@ class Cansat():
     def finish(self):
         if self.finishTime == 0:
             self.finishTime = time.time()
-            print("All State have Finished")
+            print("Finished")
             self.MotorR.stop()
             self.MotorL.stop()
+            GPIO.output(ct.const.SEPARATION_PARA,0) #焼き切りが危ないのでlowにしておく
+            GPIO.output(ct.const.SEPARATION_MOD1,0) #焼き切りが危ないのでlowにしておく
+            GPIO.output(ct.const.SEPARATION_MOD2,0) #焼き切りが危ないのでlowにしておく
             self.RED_LED.led_off()
             self.BLUE_LED.led_off()
             self.GREEN_LED.led_off()
-            # self.pc2.stop()
+            self.pc2.stop()
+            time.sleep(0.5)
             cv2.destroyAllWindows()
             sys.exit()
 
@@ -508,6 +749,6 @@ class Cansat():
         self.RED_LED.led_off()
         self.BLUE_LED.led_off()
         self.GREEN_LED.led_off()
-        #self.pc2.stop()
+        self.pc2.stop()
         time.sleep(0.5)
         cv2.destroyAllWindows()

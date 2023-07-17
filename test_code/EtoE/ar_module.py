@@ -15,7 +15,7 @@ import datetime
 # Import other file
 import libcam
 
-arm_id = "3"
+arm_id = "1"
 
 # Definitions
 """
@@ -27,7 +27,7 @@ class Ar_cansat():
     """
     ## must be changed by id
 #     marker_length = 0.009 # [m]
-    marker_length = 0.02 # [m]
+    #marker_length = 0.02 # [m]
     id_set = [1,2,3,4,5,6,7,8,9,10]
     def __init__(self):
         #レンズの性質などの内部パラメータ(今回はすでに行っている)
@@ -36,9 +36,10 @@ class Ar_cansat():
         # マーカーの辞書選択
         self.dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
         #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
-        self.id_size = {1:0.0095,2:0.0199,3:0.0095,4:0.0199,5:0.01,6:0.01,7:0.025,8:0.025,9:0.01,10:0.01}
+        self.id_size = {1:0.00998,2:0.00998,3:0.00998,4:0.00998,5:0.00998,6:0.00998,7:0.025,8:0.025,9:0.01,10:0.01}
         self.debug_mode = False
         self.estimate_norm = 1
+        self.aprc_AR = False
         
     def addSpace(self,img):
         self.debug_mode = True
@@ -127,7 +128,7 @@ class Ar_cansat():
                     #print("pitch: " + str(euler_angle[1]))
                     #print("yaw  : " + str(euler_angle[2]))
                     #可視化
-                    draw_pole_length = self.marker_length
+                    #draw_pole_length = self.marker_length
                     #img = aruco.drawAxis(img,self.camera_matrix,self.distortion_coeff,rvec,tvec,draw_pole_length)
                     
                     # show ar_info
@@ -176,6 +177,51 @@ class Ar_cansat():
             img, self.ar_info = img, {}
 
         return img, self.ar_info
+    
+    def AR_decide(self, ar_info, connecting_state):
+        """
+        ARマーカーが見えたらAR出力にするためのbool値とID別のノルムの計算
+        """
+        side:str
+        norm:float
+        if connecting_state == 0:
+            if "1" in ar_info.keys() and "2" in ar_info.keys():
+                self.aprc_AR = True
+                side = 'marker_R'
+                norm = ar_info['2']['norm']
+                target_id = '2'
+            else: 
+                side = 'None'
+                norm = 0
+                self.aprc_AR = False
+                target_id = 100
+
+        else:
+            if "3" in ar_info.keys() or "4" in ar_info.keys():
+                self.aprc_AR = True
+                side = 'marker_R'
+                if "3" in ar_info.keys():
+                    norm = ar_info['3']['norm']
+                    target_id = '3'
+                else:
+                    norm = ar_info['4']['norm']
+                    target_id = '4'
+            elif "5" in ar_info.keys() or "6" in ar_info.keys():
+                self.aprc_AR = True
+                side = 'marker_L'
+                if "5" in ar_info.keys():
+                    norm = ar_info['5']['norm']
+                    target_id = '5'
+                else:
+                    norm = ar_info['6']['norm']
+                    target_id = '6'
+            else:
+                norm = 0
+                side = 'None'
+                self.aprc_AR = False
+                target_id = 100
+        
+        return {"AR":self.aprc_AR, "side":side, "id":target_id, "norm":norm}
 
 
 class Target(Ar_cansat):
