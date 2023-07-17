@@ -331,11 +331,8 @@ class Cansat():
         elif self.landstate == 2: #アームのキャリブレーション
             print("calib arm")
             if self.arm_calibTime == 0:
-                self.arm.up()
-                self.arm.down()
-                self.arm.up()
-                self.arm.down()
-                self.arm.up()
+                self.arm.move(850)
+                self.arm.move(1800)
                 self.arm.down()
                 self.arm_calibTime = time.time()
 
