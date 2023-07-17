@@ -24,7 +24,7 @@ class Picam():
         # self.picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous,"AfSpeed":controls.AfSpeedEnum.Fast})
         self.picam2.set_controls({"AfMode":0,"LensPosition":4.5})
         
-    def capture(self, args):
+    def capture(self, args, filename="test"):
         """
         引数0→写真
         引数1→動画
@@ -36,7 +36,7 @@ class Picam():
         if args == 0:
             now = datetime.now()
             now = now.strftime('%Y%m%d%H%M%S')
-            cv2.imwrite(f"pics/{now}.jpg", self.img)
+            cv2.imwrite(filename + f"-{now}.jpg", self.img)
             # print(now)
             return self.img
         elif args == 1:

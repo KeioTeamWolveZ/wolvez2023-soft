@@ -73,7 +73,6 @@ class Cansat():
         self.timer = 0
         self.state = state
         self.landstate = 0
-        self.camerastate = 0
         
         #初期パラメータ設定
         self.startTime_time=time.time()
@@ -83,23 +82,14 @@ class Cansat():
         self.droppingTime = 0
         self.landingTime = 0
         self.arm_calibTime = 0
-        self.arm_calibCount = 0
-        self.avoid_paraCount = 0
         self.modu_sepaTime = 0
         self.releasingstate = 0
         self.runningTime = 0
         self.finishTime = 0
         self.stuckTime = 0
-        self.aprc_c = True
-        self.Flag_AR = False
-        self.Flag_C = False
-        self.aprc_clear = False
-        self.ar_count = 0
-        self.connecting_state = 0
-        self.vanish_c = 0
-        self.estimate_norm = 100000
-        self.starttime_color = time.time()
-        self.starttime_AR = time.time()
+        self.arm_calibCount = 0
+        self.avoid_paraCount = 0
+        self.cameraCount = 0
         
         #state管理用変数初期化
         self.gpscount=0
@@ -110,6 +100,16 @@ class Cansat():
         self.countFlyLoop = 0
         self.countDropLoop = 0
         self.countstuckLoop = 0
+        self.aprc_c = True
+        self.Flag_AR = False
+        self.Flag_C = False
+        self.aprc_clear = False
+        self.ar_count = 0
+        self.connecting_state = 0
+        self.vanish_c = 0
+        self.estimate_norm = 100000
+        self.starttime_color = time.time()
+        self.starttime_AR = time.time()
 
         self.dict_list = {}
         self.goallat = ct.const.GPS_GOAL_LAT
@@ -120,7 +120,10 @@ class Cansat():
         self.mvfile()
 
     def mkdir(self): #フォルダ作成部分
-        os.mkdir(f'results/{self.startTime}')
+        self.results_dir = f'results/{self.startTime}'
+        self.results_img_dir = self.results_dir + '/imgs'
+        os.mkdir(self.results_dir)
+        os.mkdir(self.results_img_dir)
         return
 
     def mkfile(self):
@@ -141,7 +144,7 @@ class Cansat():
                   + "q:" + str(self.ex).rjust(6) + ","\
                   + "rV:" + str(round(self.MotorR.velocity,2)).rjust(4) + ","\
                   + "lV:" + str(round(self.MotorL.velocity,2)).rjust(4) + ","\
-                  + "Camera:" + str(self.camerastate)
+                  + "Camera:" + str(self.cameraCount)
 
         print(print_datalog)
      
@@ -156,7 +159,7 @@ class Cansat():
                   + "q:"+str(self.bno055.ex).rjust(6) + ","\
                   + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
                   + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
-                  + "Camera:" + str(self.camerastate)
+                  + "Camera:" + str(self.cameraCount)
         
         with open(f'results/{self.startTime}/control_result.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
             test.write(datalog + '\n')
@@ -235,6 +238,8 @@ class Cansat():
 
     def preparing(self): #時間が立ったら移行
         if self.preparingTime == 0:
+            self.pc2.set_controls({"AfMode": controls.AfModeEnum.Continuous})
+            self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
             self.preparingTime = time.time()#時刻を取得
             self.RED_LED.led_on()
             self.BLUE_LED.led_off()
@@ -308,7 +313,8 @@ class Cansat():
         #パラシュートの色を検知して離脱
         elif self.landstate == 1:
             # 走行中は色認識されなければ直進，されれば回避
-            self.img = self.pc2.capture(1)
+            self.cameraCount += 1
+            self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
             self.plan_color = self.mpp.para_detection(self.img)
             # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
             if not self.plan_color["Detected_tf"]:
@@ -337,7 +343,8 @@ class Cansat():
                 self.arm_calibTime = time.time()
 
             if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
-                self.img = self.pc2.capture(1)
+                self.cameraCount += 1
+                self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
                 detected_img, ar_info = self.tg.detect_marker(self.img)
                 self.arm.calibration()  # 関数内でキャリブレーションを行う
             else:
@@ -434,7 +441,8 @@ class Cansat():
             self.arm.up()
         # capture and detect markers
         self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":5})
-        self.img = self.pc2.capture(1)
+        self.cameraCount += 1
+        self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
         
         detected_img, ar_info = self.tg.detect_marker(self.img)
         AR_checker = self.tg.AR_decide(ar_info,self.connecting_state)
