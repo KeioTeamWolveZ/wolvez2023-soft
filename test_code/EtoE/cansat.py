@@ -450,21 +450,29 @@ class Cansat():
                         self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
                         print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"])
                 else:
-                        self.move(0,0,0.2)
-                        print('state_change')
-                        self.estimate_norm = 100000
-                        if self.connecting_state == 0:
-                            self.RED_LED.led_off()
-                            self.BLUE_LED.led_on()
-                            self.GREEN_LED.led_off()
-                            self.arm_grasping()
-                        elif self.connecting_state == 1:
-                            self.RED_LED.led_on()
-                            self.BLUE_LED.led_off()
-                            self.GREEN_LED.led_off()
-                            self.arm_release()
-                        # self.checking(self.img,self.connecting_state) #ここは出力が0になるからこの関数じゃない方が良い？
+                    self.move(0,0,0.2)
+                    print('state_change')
+                    self.estimate_norm = 100000
+                    if self.connecting_state == 0:
+                        self.RED_LED.led_off()
+                        self.BLUE_LED.led_on()
+                        self.GREEN_LED.led_off()
+                        self.arm_grasping()
+                        SorF = self.checking(self.img,self.connecting_state)
                         self.connecting_state += 1
+                        if not SorF["clear"]:
+                            self.connecting_state -= 1
+                    elif self.connecting_state == 1:
+                        self.RED_LED.led_on()
+                        self.BLUE_LED.led_off()
+                        self.GREEN_LED.led_off()
+                        self.arm_release()
+                        SorF = self.checking(self.img,self.connecting_state)
+                        self.connecting_state += 1
+                        if not SorF["clear"]:
+                            self.connecting_state -= 2
+                        # 焼き切りを待つ時間をここで使いたい（10秒）
+                        
         else:
             
             if self.aprc_c : #色認識による出力決定するかどうか
@@ -508,11 +516,11 @@ class Cansat():
                         if self.estimate_norm > 0.5:
                             self.move(90,-90,0.03)
                             print('sleeptime : 0.2')
-                            vanish_c = 0
+                            self.vanish_c = 0
                         else:
                             if self.vanish_c >= 40:
                                 vanish_sleep = 0.3
-                                vanish_c = 0
+                                self.vanish_c = 0
                             else:
                                 vanish_sleep = 0.1
                             self.move(40,-40,vanish_sleep)
@@ -560,36 +568,41 @@ class Cansat():
         time.sleep(1)
     
     def checking(self,frame,connecting_state):
-        grasp_clear = False
-        
+        clear = False
+        if connecting_state == 0:
+            color_num = connecting_state
+        else:
+            color_num = 99 # 色変えるならここ変更(mppも)
+            time.sleep(10.0) # 焼き切り時間用いつか変更する
         # try:
             # arm.setup()
         # except:
             # pass
-        self.arm.move(1500)
+        self.arm.up()
         time.sleep(1.0)
         
-        pos = powerplanner.find_specific_color(frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR,connecting_state)
+        pos = self.mpp.find_specific_color(frame,self.AREA_RATIO_THRESHOLD,self.LOW_COLOR,self.HIGH_COLOR,color_num)
         if pos is not None:
-            print("pos:",pos[1],"\nTHRESHOLD:",Module_Height[connecting_state])
+            print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
             detected = True
-            if pos[1] < Module_Height[connecting_state]:
-                grasp_clear = True
-                self.arm.move(1500)
-                time.sleep(2.0)
-                # arm.stop()
-                print('===========\nGRASPED\n===========')
+            if color_num == 0:
+                if pos[1] > ct.const.CONNECTED_HEIGHT_THRE: # パラメータ未調整
+                    clear = True
+                    time.sleep(2.0)
+                    print('===========\nGRASPED\n===========')
+                else:
+                    self.arm.middle()
+                    time.sleep(1)
+                    print('===========\nFAILED\n===========')
             else:
-                self.arm.move(1200)
-                time.sleep(1)
-                # arm.stop()
-                print('===========\nFAILED\n===========')
+                clear = True
         else:
             detected = False
             print('===========\nNO LOOK\n===========')
 
-        return {"grasp_clear":grasp_clear,"Detected_tf":detected}
+        return {"clear":clear,"Detected_tf":detected}
     
+
     def move(self,Vr=0,Vl=0,t=0.1):
         """
 		arg:
