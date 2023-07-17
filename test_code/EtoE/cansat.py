@@ -94,7 +94,8 @@ class Cansat():
         self.Flag_AR = False
         self.Flag_C = False
         self.aprc_clear = False
-        self.connecting_state = 0
+        self.ar_count = 0
+        self.connecting_state = 1
         self.vanish_c = 0
         self.estimate_norm = 100000
         self.starttime_color = time.time()
@@ -309,7 +310,7 @@ class Cansat():
             self.plan_color = self.mpp.para_detection(self.img)
             # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
             if not self.plan_color["Detected_tf"]:
-                self.MotorR.go(ct.const.LANDING_MOTOR_VREF-10)
+                self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
             else:
                 self.MotorR.go(self.plan_color["L"])
@@ -322,8 +323,8 @@ class Cansat():
                 self.MotorL.stop()
                 self.landstate = 2
                 print("\n\n=====The arm was calibrated=====\n\n")
-                self.state = 4
-                self.laststate = 4
+                #self.state = 4
+                #self.laststate = 4
             
         elif self.landstate == 2: #アームのキャリブレーション
             print("calib arm")
@@ -400,8 +401,15 @@ class Cansat():
             self.pre_motorTime = time.time()
             self.releasingstate = 2
         
-        if self.releasingstate == 2:
-            if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #5秒間モータ回して分離シートから十分離れる
+        elif self.releasingstate == 2:
+            if time.time()-self.pre_motorTime > ct.const.RELEASING_MOTOR_TIME_THRE: #5秒間モータ回して分離シートから十分離れる
+                    self.pre_motorTime = time.time()
+                    self.MotorR.go(ct.const.RELEASING_MOTOR_VREF)
+                    self.MotorL.stop()
+                    self.releasingstate = 3
+                    
+        if self.releasingstate == 3:
+            if time.time()-self.pre_motorTime > ct.const.TURNING_MOTOR_TIME_THRE: #2 seconds for tuning
                     self.MotorR.stop()
                     self.MotorL.stop()
                     self.modu_sepaTime = 0
@@ -416,6 +424,7 @@ class Cansat():
             self.GREEN_LED.led_on()
             self.arm.middle()
         if self.connecting_state == 1:
+            self.ar_count = 0
             self.RED_LED.led_off()
             self.BLUE_LED.led_on()
             self.GREEN_LED.led_off()
@@ -434,6 +443,7 @@ class Cansat():
             if not self.Flag_AR:
                 print("keisoku_AR")
                 self.starttime_AR = time.time()
+                self.ar_count += 1
                 self.Flag_AR = True
             if self.Flag_AR and time.time()-self.starttime_AR >= 1.0:
                 self.Flag_AR = False #フラグをリセット←これもAR_decideの中で定義しても良いかも
@@ -445,7 +455,7 @@ class Cansat():
                         print("Back!")
                         #arm_grasping()
                     else:
-                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
+                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.02)
                         print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"])
                 else:
                     self.move(0,0,0.2)
@@ -496,15 +506,18 @@ class Cansat():
                         self.Flag_C = False #フラグをリセット
                         sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
                         if not self.aprc_clear:
-                            self.move(plan_color["R"],plan_color["L"],0.035)
+                            self.move(plan_color["R"],plan_color["L"],0.03)
                             print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
                             '''
                             色認識の出力の離散化：出力する時間を0.2秒に
                             '''
+                            
+                            # if more than once AR could be seen
+                            if self.ar_count > 0:
+                                self.move(90,-90,0.025)
                         else:
-                            self.move(plan_color["R"],plan_color["L"],0.035)
+                            self.move(plan_color["R"],plan_color["L"],0.03)
                         
-                        self.move(-90,-90,0.02)
                 else :
                     if self.vanish_c > 10 and not self.aprc_clear:
                         '''
@@ -715,10 +728,8 @@ class Cansat():
         return answer_mtx
      
     def sendLoRa(self): #通信モジュールの送信を行う関数
-        datalog = str(self.state) + ","\
-                  + str(self.gps.Time) + ","\
-                  + str(self.gps.Lat) + ","\
-                  + str(self.gps.Lon)
+        datalog = str(self.state)+ ","+ str(self.gps.Lat) + "," + str(self.gps.Lon)
+        
         self.lora.sendData(datalog) #データを送信
         
     def stuck_detection(self):

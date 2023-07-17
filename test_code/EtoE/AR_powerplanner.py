@@ -14,7 +14,7 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
         goal_area = {"L":[-0.035,-0.025],"R":[-0.005,0.005],"z":[0.01,0.03]}
     else:
         marker_1 = np.array([0.0025,0.008755,0.1745])
-        goal_area = {"L":[-0.053,-0.063],"R":[0.0053,0.0153],"z":[-0.01,0.01]}
+        goal_area = {"L":[-0.056,-0.046],"R":[0.019,0.029],"z":[-0.01,0.01]}
     marker_target = np.array([ar_info[target_id]["x"],ar_info[target_id]["y"],ar_info[target_id]["z"]])
     vec, distance = __targetting(marker_1,marker_target)
     #print(distance,vec[0])
@@ -89,7 +89,7 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
             if AR_checker["side"] == "marker_R":
                 if vec[0] > goal_area["R"][0] and vec[0] < goal_area["R"][1]:
                     power_R = int(STANDARD_POWER - POWER_RANGE)
-                    power_L = int(STANDARD_POWER - POWER_RANGE)
+                    power_L = int(STANDARD_POWER - POWER_RANGE+5)
                 else:
                     if vec[0] < goal_area["R"][0]:
                         power_R = int(STANDARD_POWER - POWER_RANGE )
@@ -100,7 +100,7 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
             elif AR_checker["side"] == "marker_L":
                 if vec[0] > goal_area["L"][0] and vec[0] < goal_area["L"][1]:
                     power_R = int(STANDARD_POWER - POWER_RANGE)
-                    power_L = int(STANDARD_POWER - POWER_RANGE)
+                    power_L = int(STANDARD_POWER - POWER_RANGE+5)
                 else:
                     if vec[0] > goal_area["L"][1]:
                         power_R = int(0)
@@ -134,10 +134,10 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
                 else:
                     if vec[0] > goal_area["L"][1]:
                         power_R = int(-motor_ouput)
-                        power_L = int(motor_ouput)
+                        power_L = int(motor_ouput+7)
                     else:
                         power_R = int(motor_ouput)
-                        power_L = int(-motor_ouput)
+                        power_L = int(-motor_ouput -7)
             '''
             接近後なのでアーム動かしたい：要検討
             '''
