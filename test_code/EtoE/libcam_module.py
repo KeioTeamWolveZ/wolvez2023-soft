@@ -26,8 +26,8 @@ class Picam():
         
     def capture(self, args, filename="test"):
         """
-        引数0→写真
-        引数1→動画
+        引数0→撮影&保存
+        引数1→撮影のみ
         """
         # capture with libcam
         self.img = self.picam2.capture_array()
@@ -43,6 +43,7 @@ class Picam():
             # cv2.imshow("realtime", self.img)
             return self.img
         else:
+            print("The argument should be 0 or 1")
             return None
 
     def show(self, img, title='realtime'):
