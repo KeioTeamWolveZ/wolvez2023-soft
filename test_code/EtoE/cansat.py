@@ -225,8 +225,8 @@ class Cansat():
         self.ay=round(self.bno055.ay,3)
         self.az=round(self.bno055.az,3)
         self.ex=round(self.bno055.ex,3)
-        self.lat = round(self.gps.Lat,3)
-        self.lon = round(self.gps.Lon,3)
+        self.lat = round(float(self.gps.Lat),3)
+        self.lon = round(float(self.gps.Lon),3)
         
         self.writeData() #txtファイルへのログの保存
     
@@ -331,6 +331,10 @@ class Cansat():
         elif self.landstate == 2: #アームのキャリブレーション
             print("calib arm")
             if self.arm_calibTime == 0:
+                self.arm.up()
+                self.arm.down()
+                self.arm.up()
+                self.arm.down()
                 self.arm.up()
                 self.arm.down()
                 self.arm_calibTime = time.time()
