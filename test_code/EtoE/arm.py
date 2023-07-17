@@ -81,17 +81,14 @@ if __name__ == "__main__":
 	#arm = ArmHardPwm(16)
 	arm = Arm(23)
 	arm.setup()
-	arm.up()
-	arm.down()
-	arm.up()
-	arm.down()
-	arm.up()
+	arm.move(850)
+	arm.move(1900)
 	arm.down()
 	start = time.time()
 	while True:
 		end = time.time()
 		print("wating")
-		if end-start > 5:
+		if end-start > 1:
 			break
 	#GPIO.cleanup()
 	
