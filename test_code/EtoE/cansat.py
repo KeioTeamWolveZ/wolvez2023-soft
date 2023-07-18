@@ -434,7 +434,6 @@ class Cansat():
             self.GREEN_LED.led_on()
             self.arm.middle()
         if self.connecting_state == 1:
-            self.ar_count = 0
             self.RED_LED.led_off()
             self.BLUE_LED.led_on()
             self.GREEN_LED.led_off()
@@ -462,11 +461,11 @@ class Cansat():
                 APRC_STATE = AR_powerplan['aprc_state']
                 if not APRC_STATE:      #　接近できたかどうか
                     if AR_powerplan["R"] < -0.1 and AR_powerplan["L"] < -0.1:
-                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
+                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.05)
                         print("Back!")
                         #arm_grasping()
                     else:
-                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.02)
+                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
                         print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"])
                 else:
                     self.move(0,0,0.2)
@@ -479,6 +478,7 @@ class Cansat():
                         self.arm_grasping()
                         #SorF = self.checking(self.img,self.connecting_state)
                         self.connecting_state += 1
+                        self.ar_count = 0
                         #if not SorF["clear"]:
                         #    self.connecting_state -= 1
                     elif self.connecting_state == 1:
@@ -496,8 +496,7 @@ class Cansat():
         else:
             
             if self.aprc_c : #色認識による出力決定するかどうか
-                
-                plan_color = self.mpp.power_planner(self.img,self.connecting_state)
+                plan_color = self.mpp.power_planner(self.img,self.connecting_state,self.ar_count)
                 self.aprc_clear = plan_color["Clear"]
                 if plan_color["Detected_tf"] :
                     #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -517,17 +516,15 @@ class Cansat():
                         self.Flag_C = False #フラグをリセット
                         sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
                         if not self.aprc_clear:
-                            self.move(plan_color["R"],plan_color["L"],0.03)
+                            self.move(plan_color["R"],plan_color["L"],0.04)
                             print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
                             '''
                             色認識の出力の離散化：出力する時間を0.2秒に
                             '''
                             
-                            # if more than once AR could be seen
-                            if self.ar_count > 0:
-                                self.move(90,-90,0.025)
                         else:
-                            self.move(plan_color["R"],plan_color["L"],0.03)
+                            self.move(plan_color["R"],plan_color["L"],0.04)
+                            # if more than once AR could be seen
                         
                 else :
                     if self.vanish_c > 10 and not self.aprc_clear:
