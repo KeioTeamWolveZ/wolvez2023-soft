@@ -32,8 +32,8 @@ class PowerPlanner():
     # LOW_COLOR = np.array([150, 64, 0])
     # HIGH_COLOR = np.array([179, 255, 255])
     #{1:red,0:yellow}
-    LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([28, 150, 180]),99:np.array([18, 227, 217])}
-    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([33, 255, 255]),99:np.array([21, 255, 255])}
+    LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([25, 200, 180]),99:np.array([18, 227, 217])}
+    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([27, 255, 255]),99:np.array([21, 255, 255])}
     # HIGH_COLOR = np.array([179, 255, 255])
     # LOW_COLOR = {0:np.array([[0, 64, 0],[150, 64, 0]]),1:np.array([100, 75, 75])}
     # HIGH_COLOR = {0:np.array([[10, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}

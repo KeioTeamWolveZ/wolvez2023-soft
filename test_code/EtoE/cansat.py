@@ -238,7 +238,7 @@ class Cansat():
 
     def preparing(self): #時間が立ったら移行
         if self.preparingTime == 0:
-            self.pc2.set_controls({"AfMode": controls.AfModeEnum.Continuous})
+            #self.pc2.set_controls({"AfMode": controls.AfModeEnum.Continuous})
             self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
             self.preparingTime = time.time()#時刻を取得
             self.RED_LED.led_on()
