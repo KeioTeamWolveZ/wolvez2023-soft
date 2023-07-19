@@ -41,7 +41,7 @@ class PowerPlanner():
     # 抽出する色の塊のしきい値
     AREA_RATIO_THRESHOLD = 0.00003
     def __init__(self):
-        pass
+        self.pos = []
 
     def find_specific_color(self,frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR,connecting_state):
         # 高さ，幅，チャンネル数
@@ -164,7 +164,7 @@ class PowerPlanner():
 
         aprc_clear = False #これは目標に到達できたかのbool値
 
-        pos = self.find_specific_color(
+        self.pos = self.find_specific_color(
                 frame,
                 self.AREA_RATIO_THRESHOLD,
                 self.LOW_COLOR,
@@ -210,7 +210,7 @@ class PowerPlanner():
         if pos is not None:
             if pos[2] > 6000:
                 detected = True
-                power_R, power_L, w_rate = self.power_calculation(pos,height,width,aprc_clear)
+                power_L, power_R, w_rate = self.power_calculation(pos,height,width,aprc_clear)
                 if power_L > power_R:
                     move = 'stay-right'
                 else:
@@ -226,4 +226,4 @@ class PowerPlanner():
             w_rate = None ### mienai toki ni None ni naruyouni
             detected = False
 
-        return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected,"w_rate":w_rate} ### sleep zikan keisan ni motiiru node w_rate wo dasu
+        return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected,"w_rate":w_rate,"move":move} ### sleep zikan keisan ni motiiru node w_rate wo dasu

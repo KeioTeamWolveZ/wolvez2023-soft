@@ -114,6 +114,7 @@ class Cansat():
         self.starttime_color = time.time()
         self.starttime_AR = time.time()
         self.ar_info = {}
+        self.cl_data = [0,0,0]
         self.move_arplan = 'none'
         self.move_clplan = 'none'
         self.connected = False
@@ -167,13 +168,19 @@ class Cansat():
                   + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
                   + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
                   + "Camera:" + str(self.cameraCount)
-        if self.state == 6:
+        if self.state == 3:
+            datalog = datalog + ","\
+                  + "Color-Approach:" + str(self.cl_checker) + ","\
+                  + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
+                  + "Color-move:" + str(self.move_clplan)
+        elif self.state == 6:
             datalog = datalog + ","\
                   + "ConnectingState:" + str(self.connecting_state) + ","\
                   + "AR-Approach:" + str(self.ar_checker) + ","\
                   + "AR-info:" + str(self.ar_info) + ","\
                   + "AR-move:" + str(self.move_arplan) + ","\
                   + "Color-Approach:" + str(self.cl_checker) + ","\
+                  + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
                   + "Color-move:" + str(self.move_clplan) + ","\
                   + "Done-Approach:" + str(self.done_approach) + ","\
                   + "Done-Connect:" + str(self.connected)
@@ -333,13 +340,16 @@ class Cansat():
             self.cameraCount += 1
             self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
             self.plan_color = self.mpp.para_detection(self.img)
+            self.cl_checker = plan_color["Detected_tf"]
+            self.move_clplan = plan_color["move"]
+            self.cl_data = self.mpp.pos
             # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
             if not self.plan_color["Detected_tf"]:
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
             else:
-                self.MotorR.go(self.plan_color["L"])
-                self.MotorL.go(self.plan_color["R"])
+                self.MotorR.go(self.plan_color["R"])
+                self.MotorL.go(self.plan_color["L"])
 
                 self.stuck_detection()
 
@@ -521,6 +531,7 @@ class Cansat():
                 self.aprc_clear = plan_color["Clear"]
                 self.cl_checker = plan_color["Detected_tf"]
                 self.move_clplan = plan_color["move"]
+                self.cl_data = self.mpp.pos
                 if plan_color["Detected_tf"] :
                     #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     if not self.Flag_C:
