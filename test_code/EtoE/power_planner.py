@@ -131,7 +131,7 @@ class PowerPlanner():
         return power_R,power_L,w_rate
 
     """
-    def power_calculation(pos,h,w):
+    def power_calculation(self.pos,h,w):
         power_R = 0
         power_L = 0
         if pos[0] > 4*w/5:
@@ -172,22 +172,23 @@ class PowerPlanner():
                 connecting_state
             )
         
-        if pos is not None:
+        if self.pos is not None:
             detected = True
             if connecting_state == 0:
-                if pos[2] > 6000:
+                if self.pos[2] > 6000:
                     aprc_clear = True #これは目標に到達できたかのbool値
             else:
-                if pos[2] > 10000:
+                if self.pos[2] > 10000:
                 # arm temae : 28000
                 # arm red : 25000
                     aprc_clear = True #これは目標に到達できたかのbool値
             if ar_count > 0:
                 aprc_clear = True
             print("aprc_clear : ",aprc_clear)
-            power_R, power_L, w_rate = self.power_calculation(pos,height,width,aprc_clear)
+            power_R, power_L, w_rate = self.power_calculation(self.pos,height,width,aprc_clear)
             
         else:
+            self.pos = ["none","none","none"]
             move = 'stop'
             power_R, power_L = 0,0
             w_rate = None ### mienai toki ni None ni naruyouni
@@ -197,7 +198,7 @@ class PowerPlanner():
     def para_detection(self,frame):
         height, width = frame.shape[:2]
 
-        pos = self.find_specific_color(
+        self.pos = self.find_specific_color(
                 frame,
                 self.AREA_RATIO_THRESHOLD,
                 self.LOW_COLOR,
@@ -206,11 +207,12 @@ class PowerPlanner():
             )
         
         aprc_clear = True
+        move = 'stop'
         
-        if pos is not None:
-            if pos[2] > 6000:
+        if self.pos is not None:
+            if self.pos[2] > 6000:
                 detected = True
-                power_L, power_R, w_rate = self.power_calculation(pos,height,width,aprc_clear)
+                power_L, power_R, w_rate = self.power_calculation(self.pos,height,width,aprc_clear)
                 if power_L > power_R:
                     move = 'stay-right'
                 else:
@@ -221,6 +223,8 @@ class PowerPlanner():
                 w_rate = None ### mienai toki ni None ni naruyouni
                 detected = False
         else:
+            self.pos = ["none","none","none"]
+            move = 'stop'
             print("here")
             power_R, power_L = 0,0
             w_rate = None ### mienai toki ni None ni naruyouni

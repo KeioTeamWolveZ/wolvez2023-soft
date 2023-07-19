@@ -108,7 +108,7 @@ class Cansat():
         self.Flag_C = False
         self.aprc_clear = False
         self.ar_count = 0
-        self.connecting_state = 1
+        self.connecting_state = 0
         self.vanish_c = 0
         self.estimate_norm = 100000
         self.starttime_color = time.time()
@@ -168,22 +168,22 @@ class Cansat():
                   + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
                   + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
                   + "Camera:" + str(self.cameraCount)
-        if self.state == 3:
-            datalog = datalog + ","\
-                  + "Color-Approach:" + str(self.cl_checker) + ","\
-                  + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
-                  + "Color-move:" + str(self.move_clplan)
-        elif self.state == 6:
-            datalog = datalog + ","\
-                  + "ConnectingState:" + str(self.connecting_state) + ","\
-                  + "AR-Approach:" + str(self.ar_checker) + ","\
-                  + "AR-info:" + str(self.ar_info) + ","\
-                  + "AR-move:" + str(self.move_arplan) + ","\
-                  + "Color-Approach:" + str(self.cl_checker) + ","\
-                  + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
-                  + "Color-move:" + str(self.move_clplan) + ","\
-                  + "Done-Approach:" + str(self.done_approach) + ","\
-                  + "Done-Connect:" + str(self.connected)
+        #if self.state == 3:
+        #    datalog = datalog + ","\
+        #          + "Color-Approach:" + str(self.cl_checker) + ","\
+        #          + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
+        #          + "Color-move:" + str(self.move_clplan)
+        #elif self.state == 6:
+        #    datalog = datalog + ","\
+        #          + "ConnectingState:" + str(self.connecting_state) + ","\
+        #          + "AR-Approach:" + str(self.ar_checker) + ","\
+        #          + "AR-info:" + str(self.ar_info) + ","\
+        #          + "AR-move:" + str(self.move_arplan) + ","\
+        #          + "Color-Approach:" + str(self.cl_checker) + ","\
+        #          + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
+        #          + "Color-move:" + str(self.move_clplan) + ","\
+        #          + "Done-Approach:" + str(self.done_approach) + ","\
+        #          + "Done-Connect:" + str(self.connected)
         
         with open(f'results/{self.startTime}/control_result.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
             test.write(datalog + '\n')
@@ -340,8 +340,8 @@ class Cansat():
             self.cameraCount += 1
             self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
             self.plan_color = self.mpp.para_detection(self.img)
-            self.cl_checker = plan_color["Detected_tf"]
-            self.move_clplan = plan_color["move"]
+            self.cl_checker = self.plan_color["Detected_tf"]
+            self.move_clplan = self.plan_color["move"]
             self.cl_data = self.mpp.pos
             # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
             if not self.plan_color["Detected_tf"]:
@@ -634,11 +634,11 @@ class Cansat():
             # arm.setup()
         # except:
             # pass
-        self.arm.up()
         time.sleep(1.0)
         
         pos = self.mpp.find_specific_color(frame,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.LOW_COLOR,self.mpp.HIGH_COLOR,color_num)
         if pos is not None:
+            self.cl_data = pos
             print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
             detected = True
             if color_num == 0:
@@ -653,6 +653,7 @@ class Cansat():
             else:
                 clear = True
         else:
+            self.cl_data = ["none", "none", "none"]
             detected = False
             print('===========\nNO LOOK\n===========')
 
