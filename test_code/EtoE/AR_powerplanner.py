@@ -81,6 +81,7 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
         # print("senkai")
         # power_R = int(vec[0]/abs(vec[0])*(STANDARD_POWER - POWER_RANGE + POWER_RANGE * vec[0]/10)) ### +- ga umareru youni
         # power_L = -power_R -5
+    move = "stop"
     if vec[2] > goal_area["z"][0]:
         if vec[2] > goal_area["z"][1]+0.01:
             '''
@@ -88,24 +89,30 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
             '''
             if AR_checker["side"] == "marker_R":
                 if vec[0] > goal_area["R"][0] and vec[0] < goal_area["R"][1]:
+                    move = 'straight'
                     power_R = int(STANDARD_POWER - POWER_RANGE)
                     power_L = int(STANDARD_POWER - POWER_RANGE+5)
                 else:
                     if vec[0] < goal_area["R"][0]:
+                        move = 'straight-left'
                         power_R = int(STANDARD_POWER - POWER_RANGE )
                         power_L = int(0)
                     else:
+                        move = 'straight-right'
                         power_R = int(0)
                         power_L = int(STANDARD_POWER - POWER_RANGE)
             elif AR_checker["side"] == "marker_L":
                 if vec[0] > goal_area["L"][0] and vec[0] < goal_area["L"][1]:
+                    move = 'straight'
                     power_R = int(STANDARD_POWER - POWER_RANGE)
                     power_L = int(STANDARD_POWER - POWER_RANGE+5)
                 else:
                     if vec[0] > goal_area["L"][1]:
+                        move = 'straight-right'
                         power_R = int(0)
                         power_L = int(STANDARD_POWER - POWER_RANGE)
                     else:
+                        move = 'straight-left'
                         power_R = int(STANDARD_POWER - POWER_RANGE )
                         power_L = int(0)
 
@@ -120,9 +127,11 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
                     aprc_state = True
                 else:
                     if vec[0] < goal_area["R"][0]:
+                        move = 'stay-left'
                         power_R = int(motor_ouput)
                         power_L = int(-motor_ouput)
                     else:
+                        move = 'stay-right'
                         power_R = int(-motor_ouput)
                         power_L = int(motor_ouput)
             elif AR_checker["side"] == "marker_L":
@@ -133,9 +142,11 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
                     aprc_state = True
                 else:
                     if vec[0] > goal_area["L"][1]:
+                        move = 'stay-right'
                         power_R = int(-motor_ouput)
                         power_L = int(motor_ouput+7)
                     else:
+                        move = 'stay-left'
                         power_R = int(motor_ouput)
                         power_L = int(-motor_ouput -7)
             '''
@@ -147,10 +158,11 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
         distanceが負のときバックする？iranaikamo
         '''
         print("distance<0")
+        move = 'back'
         power_R = int(-1*STANDARD_POWER)
         power_L = int(-1*STANDARD_POWER)
     
-    return {"R":power_R,"L":power_L,"aprc_state":aprc_state}
+    return {"R":power_R,"L":power_L,"aprc_state":aprc_state,"move":move}
 
 
 ### module nomi kara sansyutu

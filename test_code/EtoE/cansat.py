@@ -100,6 +100,8 @@ class Cansat():
         self.countFlyLoop = 0
         self.countDropLoop = 0
         self.countstuckLoop = 0
+        self.done_approach = False
+        self.ar_checker = False
         self.aprc_c = True
         self.Flag_AR = False
         self.Flag_C = False
@@ -110,6 +112,10 @@ class Cansat():
         self.estimate_norm = 100000
         self.starttime_color = time.time()
         self.starttime_AR = time.time()
+        self.ar_info = {}
+        self.move_arplan = 'none'
+        self.move_clplan = 'none'
+        self.connected = False
 
         self.dict_list = {}
         self.goallat = ct.const.GPS_GOAL_LAT
@@ -160,6 +166,16 @@ class Cansat():
                   + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
                   + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
                   + "Camera:" + str(self.cameraCount)
+        if self.state == 6:
+            datalog = datalog + ","\
+                  + "ConnectingState:" + str(self.connecting_state) + ","\
+                  + "AR-Approach:" + str(self.ar_checker) + ","\
+                  + "AR-info:" + str(self.ar_info) + ","\
+                  + "AR-move:" + str(self.move_arplan) + ","\
+                  + "Color-Approach:" + str(self.cl_checker) + ","\
+                  + "Color-move:" + str(self.move_clplan) + ","\
+                  + "Done-Approach:" + str(self.done_approach) + ","\
+                  + "Done-Connect:" + str(self.connected)
         
         with open(f'results/{self.startTime}/control_result.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
             test.write(datalog + '\n')
@@ -345,17 +361,17 @@ class Cansat():
             if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
                 self.cameraCount += 1
                 self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
-                detected_img, ar_info = self.tg.detect_marker(self.img)
+                detected_img, self.ar_info = self.tg.detect_marker(self.img)
                 self.arm.calibration()  # 関数内でキャリブレーションを行う
             else:
                 print("\n\n=====The arm was calibrated=====\n\n")
                 self.state = 4
                 self.laststate = 4
 
-            #if "1" in ar_info.keys():
-            #    if ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.5:
+            #if "1" in self.ar_info.keys():
+            #    if self.ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION > 0.5:
             #        self.buff = 0.2
-            #   elif ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.5:
+            #   elif self.ar_info["1"]["y"] - ct.const.ARM_CALIB_POSITION < 0.5:
             #        self.buff = -0.2
             #   else:
             #       self.arm_calibCount += 1
@@ -428,6 +444,7 @@ class Cansat():
                     self.laststate = 6
 
     def connecting(self):
+        self.done_approach = False
         if self.connecting_state == 0:
             self.RED_LED.led_off()
             self.BLUE_LED.led_off()
@@ -443,13 +460,14 @@ class Cansat():
         self.cameraCount += 1
         self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
         
-        detected_img, ar_info = self.tg.detect_marker(self.img)
-        AR_checker = self.tg.AR_decide(ar_info,self.connecting_state)
-        print(ar_info)
-        if AR_checker["AR"]:
+        detected_img, self.ar_info = self.tg.detect_marker(self.img)
+        self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
+        self.ar_checker = self.AR_checker["AR"]
+        print(self.ar_info)
+        if self.AR_checker["AR"]:
             self.vanish_c = 0 #喪失カウントをリセット
             self.aprc_c = False #アプローチの仕方のbool
-            self.estimate_norm = AR_checker["norm"] #使u これself.いるん？？
+            self.estimate_norm = self.AR_checker["norm"] #使u これself.いるん？？
             if not self.Flag_AR:
                 print("keisoku_AR")
                 self.starttime_AR = time.time()
@@ -457,7 +475,8 @@ class Cansat():
                 self.Flag_AR = True
             if self.Flag_AR and time.time()-self.starttime_AR >= 1.0:
                 self.Flag_AR = False #フラグをリセット←これもAR_decideの中で定義しても良いかも
-                AR_powerplan = AR_powerplanner(ar_info,AR_checker,self.connecting_state)  #sideを追加
+                AR_powerplan = AR_powerplanner(self.ar_info,self.AR_checker,self.connecting_state)  #sideを追加
+                self.move_arplan = AR_powerplan["move"]
                 APRC_STATE = AR_powerplan['aprc_state']
                 if not APRC_STATE:      #　接近できたかどうか
                     if AR_powerplan["R"] < -0.1 and AR_powerplan["L"] < -0.1:
@@ -471,6 +490,7 @@ class Cansat():
                     self.move(0,0,0.2)
                     print('state_change')
                     self.estimate_norm = 100000
+                    self.done_approach = True
                     if self.connecting_state == 0:
                         self.RED_LED.led_off()
                         self.BLUE_LED.led_on()
@@ -498,6 +518,8 @@ class Cansat():
             if self.aprc_c : #色認識による出力決定するかどうか
                 plan_color = self.mpp.power_planner(self.img,self.connecting_state,self.ar_count)
                 self.aprc_clear = plan_color["Clear"]
+                self.cl_checker = plan_color["Detected_tf"]
+                self.move_clplan = plan_color["move"]
                 if plan_color["Detected_tf"] :
                     #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     if not self.Flag_C:
