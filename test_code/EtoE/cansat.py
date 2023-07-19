@@ -528,6 +528,9 @@ class Cansat():
                             self.checking_time = time.time()
                             SorF = self.checking(self.img,self.connecting_state)
                             self.connecting_state += 1
+                            self.arm.up()
+                            self.arm.down()
+                            self.arm.up()
                             print(f'connect_clear: {SorF["clear"]}')
                             # if not SorF["clear"]:
                                 # self.connecting_state -= 2
