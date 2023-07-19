@@ -10,5 +10,6 @@ GPIO.setmode(BCM)
 for pin in [pin1,pin2,pin3]:
     GPIO.setup(pin,GPIO.OUT)
     GPIO.output(pin,0)
+    print(f'pin {pin} turned off')
 
 GPIO.cleanup()
