@@ -5,7 +5,7 @@
 sudo systemctl enable pigpiod
 
 # turn pins off
-cp ./turn_off_pins.py ~/Desktop/
+cp ./turn_off_pins.py /home/wolvez2023/Desktop/
 touch /etc/systemd/system/pin_off.service
 
 sudo cat > /etc/systemd/system/pin_off.service <<EOF
@@ -13,7 +13,7 @@ sudo cat > /etc/systemd/system/pin_off.service <<EOF
 Description=Do test
 
 [Service]
-ExecStart=/usr/bin/python3/home/wolvez2023/Desktop/turn_off_pins.py
+ExecStart=/usr/bin/python3 /home/wolvez2023/Desktop/turn_off_pins.py
 
 [Install]
 WantedBy=multi-user.target

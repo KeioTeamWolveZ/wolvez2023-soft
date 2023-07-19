@@ -192,7 +192,7 @@ class PowerPlanner():
             power_R, power_L = 0,0
             w_rate = None ### mienai toki ni None ni naruyouni
             detected = False
-        return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected,"w_rate":w_rate} ### sleep zikan keisan ni motiiru node w_rate wo dasu
+        return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected,"w_rate":w_rate,"move":move} ### sleep zikan keisan ni motiiru node w_rate wo dasu
 
     def para_detection(self,frame):
         height, width = frame.shape[:2]
@@ -226,4 +226,4 @@ class PowerPlanner():
             w_rate = None ### mienai toki ni None ni naruyouni
             detected = False
 
-        return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected,"w_rate":w_rate,"move":move} ### sleep zikan keisan ni motiiru node w_rate wo dasu
+        return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected,"w_rate":w_rate} ### sleep zikan keisan ni motiiru node w_rate wo dasu

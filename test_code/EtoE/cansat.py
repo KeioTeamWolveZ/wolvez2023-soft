@@ -102,6 +102,7 @@ class Cansat():
         self.countstuckLoop = 0
         self.done_approach = False
         self.ar_checker = False
+        self.cl_checker = False
         self.aprc_c = True
         self.Flag_AR = False
         self.Flag_C = False
