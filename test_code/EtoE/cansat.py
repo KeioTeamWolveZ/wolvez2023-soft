@@ -108,7 +108,7 @@ class Cansat():
         self.Flag_C = False
         self.aprc_clear = False
         self.ar_count = 0
-        self.connecting_state = 0
+        self.connecting_state = 1
         self.vanish_c = 0
         self.estimate_norm = 100000
         self.starttime_color = time.time()

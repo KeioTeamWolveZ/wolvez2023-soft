@@ -13,8 +13,11 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
         #marker_1 = np.array([0.00161,0.008755,0.18084])
         goal_area = {"L":[-0.035,-0.025],"R":[0.00397,0.01397],"z":[0.00973,0.01973]}
     else:
-        marker_1 = np.array([0.00161,0.008755,0.18084])
-        goal_area = {"L":[-0.05063,-0.04063],"R":[0.019,0.029],"z":[-0.00797,0.00203]}
+        marker_1 = np.array([0.002157,0.008755,0.18084])
+        if AR_checker["side"] == 'marker_L':
+            goal_area = {"L":[-0.051,-0.041],"R":[0.018,0.029],"z":[-0.00797,-0.00203]}
+        else:
+            goal_area = {"L":[-0.05063,-0.04063],"R":[0.0098,0.0198],"z":[-0.02701,0.01701]}
     marker_target = np.array([ar_info[target_id]["x"],ar_info[target_id]["y"],ar_info[target_id]["z"]])
     vec, distance = __targetting(marker_1,marker_target)
     #print(distance,vec[0])
@@ -82,8 +85,8 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
         # power_R = int(vec[0]/abs(vec[0])*(STANDARD_POWER - POWER_RANGE + POWER_RANGE * vec[0]/10)) ### +- ga umareru youni
         # power_L = -power_R -5
     move = "stop"
-    if vec[2] > goal_area["z"][0]:
-        if vec[2] > goal_area["z"][1]+0.01:
+    if vec[2] > goal_area["z"][0]-0.01:
+        if vec[2] > goal_area["z"][1]:
             '''
             tooi toki no yatu ha kesita
             '''
