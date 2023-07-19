@@ -1,0 +1,511 @@
+5237,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:-0.0011111111111111111,ay:   0.0,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5273,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:   0.0,ay:-0.0022222222222222222,az:-0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5310,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0022222222222222222,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5350,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0022222222222222222,ay:-0.0033333333333333335,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5384,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0022222222222222222,ay:-0.0033333333333333335,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5419,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5455,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:-0.0033333333333333335,ay:-0.0011111111111111111,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5490,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5527,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.005555555555555556,az:-0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5562,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:-0.0022222222222222222,ay:-0.005555555555555556,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5600,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0044444444444444444,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5635,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:-0.0033333333333333335,ay:-0.0033333333333333335,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5669,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5706,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5740,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5778,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:-0.0022222222222222222,ay:   0.0,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5811,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.005555555555555556,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5848,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0022222222222222222,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5882,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5918,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0022222222222222222,az:-0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5953,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:   0.0,ay:-0.0022222222222222222,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+5989,state:3,Time:20:03:56,Lat:35.55520833,Lng:139.65495500,ax:   0.0,ay:-0.0011111111111111111,az:0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6027,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0011111111111111111,ay:0.0033333333333333335,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6061,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:   0.0,ay:-0.005555555555555556,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6098,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6132,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.005555555555555556,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6168,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:   0.0,ay:-0.0011111111111111111,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6205,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:   0.0,ay:-0.0044444444444444444,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6240,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:   0.0,ay:0.0033333333333333335,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6278,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:0.0022222222222222222,ay:-0.0033333333333333335,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6313,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6353,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6388,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:0.0011111111111111111,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6425,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6460,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:0.0022222222222222222,ay:-0.0033333333333333335,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6497,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:   0.0,ay:-0.0033333333333333335,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6531,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0011111111111111111,ay:   0.0,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6568,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:   0.0,ay:0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6603,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6641,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0011111111111111111,ay:   0.0,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6678,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6714,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0022222222222222222,ay:-0.0044444444444444444,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6749,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0022222222222222222,ay:0.0011111111111111111,az:0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6783,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0022222222222222222,ay:0.0011111111111111111,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6818,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:   0.0,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6855,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:0.0011111111111111111,ay:-0.0022222222222222222,az:0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6889,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:0.0022222222222222222,ay:-0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6926,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0011111111111111111,ay:0.0011111111111111111,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6962,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0011111111111111111,ay:   0.0,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+6997,state:3,Time:20:03:57,Lat:35.55520833,Lng:139.65495500,ax:-0.0022222222222222222,ay:0.006666666666666667,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7032,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:0.0033333333333333335,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7068,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7106,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:   0.0,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7140,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7177,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7214,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:0.0011111111111111111,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7248,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7283,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7318,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0022222222222222222,ay:-0.0022222222222222222,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7355,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0033333333333333335,ay:-0.0022222222222222222,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7389,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:0.0011111111111111111,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7428,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7466,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:0.0033333333333333335,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7501,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.005555555555555556,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7536,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7571,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:-0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7606,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0033333333333333335,ay:   0.0,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7642,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0022222222222222222,ay:-0.0022222222222222222,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7677,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7713,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:   0.0,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7749,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:0.0022222222222222222,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7785,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:-0.0011111111111111111,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7821,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:0.0022222222222222222,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7857,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:0.0011111111111111111,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7892,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7928,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0022222222222222222,ay:-0.0011111111111111111,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7965,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+7999,state:3,Time:20:03:58,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:   0.0,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8034,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:0.0011111111111111111,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8068,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:0.0022222222222222222,ay:-0.0011111111111111111,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8107,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:0.0044444444444444444,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8145,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:0.0022222222222222222,ay:   0.0,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8180,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:   0.0,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8216,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:0.0022222222222222222,ay:0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8252,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:-0.0044444444444444444,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8287,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0022222222222222222,ay:-0.0044444444444444444,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8325,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0022222222222222222,ay:-0.0033333333333333335,az:-0.0044444444444444444,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8361,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:0.0011111111111111111,az:-0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8397,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:   0.0,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8432,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:0.0022222222222222222,ay:-0.005555555555555556,az:0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8467,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:0.0022222222222222222,ay:-0.0044444444444444444,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8506,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0033333333333333335,ay:-0.0033333333333333335,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8542,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0044444444444444444,ay:0.0022222222222222222,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8577,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:-0.0022222222222222222,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8614,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:0.0033333333333333335,az:0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8649,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:   0.0,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8685,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0022222222222222222,ay:-0.0011111111111111111,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8720,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0022222222222222222,ay:0.0033333333333333335,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8756,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8792,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:0.0022222222222222222,ay:-0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8827,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8864,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8899,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:-0.0022222222222222222,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8935,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:-0.0022222222222222222,ay:-0.0011111111111111111,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+8972,state:3,Time:20:03:59,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:   0.0,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9007,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:0.0044444444444444444,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9044,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:-0.0044444444444444444,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9078,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9115,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:-0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9152,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:   0.0,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9188,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0022222222222222222,ay:-0.0044444444444444444,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9225,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:0.0033333333333333335,az:-0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9262,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:   0.0,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9296,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:0.0044444444444444444,ay:-0.0033333333333333335,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9331,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:-0.0011111111111111111,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9366,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0033333333333333335,ay:0.0022222222222222222,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9404,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0033333333333333335,ay:0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9438,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:0.0033333333333333335,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9475,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9513,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9549,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:0.0033333333333333335,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9584,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:0.0011111111111111111,az:-0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9620,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:   0.0,az:-0.0033333333333333335,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9656,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:   0.0,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9693,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9727,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:   0.0,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9764,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:   0.0,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9799,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9834,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:0.0011111111111111111,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9870,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:   0.0,ay:0.0044444444444444444,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9904,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:0.0011111111111111111,ay:   0.0,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9941,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:0.0033333333333333335,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+9976,state:3,Time:20:04:00,Lat:35.55521000,Lng:139.65495333,ax:-0.0011111111111111111,ay:0.0033333333333333335,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+10014,state:3,Time:20:04:01,Lat:35.55521167,Lng:139.65495333,ax:0.0033333333333333335,ay:-0.0022222222222222222,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+10049,state:3,Time:20:04:01,Lat:35.55521167,Lng:139.65495333,ax:   0.0,ay:   0.0,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+10085,state:3,Time:20:04:01,Lat:35.55521167,Lng:139.65495333,ax:-0.0022222222222222222,ay:0.0022222222222222222,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+10123,state:3,Time:20:04:01,Lat:35.55521167,Lng:139.65495333,ax:   0.0,ay:-0.0022222222222222222,az:0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+10157,state:3,Time:20:04:01,Lat:35.55521167,Lng:139.65495333,ax:-0.0011111111111111111,ay:0.0011111111111111111,az:-0.0011111111111111111,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+10193,state:3,Time:20:04:01,Lat:35.55521167,Lng:139.65495333,ax:0.0011111111111111111,ay:0.0011111111111111111,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+10227,state:3,Time:20:04:01,Lat:35.55521167,Lng:139.65495333,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:   0.0,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+10263,state:3,Time:20:04:01,Lat:35.55521167,Lng:139.65495333,ax:0.0022222222222222222,ay:-0.0033333333333333335,az:0.0022222222222222222,q:   0.0,rV:     0,lV:     0,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+10299,state:3,Time:20:04:01,Lat:35.55521167,Lng:139.65495333,ax:-0.0011111111111111111,ay:-0.0022222222222222222,az:0.0011111111111111111,q:   0.0,rV:    90,lV:    90,Camera:0,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none
+10694,state:3,Time:20:04:01,Lat:35.55521167,Lng:139.65495333,ax:-0.8788888888888889,ay:-0.3566666666666667,az:1.0044444444444445,q: 346.5,rV:    90,lV:    97,Camera:1,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+11061,state:3,Time:20:04:02,Lat:35.55521167,Lng:139.65495167,ax:-0.9233333333333333,ay:1.0666666666666667,az: -0.46,q:344.6875,rV:    90,lV:    97,Camera:2,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+11425,state:3,Time:20:04:02,Lat:35.55521167,Lng:139.65495167,ax: -0.79,ay:0.29333333333333333,az:0.10666666666666667,q:345.9375,rV:    90,lV:    97,Camera:3,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+11791,state:3,Time:20:04:02,Lat:35.55521167,Lng:139.65495167,ax:1.4866666666666666,ay:0.8055555555555556,az:-0.2222222222222222,q:347.875,rV:    90,lV:    97,Camera:4,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+12160,state:3,Time:20:04:03,Lat:35.55521167,Lng:139.65495167,ax:-1.4755555555555555,ay:-0.9333333333333333,az:0.14555555555555555,q:348.3125,rV:    90,lV:    97,Camera:5,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+12526,state:3,Time:20:04:03,Lat:35.55521167,Lng:139.65495167,ax:  1.73,ay:  1.21,az:-0.37666666666666665,q: 347.5,rV:    90,lV:    97,Camera:6,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+12891,state:3,Time:20:04:03,Lat:35.55521167,Lng:139.65495167,ax:-2.3844444444444446,ay:0.0022222222222222222,az:-0.16666666666666666,q:349.625,rV:    90,lV:    97,Camera:7,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+13256,state:3,Time:20:04:04,Lat:35.55521333,Lng:139.65494833,ax:3.641111111111111,ay:-0.09222222222222222,az:  -0.3,q:349.875,rV:    90,lV:    97,Camera:8,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+13622,state:3,Time:20:04:04,Lat:35.55521333,Lng:139.65494833,ax:-0.7488888888888889,ay:-0.6144444444444445,az:0.14444444444444443,q:350.75,rV:    90,lV:    97,Camera:9,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+13998,state:3,Time:20:04:04,Lat:35.55521333,Lng:139.65494833,ax:  1.57,ay:-0.0077777777777777776,az:-0.1288888888888889,q:354.3125,rV:    90,lV:    97,Camera:10,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+14375,state:3,Time:20:04:05,Lat:35.55519833,Lng:139.65492667,ax:-0.10222222222222223,ay:0.07666666666666666,az:0.37444444444444447,q:351.875,rV:    90,lV:    97,Camera:11,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+14751,state:3,Time:20:04:05,Lat:35.55519833,Lng:139.65492667,ax:3.4077777777777776,ay:0.13666666666666666,az:0.2222222222222222,q:351.9375,rV:    90,lV:    97,Camera:12,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+15124,state:3,Time:20:04:06,Lat:35.55519667,Lng:139.65491833,ax:-2.1344444444444446,ay:0.1288888888888889,az:-0.12555555555555556,q:353.5625,rV:    90,lV:    97,Camera:13,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+15491,state:3,Time:20:04:06,Lat:35.55519667,Lng:139.65491833,ax:  2.24,ay:0.2911111111111111,az:-0.41555555555555557,q:358.75,rV:     0,lV:     0,Camera:14,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+17433,state:3,Time:20:04:08,Lat:35.55518333,Lng:139.65489833,ax:0.0011111111111111111,ay:-0.0044444444444444444,az:0.0022222222222222222,q: 5.625,rV:     0,lV:     0,Camera:15,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+17871,state:3,Time:20:04:08,Lat:35.55518333,Lng:139.65489833,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:0.0011111111111111111,q:5.5625,rV:     0,lV:     0,Camera:16,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+18303,state:3,Time:20:04:09,Lat:35.55518333,Lng:139.65489333,ax:-0.0011111111111111111,ay:   0.0,az:0.0011111111111111111,q:5.5625,rV:     0,lV:     0,Camera:17,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+18736,state:3,Time:20:04:09,Lat:35.55518333,Lng:139.65489333,ax:0.011111111111111112,ay:-0.0044444444444444444,az:-0.0033333333333333335,q:5.5625,rV:     0,lV:     0,Camera:18,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+19163,state:3,Time:20:04:10,Lat:35.55518500,Lng:139.65489167,ax:-0.0044444444444444444,ay:0.0022222222222222222,az:0.0011111111111111111,q:5.5625,rV:     0,lV:     0,Camera:19,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+19582,state:3,Time:20:04:10,Lat:35.55518500,Lng:139.65489167,ax:0.015555555555555555,ay:-0.005555555555555556,az:0.025555555555555557,q:   5.5,rV:     0,lV:     0,Camera:20,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+19960,state:3,Time:20:04:10,Lat:35.55518500,Lng:139.65489167,ax:-0.06555555555555556,ay:-0.008888888888888889,az:  0.06,q:  4.75,rV:     0,lV:     0,Camera:21,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+20349,state:3,Time:20:04:11,Lat:35.55518833,Lng:139.65489500,ax:-0.15666666666666668,ay:0.05444444444444444,az:-0.24444444444444444,q:   5.5,rV:     0,lV:     0,Camera:22,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+20731,state:3,Time:20:04:11,Lat:35.55518833,Lng:139.65489500,ax:-0.1388888888888889,ay:0.1922222222222222,az:-0.24888888888888888,q: 5.875,rV:     0,lV:     0,Camera:23,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+21112,state:3,Time:20:04:12,Lat:35.55518500,Lng:139.65490000,ax:  0.07,ay:-0.03666666666666667,az:-0.04111111111111111,q: 5.875,rV:     0,lV:     0,Camera:24,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+21497,state:3,Time:20:04:12,Lat:35.55518500,Lng:139.65490000,ax:-0.1688888888888889,ay:-0.044444444444444446,az:-0.10222222222222223,q: 4.875,rV:     0,lV:     0,Camera:25,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+21874,state:3,Time:20:04:12,Lat:35.55518500,Lng:139.65490000,ax:0.23666666666666666,ay:-0.1511111111111111,az:0.06666666666666667,q:4.0625,rV:     0,lV:     0,Camera:26,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+22255,state:3,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:0.0044444444444444444,q: 4.125,rV:     0,lV:     0,Camera:27,Color-Approach:False,Color-data:xnoney:noneArea:none,Color-move:stop
+22291,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0022222222222222222,ay:0.011111111111111112,az:-0.008888888888888889,q: 4.125,rV:     0,lV:     0,Camera:27
+22326,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.005555555555555556,ay:0.011111111111111112,az:-0.005555555555555556,q: 4.125,rV:     0,lV:     0,Camera:27
+22363,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:   0.0,ay:-0.0033333333333333335,az:0.005555555555555556,q: 4.125,rV:     0,lV:     0,Camera:27
+22400,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0011111111111111111,ay:   0.0,az:0.0033333333333333335,q: 4.125,rV:     0,lV:     0,Camera:27
+22434,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:   0.0,ay:0.0033333333333333335,az:-0.0044444444444444444,q: 4.125,rV:     0,lV:     0,Camera:27
+22470,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0011111111111111111,ay:0.012222222222222223,az:-0.006666666666666667,q: 4.125,rV:     0,lV:     0,Camera:27
+22504,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0022222222222222222,ay:-0.0077777777777777776,az:0.011111111111111112,q: 4.125,rV:     0,lV:     0,Camera:27
+22540,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.013333333333333334,ay:0.0011111111111111111,az:-0.016666666666666666,q: 4.125,rV:     0,lV:     0,Camera:27
+22574,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:0.0033333333333333335,ay:  0.01,az:-0.0044444444444444444,q: 4.125,rV:     0,lV:     0,Camera:27
+22610,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:0.0033333333333333335,ay:0.0044444444444444444,az:0.008888888888888889,q: 4.125,rV:     0,lV:     0,Camera:27
+22644,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:   0.0,ay:0.013333333333333334,az:-0.0033333333333333335,q: 4.125,rV:     0,lV:     0,Camera:27
+22681,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.005555555555555556,ay:0.0044444444444444444,az:-0.0044444444444444444,q: 4.125,rV:     0,lV:     0,Camera:27
+22715,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0044444444444444444,ay:-0.0022222222222222222,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+22751,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0011111111111111111,ay:-0.005555555555555556,az:0.005555555555555556,q: 4.125,rV:     0,lV:     0,Camera:27
+22786,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0033333333333333335,ay:-0.0011111111111111111,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+22822,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0011111111111111111,ay:0.0044444444444444444,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+22858,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:   0.0,ay:0.0022222222222222222,az:0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+22892,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0011111111111111111,ay:0.0011111111111111111,az:0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+22928,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:0.0022222222222222222,ay:0.0033333333333333335,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+22963,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23000,state:4,Time:20:04:13,Lat:35.55518500,Lng:139.65490167,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+23037,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23072,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:0.0022222222222222222,ay:-0.0022222222222222222,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23109,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0011111111111111111,ay:   0.0,az:0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+23143,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:   0.0,ay:-0.0033333333333333335,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+23180,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:   0.0,ay:-0.0011111111111111111,az:0.0033333333333333335,q: 4.125,rV:     0,lV:     0,Camera:27
+23216,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:0.0011111111111111111,ay:0.0011111111111111111,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+23251,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:0.0011111111111111111,ay:0.0022222222222222222,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23288,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0022222222222222222,ay:0.0022222222222222222,az:0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+23321,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:   0.0,ay:-0.0022222222222222222,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+23360,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23397,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0033333333333333335,ay:-0.0033333333333333335,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23432,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23467,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0033333333333333335,ay:-0.0044444444444444444,az:-0.0033333333333333335,q: 4.125,rV:     0,lV:     0,Camera:27
+23502,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0011111111111111111,ay:0.0011111111111111111,az:-0.0033333333333333335,q: 4.125,rV:     0,lV:     0,Camera:27
+23540,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0011111111111111111,ay:-0.0044444444444444444,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23574,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0011111111111111111,ay:   0.0,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+23610,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23645,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0033333333333333335,ay:0.0033333333333333335,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+23681,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0011111111111111111,ay:-0.0022222222222222222,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23715,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0011111111111111111,ay:-0.0033333333333333335,az:0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+23750,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0044444444444444444,ay:   0.0,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23786,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:0.0011111111111111111,ay:-0.0022222222222222222,az:-0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+23821,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0022222222222222222,ay:0.0022222222222222222,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+23858,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:-0.0022222222222222222,ay:0.0011111111111111111,az:0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+23892,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:0.0011111111111111111,ay:   0.0,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+23929,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:0.0011111111111111111,ay:0.0022222222222222222,az:0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+23964,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:   0.0,ay:0.0022222222222222222,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+24000,state:4,Time:20:04:14,Lat:35.55518667,Lng:139.65490500,ax:0.0022222222222222222,ay:   0.0,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24036,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.0011111111111111111,ay:0.0011111111111111111,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24072,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.0011111111111111111,ay:0.0022222222222222222,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+24109,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:   0.0,ay:0.0022222222222222222,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24144,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:   0.0,ay:-0.005555555555555556,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+24181,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:   0.0,ay:-0.0022222222222222222,az:0.0033333333333333335,q: 4.125,rV:     0,lV:     0,Camera:27
+24217,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.015555555555555555,ay:0.0077777777777777776,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24251,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.0022222222222222222,ay:-0.0011111111111111111,az:-0.016666666666666666,q: 4.125,rV:     0,lV:     0,Camera:27
+24289,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.0011111111111111111,ay:   0.0,az:0.0077777777777777776,q: 4.125,rV:     0,lV:     0,Camera:27
+24323,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.015555555555555555,ay:-0.0033333333333333335,az:0.0044444444444444444,q: 4.125,rV:     0,lV:     0,Camera:27
+24360,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:-0.006666666666666667,ay:-0.0011111111111111111,az:-0.008888888888888889,q: 4.125,rV:     0,lV:     0,Camera:27
+24397,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.0022222222222222222,ay:   0.0,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24431,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:-0.04666666666666667,ay:0.0011111111111111111,az:0.005555555555555556,q: 4.125,rV:     0,lV:     0,Camera:27
+24468,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.024444444444444446,ay:0.0022222222222222222,az:-0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+24504,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:-0.0011111111111111111,ay:0.006666666666666667,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24539,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.024444444444444446,ay:0.0011111111111111111,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+24574,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.0077777777777777776,ay:0.0011111111111111111,az:0.0033333333333333335,q: 4.125,rV:     0,lV:     0,Camera:27
+24610,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:-0.011111111111111112,ay:-0.0033333333333333335,az:0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+24646,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:  0.01,ay:0.0011111111111111111,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24681,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.014444444444444444,ay:-0.0011111111111111111,az:0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+24715,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.006666666666666667,ay:0.0022222222222222222,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24750,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:-0.0011111111111111111,ay:-0.0077777777777777776,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24788,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:-0.0011111111111111111,ay:-0.0077777777777777776,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24822,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:-0.0044444444444444444,ay:-0.0011111111111111111,az:0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24859,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.0022222222222222222,ay:0.0022222222222222222,az:-0.0022222222222222222,q: 4.125,rV:     0,lV:     0,Camera:27
+24895,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:-0.0011111111111111111,ay:0.0033333333333333335,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+24930,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:0.0022222222222222222,ay:0.0011111111111111111,az:0.0033333333333333335,q: 4.125,rV:     0,lV:     0,Camera:27
+24965,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:-0.0011111111111111111,ay:0.0011111111111111111,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+25000,state:4,Time:20:04:15,Lat:35.55518333,Lng:139.65490000,ax:-0.0011111111111111111,ay:0.0033333333333333335,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+25038,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:-0.0022222222222222222,ay:0.0011111111111111111,az:-0.0033333333333333335,q: 4.125,rV:     0,lV:     0,Camera:27
+25074,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:   0.0,ay:-0.0011111111111111111,az:   0.0,q: 4.125,rV:     0,lV:     0,Camera:27
+25109,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.0022222222222222222,ay:-0.0011111111111111111,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+25147,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:-0.0022222222222222222,ay:0.0033333333333333335,az:-0.0011111111111111111,q: 4.125,rV:     0,lV:     0,Camera:27
+25181,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:-0.021111111111111112,ay:-0.03777777777777778,az:0.06555555555555556,q:4.0625,rV:     0,lV:     0,Camera:27
+25218,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:-0.25222222222222224,ay:0.06111111111111111,az:0.22444444444444445,q:3.5625,rV:     0,lV:     0,Camera:27
+25255,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.056666666666666664,ay:0.07777777777777778,az:-0.18444444444444444,q: 3.625,rV:     0,lV:     0,Camera:27
+25290,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.2733333333333333,ay:0.03777777777777778,az:-0.1922222222222222,q:   4.0,rV:     0,lV:     0,Camera:27
+25324,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax: -0.09,ay:-0.10555555555555556,az:0.14666666666666667,q:3.8125,rV:     0,lV:     0,Camera:27
+25360,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.035555555555555556,ay:-0.03111111111111111,az:0.044444444444444446,q:3.5625,rV:     0,lV:     0,Camera:27
+25402,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.09888888888888889,ay:0.09777777777777778,az:-0.14222222222222222,q:3.9375,rV:     0,lV:     0,Camera:27
+25438,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:-0.051111111111111114,ay:-0.014444444444444444,az:0.014444444444444444,q:3.9375,rV:     0,lV:     0,Camera:27
+25472,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:  0.03,ay:-0.02666666666666667,az:0.03777777777777778,q: 3.875,rV:     0,lV:     0,Camera:27
+25508,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:-0.015555555555555555,ay:0.04111111111111111,az:-0.056666666666666664,q:3.9375,rV:     0,lV:     0,Camera:27
+25545,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.04888888888888889,ay:0.03888888888888889,az:-0.03222222222222222,q:   4.0,rV:     0,lV:     0,Camera:27
+25579,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:-0.042222222222222223,ay:-0.05555555555555555,az:  0.03,q:   4.0,rV:     0,lV:     0,Camera:27
+25614,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.0033333333333333335,ay:-0.06777777777777778,az:0.06888888888888889,q: 3.875,rV:     0,lV:     0,Camera:27
+25648,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.008888888888888889,ay:0.025555555555555557,az:-0.05333333333333334,q:3.9375,rV:     0,lV:     0,Camera:27
+25686,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.012222222222222223,ay:0.016666666666666666,az: -0.01,q:   4.0,rV:     0,lV:     0,Camera:27
+25720,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.0044444444444444444,ay:-0.0044444444444444444,az:0.0077777777777777776,q:3.9375,rV:     0,lV:     0,Camera:27
+25757,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.0033333333333333335,ay:0.0033333333333333335,az:0.016666666666666666,q:3.9375,rV:     0,lV:     0,Camera:27
+25793,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.013333333333333334,ay:-0.022222222222222223,az:0.0022222222222222222,q:3.9375,rV:     0,lV:     0,Camera:27
+25829,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.0022222222222222222,ay:-0.021111111111111112,az:0.016666666666666666,q:3.9375,rV:     0,lV:     0,Camera:27
+25862,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.05333333333333334,ay:0.01888888888888889,az:0.04111111111111111,q: 3.875,rV:     0,lV:     0,Camera:27
+25898,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:-0.03111111111111111,ay:-0.034444444444444444,az:-0.03666666666666667,q: 3.875,rV:     0,lV:     0,Camera:27
+25934,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.014444444444444444,ay:-0.006666666666666667,az:0.024444444444444446,q: 3.875,rV:     0,lV:     0,Camera:27
+25968,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:-0.07444444444444444,ay:0.03333333333333333,az:-0.0033333333333333335,q:3.8125,rV:     0,lV:     0,Camera:27
+26005,state:4,Time:20:04:16,Lat:35.55518333,Lng:139.65490000,ax:0.042222222222222223,ay:0.10888888888888888,az:-0.2922222222222222,q:4.3125,rV:     0,lV:     0,Camera:27
+26039,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:-0.09777777777777778,ay:-0.1388888888888889,az:-0.12777777777777777,q: 4.625,rV:     0,lV:     0,Camera:27
+26073,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.013333333333333334,ay:-0.008888888888888889,az:0.0044444444444444444,q:4.6875,rV:     0,lV:     0,Camera:27
+26108,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:  0.15,ay:-0.22555555555555556,az:0.18333333333333332,q: 4.375,rV:     0,lV:     0,Camera:27
+26145,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:-0.22555555555555556,ay:0.08222222222222222,az:0.17333333333333334,q:   4.0,rV:     0,lV:     0,Camera:27
+26179,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.015555555555555555,ay:  0.05,az:-0.05333333333333334,q:3.9375,rV:     0,lV:     0,Camera:27
+26214,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:-0.14444444444444443,ay:-0.06888888888888889,az:-0.05444444444444444,q: 4.125,rV:     0,lV:     0,Camera:27
+26248,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.03333333333333333,ay:-0.05333333333333334,az:0.07888888888888888,q:4.0625,rV:     0,lV:     0,Camera:27
+26286,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.015555555555555555,ay:0.0033333333333333335,az:-0.0011111111111111111,q:   4.0,rV:     0,lV:     0,Camera:27
+26321,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.008888888888888889,ay:0.042222222222222223,az:-0.04888888888888889,q:4.0625,rV:     0,lV:     0,Camera:27
+26357,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:-0.021111111111111112,ay:0.013333333333333334,az:-0.0022222222222222222,q:4.0625,rV:     0,lV:     0,Camera:27
+26394,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.0077777777777777776,ay:-0.027777777777777776,az:  0.01,q:4.0625,rV:     0,lV:     0,Camera:27
+26429,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:-0.013333333333333334,ay: -0.02,az:0.022222222222222223,q:4.0625,rV:     0,lV:     0,Camera:27
+26466,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.005555555555555556,ay:0.008888888888888889,az:-0.0077777777777777776,q:   4.0,rV:     0,lV:     0,Camera:27
+26501,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:-0.006666666666666667,ay:0.022222222222222223,az:-0.016666666666666666,q:4.0625,rV:     0,lV:     0,Camera:27
+26537,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.0033333333333333335,ay:0.0011111111111111111,az:0.0022222222222222222,q:4.0625,rV:     0,lV:     0,Camera:27
+26572,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:-0.0011111111111111111,ay:-0.015555555555555555,az:0.008888888888888889,q:4.0625,rV:     0,lV:     0,Camera:27
+26607,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:-0.0011111111111111111,ay:-0.0022222222222222222,az:0.0033333333333333335,q:4.0625,rV:     0,lV:     0,Camera:27
+26642,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:   0.0,ay:0.0077777777777777776,az:-0.0044444444444444444,q:4.0625,rV:     0,lV:     0,Camera:27
+26677,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:   0.0,ay:0.005555555555555556,az:-0.0022222222222222222,q:4.0625,rV:     0,lV:     0,Camera:27
+26712,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.0011111111111111111,ay:   0.0,az:0.0022222222222222222,q:4.0625,rV:     0,lV:     0,Camera:27
+26747,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:   0.0,ay:-0.0044444444444444444,az:0.0033333333333333335,q:4.0625,rV:     0,lV:     0,Camera:27
+26784,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.0011111111111111111,ay:0.0033333333333333335,az:   0.0,q:4.0625,rV:     0,lV:     0,Camera:27
+26818,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.0022222222222222222,ay:0.0044444444444444444,az:-0.0022222222222222222,q:4.0625,rV:     0,lV:     0,Camera:27
+26855,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.0022222222222222222,ay:-0.0022222222222222222,az:0.0011111111111111111,q:4.0625,rV:     0,lV:     0,Camera:27
+26890,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.07777777777777778,ay:0.0044444444444444444,az:0.03666666666666667,q:   4.0,rV:     0,lV:     0,Camera:27
+26923,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:0.027777777777777776,ay:0.0033333333333333335,az:0.025555555555555557,q:3.9375,rV:     0,lV:     0,Camera:27
+26960,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:-0.13777777777777778,ay:0.03333333333333333,az:-0.06555555555555556,q:4.0625,rV:     0,lV:     0,Camera:27
+26996,state:4,Time:20:04:17,Lat:35.55518333,Lng:139.65489833,ax:-0.04777777777777778,ay:-0.015555555555555555,az:-0.06666666666666667,q:  4.25,rV:     0,lV:     0,Camera:27
+27032,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.13555555555555557,ay:-0.017777777777777778,az:0.09888888888888889,q:4.0625,rV:     0,lV:     0,Camera:27
+27066,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.1411111111111111,ay:0.08222222222222222,az:0.04555555555555556,q:   4.0,rV:     0,lV:     0,Camera:27
+27103,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.015555555555555555,ay:-0.035555555555555556,az:0.014444444444444444,q:3.9375,rV:     0,lV:     0,Camera:27
+27138,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.022222222222222223,ay:-0.016666666666666666,az:0.0022222222222222222,q:3.9375,rV:     0,lV:     0,Camera:27
+27175,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:-0.011111111111111112,ay:0.014444444444444444,az:-0.0044444444444444444,q:3.9375,rV:     0,lV:     0,Camera:27
+27210,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.0044444444444444444,ay:   0.0,az:0.014444444444444444,q:3.9375,rV:     0,lV:     0,Camera:27
+27246,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.1111111111111111,ay:0.015555555555555555,az:-0.042222222222222223,q:   4.0,rV:     0,lV:     0,Camera:27
+27282,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.36444444444444446,ay:0.07111111111111111,az: -0.22,q: 4.375,rV:     0,lV:     0,Camera:27
+27316,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax: -0.46,ay:0.07222222222222222,az:-0.014444444444444444,q:4.5625,rV:     0,lV:     0,Camera:27
+27353,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.10888888888888888,ay:-0.0033333333333333335,az:0.18777777777777777,q:4.1875,rV:    50,lV:    70,Camera:27
+27387,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:-0.021111111111111112,ay:-0.21222222222222223,az:0.39666666666666667,q: 3.625,rV:    50,lV:    70,Camera:27
+27421,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:-0.4711111111111111,ay:-0.052222222222222225,az:0.23666666666666666,q:   3.0,rV:    50,lV:    70,Camera:27
+27458,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:-1.2644444444444445,ay:0.15444444444444444,az:-0.4688888888888889,q:   3.5,rV:    50,lV:    70,Camera:27
+27495,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:-0.1811111111111111,ay:0.32555555555555554,az:-0.5322222222222223,q: 4.625,rV:    50,lV:    70,Camera:27
+27532,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.05555555555555555,ay:0.4111111111111111,az:-0.03888888888888889,q:   5.0,rV:    50,lV:    70,Camera:27
+27567,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:-0.5877777777777777,ay:-0.11555555555555555,az: -0.37,q:5.4375,rV:    50,lV:    70,Camera:27
+27604,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:-0.1411111111111111,ay:-0.3688888888888889,az:-0.6477777777777778,q:6.5625,rV:    50,lV:    70,Camera:27
+27638,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.26555555555555554,ay:0.48777777777777775,az:-0.9055555555555556,q:8.0625,rV:    50,lV:    70,Camera:27
+27671,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:1.5988888888888888,ay:-0.11555555555555555,az:-0.9566666666666667,q:10.375,rV:    50,lV:    70,Camera:27
+27706,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:1.2033333333333334,ay:  0.57,az:-0.19777777777777777,q:11.125,rV:    50,lV:    70,Camera:27
+27743,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax: -0.66,ay:-1.7344444444444445,az:-0.07777777777777778,q:10.875,rV:    50,lV:    70,Camera:27
+27777,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:-0.18666666666666668,ay:1.1866666666666668,az:-0.5022222222222222,q:11.4375,rV:    50,lV:    70,Camera:27
+27811,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:-0.11444444444444445,ay:-0.29888888888888887,az:-0.5577777777777778,q:12.8125,rV:    50,lV:    70,Camera:27
+27846,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:1.3522222222222222,ay:0.18777777777777777,az:-0.36444444444444446,q:  13.0,rV:    50,lV:    70,Camera:27
+27881,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.5922222222222222,ay:0.8555555555555555,az:-1.0877777777777777,q:15.0625,rV:    50,lV:    70,Camera:27
+27916,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:0.8633333333333333,ay:-0.48333333333333334,az:-0.29444444444444445,q:15.625,rV:    50,lV:    70,Camera:27
+27952,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:-1.4677777777777778,ay:-0.6088888888888889,az:-0.29333333333333333,q:16.375,rV:    50,lV:    70,Camera:27
+27987,state:4,Time:20:04:18,Lat:35.55518333,Lng:139.65489667,ax:2.0655555555555556,ay:-0.09555555555555556,az:-0.6077777777777778,q: 17.25,rV:    50,lV:    70,Camera:27
+28021,state:4,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-1.0666666666666667,ay:-1.4166666666666667,az:-0.3211111111111111,q:18.1875,rV:    50,lV:    70,Camera:27
+28056,state:4,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.1711111111111111,ay:0.6755555555555556,az:-1.038888888888889,q:19.8125,rV:    50,lV:    70,Camera:27
+28094,state:4,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-1.021111111111111,ay:-1.2977777777777777,az:-0.4111111111111111,q:21.1875,rV:    50,lV:    70,Camera:27
+28130,state:4,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-0.5822222222222222,ay:  0.29,az: -0.89,q:  23.0,rV:    50,lV:    70,Camera:27
+28165,state:4,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.09444444444444444,ay: -0.74,az:-0.7755555555555556,q:24.6875,rV:    50,lV:    70,Camera:27
+28201,state:4,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.4811111111111111,ay:-0.7111111111111111,az:-0.5211111111111111,q:25.6875,rV:    50,lV:    70,Camera:27
+28236,state:4,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-0.9666666666666667,ay:1.0844444444444445,az:-1.191111111111111,q: 27.75,rV:    50,lV:    70,Camera:27
+28270,state:4,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-0.11777777777777777,ay:-1.011111111111111,az:-0.43777777777777777,q:28.8125,rV:    50,lV:    70,Camera:27
+28306,state:4,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.9766666666666667,ay:1.0944444444444446,az:-0.7677777777777778,q: 29.75,rV:    50,lV:    70,Camera:27
+28342,state:4,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-2.1633333333333336,ay:0.10777777777777778,az:-0.5255555555555556,q:31.6875,rV:    50,lV:    70,Camera:27
+28378,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:1.7744444444444445,ay:-0.15666666666666668,az:  0.41,q: 31.25,rV:     0,lV:     0,Camera:27
+28411,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:  -0.6,ay: -1.06,az:-0.014444444444444444,q:  31.0,rV:     0,lV:     0,Camera:27
+28446,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.8333333333333334,ay:0.9777777777777777,az:-0.6455555555555555,q:32.3125,rV:     0,lV:     0,Camera:27
+28484,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.8966666666666666,ay:-1.1877777777777778,az:-0.40444444444444444,q:33.6875,rV:     0,lV:     0,Camera:27
+28519,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-0.24333333333333335,ay:1.1688888888888889,az:-0.8033333333333333,q:  35.0,rV:     0,lV:     0,Camera:27
+28555,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.8911111111111111,ay:-0.1511111111111111,az:-0.30444444444444446,q:35.8125,rV:     0,lV:     0,Camera:27
+28592,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.3522222222222222,ay:0.28888888888888886,az:-0.1811111111111111,q:36.0625,rV:     0,lV:     0,Camera:27
+28627,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.07222222222222222,ay:-0.4633333333333333,az:0.1511111111111111,q:36.0625,rV:     0,lV:     0,Camera:27
+28660,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-0.11222222222222222,ay:0.15666666666666668,az: -0.08,q:36.125,rV:     0,lV:     0,Camera:27
+28695,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax: -1.09,ay:0.14777777777777779,az:0.06222222222222222,q:36.3125,rV:     0,lV:     0,Camera:27
+28732,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-0.006666666666666667,ay:0.2544444444444444,az:0.13111111111111112,q:  36.0,rV:     0,lV:     0,Camera:27
+28766,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-0.2966666666666667,ay:-0.011111111111111112,az:0.057777777777777775,q:35.875,rV:     0,lV:     0,Camera:27
+28803,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.11444444444444445,ay:-0.027777777777777776,az:-0.10333333333333333,q:  36.0,rV:     0,lV:     0,Camera:27
+28837,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:  0.07,ay:0.051111111111111114,az:-0.0811111111111111,q:36.125,rV:     0,lV:     0,Camera:27
+28871,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:0.06777777777777778,ay:0.024444444444444446,az:-0.09555555555555556,q:36.3125,rV:     0,lV:     0,Camera:27
+28905,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:  0.11,ay:0.03222222222222222,az:-0.06777777777777778,q:36.4375,rV:     0,lV:     0,Camera:27
+28942,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax:-0.05555555555555555,ay:  0.02,az:0.052222222222222225,q:36.4375,rV:     0,lV:     0,Camera:27
+28976,state:5,Time:20:04:19,Lat:35.55518333,Lng:139.65489500,ax: -0.02,ay:-0.006666666666666667,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+29012,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0011111111111111111,ay: -0.01,az:0.013333333333333334,q:36.4375,rV:     0,lV:     0,Camera:27
+29046,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0022222222222222222,ay:0.0022222222222222222,az:  0.01,q:36.375,rV:     0,lV:     0,Camera:27
+29084,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:0.0011111111111111111,ay:0.011111111111111112,az:-0.013333333333333334,q:36.4375,rV:     0,lV:     0,Camera:27
+29120,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:   0.0,ay:-0.0011111111111111111,az:0.006666666666666667,q:36.4375,rV:     0,lV:     0,Camera:27
+29155,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.008888888888888889,ay:-0.006666666666666667,az:0.0044444444444444444,q:36.4375,rV:     0,lV:     0,Camera:27
+29192,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:0.006666666666666667,ay:-0.0022222222222222222,az:0.0022222222222222222,q:36.4375,rV:     0,lV:     0,Camera:27
+29226,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:   0.0,ay:0.0044444444444444444,az:-0.0033333333333333335,q:36.375,rV:     0,lV:     0,Camera:27
+29261,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+29297,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0022222222222222222,ay:-0.0044444444444444444,az:0.0077777777777777776,q:36.375,rV:     0,lV:     0,Camera:27
+29334,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:   0.0,ay:0.0033333333333333335,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+29370,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:0.0022222222222222222,ay:0.0077777777777777776,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+29406,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+29443,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:   0.0,ay:-0.0022222222222222222,az:0.0033333333333333335,q:36.375,rV:     0,lV:     0,Camera:27
+29477,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:0.0022222222222222222,ay:-0.14444444444444443,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+29513,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:0.0011111111111111111,ay:0.0033333333333333335,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+29548,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:   0.0,ay:   0.0,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+29584,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+29620,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0011111111111111111,ay:-0.0022222222222222222,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+29654,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:   0.0,ay:0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+29691,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0011111111111111111,ay:0.005555555555555556,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+29725,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0022222222222222222,ay:-0.0022222222222222222,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+29759,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0011111111111111111,ay:-0.0044444444444444444,az:0.0022222222222222222,q:36.375,rV:     0,lV:     0,Camera:27
+29794,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+29830,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:-0.0011111111111111111,ay:-0.0033333333333333335,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+29864,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:0.0011111111111111111,ay:0.0033333333333333335,az:0.0022222222222222222,q:36.375,rV:     0,lV:     0,Camera:27
+29900,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:0.0011111111111111111,ay:0.0044444444444444444,az:-0.0022222222222222222,q:36.375,rV:     0,lV:     0,Camera:27
+29934,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+29972,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:   0.0,ay:0.0011111111111111111,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30006,state:5,Time:20:04:20,Lat:35.55518333,Lng:139.65489333,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0022222222222222222,q:36.375,rV:     0,lV:     0,Camera:27
+30045,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:0.0011111111111111111,ay:   0.0,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30083,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:0.0011111111111111111,ay:   0.0,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30117,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:0.0011111111111111111,ay:0.0022222222222222222,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30153,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0011111111111111111,ay:-0.0033333333333333335,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30189,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:   0.0,ay:0.0022222222222222222,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30223,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:0.0011111111111111111,ay:0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+30259,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0022222222222222222,q:36.375,rV:     0,lV:     0,Camera:27
+30295,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+30333,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:0.0011111111111111111,ay:0.0011111111111111111,az:0.0022222222222222222,q:36.375,rV:     0,lV:     0,Camera:27
+30370,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:0.0022222222222222222,ay:   0.0,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30404,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30442,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0011111111111111111,ay:-0.0044444444444444444,az:0.0011111111111111111,q:-2011.625,rV:     0,lV:     0,Camera:27
+30477,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0011111111111111111,ay:-0.0033333333333333335,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+30513,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:0.0033333333333333335,q:36.375,rV:     0,lV:     0,Camera:27
+30549,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0022222222222222222,ay:   0.0,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30584,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0022222222222222222,ay:0.0011111111111111111,az:0.0022222222222222222,q:36.375,rV:     0,lV:     0,Camera:27
+30621,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0011111111111111111,ay:-0.0033333333333333335,az:0.14222222222222222,q:36.375,rV:     0,lV:     0,Camera:27
+30655,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:0.0011111111111111111,ay:0.0022222222222222222,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30692,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0022222222222222222,ay:-0.0022222222222222222,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30727,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:   0.0,ay:-0.0022222222222222222,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+30762,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0011111111111111111,ay:-0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+30798,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:   0.0,ay:-0.0044444444444444444,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+30833,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:-0.0011111111111111111,ay:-0.0022222222222222222,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+30871,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:   0.0,ay:-0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+30905,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:   0.0,ay:   0.0,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+30941,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:   0.0,ay:0.0033333333333333335,az:-0.0033333333333333335,q:36.375,rV:     0,lV:     0,Camera:27
+30976,state:5,Time:20:04:21,Lat:35.55518333,Lng:139.65489167,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+31013,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:-0.0022222222222222222,ay:   0.0,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+31049,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31084,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0022222222222222222,ay:-0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+31124,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31159,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:   0.0,ay:0.0033333333333333335,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+31193,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31231,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0011111111111111111,ay:-0.0022222222222222222,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31265,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:   0.0,ay:0.0011111111111111111,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31303,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:   0.0,ay:0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+31341,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:   0.0,ay:0.0022222222222222222,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31378,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:-0.0033333333333333335,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31413,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:   0.0,ay:0.0022222222222222222,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31453,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+31491,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31526,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:-0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31561,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:-0.0011111111111111111,ay:-0.0033333333333333335,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31597,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:-0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31632,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0022222222222222222,ay:0.0011111111111111111,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31669,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:   0.0,ay:0.0033333333333333335,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31704,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:   0.0,ay:0.0022222222222222222,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+31741,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:   0.0,ay:-0.0022222222222222222,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+31776,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0022222222222222222,ay:0.0022222222222222222,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31811,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+31847,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0022222222222222222,ay:0.0022222222222222222,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31882,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:-0.0022222222222222222,ay:0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+31919,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31953,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0022222222222222222,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+31990,state:5,Time:20:04:22,Lat:35.55518333,Lng:139.65489000,ax:0.0011111111111111111,ay:0.0022222222222222222,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32025,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:-0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32061,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:   0.0,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32099,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:-0.0022222222222222222,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32133,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:-0.0022222222222222222,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32170,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:0.0011111111111111111,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32205,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:0.0011111111111111111,ay:-0.0033333333333333335,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32241,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:-0.0011111111111111111,ay:-0.005555555555555556,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32278,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:0.0011111111111111111,ay:-0.0044444444444444444,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32312,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:-0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32350,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:-0.0022222222222222222,ay:0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32386,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32422,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:0.005555555555555556,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32457,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32492,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:0.0011111111111111111,ay:   0.0,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32530,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32566,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:-0.0022222222222222222,ay:-0.0033333333333333335,az:-0.0022222222222222222,q:36.375,rV:     0,lV:     0,Camera:27
+32601,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:0.0022222222222222222,az:-0.0033333333333333335,q:36.375,rV:     0,lV:     0,Camera:27
+32637,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:0.0022222222222222222,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32671,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:0.0011111111111111111,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32708,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:-0.0022222222222222222,ay:0.0011111111111111111,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32742,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32779,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:-0.0011111111111111111,ay:0.0033333333333333335,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32813,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:-0.0022222222222222222,ay:0.0033333333333333335,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32850,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:0.0022222222222222222,ay:-0.0022222222222222222,az:0.0022222222222222222,q:36.375,rV:     0,lV:     0,Camera:27
+32885,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:   0.0,ay:-0.0022222222222222222,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32921,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:0.0011111111111111111,ay:-0.0044444444444444444,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+32955,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:0.0022222222222222222,ay:-0.0022222222222222222,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+32991,state:5,Time:20:04:23,Lat:35.55518167,Lng:139.65488833,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+33029,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:0.0011111111111111111,ay:0.0011111111111111111,az:   0.0,q:36.375,rV:     0,lV:     0,Camera:27
+33063,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-0.0011111111111111111,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+33100,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-0.0011111111111111111,ay:0.0022222222222222222,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+33137,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:   0.0,ay:-0.0011111111111111111,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+33171,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:   0.0,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+33205,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:0.0011111111111111111,ay:-0.0022222222222222222,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+33240,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-0.0022222222222222222,ay:   0.0,az:-0.0033333333333333335,q:36.375,rV:     0,lV:     0,Camera:27
+33277,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:   0.0,ay:   0.0,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+33312,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:   0.0,ay:-0.006666666666666667,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+33349,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-0.0022222222222222222,ay:   0.0,az:0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+33386,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-0.0022222222222222222,ay:-0.0022222222222222222,az:-0.0011111111111111111,q:36.375,rV:     0,lV:     0,Camera:27
+33421,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:   0.0,ay:   0.0,az:0.0022222222222222222,q:36.375,rV:    50,lV:    70,Camera:27
+33457,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-0.11222222222222222,ay:0.017777777777777778,az:0.0011111111111111111,q:36.375,rV:    50,lV:    70,Camera:27
+33491,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-2.442222222222222,ay:0.24222222222222223,az:0.38222222222222224,q:36.125,rV:    50,lV:    70,Camera:27
+33528,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-2.0833333333333335,ay:-0.19111111111111112,az:-0.18555555555555556,q:35.875,rV:    50,lV:    70,Camera:27
+33562,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-0.21333333333333335,ay:-0.11444444444444445,az:-0.8266666666666667,q:37.0625,rV:    50,lV:    70,Camera:27
+33598,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-0.4166666666666667,ay:-0.28888888888888886,az:-0.4777777777777778,q:  38.0,rV:    50,lV:    70,Camera:27
+33634,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:0.02666666666666667,ay:-0.17888888888888888,az:-0.5966666666666667,q:  39.0,rV:    50,lV:    70,Camera:27
+33668,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:0.6522222222222223,ay:-0.8766666666666667,az:0.42444444444444446,q:38.4375,rV:    50,lV:    70,Camera:27
+33702,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:0.9522222222222222,ay:0.8766666666666667,az:-0.22777777777777777,q:  38.5,rV:    50,lV:    70,Camera:27
+33738,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:2.0966666666666667,ay:-0.3888888888888889,az: -0.22,q:38.4375,rV:    50,lV:    70,Camera:27
+33773,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-1.0611111111111111,ay:0.9233333333333333,az:-0.46111111111111114,q: 39.25,rV:    50,lV:    70,Camera:27
+33808,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:  1.25,ay:-0.6544444444444445,az:-0.48444444444444446,q:39.9375,rV:    50,lV:    70,Camera:27
+33842,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-1.4166666666666667,ay:2.0388888888888888,az:-1.2422222222222221,q:42.5625,rV:    50,lV:    70,Camera:27
+33879,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:1.3133333333333332,ay:0.025555555555555557,az:-0.32555555555555554,q:43.5625,rV:    50,lV:    70,Camera:27
+33914,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:-0.27666666666666667,ay:0.08222222222222222,az:-0.6722222222222223,q:44.625,rV:    50,lV:    70,Camera:27
+33949,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:0.8144444444444444,ay: -0.04,az:-0.5255555555555556,q:45.4375,rV:    50,lV:    70,Camera:27
+33987,state:5,Time:20:04:24,Lat:35.55518000,Lng:139.65488833,ax:0.9322222222222222,ay:0.5244444444444445,az:-0.9244444444444444,q:47.9375,rV:    50,lV:    70,Camera:27
+34022,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:0.012222222222222223,ay:-1.008888888888889,az:-0.5588888888888889,q: 48.75,rV:    50,lV:    70,Camera:27
+34057,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:-0.7933333333333333,ay:1.2222222222222223,az:-0.9044444444444445,q:50.1875,rV:    50,lV:    70,Camera:27
+34092,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:0.7133333333333334,ay:-0.3655555555555556,az:-0.6266666666666667,q:  51.5,rV:    50,lV:    70,Camera:27
+34129,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:  0.29,ay:0.24444444444444444,az:-0.28888888888888886,q:51.8125,rV:    50,lV:    70,Camera:27
+34163,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:-1.3577777777777778,ay:0.16666666666666666,az:-0.8522222222222222,q:53.4375,rV:    50,lV:    70,Camera:27
+34201,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:-0.04777777777777778,ay: -0.59,az:-0.5022222222222222,q:54.5625,rV:    50,lV:    70,Camera:27
+34238,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:-0.2088888888888889,ay:0.7522222222222222,az:-0.8755555555555555,q:55.8125,rV:    50,lV:    70,Camera:27
+34273,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:0.6111111111111112,ay:0.7322222222222222,az:-0.8077777777777778,q:  57.5,rV:    50,lV:    70,Camera:27
+34308,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:0.8844444444444445,ay:-0.6088888888888889,az:-0.3566666666666667,q:  58.0,rV:    50,lV:    70,Camera:27
+34344,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax: -0.88,ay:1.6333333333333333,az:-1.0877777777777777,q:  60.0,rV:    50,lV:    70,Camera:27
+34380,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:0.8566666666666667,ay:-1.0977777777777777,az:-0.4211111111111111,q:60.9375,rV:    50,lV:    70,Camera:27
+34414,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:  0.68,ay:0.49333333333333335,az:-0.47333333333333333,q:61.875,rV:    50,lV:    70,Camera:27
+34450,state:5,Time:20:04:25,Lat:35.55517833,Lng:139.65488667,ax:-1.0433333333333332,ay:0.29555555555555557,az:-0.9344444444444444,q:  63.5,rV:    50,lV:     0,Camera:27

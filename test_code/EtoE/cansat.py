@@ -118,7 +118,8 @@ class Cansat():
         self.move_arplan = 'none'
         self.move_clplan = 'none'
         self.connected = False
-
+        self.checking_time = 0
+        
         self.dict_list = {}
         self.goallat = ct.const.GPS_GOAL_LAT
         self.goallon = ct.const.GPS_GOAL_LON
@@ -128,6 +129,7 @@ class Cansat():
         self.mvfile()
 
     def mkdir(self): #フォルダ作成部分
+        print(self.startTime)
         self.results_dir = f'results/{self.startTime}'
         self.results_img_dir = self.results_dir + '/imgs'
         os.mkdir(self.results_dir)
@@ -168,22 +170,22 @@ class Cansat():
                   + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
                   + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
                   + "Camera:" + str(self.cameraCount)
-        #if self.state == 3:
-        #    datalog = datalog + ","\
-        #          + "Color-Approach:" + str(self.cl_checker) + ","\
-        #          + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
-        #          + "Color-move:" + str(self.move_clplan)
-        #elif self.state == 6:
-        #    datalog = datalog + ","\
-        #          + "ConnectingState:" + str(self.connecting_state) + ","\
-        #          + "AR-Approach:" + str(self.ar_checker) + ","\
-        #          + "AR-info:" + str(self.ar_info) + ","\
-        #          + "AR-move:" + str(self.move_arplan) + ","\
-        #          + "Color-Approach:" + str(self.cl_checker) + ","\
-        #          + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
-        #          + "Color-move:" + str(self.move_clplan) + ","\
-        #          + "Done-Approach:" + str(self.done_approach) + ","\
-        #          + "Done-Connect:" + str(self.connected)
+        if self.state == 3:
+            datalog = datalog + ","\
+                 + "Color-Approach:" + str(self.cl_checker) + ","\
+                 + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
+                 + "Color-move:" + str(self.move_clplan)
+        elif self.state == 6:
+           datalog = datalog + ","\
+                 + "ConnectingState:" + str(self.connecting_state) + ","\
+                 + "AR-Approach:" + str(self.ar_checker) + ","\
+                 + "AR-info:" + str(self.ar_info) + ","\
+                 + "AR-move:" + str(self.move_arplan) + ","\
+                 + "Color-Approach:" + str(self.cl_checker) + ","\
+                 + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
+                 + "Color-move:" + str(self.move_clplan) + ","\
+                 + "Done-Approach:" + str(self.done_approach) + ","\
+                 + "Done-Connect:" + str(self.connected)
         
         with open(f'results/{self.startTime}/control_result.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
             test.write(datalog + '\n')
@@ -346,7 +348,7 @@ class Cansat():
             # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
             if not self.plan_color["Detected_tf"]:
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
-                self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
+                self.MotorL.go(ct.const.LANDING_MOTOR_VREF +7)
             else:
                 self.MotorR.go(self.plan_color["R"])
                 self.MotorL.go(self.plan_color["L"])
@@ -455,149 +457,156 @@ class Cansat():
                     self.laststate = 6
 
     def connecting(self):
-        self.done_approach = False
-        if self.connecting_state == 0:
-            self.RED_LED.led_off()
-            self.BLUE_LED.led_off()
-            self.GREEN_LED.led_on()
-            self.arm.middle()
-        if self.connecting_state == 1:
-            self.RED_LED.led_off()
-            self.BLUE_LED.led_on()
-            self.GREEN_LED.led_off()
-            self.arm.up()
-        # capture and detect markers
-        self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":5})
-        self.cameraCount += 1
-        self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
-        
-        detected_img, self.ar_info = self.tg.detect_marker(self.img)
-        self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
-        self.ar_checker = self.AR_checker["AR"]
-        print(self.ar_info)
-        if self.AR_checker["AR"]:
-            self.vanish_c = 0 #喪失カウントをリセット
-            self.aprc_c = False #アプローチの仕方のbool
-            self.estimate_norm = self.AR_checker["norm"] #使u これself.いるん？？
-            if not self.Flag_AR:
-                print("keisoku_AR")
-                self.starttime_AR = time.time()
-                self.ar_count += 1
-                self.Flag_AR = True
-            if self.Flag_AR and time.time()-self.starttime_AR >= 1.0:
-                self.Flag_AR = False #フラグをリセット←これもAR_decideの中で定義しても良いかも
-                AR_powerplan = AR_powerplanner(self.ar_info,self.AR_checker,self.connecting_state)  #sideを追加
-                self.move_arplan = AR_powerplan["move"]
-                APRC_STATE = AR_powerplan['aprc_state']
-                if not APRC_STATE:      #　接近できたかどうか
-                    if AR_powerplan["R"] < -0.1 and AR_powerplan["L"] < -0.1:
-                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.05)
-                        print("Back!")
-                        #arm_grasping()
-                    else:
-                        self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
-                        print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"])
-                else:
-                    self.move(0,0,0.2)
-                    print('state_change')
-                    self.estimate_norm = 100000
-                    self.done_approach = True
-                    if self.connecting_state == 0:
-                        self.RED_LED.led_off()
-                        self.BLUE_LED.led_on()
-                        self.GREEN_LED.led_off()
-                        self.arm_grasping()
-                        #SorF = self.checking(self.img,self.connecting_state)
-                        self.connecting_state += 1
-                        self.ar_count = 0
-                        #if not SorF["clear"]:
-                        #    self.connecting_state -= 1
-                    elif self.connecting_state == 1:
-                        self.RED_LED.led_on()
-                        self.BLUE_LED.led_off()
-                        self.GREEN_LED.led_off()
-                        self.arm_release()
-                        #SorF = self.checking(self.img,self.connecting_state)
-                        self.connecting_state += 1
-                        #print(SorF["clear"])
-                        #if not SorF["clear"]:
-                        #    self.connecting_state -= 2
-                        # 焼き切りを待つ時間をここで使いたい（10秒）
-                        
+        if self.connecting_state == 2:
+            SorF = self.checking(self.img,self.connecting_state-1)
+            if SorF["Time_clear"]:
+                self.state = 8
+                self.laststate = 8
         else:
+            self.done_approach = False
+            if self.connecting_state == 0:
+                self.RED_LED.led_off()
+                self.BLUE_LED.led_off()
+                self.GREEN_LED.led_on()
+                self.arm.middle()
+            if self.connecting_state == 1:
+                self.RED_LED.led_off()
+                self.BLUE_LED.led_on()
+                self.GREEN_LED.led_off()
+                self.arm.up()
+            # capture and detect markers
+            self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":5})
+            self.cameraCount += 1
+            self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
             
-            if self.aprc_c : #色認識による出力決定するかどうか
-                plan_color = self.mpp.power_planner(self.img,self.connecting_state,self.ar_count)
-                self.aprc_clear = plan_color["Clear"]
-                self.cl_checker = plan_color["Detected_tf"]
-                self.move_clplan = plan_color["move"]
-                self.cl_data = self.mpp.pos
-                if plan_color["Detected_tf"] :
-                    #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                    if not self.Flag_C:
-                        self.starttime_color = time.time()
-                        self.Flag_C = True
-                        print("keisoku_color")
-                        '''
-                        Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
-                        '''
-                    
-                    if self.Flag_C and time.time()-self.starttime_color >= 1.0:
-                        '''
-                        5秒超えたら入ってくる
-                        '''
-                        self.vanish_c = 0 #喪失カウントをリセット
-                        self.Flag_C = False #フラグをリセット
-                        sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
-                        if not self.aprc_clear:
-                            self.move(plan_color["R"],plan_color["L"],0.04)
-                            print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
-                            '''
-                            色認識の出力の離散化：出力する時間を0.2秒に
-                            '''
+            detected_img, self.ar_info = self.tg.detect_marker(self.img)
+            self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
+            self.ar_checker = self.AR_checker["AR"]
+            print(self.ar_info)
+            if self.AR_checker["AR"]:
+                self.vanish_c = 0 #喪失カウントをリセット
+                self.aprc_c = False #アプローチの仕方のbool
+                self.estimate_norm = self.AR_checker["norm"] #使u これself.いるん？？
+                if not self.Flag_AR:
+                    print("keisoku_AR")
+                    self.starttime_AR = time.time()
+                    self.ar_count += 1
+                    self.Flag_AR = True
+                if self.Flag_AR and time.time()-self.starttime_AR >= 1.0:
+                    self.Flag_AR = False #フラグをリセット←これもAR_decideの中で定義しても良いかも
+                    AR_powerplan = AR_powerplanner(self.ar_info,self.AR_checker,self.connecting_state)  #sideを追加
+                    self.move_arplan = AR_powerplan["move"]
+                    APRC_STATE = AR_powerplan['aprc_state']
+                    if not APRC_STATE:      #　接近できたかどうか
+                        if AR_powerplan["R"] < -0.1 and AR_powerplan["L"] < -0.1:
+                            self.move(AR_powerplan["R"],AR_powerplan["L"],0.05)
+                            print("Back!")
+                            #arm_grasping()
+                        else:
+                            self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
+                            print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"])
+                    else:
+                        self.move(0,0,0.2)
+                        print('state_change')
+                        self.estimate_norm = 100000
+                        self.done_approach = True
+                        if self.connecting_state == 0:
+                            self.RED_LED.led_off()
+                            self.BLUE_LED.led_on()
+                            self.GREEN_LED.led_off()
+                            self.arm_grasping()
+                            #SorF = self.checking(self.img,self.connecting_state)
+                            self.connecting_state += 1
+                            self.ar_count = 0
+                            #if not SorF["clear"]:
+                            #    self.connecting_state -= 1
+                        elif self.connecting_state == 1:
+                            self.RED_LED.led_on()
+                            self.BLUE_LED.led_off()
+                            self.GREEN_LED.led_off()
+                            self.arm_release()
+                            self.checking_time = time.time()
+                            SorF = self.checking(self.img,self.connecting_state)
+                            self.connecting_state += 1
+                            print(f'connect_clear: {SorF["clear"]}')
+                            # if not SorF["clear"]:
+                                # self.connecting_state -= 2
+                            # 焼き切りを待つ時間をここで使いたい（10秒）
                             
-                        else:
-                            self.move(plan_color["R"],plan_color["L"],0.04)
-                            # if more than once AR could be seen
+            else:
+                
+                if self.aprc_c : #色認識による出力決定するかどうか
+                    plan_color = self.mpp.power_planner(self.img,self.connecting_state,self.ar_count)
+                    self.aprc_clear = plan_color["Clear"]
+                    self.cl_checker = plan_color["Detected_tf"]
+                    self.move_clplan = plan_color["move"]
+                    self.cl_data = self.mpp.pos
+                    if plan_color["Detected_tf"] :
+                        #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                        if not self.Flag_C:
+                            self.starttime_color = time.time()
+                            self.Flag_C = True
+                            print("keisoku_color")
+                            '''
+                            Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
+                            '''
                         
-                else :
-                    if self.vanish_c > 10 and not self.aprc_clear:
-                        '''
-                        数を20に変更
-                        '''
-                        self.Flag_C = False #色を見つけたら待機できるようにリセット
-                        self.Flag_AR = False #AR認識もリセット
-                        self.aprc_clear = False #aprc_clearのリセット
-                        print("-R:35-")
-                        if self.estimate_norm > 0.5:
-                            self.move(90,-90,0.03)
-                            print('sleeptime : 0.2')
-                            self.vanish_c = 0
-                        else:
-                            if self.vanish_c >= 40:
-                                vanish_sleep = 0.3
+                        if self.Flag_C and time.time()-self.starttime_color >= 1.0:
+                            '''
+                            5秒超えたら入ってくる
+                            '''
+                            self.vanish_c = 0 #喪失カウントをリセット
+                            self.Flag_C = False #フラグをリセット
+                            sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
+                            if not self.aprc_clear:
+                                self.move(plan_color["R"],plan_color["L"],0.04)
+                                print("-Color- R:",plan_color["R"],"L:",plan_color["L"])
+                                '''
+                                色認識の出力の離散化：出力する時間を0.2秒に
+                                '''
+                                
+                            else:
+                                self.move(plan_color["R"],plan_color["L"],0.04)
+                                # if more than once AR could be seen
+                            
+                    else :
+                        if self.vanish_c > 10 and not self.aprc_clear:
+                            '''
+                            数を20に変更
+                            '''
+                            self.Flag_C = False #色を見つけたら待機できるようにリセット
+                            self.Flag_AR = False #AR認識もリセット
+                            self.aprc_clear = False #aprc_clearのリセット
+                            print("-R:35-")
+                            if self.estimate_norm > 0.5:
+                                self.move(90,-90,0.03)
+                                print('sleeptime : 0.2')
                                 self.vanish_c = 0
                             else:
-                                vanish_sleep = 0.1
-                            self.move(40,-40,vanish_sleep)
-                            print('sleeptime : vanish_sleep')
+                                if self.vanish_c >= 40:
+                                    vanish_sleep = 0.3
+                                    self.vanish_c = 0
+                                else:
+                                    vanish_sleep = 0.1
+                                self.move(40,-40,vanish_sleep)
+                                print('sleeptime : vanish_sleep')
 
+                        self.vanish_c += 1
+                else:
+                    if self.vanish_c > 10:
+                        self.aprc_c = True #色認識をさせる
                     self.vanish_c += 1
-            else:
-                if self.vanish_c > 10:
-                    self.aprc_c = True #色認識をさせる
-                self.vanish_c += 1
-        
-        if self.connecting_state >= 2:  # Finish this state
-            self.arm.up()
-            self.arm.down()
-            self.arm.up()
-            self.RED_LED.led_off()
-            self.BLUE_LED.led_off()
-            self.GREEN_LED.led_off()
-            self.state = 8
-            self.laststate = 8
-        return
+            
+            # if self.connecting_state >= 2:  # Finish this state
+                # self.arm.up()
+                # self.arm.down()
+                # self.arm.up()
+                # self.RED_LED.led_off()
+                # self.BLUE_LED.led_off()
+                # self.GREEN_LED.led_off()
+                # self.state = 8
+                # self.laststate = 8
+            return
     
     def arm_grasping(self):
         # try:
@@ -624,40 +633,42 @@ class Cansat():
         time.sleep(1)
     
     def checking(self,frame,connecting_state):
+        detected = False
         clear = False
         if connecting_state == 0:
             color_num = connecting_state
         else:
             color_num = 99 # 色変えるならここ変更(mppも)
-            time.sleep(10.0) # 焼き切り時間用いつか変更する
+            #time.sleep(10.0) # 焼き切り時間用いつか変更する
         # try:
             # arm.setup()
         # except:
             # pass
-        time.sleep(1.0)
-        
-        pos = self.mpp.find_specific_color(frame,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.LOW_COLOR,self.mpp.HIGH_COLOR,color_num)
-        if pos is not None:
-            self.cl_data = pos
-            print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
-            detected = True
-            if color_num == 0:
-                if pos[1] > ct.const.CONNECTED_HEIGHT_THRE: # パラメータ未調整
-                    clear = True
-                    time.sleep(2.0)
-                    print('===========\nGRASPED\n===========')
+        #time.sleep(1.0)
+        time_clear = False
+        if time.time() - self.checking_time > 180:
+            time_clear = True
+            pos = self.mpp.find_specific_color(frame,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.LOW_COLOR,self.mpp.HIGH_COLOR,color_num)
+            if pos is not None:
+                self.cl_data = pos
+                print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
+                detected = True
+                if color_num == 0:
+                    if pos[1] > ct.const.CONNECTED_HEIGHT_THRE: # パラメータ未調整
+                        clear = True
+                        time.sleep(2.0)
+                        print('===========\nGRASPED\n===========')
+                    else:
+                        self.arm.middle()
+                        time.sleep(1)
+                        print('===========\nFAILED\n===========')
                 else:
-                    self.arm.middle()
-                    time.sleep(1)
-                    print('===========\nFAILED\n===========')
+                    clear = True
             else:
-                clear = True
-        else:
-            self.cl_data = ["none", "none", "none"]
-            detected = False
-            print('===========\nNO LOOK\n===========')
+                self.cl_data = ["none", "none", "none"]
+                print('===========\nNO LOOK\n===========')
 
-        return {"clear":clear,"Detected_tf":detected}
+        return {"clear":clear,"Detected_tf":detected,"Time_clear":time_clear}
     
 
     def move(self,Vr=0,Vl=0,t=0.1):

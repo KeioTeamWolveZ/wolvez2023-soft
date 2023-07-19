@@ -54,7 +54,7 @@ const.DROPPING_ACC_THRE = 1 #加速度の値
 
 const.SEPARATION_TIME_THRE = 10 #焼き切り時間
 const.ARM_CARIBRATION_THRE = 5 #アームのマーカーが認識できるまで繰り返す時間
-const.LANDING_MOTOR_TIME_THRE = 10 #分離シートから離れるためにモータを回転させる時間
+const.LANDING_MOTOR_TIME_THRE = 5 #分離シートから離れるためにモータを回転させる時間
 const.RELEASING_MOTOR_TIME_THRE = 1 #放出と放出の間にモータを回転させる時間
 const.TURNING_MOTOR_TIME_THRE = 1.5 #turning time after the end of second-releasing
 const.MODULE_SEPARATION_TIME_THRE = 15 # モジュール同士の接続の際の焼き切り時間

@@ -82,7 +82,7 @@ if __name__ == "__main__":
 	arm = Arm(23)
 	arm.setup()
 	arm.move(850)
-	arm.move(1800)
+	arm.move(1900)
 	arm.down()
 	start = time.time()
 	while True:
