@@ -159,6 +159,7 @@ class PowerPlanner():
         return:
             {"R":power_R,"L":power_L,"Clear":bool} 
         """
+        move = 'stop'
         height, width = frame.shape[:2]
 
         aprc_clear = False #これは目標に到達できたかのbool値
@@ -187,6 +188,7 @@ class PowerPlanner():
             power_R, power_L, w_rate = self.power_calculation(pos,height,width,aprc_clear)
             
         else:
+            move = 'stop'
             power_R, power_L = 0,0
             w_rate = None ### mienai toki ni None ni naruyouni
             detected = False
@@ -209,7 +211,12 @@ class PowerPlanner():
             if pos[2] > 6000:
                 detected = True
                 power_R, power_L, w_rate = self.power_calculation(pos,height,width,aprc_clear)
+                if power_L > power_R:
+                    move = 'stay-right'
+                else:
+                    move = 'stay-left'
             else:
+                move = 'stop'
                 power_R, power_L = 0,0
                 w_rate = None ### mienai toki ni None ni naruyouni
                 detected = False
@@ -219,4 +226,4 @@ class PowerPlanner():
             w_rate = None ### mienai toki ni None ni naruyouni
             detected = False
 
-        return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected,"w_rate":w_rate} ### sleep zikan keisan ni motiiru node w_rate wo dasu
+        return {"R":power_R,"L":power_L,"Clear":aprc_clear,"Detected_tf":detected,"w_rate":w_rate,"move":move} ### sleep zikan keisan ni motiiru node w_rate wo dasu
