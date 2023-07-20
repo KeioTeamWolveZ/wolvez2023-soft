@@ -64,6 +64,14 @@ class Picam():
         self.video = cv2.VideoWriter(f'{name}.mp4',fourcc,60,v_size)  # 動画の仕様（ファイル名、fourcc, FPS, サイズ）
         return self.video
     
+    def red2blk(self,frame):
+        blk = frame
+        condition_blue = blk[:,:,0] < 110
+        condition_green = blk[:,:,1] < 110
+        condition_red = blk[:,:,2] > 110
+        blk[condition_blue * condition_green * condition_red] = 0
+        return blk
+
     def write_video(self,frame):
         self.video.write(frame)   
         
