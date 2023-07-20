@@ -25,18 +25,16 @@ class PowerPlanner():
     # 0 <= h <= 179 (色相)　OpenCVではmax=179なのでR:0(180),G:60,B:120となる
     # 0 <= s <= 255 (彩度)　黒や白の値が抽出されるときはこの閾値を大きくする
     # 0 <= v <= 255 (明度)　これが大きいと明るく，小さいと暗い
-    # ここでは青色を抽出するので120±20を閾値とした
-    # LOW_COLOR = np.array([100, 75, 75])
-    # HIGH_COLOR = np.array([140, 255, 255])
-    #red_color
-    # LOW_COLOR = np.array([150, 64, 0])
-    # HIGH_COLOR = np.array([179, 255, 255])
     #{1:red,0:yellow}
-    LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([25, 200, 180]),99:np.array([18, 227, 217])}
-    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([27, 255, 255]),99:np.array([21, 255, 255])}
-    # HIGH_COLOR = np.array([179, 255, 255])
+    # LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([25, 200, 180]),99:np.array([18, 227, 217])}
+    # HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([27, 255, 255]),99:np.array([21, 255, 255])}
+    
     # LOW_COLOR = {0:np.array([[0, 64, 0],[150, 64, 0]]),1:np.array([100, 75, 75])}
     # HIGH_COLOR = {0:np.array([[10, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}
+
+    #{1:red,0:blue,99:orange}
+    LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([109, 200, 180]),99:np.array([18, 227, 217])}
+    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([111, 255, 255]),99:np.array([21, 255, 255])}
 
     # 抽出する色の塊のしきい値
     AREA_RATIO_THRESHOLD = 0.00003
