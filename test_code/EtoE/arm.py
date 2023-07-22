@@ -17,14 +17,14 @@ class Arm():
 	def up(self,buff=0):
 		self.pi.write(self.servo_pin,1)
 		self.pi.set_servo_pulsewidth(self.servo_pin,1500)
-		time.sleep(0.5)
+		time.sleep(0.2)
 		self.pi.set_servo_pulsewidth(self.servo_pin,0)
 		self.pi.write(self.servo_pin,0)
 	
 	def middle(self,buff=0):
 		self.pi.write(self.servo_pin,1)
 		self.pi.set_servo_pulsewidth(self.servo_pin,1300)
-		time.sleep(0.5)
+		time.sleep(0.2)
 		self.pi.set_servo_pulsewidth(self.servo_pin,0)
 		self.pi.write(self.servo_pin,0)
 		
@@ -82,13 +82,15 @@ if __name__ == "__main__":
 	arm = Arm(23)
 	arm.setup()
 	arm.move(850)
-	arm.move(1800)
+	arm.move(1300)
 	arm.down()
 	start = time.time()
 	while True:
+		arm.up()
+		arm.down()
 		end = time.time()
 		print("wating")
-		if end-start > 1:
+		if end-start > 10:
 			break
 	#GPIO.cleanup()
 	
