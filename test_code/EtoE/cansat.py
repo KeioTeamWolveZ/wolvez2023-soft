@@ -478,8 +478,9 @@ class Cansat():
             self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":5})
             self.cameraCount += 1
             self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
+            self.blk = self.pc2.red2blk(self.img)
             
-            detected_img, self.ar_info = self.tg.detect_marker(self.img)
+            detected_img, self.ar_info = self.tg.detect_marker(self.blk)
             self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
             self.ar_checker = self.AR_checker["AR"]
             print(self.ar_info)

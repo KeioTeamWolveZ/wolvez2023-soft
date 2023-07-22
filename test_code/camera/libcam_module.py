@@ -35,8 +35,8 @@ class Picam():
 
         if args == 0:
             now = datetime.now()
-            self.now = now.strftime('%Y%m%d%H%M%S')
-            cv2.imwrite(filename + f"-{self.now}.jpg", self.img)
+            now = now.strftime('%Y%m%d%H%M%S')
+            cv2.imwrite(filename + f"-{now}.jpg", self.img)
             # print(now)
             return self.img
         elif args == 1:
@@ -70,7 +70,6 @@ class Picam():
         condition_green = blk[:,:,1] < 110
         condition_red = blk[:,:,2] > 110
         blk[condition_blue * condition_green * condition_red] = 0
-        cv2.imwrite(filename + f"-red2blk{self.now}.jpg", blk)
         return blk
 
     def write_video(self,frame):
