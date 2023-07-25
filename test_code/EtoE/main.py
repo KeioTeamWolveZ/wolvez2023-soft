@@ -35,12 +35,14 @@ try:
         if cansat.state > end_state:
             cansat.sensor()
             print("Finished")
+            print(cansat.startTime)
             cansat.keyboardinterrupt()
             GPIO.cleanup()
             break
     
 except KeyboardInterrupt:
     print("Finished")
+    print(cansat.startTime)
     cansat.keyboardinterrupt()
     time.sleep(1)
     GPIO.cleanup()
