@@ -25,6 +25,7 @@ class Picam():
         self.picam2.set_controls({"AfMode":0,"LensPosition":4.5})
         
     def capture(self, args, filename="test"):
+        self.filename = filename
         """
         引数0→撮影&保存
         引数1→撮影のみ
@@ -65,12 +66,13 @@ class Picam():
         return self.video
     
     def red2blk(self,frame):
+        self.red_thre = 50
         blk = frame
-        condition_blue = blk[:,:,0] < 110
-        condition_green = blk[:,:,1] < 110
-        condition_red = blk[:,:,2] > 110
+        condition_blue = blk[:,:,0] < self.red_thre
+        condition_green = blk[:,:,1] < self.red_thre
+        condition_red = blk[:,:,2] > self.red_thre
         blk[condition_blue * condition_green * condition_red] = 0
-        cv2.imwrite(filename + f"-red2blk{self.now}.jpg", blk)
+        cv2.imwrite(self.filename + f"-red2blk{self.now}.jpg", blk)
         return blk
 
     def write_video(self,frame):
