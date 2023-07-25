@@ -19,6 +19,7 @@ def gpslogger(start_time):
     plt.plot(Lng,Lat)
     plt.xlabel("Lng")
     plt.ylabel("Lon")
+    plt.title("GPS log: "+start_time)
     plt.show()
     
 if __name__ == '__main__':
