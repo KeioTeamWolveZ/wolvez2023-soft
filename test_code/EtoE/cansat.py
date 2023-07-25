@@ -129,7 +129,6 @@ class Cansat():
         self.mvfile()
 
     def mkdir(self): #フォルダ作成部分
-        print(self.startTime)
         self.results_dir = f'results/{self.startTime}'
         self.results_img_dir = self.results_dir + '/imgs'
         os.mkdir(self.results_dir)
