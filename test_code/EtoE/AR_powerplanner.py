@@ -1,135 +1,59 @@
 import numpy as np
-arm_id = "1"
 
-def AR_powerplanner(ar_info,AR_checker,connecting_state):
-    
-    # 速度の設定
+class ARPowerPlanner():
+
+    #速度の設定
     STANDARD_POWER = 90
     POWER_RANGE = 10
-    aprc_state = False
-    target_id = AR_checker["id"]
-    if connecting_state == 0:
-        marker_1 = np.array([ar_info[arm_id]["x"],ar_info[arm_id]["y"],ar_info[arm_id]["z"]])
-        #marker_1 = np.array([0.00161,0.008755,0.18084])
-        goal_area = {"L":[-0.035,-0.025],"R":[0.00397,0.01397],"z":[0.00973,0.01973]}
-    else:
-        marker_1 = np.array([0.002157,0.008755,0.18084])
-        if AR_checker["side"] == 'marker_L':
-            goal_area = {"L":[-0.051,-0.041],"R":[0.018,0.029],"z":[-0.00797,-0.00203]}
-        else:
-            goal_area = {"L":[-0.05063,-0.04063],"R":[0.0098,0.0198],"z":[-0.02701,0.01701]}
-    marker_target = np.array([ar_info[target_id]["x"],ar_info[target_id]["y"],ar_info[target_id]["z"]])
-    vec, distance = __targetting(marker_1,marker_target)
-    #print(distance,vec[0])
-    print(f"distance:{distance},vec:{vec}")
-    threshold = {"marker_R":[0.07,0.02],"marker_L":[-0.07,0.02],} # 使ってない
-    # if vec[0] > goal_area[0] and vec[0] < goal_area[1] and distance > goal_area[2] and distance < goal_area[3]:
-        # '''
-        # 接近後なのでアーム動かしたい：要検討
-        # '''
-        # print("finish")
-        # power_R = 0
-        # power_L = 0
-        # aprc_state = True
-    # elif distance < goal_area[2]:
-        # '''
-        # distanceが負のときバックする？iranaikamo
-        # '''
-        # print("distance<0")
-        # power_R = int(-1*STANDARD_POWER+POWER_RANGE)
-        # power_L = int(-1*STANDARD_POWER+POWER_RANGE-5)
-    # elif distance > goal_area[3]:
-        # '''
-        # hutuu ni tikaduku
-        # '''
-        # # if vec[2] > 0.15:
-            # # '''
-            # # 接近する(アームとモジュールが横並びするまで？)
-            # # '''
-            # # if AR_checker["side"] == "marker_R":
-            # # #print(f"distance:{distance}")
-            # # #print(f"vec:{vec[0]}")
-                # # if vec[0] < 0.03:
-                    # # power_R = int(STANDARD_POWER )
-                    # # power_L = int(0)
-                # # else:
-                    # # power_R = int(0)
-                    # # power_L = int(STANDARD_POWER )
-            # # else:
-                # # if vec[0] > -0.03:
-                    # # power_R = int(0)
-                    # # power_L = int(STANDARD_POWER+5 )
-                # # else:
-                    # # power_R = int(STANDARD_POWER )
-                    # # power_L = int(0)
-        # # else:
-        # if AR_checker["side"] == "marker_R":
-            # if vec[0] < goal_area[1]:
-                # power_R = int(STANDARD_POWER - POWER_RANGE )
-                # power_L = int(0)
-            # else:
-                # power_R = int(0)
-                # power_L = int(STANDARD_POWER - POWER_RANGE+5 )
-        # else:
-            # if vec[0] > goal_area[0]:
-                # power_R = int(0)
-                # power_L = int(STANDARD_POWER - POWER_RANGE+5 )
-            # else:
-                # power_R = int(STANDARD_POWER - POWER_RANGE )
-                # power_L = int(0)
-    # else:
-        # '''
-        # tikai kedo yokohaba ari : sonoba senkai 
-        # '''
-        # print("senkai")
-        # power_R = int(vec[0]/abs(vec[0])*(STANDARD_POWER - POWER_RANGE + POWER_RANGE * vec[0]/10)) ### +- ga umareru youni
-        # power_L = -power_R -5
-    move = "stop"
-    if vec[2] > goal_area["z"][0]-0.01:
-        if vec[2] > goal_area["z"][1]:
-            '''
-            tooi toki no yatu ha kesita
-            '''
-            if AR_checker["side"] == "marker_R":
-                if vec[0] > goal_area["R"][0] and vec[0] < goal_area["R"][1]:
-                    move = 'straight'
-                    power_R = int(STANDARD_POWER - POWER_RANGE)
-                    power_L = int(STANDARD_POWER - POWER_RANGE+5)
-                else:
-                    if vec[0] < goal_area["R"][0]:
-                        move = 'straight-left'
-                        power_R = int(STANDARD_POWER - POWER_RANGE )
-                        power_L = int(0)
-                    else:
-                        move = 'straight-right'
-                        power_R = int(0)
-                        power_L = int(STANDARD_POWER - POWER_RANGE)
-            elif AR_checker["side"] == "marker_L":
-                if vec[0] > goal_area["L"][0] and vec[0] < goal_area["L"][1]:
-                    move = 'straight'
-                    power_R = int(STANDARD_POWER - POWER_RANGE)
-                    power_L = int(STANDARD_POWER - POWER_RANGE+5)
-                else:
-                    if vec[0] > goal_area["L"][1]:
-                        move = 'straight-right'
-                        power_R = int(0)
-                        power_L = int(STANDARD_POWER - POWER_RANGE)
-                    else:
-                        move = 'straight-left'
-                        power_R = int(STANDARD_POWER - POWER_RANGE )
-                        power_L = int(0)
 
+    def __init__(self):
+        self.arm_id = "1"
+
+    def goalvec_maker(self,ar_info,goal_point,connecting_state):
+        if connecting_state == 0:
+            if self.arm_id in ar_info.keys():
+                marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
+            else:
+                marker_1 = np.array([0.002157,0.008755,0.18084])
         else:
-            # When z is satisfying the thresholds, cansat changes just orientation
-            motor_ouput = STANDARD_POWER - POWER_RANGE
-            if AR_checker["side"] == "marker_R":
-                if vec[0] > goal_area["R"][0] and vec[0] < goal_area["R"][1]:
+            marker_1 = np.array([0.002157,0.008755,0.18084])
+        vec, distance = self.__targetting(marker_1,goal_point)
+        goal_area = {"x":[-0.005,0.005],"z":[-0.005,0.005]}
+        print(f"distance:{distance},vec:{vec}")
+        return vec,goal_area
+
+    def ar_powerplanner(self,ar_info,goal_point,connecting_state):
+        self.aprc_state = False # 2回目の接続の際にリセットできるようにしてある
+        vec,goal_area = self.goalvec_maker(ar_info,goal_point,connecting_state)
+        move = "stop"
+        if vec[2] > goal_area["z"][0]:
+            if vec[2] > goal_area["z"][1]:
+                '''
+                遠いVerは消した
+                '''
+                if vec[0] > goal_area["x"][0] and vec[0] < goal_area["x"][1]:
+                    move = 'straight'
+                    power_R = int(self.STANDARD_POWER - self.POWER_RANGE)
+                    power_L = int(self.STANDARD_POWER - self.POWER_RANGE+5)
+                else:
+                    if vec[0] < goal_area["x"][0]:
+                        move = 'straight-left'
+                        power_R = int(self.STANDARD_POWER - self.POWER_RANGE )
+                        power_L = int(0)
+                    else:
+                        move = 'straight-right'
+                        power_R = int(0)
+                        power_L = int(self.STANDARD_POWER - self.POWER_RANGE)
+            else:
+                # When z is satisfying the thresholds, cansat changes just orientation
+                motor_ouput = self.STANDARD_POWER - self.POWER_RANGE
+                if vec[0] > goal_area["x"][0] and vec[0] < goal_area["x"][1]:
                     print("finish")
                     power_R = 0
                     power_L = 0
                     aprc_state = True
                 else:
-                    if vec[0] < goal_area["R"][0]:
+                    if vec[0] < goal_area["x"][0]:
                         move = 'stay-left'
                         power_R = int(motor_ouput)
                         power_L = int(-motor_ouput)
@@ -137,35 +61,30 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
                         move = 'stay-right'
                         power_R = int(-motor_ouput)
                         power_L = int(motor_ouput)
-            elif AR_checker["side"] == "marker_L":
-                if vec[0] > goal_area["L"][0] and vec[0] < goal_area["L"][1]:
-                    print("finish")
-                    power_R = 0
-                    power_L = 0
-                    aprc_state = True
-                else:
-                    if vec[0] > goal_area["L"][1]:
-                        move = 'stay-right'
-                        power_R = int(-motor_ouput)
-                        power_L = int(motor_ouput+7)
-                    else:
-                        move = 'stay-left'
-                        power_R = int(motor_ouput)
-                        power_L = int(-motor_ouput -7)
-            '''
-            接近後なのでアーム動かしたい：要検討
-            '''
+                '''
+                接近後なのでアーム動かしたい：要検討
+                '''
 
-    else:
+        else:
+            '''
+            distanceが負のときバックする
+            '''
+            print("distance<0")
+            move = 'back'
+            power_R = int(-1*self.STANDARD_POWER)
+            power_L = int(-1*self.STANDARD_POWER)
+
+        return {"R":power_R,"L":power_L,"aprc_state":aprc_state,"move":move}
+
+    def __targetting(self,marker_1:np.ndarray=np.zeros(3), marker_2:np.ndarray=np.zeros(3)):
         '''
-        distanceが負のときバックする？iranaikamo
+        二つのベクトルの差分と閾値に対する評価を出力
         '''
-        print("distance<0")
-        move = 'back'
-        power_R = int(-1*STANDARD_POWER)
-        power_L = int(-1*STANDARD_POWER)
+        target_vec = marker_2 - marker_1
+        #print(target_vec)
+        distance = (self.target_vec[2]/abs(target_vec[2]))*((target_vec[1]**2 + target_vec[2]**2)**0.5)
+        return target_vec, distance
     
-    return {"R":power_R,"L":power_L,"aprc_state":aprc_state,"move":move}
 
 
 ### module nomi kara sansyutu
@@ -219,14 +138,3 @@ def AR_powerplanner(ar_info,AR_checker,connecting_state):
         # power_L = int(-1*STANDARD_POWER)
     
     # return {"R":power_R,"L":power_L,"aprc_state":aprc_state}
-
-def __targetting(marker_1:np.ndarray=np.zeros(3), marker_2:np.ndarray=np.zeros(3)):
-    '''
-    二つのベクトルの差分と閾値に対する評価を出力
-    '''
-    target_vec = marker_2 - marker_1
-    #print(target_vec)
-    distance = (target_vec[2]/abs(target_vec[2]))*((target_vec[1]**2 + target_vec[2]**2)**0.5)
-    return target_vec, distance
-
-#print(AR_powerplanner())

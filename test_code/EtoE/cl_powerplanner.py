@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 
 
-class PowerPlanner():
+class ColorPowerPlanner():
     """
     指定した範囲の色の物体の座標を取得する関数
     frame: 画像

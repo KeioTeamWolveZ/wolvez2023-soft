@@ -19,8 +19,8 @@ import shutil
 
 
 import constant as ct
-from power_planner import PowerPlanner
-from AR_powerplanner import AR_powerplanner
+from cl_powerplanner import ColorPowerPlanner
+from AR_powerplanner import ARPowerPlanner
 from bno055 import BNO055
 from motor import motor
 from gps import GPS
@@ -64,7 +64,8 @@ class Cansat():
         self.arm = Arm(ct.const.SERVO_PIN)
         self.tg = Target()
         self.pc2 = Picam()
-        self.mpp = PowerPlanner()
+        self.cpp = ColorPowerPlanner()
+        self.app = ARPowerPlanner()
         self.RED_LED = led(ct.const.RED_LED_PIN)
         self.BLUE_LED = led(ct.const.BLUE_LED_PIN)
         self.GREEN_LED = led(ct.const.GREEN_LED_PIN)
@@ -340,11 +341,11 @@ class Cansat():
             # 走行中は色認識されなければ直進，されれば回避
             self.cameraCount += 1
             self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
-            self.plan_color = self.mpp.para_detection(self.img)
+            self.plan_color = self.cpp.para_detection(self.img)
             self.cl_checker = self.plan_color["Detected_tf"]
             self.move_clplan = self.plan_color["move"]
-            self.cl_data = self.mpp.pos
-            # self.found_color = self.mpp.avoid_color(self.img,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.BLUE_LOW_COLOR,self.mpp.BLUE_HIGH_COLOR)
+            self.cl_data = self.cpp.pos
+            # self.found_color = self.cpp.avoid_color(self.img,self.cpp.AREA_RATIO_THRESHOLD,self.cpp.BLUE_LOW_COLOR,self.cpp.BLUE_HIGH_COLOR)
             if not self.plan_color["Detected_tf"]:
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF +7)
@@ -494,7 +495,7 @@ class Cansat():
                     self.Flag_AR = True
                 if self.Flag_AR and time.time()-self.starttime_AR >= 1.0:
                     self.Flag_AR = False #フラグをリセット←これもAR_decideの中で定義しても良いかも
-                    AR_powerplan = AR_powerplanner(self.ar_info,self.AR_checker,self.connecting_state)  #sideを追加
+                    AR_powerplan = self.app.ar_powerplanner(self.ar_info,self.AR_checker,self.connecting_state)  #sideを追加
                     self.move_arplan = AR_powerplan["move"]
                     APRC_STATE = AR_powerplan['aprc_state']
                     if not APRC_STATE:      #　接近できたかどうか
@@ -539,11 +540,11 @@ class Cansat():
             else:
                 
                 if self.aprc_c : #色認識による出力決定するかどうか
-                    plan_color = self.mpp.power_planner(self.img,self.connecting_state,self.ar_count)
+                    plan_color = self.cpp.power_planner(self.img,self.connecting_state,self.ar_count)
                     self.aprc_clear = plan_color["Clear"]
                     self.cl_checker = plan_color["Detected_tf"]
                     self.move_clplan = plan_color["move"]
-                    self.cl_data = self.mpp.pos
+                    self.cl_data = self.cpp.pos
                     if plan_color["Detected_tf"] :
                         #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                         if not self.Flag_C:
@@ -641,7 +642,7 @@ class Cansat():
         if connecting_state == 0:
             color_num = connecting_state
         else:
-            color_num = 99 # 色変えるならここ変更(mppも)
+            color_num = 99 # 色変えるならここ変更(cppも)
             #time.sleep(10.0) # 焼き切り時間用いつか変更する
         # try:
             # arm.setup()
@@ -651,7 +652,7 @@ class Cansat():
         time_clear = False
         if time.time() - self.checking_time > 180:
             time_clear = True
-            pos = self.mpp.find_specific_color(frame,self.mpp.AREA_RATIO_THRESHOLD,self.mpp.LOW_COLOR,self.mpp.HIGH_COLOR,color_num)
+            pos = self.cpp.find_specific_color(frame,self.cpp.AREA_RATIO_THRESHOLD,self.cpp.LOW_COLOR,self.cpp.HIGH_COLOR,color_num)
             if pos is not None:
                 self.cl_data = pos
                 print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)

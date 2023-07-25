@@ -182,7 +182,7 @@ class Ar_cansat():
         side:str
         norm:float
         if connecting_state == 0:
-            if "1" in ar_info.keys() and "2" in ar_info.keys():
+            if "2" in ar_info.keys():
                 self.aprc_AR = True
                 side = 'marker_R'
                 norm = ar_info['2']['norm']
