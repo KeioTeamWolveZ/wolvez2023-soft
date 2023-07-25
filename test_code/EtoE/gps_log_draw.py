@@ -22,7 +22,7 @@ def gpslogger(start_time):
     plt.scatter(Lng[0],Lat[0],marker='s',s=30,color='black')
     plt.scatter(Lng[-1],Lat[1],marker='*',s=30,color='b')
     plt.xlabel("Lng")
-    plt.ylabel("Lon")
+    plt.ylabel("Lat")
     plt.grid(True)
     plt.title("GPS log: " + start_time + "\nTime of working: " + str(time[-1]-time[0]))
     plt.show()
