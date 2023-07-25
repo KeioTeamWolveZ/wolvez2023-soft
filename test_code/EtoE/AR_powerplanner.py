@@ -20,6 +20,7 @@ class ARPowerPlanner():
         vec, distance = self.__targetting(marker_1,goal_point)
         goal_area = {"x":[-0.005,0.005],"z":[-0.005,0.005]}
         print(f"distance:{distance},vec:{vec}")
+        norm_yz = 
         return vec,goal_area
 
     def ar_powerplanner(self,ar_info,goal_point,connecting_state):
@@ -82,7 +83,8 @@ class ARPowerPlanner():
         '''
         target_vec = marker_2 - marker_1
         #print(target_vec)
-        distance = (self.target_vec[2]/abs(target_vec[2]))*((target_vec[1]**2 + target_vec[2]**2)**0.5)
+        # distance = (self.target_vec[2]/abs(target_vec[2]))*((target_vec[1]**2 + target_vec[2]**2)**0.5)
+        distance = np.sign(target_vec[2])*np.linalg.norm(target_vec[1:2])
         return target_vec, distance
     
 
