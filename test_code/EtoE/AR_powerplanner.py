@@ -30,9 +30,10 @@ class ARPowerPlanner():
         yaw = ar_info[id]['yaw']
         bias = self.marker_goal[id] # マーカーからゴールまでのベクトル
 
-        goal = self.rot_vec(roll,pitch,yaw,bias)+[[x],[y],[z]]
+        goal = self.rot_vec(roll,pitch,yaw,bias)+np.array([[x],[y],[z]])
+        goal= goal.T
         
-        return goal
+        return goal.reshape(1,3)
     
     def rot_vec(self,roll,pitch,yaw,vec):
         rvec = np.array([roll, pitch, yaw]) 
@@ -88,7 +89,7 @@ class ARPowerPlanner():
                     print("finish")
                     power_R = 0
                     power_L = 0
-                    aprc_state = True
+                    self.aprc_state = True
                 else:
                     if vec[0] < goal_area["x"][0]:
                         move = 'stay-left'
@@ -111,13 +112,13 @@ class ARPowerPlanner():
             power_R = int(-1*self.STANDARD_POWER)
             power_L = int(-1*self.STANDARD_POWER)
 
-        return {"R":power_R,"L":power_L,"aprc_state":aprc_state,"move":move}
+        return {"R":power_R,"L":power_L,"aprc_state":self.aprc_state,"move":move}
 
     def calc_t_distance(self,id,ar_info, vec, distance):
         y_m = self.rot_vec(ar_info[id]['roll'],ar_info[id]['pitch'],ar_info[id]['yaw'],[0,1,0])
-        vec_normalize = vec/np.linalg.norm(vec)
-        cos_argment = np.dot(y_m,vec_normalize)
-        ultraman = distance*np.sqrt(1-cos_argment^2)
+        vec_normalize = vec.reshape(3,1)/np.linalg.norm(vec)
+        cos_argment = np.dot(y_m.T,vec_normalize)
+        ultraman = distance*np.sqrt(1-cos_argment**2)
         return ultraman
 
 
@@ -126,6 +127,7 @@ class ARPowerPlanner():
         二つのベクトルの差分と閾値に対する評価を出力
         '''
         target_vec = marker_2 - marker_1
+        target_vec = target_vec[0]
         #print(target_vec)
         # distance = (self.target_vec[2]/abs(target_vec[2]))*((target_vec[1]**2 + target_vec[2]**2)**0.5)
         distance = np.sign(target_vec[2])*np.linalg.norm(target_vec[1:2])
