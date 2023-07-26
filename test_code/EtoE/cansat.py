@@ -17,7 +17,8 @@ from glob import glob
 import shutil
 # from math import prod
 
-
+# import functions
+# import Wolvez2023
 import constant as ct
 from cl_powerplanner import ColorPowerPlanner
 from AR_powerplanner import ARPowerPlanner
@@ -69,6 +70,19 @@ class Cansat():
         self.RED_LED = led(ct.const.RED_LED_PIN)
         self.BLUE_LED = led(ct.const.BLUE_LED_PIN)
         self.GREEN_LED = led(ct.const.GREEN_LED_PIN)
+        # self.bno055 = Wolvez2023.BNO055()
+        # self.MotorL = Wolvez2023.Motor(ct.const.RIGHT_MOTOR_IN1_PIN,ct.const.RIGHT_MOTOR_IN2_PIN,ct.const.RIGHT_MOTOR_VREF_PIN)
+        # self.MotorR = Wolvez2023.Motor(ct.const.LEFT_MOTOR_IN1_PIN,ct.const.LEFT_MOTOR_IN2_PIN, ct.const.LEFT_MOTOR_VREF_PIN)
+        # self.gps = Wolvez2023.GPS()
+        # self.lora = Wolvez2023.lora()
+        # self.arm = Wolvez2023.Arm(ct.const.SERVO_PIN)
+        # self.tg = Wolvez2023.Target()
+        # self.pc2 = Wolvez2023.Picam()
+        # self.cpp = Wolvez2023.ColorPowerPlanner()
+        # self.app = Wolvez2023.ARPowerPlanner()
+        # self.RED_LED = Wolvez2023.led(ct.const.RED_LED_PIN)
+        # self.BLUE_LED = Wolvez2023.led(ct.const.BLUE_LED_PIN)
+        # self.GREEN_LED = Wolvez2023.led(ct.const.GREEN_LED_PIN)
         
         #ステート設定用
         self.timer = 0
