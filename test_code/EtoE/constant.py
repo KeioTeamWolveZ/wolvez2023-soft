@@ -33,6 +33,7 @@ const.FLIGHTPIN_PIN = 4
 # Goal information
 const.GPS_GOAL_LAT = 35.5559391
 const.GPS_GOAL_LON = 139.6525889
+const.GOAL_DISTANCE_THRE = 0.0005 # [km] (50 [cm])
 const.f1 = 1 # 136
 const.f2 = 50 # 196
 const.f3 = 776
@@ -65,6 +66,8 @@ const.AVOID_COLOR_THRE = 20 #色認識されなかった合計回数の閾値
 
 const.CONNECTED_HEIGHT_THRE = 700 #アームを上げた場合に接続できていることを確認する時の色の高さの閾値
 const.FINISH_DIS_THRE = 1.5
+
+const.EARTH_RADIUS = 6378.137 # [km]
 
 # Stack
 const.STUCK_ACC_THRE = 0.5

@@ -14,6 +14,7 @@ import re
 import math
 from datetime import datetime
 from glob import glob
+from numpy import arccos, arcsin, arctan2, sin, cos, tan, pi, deg2rad, rad2deg
 import shutil
 # from math import prod
 
@@ -105,6 +106,7 @@ class Cansat():
         self.arm_calibCount = 0
         self.avoid_paraCount = 0
         self.cameraCount = 0
+        self.goaldis = 10
         
         #state管理用変数初期化
         self.gpscount=0
@@ -203,31 +205,6 @@ class Cansat():
         
         with open(f'results/{self.startTime}/control_result.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
             test.write(datalog + '\n')
-
-    def writeSparseData(self,risk): #ログデータ作成。\マークを入れることで改行してもコードを続けて書くことができる   
-        if self.state == 6:
-            datalog_sparse =  str(self.timer) + ","\
-                    + "Time:"+str(self.gps.Time) + ","\
-                    + "Lat:"+str(self.gps.Lat).rjust(6) + ","\
-                    + "Lng:"+str(self.gps.Lon).rjust(6) + ","\
-                    + "Goal Distance:"+str(self.gps.gpsdis).rjust(6) + ","\
-                    + "Goal Angle:"+str(self.gps.gpsdegrees).rjust(6) + ",\n"\
-                    + "    "\
-                    +"q:"+str(self.bno055.ex).rjust(6) + ","\
-                    + "Risk:"+str(np.array(self.risk).reshape(1,-1)).rjust(6) + ","\
-                    + "threadshold_risk:"+str(self.threshold_risk).rjust(6) + ","\
-                    + "max_risk:"+str(self.max_risk).rjust(6)+","\
-                    + "boolean_risk:"+str(self.boolean_risk).rjust(6)+","\
-                    + "    "\
-                    + "Plan:"+str(self.plan_str) + ","\
-                    + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
-                    + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
-
-
-            with open(f'results/{self.startTime}/planning_result.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
-                test.write(datalog_sparse + '\n')
-                print("### SPARSE LOG ###",datalog_sparse)
-
 
     def sequence(self):
         if self.state == 0:   #センサ系の準備を行う段階。時間経過でステート移行
@@ -743,6 +720,43 @@ class Cansat():
             self.MotorL.stop()
             self.state = 8
             self.laststate = 8
+
+    def running(self):
+        if self.runningTime == 0:
+            self.runningTime = time.time()
+            
+        if self.goaldis < ct.const.GOAL_DISTANCE_THRE:
+            self.MotorR.stop()
+            self.MotorL.stop()
+            self.goaltime = time.time()-self.runningTime
+            print("Goal Time: "+ self.goaltime)
+            print("GOAAAAAAAAAL!!!!!")
+            self.state = 8
+            self.laststate = 8
+        
+        else:
+            dlon = self.goallon - self.lon
+            # distance to the goal
+            self.goaldis = ct.const.EARTH_RADIUS * arccos(sin(self.lat)*sin(self.goallat) + cos(self.lat)*cos(self.goallat)*cos(dlon))
+            print(f"Distance to goal: {round(self.goaldis,2)} [km]")
+
+            # angular to the goal (North: 0, South: 180)
+            self.goalphi = 90 - rad2deg(arctan2(sin(dlon), cos(self.lat)*tan(self.goallat) - sin(self.lat)*cos(dlon)))
+            self.arg_diff = self.goalphi - self.ex
+            if self.arg_diff < 0:
+                self.arg_diff = 360 - self.arg_diff
+            
+            if self.arg_diff <= 180 and self.arg_diff > 20:
+                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF)
+                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF+15)
+                
+            elif self.arg_diff > 180 and self.arg_diff < 340:
+                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF+15)
+                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
+            
+            else:
+                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF)
+                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
 
     def finish(self):
         if self.finishTime == 0:
