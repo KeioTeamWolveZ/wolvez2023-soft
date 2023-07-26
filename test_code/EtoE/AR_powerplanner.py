@@ -42,7 +42,7 @@ class ARPowerPlanner():
         g = np.dot(rvec_matrix,vec).reshape(-1, 1)
         return g
 
-    def goalvec_maker(self,ar_info,goal_point,connecting_state):
+    def goalvec_maker(self,ar_info,goal_point,connecting_state,id):
         if connecting_state == 0:
             if self.arm_id in ar_info.keys():
                 marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
@@ -51,7 +51,7 @@ class ARPowerPlanner():
         else:
             marker_1 = np.array([0.002157,0.008755,0.18084])
         vec, distance = self.__targetting(marker_1,goal_point)
-        vec[2] = self.calc_t_distance(self,id,ar_info, vec, distance)
+        vec[2] = self.calc_t_distance(id,ar_info, vec, distance)
         goal_area = {"x":[-0.005,0.005],"z":[-0.005,0.005]}
         print(f"distance:{distance},vec:{vec}")
 

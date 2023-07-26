@@ -486,7 +486,7 @@ class Cansat():
                     self.Flag_AR = True
                 if self.Flag_AR and time.time()-self.starttime_AR >= 1.0:
                     self.Flag_AR = False #フラグをリセット←これもAR_decideの中で定義しても良いかも
-                    AR_powerplan = self.app.ar_powerplanner(self.ar_info,self.AR_checker,self.connecting_state)  #sideを追加
+                    AR_powerplan = self.app.ar_powerplanner(self.ar_info,self.connecting_state,self.AR_checker)  #sideを追加
                     self.move_arplan = AR_powerplan["move"]
                     APRC_STATE = AR_powerplan['aprc_state']
                     if not APRC_STATE:      #　接近できたかどうか
