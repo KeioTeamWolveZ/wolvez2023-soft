@@ -90,7 +90,7 @@ class Cansat():
         self.state = state
         self.landstate = 0
         
-        #初期パラメータ設定
+        #初期時時間設定
         self.startTime_time=time.time()
         self.startTime = str(datetime.now())[:19].replace(" ","_").replace(":","-")
         self.preparingTime = 0
@@ -99,43 +99,45 @@ class Cansat():
         self.landingTime = 0
         self.arm_calibTime = 0
         self.modu_sepaTime = 0
-        self.releasingstate = 0
+        self.starttime_color = time.time()
+        self.starttime_AR = time.time()
+        self.checking_time = 0
         self.runningTime = 0
         self.finishTime = 0
         self.stuckTime = 0
-        self.arm_calibCount = 0
-        self.avoid_paraCount = 0
-        self.cameraCount = 0
-        self.goaldis = 10
-        
-        #state管理用変数初期化
-        self.gpscount=0
-        self.startgps_lon=[]
-        self.startgps_lat=[]
-        
-        #ステート管理用変数設定
+
+        # 初期カウンター設定
         self.countFlyLoop = 0
         self.countDropLoop = 0
         self.countstuckLoop = 0
+        self.cameraCount = 0
+        self.arm_calibCount = 0
+        self.avoid_paraCount = 0
+        self.ar_count = 0
+        self.vanish_c = 0
+        self.gpscount = 0
+        
+        # state管理用変数初期化
+        self.startgps_lon=[]
+        self.startgps_lat=[]
         self.done_approach = False
         self.ar_checker = False
+        self.Flag_AR = False
         self.cl_checker = False
         self.aprc_c = True
-        self.Flag_AR = False
         self.Flag_C = False
         self.aprc_clear = False
-        self.ar_count = 0
-        self.connecting_state = 1
-        self.vanish_c = 0
+        self.connected = False
+        self.releasingstate = 0
+        self.connecting_state = 0
+        
+        # state内変数初期設定
         self.estimate_norm = 100000
-        self.starttime_color = time.time()
-        self.starttime_AR = time.time()
         self.ar_info = {}
         self.cl_data = [0,0,0]
         self.move_arplan = 'none'
         self.move_clplan = 'none'
-        self.connected = False
-        self.checking_time = 0
+        self.goaldis = 10
         
         self.dict_list = {}
         self.goallat = ct.const.GPS_GOAL_LAT
