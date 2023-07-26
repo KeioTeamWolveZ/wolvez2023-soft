@@ -231,6 +231,7 @@ class Cansat():
     def setup(self):
         self.gps.setupGps()
         self.bno055.setupBno()
+        self.bno055.bnoInitial()
         self.lora.sendDevice.setup_lora()
         self.arm.setup()
         if self.bno055.begin() is not True:
@@ -245,8 +246,8 @@ class Cansat():
         self.ay=round(self.bno055.ay,3)
         self.az=round(self.bno055.az,3)
         self.ex=round(self.bno055.ex,3)
-        self.lat = round(float(self.gps.Lat),3)
-        self.lon = round(float(self.gps.Lon),3)
+        self.lat = round(float(self.gps.Lat),5)
+        self.lon = round(float(self.gps.Lon),5)
         
         self.writeData() #txtファイルへのログの保存
     
@@ -274,7 +275,7 @@ class Cansat():
             if time.time() - self.preparingTime > ct.const.PREPARING_TIME_THRE:
                 self.startlon=np.mean(self.startgps_lon)
                 self.startlat=np.mean(self.startgps_lat)
-                self.state = 1
+                self.state = 7
                 self.laststate = 1
     
     def flying(self): #フライトピンが外れる➡︎ボイド缶から放出されたことを検出するステート
@@ -287,7 +288,7 @@ class Cansat():
         if GPIO.input(ct.const.FLIGHTPIN_PIN) == GPIO.HIGH: #highかどうか＝フライトピンが外れているかチェック
             self.countFlyLoop+=1
             if self.countFlyLoop > ct.const.FLYING_FLIGHTPIN_COUNT_THRE: #一定時間HIGHだったらステート移行
-                self.state = 2
+                self.state = 7
                 self.laststate = 2       
         else:
             self.countFlyLoop = 0 #何故かLOWだったときカウントをリセット
@@ -723,6 +724,8 @@ class Cansat():
 
     def running(self):
         if self.runningTime == 0:
+            print("run")
+            time.sleep(10)
             self.runningTime = time.time()
             
         if self.goaldis < ct.const.GOAL_DISTANCE_THRE:
@@ -742,17 +745,19 @@ class Cansat():
 
             # angular to the goal (North: 0, South: 180)
             self.goalphi = 90 - rad2deg(arctan2(sin(dlon), cos(self.lat)*tan(self.goallat) - sin(self.lat)*cos(dlon)))
-            self.arg_diff = self.goalphi - self.ex
+            
+            self.arg_diff = self.goalphi - (self.ex-0)
+            print(f"Argument to goal: {round(self.arg_diff,2)} [deg]")
             if self.arg_diff < 0:
                 self.arg_diff = 360 - self.arg_diff
             
             if self.arg_diff <= 180 and self.arg_diff > 20:
-                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF)
+                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF-15)
                 self.MotorL.go(ct.const.RUNNING_MOTOR_VREF+15)
                 
             elif self.arg_diff > 180 and self.arg_diff < 340:
                 self.MotorR.go(ct.const.RUNNING_MOTOR_VREF+15)
-                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
+                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF-15)
             
             else:
                 self.MotorR.go(ct.const.RUNNING_MOTOR_VREF)
@@ -815,8 +820,8 @@ class Cansat():
      
     def sendLoRa(self): #通信モジュールの送信を行う関数
         datalog = str(self.state)+ ","\
-            + str(self.lat) + ","\
-            + str(self.lon)
+            + str(round(self.lat,3)) + ","\
+            + str(round(self.lon,3))
         
         self.lora.sendData(datalog) #データを送信
         

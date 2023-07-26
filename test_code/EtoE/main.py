@@ -21,16 +21,16 @@ import time
 
 """
 
-start_state = 6
+start_state = 0
 end_state = 8
 
 cansat = Cansat(start_state)
-cansat.arm.setup()
-#cansat.setup()
+#cansat.arm.setup()
+cansat.setup()
 
 try:
     while True:
-        # cansat.sensor()
+        cansat.sensor()
         time.sleep(0.03)
         cansat.sequence()
         if cansat.state > end_state:
