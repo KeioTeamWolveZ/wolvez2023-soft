@@ -742,11 +742,11 @@ class Cansat():
         else:
             dlon = self.goallon - self.lon
             # distance to the goal
-            self.goaldis = ct.const.EARTH_RADIUS * arccos(sin(self.lat)*sin(self.goallat) + cos(self.lat)*cos(self.goallat)*cos(dlon))
+            self.goaldis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.goallat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.goallat))*cos(deg2rad(dlon)))
             print(f"Distance to goal: {round(self.goaldis,2)} [km]")
 
             # angular to the goal (North: 0, South: 180)
-            self.goalphi = 90 - rad2deg(arctan2(sin(dlon), cos(self.lat)*tan(self.goallat) - sin(self.lat)*cos(dlon)))
+            self.goalphi = 90 - rad2deg(arctan2(cos(deg2rad(self.lat))*tan(deg2rad(self.goallat)) - sin(deg2rad(self.lat))*cos(deg2rad(dlon)), sin(deg2rad(dlon))))
             
             self.arg_diff = self.goalphi - (self.ex-0)
             print(f"Argument to goal: {round(self.arg_diff,2)} [deg]")
