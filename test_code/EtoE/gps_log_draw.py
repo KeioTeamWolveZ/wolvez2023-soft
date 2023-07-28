@@ -27,7 +27,7 @@ def gpslogger(start_time):
     plt.ylabel("Lat")
     plt.grid(True)
     plt.axis("equal")
-    #plt.title("GPS log: " + start_time + "\nTime of working: " + str(time[-1]-time[0]))
+    plt.title("GPS log: " + start_time + "\nTime of working: " + str(time[-1]-time[0]))
     plt.show()
     
 if __name__ == '__main__':
