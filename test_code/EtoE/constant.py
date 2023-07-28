@@ -31,9 +31,9 @@ const.FLIGHTPIN_PIN = 4
 
 ## Variables
 # Goal information
-const.GPS_GOAL_LAT = 35.55461133353649  # 南緯は負の値で与える
-const.GPS_GOAL_LON = 139.656136884419762 # 西経は負の値で与える
-const.GOAL_DISTANCE_THRE = 0.002 # [km] (50 [cm])
+const.GPS_GOAL_LAT = 35.55463167  # 南緯は負の値で与える
+const.GPS_GOAL_LON = 139.65625333 # 西経は負の値で与える
+const.GOAL_DISTANCE_THRE = 0.0005 # [km] (50 [cm])
 const.f1 = 1 # 136
 const.f2 = 50 # 196
 const.f3 = 776
@@ -41,7 +41,7 @@ const.f3 = 776
 # Motor VREF
 const.LANDING_MOTOR_VREF = 90
 const.RELEASING_MOTOR_VREF = 50
-const.RUNNING_MOTOR_VREF = 70
+const.RUNNING_MOTOR_VREF = 100
 const.STUCK_MOTOR_VREF = 100
 
 # State Threshold

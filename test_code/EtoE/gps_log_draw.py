@@ -13,8 +13,8 @@ def gpslogger(start_time):
         print(f"指定したファイルがありません．確認してください．\nファイル名 : {filename}")
         sys.exit()
 
-    Lat = [round(float(s[4:]),5) for s in lines if 'Lat' in s]
-    Lng = [round(float(s[4:]),5) for s in lines if 'Lng' in s]
+    Lat = [round(float(s[4:]),6) for s in lines if 'Lat' in s]
+    Lng = [round(float(s[4:]),6) for s in lines if 'Lng' in s]
     time = [dt.strptime(s[5:], '%H:%M:%S') for s in lines if 'Time' in s]
     print(time[-1]-time[0])
     
@@ -26,7 +26,8 @@ def gpslogger(start_time):
     plt.xlabel("Lng")
     plt.ylabel("Lat")
     plt.grid(True)
-    plt.title("GPS log: " + start_time + "\nTime of working: " + str(time[-1]-time[0]))
+    plt.axis("equal")
+    #plt.title("GPS log: " + start_time + "\nTime of working: " + str(time[-1]-time[0]))
     plt.show()
     
 if __name__ == '__main__':

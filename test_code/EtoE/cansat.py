@@ -284,8 +284,6 @@ class Cansat():
             if time.time() - self.preparingTime > ct.const.PREPARING_TIME_THRE:
                 self.startlon=np.mean(self.startgps_lon)
                 self.startlat=np.mean(self.startgps_lat)
-                self.goallat = self.startlat
-                self.goallon = self.startlon
                 self.state = 7
                 self.laststate = 1
     
@@ -749,10 +747,10 @@ class Cansat():
             
             if self.arg_diff <= 180 and self.arg_diff > 20:
                 self.MotorR.go(ct.const.RUNNING_MOTOR_VREF-15)
-                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF+20)
+                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
                 
             elif self.arg_diff > 180 and self.arg_diff < 340:
-                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF+20)
+                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF)
                 self.MotorL.go(ct.const.RUNNING_MOTOR_VREF-15)
             
             else:
