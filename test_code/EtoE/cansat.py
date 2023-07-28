@@ -284,6 +284,8 @@ class Cansat():
             if time.time() - self.preparingTime > ct.const.PREPARING_TIME_THRE:
                 self.startlon=np.mean(self.startgps_lon)
                 self.startlat=np.mean(self.startgps_lat)
+                self.goallat = self.startlat
+                self.goallon = self.startlon
                 self.state = 7
                 self.laststate = 1
     
@@ -709,23 +711,31 @@ class Cansat():
         self.MotorL.stop()
 
     def running(self):
-        if self.runningTime == 0:
-            print("run")
-            self.goallat = self.startlat
-            self.goallon = self.startlon
             
-            dlon = self.goallon - self.lon
-            # distance to the goal
-            self.goaldis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.goallat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.goallat))*cos(deg2rad(dlon)))
-            print(f"Distance to goal: {round(self.goaldis,2)} [km]")
+        dlon = self.goallon - self.lon
+        # distance to the goal
+        self.goaldis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.goallat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.goallat))*cos(deg2rad(dlon)))
+        print(f"Distance to goal: {round(self.goaldis,4)} [km]")
 
-            # angular to the goal (North: 0, South: 180)
-            self.goalphi = 90 - rad2deg(arctan2(cos(deg2rad(self.lat))*tan(deg2rad(self.goallat)) - sin(deg2rad(self.lat))*cos(deg2rad(dlon)), sin(deg2rad(dlon))))
-            
-            time.sleep(10)
+        # angular to the goal (North: 0, South: 180)
+        self.goalphi = 90 - rad2deg(arctan2(cos(deg2rad(self.lat))*tan(deg2rad(self.goallat)) - sin(deg2rad(self.lat))*cos(deg2rad(dlon)), sin(deg2rad(dlon))))
+        if self.goalphi < 0:
+            self.goalphi += 360
+        print(self.goalphi)
+        
+        self.arg_diff = self.goalphi - (self.ex-0)
+        if self.arg_diff < 0:
+            self.arg_diff += 360
+        
+        print(f"Argument to goal: {round(self.arg_diff,2)} [deg]")
+        
+        if self.runningTime == 0:
             self.runningTime = time.time()
             
-        if self.goaldis < ct.const.GOAL_DISTANCE_THRE:
+        elif time.time() - self.runningTime < 10:
+            print("run")
+            
+        elif self.goaldis < ct.const.GOAL_DISTANCE_THRE:
             self.MotorR.stop()
             self.MotorL.stop()
             self.goaltime = time.time()-self.runningTime
@@ -736,25 +746,13 @@ class Cansat():
             self.laststate = 8
         
         else:
-            dlon = self.goallon - self.lon
-            # distance to the goal
-            self.goaldis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.goallat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.goallat))*cos(deg2rad(dlon)))
-            print(f"Distance to goal: {round(self.goaldis,2)} [km]")
-
-            # angular to the goal (North: 0, South: 180)
-            self.goalphi = 90 - rad2deg(arctan2(cos(deg2rad(self.lat))*tan(deg2rad(self.goallat)) - sin(deg2rad(self.lat))*cos(deg2rad(dlon)), sin(deg2rad(dlon))))
-            
-            self.arg_diff = self.goalphi - (self.ex-0)
-            print(f"Argument to goal: {round(self.arg_diff,2)} [deg]")
-            if self.arg_diff < 0:
-                self.arg_diff = 360 - self.arg_diff
             
             if self.arg_diff <= 180 and self.arg_diff > 20:
                 self.MotorR.go(ct.const.RUNNING_MOTOR_VREF-15)
-                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF+15)
+                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF+20)
                 
             elif self.arg_diff > 180 and self.arg_diff < 340:
-                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF+15)
+                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF+20)
                 self.MotorL.go(ct.const.RUNNING_MOTOR_VREF-15)
             
             else:
@@ -764,8 +762,8 @@ class Cansat():
     def finish(self):
         if self.finishTime == 0:
             self.finishTime = time.time()
-            print(self.startTime)
-            print("Finished")
+            print("\n",self.startTime)
+            print("\nFinished\n")
             self.MotorR.stop()
             self.MotorL.stop()
             GPIO.output(ct.const.SEPARATION_PARA,0) #焼き切りが危ないのでlowにしておく
