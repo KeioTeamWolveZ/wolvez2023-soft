@@ -1,5 +1,5 @@
-#Last Update 2023/07/17
-#Author : Toshiki Fukui
+#Last Update 2023/07/28
+#Author : Masato Inoue
 
 from tempfile import TemporaryDirectory
 from xml.dom.pulldom import default_bufsize
@@ -128,6 +128,7 @@ class Cansat():
         self.Flag_C = False
         self.aprc_clear = False
         self.connected = False
+        self.running_finish = False
         self.releasingstate = 0
         self.connecting_state = 0
         
@@ -137,7 +138,8 @@ class Cansat():
         self.cl_data = [0,0,0]
         self.move_arplan = 'none'
         self.move_clplan = 'none'
-        self.goaldis = 10
+        self.goaldis = 0
+        self.goalphi = 0
         
         self.dict_list = {}
         self.goallat = ct.const.GPS_GOAL_LAT
@@ -191,7 +193,7 @@ class Cansat():
         if self.state == 3:
             datalog = datalog + ","\
                  + "Color-Approach:" + str(self.cl_checker) + ","\
-                 + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
+                 + "Color-data: x:" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
                  + "Color-move:" + str(self.move_clplan)
         elif self.state == 6:
            datalog = datalog + ","\
@@ -204,6 +206,11 @@ class Cansat():
                  + "Color-move:" + str(self.move_clplan) + ","\
                  + "Done-Approach:" + str(self.done_approach) + ","\
                  + "Done-Connect:" + str(self.connected)
+        elif self.state == 7 or self.state == 8:
+            datalog = datalog + ","\
+                 + "DistanceToGoal:" + str(self.goaldis) + ","\
+                 + "ArgumentToGoal:" + str(self.goalphi)+ ","\
+                 + "GoalCheck:" + str(self.running_finish)
         
         with open(f'results/{self.startTime}/control_result.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
             test.write(datalog + '\n')
@@ -703,30 +710,18 @@ class Cansat():
 
     def running(self):
         if self.runningTime == 0:
-            self.MotorR.go(60)
-            self.MotorL.go(60)
-            self.RED_LED.led_off()
-            self.BLUE_LED.led_off()
-            self.GREEN_LED.led_off()
-            self.runningTime = time.time()
-        
-        else:
-            #print("x",self.bno055.ax**2)
-            #print("y",self.bno055.ay**2)
-            #print("z",self.bno055.az**2)
-            self.MotorR.go(60)
-            self.MotorL.go(60)
-            self.stuck_detection()
-        
-        if time.time() - self.runningTime > 30:
-            self.MotorR.stop()
-            self.MotorL.stop()
-            self.state = 8
-            self.laststate = 8
-
-    def running(self):
-        if self.runningTime == 0:
             print("run")
+            self.goallat = self.startlat
+            self.goallon = self.startlon
+            
+            dlon = self.goallon - self.lon
+            # distance to the goal
+            self.goaldis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.goallat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.goallat))*cos(deg2rad(dlon)))
+            print(f"Distance to goal: {round(self.goaldis,2)} [km]")
+
+            # angular to the goal (North: 0, South: 180)
+            self.goalphi = 90 - rad2deg(arctan2(cos(deg2rad(self.lat))*tan(deg2rad(self.goallat)) - sin(deg2rad(self.lat))*cos(deg2rad(dlon)), sin(deg2rad(dlon))))
+            
             time.sleep(10)
             self.runningTime = time.time()
             
@@ -734,7 +729,8 @@ class Cansat():
             self.MotorR.stop()
             self.MotorL.stop()
             self.goaltime = time.time()-self.runningTime
-            print("Goal Time: "+ self.goaltime)
+            self.running_finish = True
+            print(f"Goal Time: {self.goaltime}")
             print("GOAAAAAAAAAL!!!!!")
             self.state = 8
             self.laststate = 8
@@ -768,6 +764,7 @@ class Cansat():
     def finish(self):
         if self.finishTime == 0:
             self.finishTime = time.time()
+            print(self.startTime)
             print("Finished")
             self.MotorR.stop()
             self.MotorL.stop()
