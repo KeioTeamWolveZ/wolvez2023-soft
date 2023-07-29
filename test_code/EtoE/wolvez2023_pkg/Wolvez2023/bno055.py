@@ -11,6 +11,7 @@ class BNO055:
         self.gx=0.0
         self.gy=0.0
         self.gz=0.0
+        self.ex_ini = 0
     
     BNO055_ADDRESS_A                = 0x28
     BNO055_ADDRESS_B                = 0x29
@@ -303,6 +304,9 @@ class BNO055:
         self.ax,self.ay,self.az = self.getVector(BNO055.VECTOR_GYROSCOPE)
         self.gx,self.gy,self.gz = self.getVector(BNO055.VECTOR_GRAVITY)
         self.ex,self.ey,self.ez = self.getVector(BNO055.VECTOR_EULER)
+        self.ex = self.ex - self.ex_ini
+        if self.ex < 0:
+            self.ex = 360+self.ex
 
     def bnoInitial(self):
         self.ex,self.ey,self.ez = self.getVector(BNO055.VECTOR_EULER)

@@ -1,5 +1,5 @@
-#Last Update 2023/07/17
-#Author : Toshiki Fukui
+#Last Update 2023/07/28
+#Author : Masato Inoue
 
 from tempfile import TemporaryDirectory
 from xml.dom.pulldom import default_bufsize
@@ -90,7 +90,7 @@ class Cansat():
         self.state = state
         self.landstate = 0
         
-        #初期パラメータ設定
+        #初期時時間設定
         self.startTime_time=time.time()
         self.startTime = str(datetime.now())[:19].replace(" ","_").replace(":","-")
         self.preparingTime = 0
@@ -99,43 +99,47 @@ class Cansat():
         self.landingTime = 0
         self.arm_calibTime = 0
         self.modu_sepaTime = 0
-        self.releasingstate = 0
+        self.starttime_color = time.time()
+        self.starttime_AR = time.time()
+        self.checking_time = 0
         self.runningTime = 0
         self.finishTime = 0
         self.stuckTime = 0
-        self.arm_calibCount = 0
-        self.avoid_paraCount = 0
-        self.cameraCount = 0
-        self.goaldis = 10
-        
-        #state管理用変数初期化
-        self.gpscount=0
-        self.startgps_lon=[]
-        self.startgps_lat=[]
-        
-        #ステート管理用変数設定
+
+        # 初期カウンター設定
         self.countFlyLoop = 0
         self.countDropLoop = 0
         self.countstuckLoop = 0
+        self.cameraCount = 0
+        self.arm_calibCount = 0
+        self.avoid_paraCount = 0
+        self.ar_count = 0
+        self.vanish_c = 0
+        self.gpscount = 0
+        
+        # state管理用変数初期化
+        self.startgps_lon=[]
+        self.startgps_lat=[]
         self.done_approach = False
         self.ar_checker = False
+        self.Flag_AR = False
         self.cl_checker = False
         self.aprc_c = True
-        self.Flag_AR = False
         self.Flag_C = False
         self.aprc_clear = False
-        self.ar_count = 0
-        self.connecting_state = 1
-        self.vanish_c = 0
+        self.connected = False
+        self.running_finish = False
+        self.releasingstate = 0
+        self.connecting_state = 0
+        
+        # state内変数初期設定
         self.estimate_norm = 100000
-        self.starttime_color = time.time()
-        self.starttime_AR = time.time()
         self.ar_info = {}
         self.cl_data = [0,0,0]
         self.move_arplan = 'none'
         self.move_clplan = 'none'
-        self.connected = False
-        self.checking_time = 0
+        self.goaldis = 0
+        self.goalphi = 0
         
         self.dict_list = {}
         self.goallat = ct.const.GPS_GOAL_LAT
@@ -189,7 +193,7 @@ class Cansat():
         if self.state == 3:
             datalog = datalog + ","\
                  + "Color-Approach:" + str(self.cl_checker) + ","\
-                 + "Color-data:x" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
+                 + "Color-data: x:" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
                  + "Color-move:" + str(self.move_clplan)
         elif self.state == 6:
            datalog = datalog + ","\
@@ -202,6 +206,11 @@ class Cansat():
                  + "Color-move:" + str(self.move_clplan) + ","\
                  + "Done-Approach:" + str(self.done_approach) + ","\
                  + "Done-Connect:" + str(self.connected)
+        elif self.state == 7 or self.state == 8:
+            datalog = datalog + ","\
+                 + "DistanceToGoal:" + str(self.goaldis) + ","\
+                 + "ArgumentToGoal:" + str(self.goalphi)+ ","\
+                 + "GoalCheck:" + str(self.running_finish)
         
         with open(f'results/{self.startTime}/control_result.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
             test.write(datalog + '\n')
@@ -700,63 +709,48 @@ class Cansat():
         self.MotorL.stop()
 
     def running(self):
-        if self.runningTime == 0:
-            self.MotorR.go(60)
-            self.MotorL.go(60)
-            self.RED_LED.led_off()
-            self.BLUE_LED.led_off()
-            self.GREEN_LED.led_off()
-            self.runningTime = time.time()
-        
-        else:
-            #print("x",self.bno055.ax**2)
-            #print("y",self.bno055.ay**2)
-            #print("z",self.bno055.az**2)
-            self.MotorR.go(60)
-            self.MotorL.go(60)
-            self.stuck_detection()
-        
-        if time.time() - self.runningTime > 30:
-            self.MotorR.stop()
-            self.MotorL.stop()
-            self.state = 8
-            self.laststate = 8
+            
+        dlon = self.goallon - self.lon
+        # distance to the goal
+        self.goaldis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.goallat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.goallat))*cos(deg2rad(dlon)))
+        print(f"Distance to goal: {round(self.goaldis,4)} [km]")
 
-    def running(self):
+        # angular to the goal (North: 0, South: 180)
+        self.goalphi = 90 - rad2deg(arctan2(cos(deg2rad(self.lat))*tan(deg2rad(self.goallat)) - sin(deg2rad(self.lat))*cos(deg2rad(dlon)), sin(deg2rad(dlon))))
+        if self.goalphi < 0:
+            self.goalphi += 360
+        print(self.goalphi)
+        
+        self.arg_diff = self.goalphi - (self.ex-0)
+        if self.arg_diff < 0:
+            self.arg_diff += 360
+        
+        print(f"Argument to goal: {round(self.arg_diff,2)} [deg]")
+        
         if self.runningTime == 0:
-            print("run")
-            time.sleep(10)
             self.runningTime = time.time()
             
-        if self.goaldis < ct.const.GOAL_DISTANCE_THRE:
+        elif time.time() - self.runningTime < 10:
+            print("run")
+            
+        elif self.goaldis < ct.const.GOAL_DISTANCE_THRE:
             self.MotorR.stop()
             self.MotorL.stop()
             self.goaltime = time.time()-self.runningTime
-            print("Goal Time: "+ self.goaltime)
+            self.running_finish = True
+            print(f"Goal Time: {self.goaltime}")
             print("GOAAAAAAAAAL!!!!!")
             self.state = 8
             self.laststate = 8
         
         else:
-            dlon = self.goallon - self.lon
-            # distance to the goal
-            self.goaldis = ct.const.EARTH_RADIUS * arccos(sin(self.lat)*sin(self.goallat) + cos(self.lat)*cos(self.goallat)*cos(dlon))
-            print(f"Distance to goal: {round(self.goaldis,2)} [km]")
-
-            # angular to the goal (North: 0, South: 180)
-            self.goalphi = 90 - rad2deg(arctan2(sin(dlon), cos(self.lat)*tan(self.goallat) - sin(self.lat)*cos(dlon)))
-            
-            self.arg_diff = self.goalphi - (self.ex-0)
-            print(f"Argument to goal: {round(self.arg_diff,2)} [deg]")
-            if self.arg_diff < 0:
-                self.arg_diff = 360 - self.arg_diff
             
             if self.arg_diff <= 180 and self.arg_diff > 20:
                 self.MotorR.go(ct.const.RUNNING_MOTOR_VREF-15)
-                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF+15)
+                self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
                 
             elif self.arg_diff > 180 and self.arg_diff < 340:
-                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF+15)
+                self.MotorR.go(ct.const.RUNNING_MOTOR_VREF)
                 self.MotorL.go(ct.const.RUNNING_MOTOR_VREF-15)
             
             else:
@@ -766,7 +760,8 @@ class Cansat():
     def finish(self):
         if self.finishTime == 0:
             self.finishTime = time.time()
-            print("Finished")
+            print("\n",self.startTime)
+            print("\nFinished\n")
             self.MotorR.stop()
             self.MotorL.stop()
             GPIO.output(ct.const.SEPARATION_PARA,0) #焼き切りが危ないのでlowにしておく
