@@ -16,15 +16,17 @@ class ColorPowerPlanner():
     AREA_RATIO_THRESHOLD: area_ratio未満の塊は無視する
     LOW_COLOR: 抽出する色の下限(h,s,v)
     HIGH_COLOR: 抽出する色の上限(h,s,v)
+    
+    色の設定
+    0 <= h <= 179 (色相)　OpenCVではmax=179なのでR:0(180),G:60,B:120となる
+    0 <= s <= 255 (彩度)　黒や白の値が抽出されるときはこの閾値を大きくする
+    0 <= v <= 255 (明度)　これが大きいと明るく，小さいと暗い
     """
     # 速度の設定
     STANDARD_POWER = 65
     POWER_RANGE = 15
 
-    # 色の設定
-    # 0 <= h <= 179 (色相)　OpenCVではmax=179なのでR:0(180),G:60,B:120となる
-    # 0 <= s <= 255 (彩度)　黒や白の値が抽出されるときはこの閾値を大きくする
-    # 0 <= v <= 255 (明度)　これが大きいと明るく，小さいと暗い
+    
     #{1:red,0:yellow}
     # LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([25, 200, 180]),99:np.array([18, 227, 217])}
     # HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([27, 255, 255]),99:np.array([21, 255, 255])}
