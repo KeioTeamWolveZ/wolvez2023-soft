@@ -81,8 +81,8 @@ if __name__ == "__main__":
 	#arm = ArmHardPwm(16)
 	arm = Arm(23)
 	arm.setup()
-	arm.move(850)
-	arm.move(1800)
+	arm.up()
+	#arm.move(1800)
 	arm.down()
 	start = time.time()
 	while True:

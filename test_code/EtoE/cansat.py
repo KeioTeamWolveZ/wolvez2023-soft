@@ -476,7 +476,7 @@ class Cansat():
                 self.GREEN_LED.led_off()
                 self.arm.up()
             # capture and detect markers
-            self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":5})
+            self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":10})
             self.cameraCount += 1
             self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
             self.blk = self.pc2.red2blk(self.img)
