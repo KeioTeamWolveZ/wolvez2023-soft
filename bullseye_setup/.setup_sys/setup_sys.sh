@@ -12,6 +12,7 @@ Description=Do test
 
 [Service]
 ExecStart=/usr/bin/python3 /home/wolvez2023/Desktop/turn_off_pins.py
+ExecStart=/usr/bin/python3 /home/wolvez2023/Desktop/turn_off_pins_log.py
 
 [Install]
 WantedBy=multi-user.target
