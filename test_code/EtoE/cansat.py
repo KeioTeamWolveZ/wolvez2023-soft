@@ -130,7 +130,7 @@ class Cansat():
         self.connected = False
         self.running_finish = False
         self.releasingstate = 0
-        self.connecting_state = 0
+        self.connecting_state = 1
         
         # state内変数初期設定
         self.estimate_norm = 100000
