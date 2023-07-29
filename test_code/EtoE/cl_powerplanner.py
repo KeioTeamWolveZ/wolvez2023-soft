@@ -35,8 +35,8 @@ class ColorPowerPlanner():
     # HIGH_COLOR = {0:np.array([[10, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}
 
     #{1:red,0:blue,99:orange}
-    LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([109, 200, 180]),99:np.array([18, 227, 217])}
-    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([111, 255, 255]),99:np.array([21, 255, 255])}
+    LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([108, 185, 180]),99:np.array([18, 227, 217])}
+    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([112, 255, 255]),99:np.array([21, 255, 255])}
 
     # 抽出する色の塊のしきい値
     AREA_RATIO_THRESHOLD = 0.00003
@@ -174,8 +174,9 @@ class ColorPowerPlanner():
         
         if self.pos is not None:
             detected = True
+            print(self.pos[2])
             if connecting_state == 0:
-                if self.pos[2] > 6000:
+                if self.pos[2] > 700:   #2000 datta yo
                     aprc_clear = True #これは目標に到達できたかのbool値
             else:
                 if self.pos[2] > 10000:

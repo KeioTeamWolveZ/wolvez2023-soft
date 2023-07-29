@@ -163,7 +163,7 @@ class Ar_cansat():
                     #cv2.imshow('drawDetectedMarkers', img)
                     #cv2.waitKey(0)
                     #cv2.destroyAllWindows()
-                    self.ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2],'norm':self.norm_tvec}
+                    self.ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2],'norm':self.norm_tvec,'rvec':rvec}
                     # self.ar_info.append(info)
                     
             

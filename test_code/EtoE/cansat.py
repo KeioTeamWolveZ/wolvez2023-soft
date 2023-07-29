@@ -130,7 +130,7 @@ class Cansat():
         self.connected = False
         self.running_finish = False
         self.releasingstate = 0
-        self.connecting_state = 0
+        self.connecting_state = 1
         
         # state内変数初期設定
         self.estimate_norm = 100000
@@ -469,7 +469,7 @@ class Cansat():
                 self.RED_LED.led_off()
                 self.BLUE_LED.led_off()
                 self.GREEN_LED.led_on()
-                self.arm.down()
+                self.arm.middle()
             if self.connecting_state == 1:
                 self.RED_LED.led_off()
                 self.BLUE_LED.led_on()
@@ -479,9 +479,9 @@ class Cansat():
             self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":9})
             self.cameraCount += 1
             self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
-            self.blk = self.pc2.red2blk(self.img)
+            #self.blk = self.pc2.red2blk(self.img)
             
-            detected_img, self.ar_info = self.tg.detect_marker(self.blk)
+            detected_img, self.ar_info = self.tg.detect_marker(self.img)
             self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
             self.ar_checker = self.AR_checker["AR"]
             print(self.ar_info)
@@ -494,14 +494,14 @@ class Cansat():
                     self.starttime_AR = time.time()
                     self.ar_count += 1
                     self.Flag_AR = True
-                if self.Flag_AR and time.time()-self.starttime_AR >= 1.0:
+                if self.Flag_AR and time.time()-self.starttime_AR >= 1.5:
                     self.Flag_AR = False #フラグをリセット←これもAR_decideの中で定義しても良いかも
                     AR_powerplan = self.app.ar_powerplanner(self.ar_info,self.connecting_state,self.AR_checker)  #sideを追加
                     self.move_arplan = AR_powerplan["move"]
                     APRC_STATE = AR_powerplan['aprc_state']
                     if not APRC_STATE:      #　接近できたかどうか
                         if AR_powerplan["R"] < -0.1 and AR_powerplan["L"] < -0.1:
-                            self.move(AR_powerplan["R"],AR_powerplan["L"],0.05)
+                            self.move(AR_powerplan["R"],AR_powerplan["L"],0.04)
                             print("Back!")
                             #arm_grasping()
                         else:
@@ -516,6 +516,7 @@ class Cansat():
                             self.RED_LED.led_off()
                             self.BLUE_LED.led_on()
                             self.GREEN_LED.led_off()
+                            self.arm_release(1300)
                             self.arm_grasping()
                             #SorF = self.checking(self.img,self.connecting_state)
                             self.connecting_state += 1
@@ -526,7 +527,7 @@ class Cansat():
                             self.RED_LED.led_on()
                             self.BLUE_LED.led_off()
                             self.GREEN_LED.led_off()
-                            self.arm_release()
+                            self.arm_release(1650)
                             self.checking_time = time.time()
                             SorF = self.checking(self.img,self.connecting_state)
                             self.connecting_state += 1
@@ -556,7 +557,7 @@ class Cansat():
                             Flag(bool値)を使って待機時間の計測を行うための時間計測開始部分
                             '''
                         
-                        if self.Flag_C and time.time()-self.starttime_color >= 1.0:
+                        if self.Flag_C and time.time()-self.starttime_color >= 1.5:
                             '''
                             5秒超えたら入ってくる
                             '''
@@ -619,21 +620,22 @@ class Cansat():
         # except:
             # pass
         self.arm.down()
-        self.arm.move(1050)
+        self.arm.move(1000)
         time.sleep(3)
-        for i in range(1050,1650,15):
+        for i in range(1000,1650,15):
             self.arm.move(i)
             time.sleep(0.1)
         time.sleep(1)
         
-    def arm_release(self):
+    def arm_release(self,pre_arm):
         # try:
             # arm.setup()
         # except:
             # pass
+        arm_range = pre_arm -1000
         time.sleep(3)
-        for i in range(1,600,20):
-            self.arm.move(1650-i)
+        for i in range(1,arm_range,20):
+            self.arm.move(pre_arm-i)
             time.sleep(0.1)
         time.sleep(1)
     

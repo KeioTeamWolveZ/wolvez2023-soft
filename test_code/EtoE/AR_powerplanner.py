@@ -10,7 +10,7 @@ class ARPowerPlanner():
     def __init__(self):
         self.arm_id = "1"
         # 各マーカーに対するxg,yg,zg
-        self.marker_goal = {"2":[0.0,0.0,0.0],"3":[0.0,0.01,-0.015],"4":[0.0,0.01,-0.015],"5":[0.0,0.01,-0.015],"6":[0.0,0.01,-0.015],"10":[1,1,1]}
+        self.marker_goal = {"2":[0.0,0.0,0.0],"3":[0.005,-0.03,0.015],"4":[0.005,-0.03,0.015],"5":[0.005,-0.03,0.015],"6":[0.005,-0.03,0.015],"10":[1,1,1]}
         # 参照するマーカーの優先度順
         self.marker_ref = ["10","5","3","6","4"]
 
@@ -28,18 +28,17 @@ class ARPowerPlanner():
         roll = ar_info[id]['roll']
         pitch = ar_info[id]['pitch']
         yaw = ar_info[id]['yaw']
+        rvec = ar_info[id]['rvec']
         bias = self.marker_goal[id] # マーカーからゴールまでのベクトル
 
-        goal = self.rot_vec(roll,pitch,yaw,bias)+np.array([[x],[y],[z]])
+        goal = self.rot_vec(rvec,bias)+np.array([[x],[y],[z]])
         goal= goal.T
         
         return goal.reshape(1,3)
     
-    def rot_vec(self,roll,pitch,yaw,vec):
-        rvec = np.array([roll, pitch, yaw]) 
-        rvec_matrix = cv2.Rodrigues(rvec) # rodorigues
-        rvec_matrix = rvec_matrix[0] # rodoriguesから抜き出し
-
+    def rot_vec(self,rvec,vec):
+        rvec_norm = np.linalg.norm(rvec)
+        rvec_matrix = self.rotation_matrix(rvec/rvec_norm,rvec_norm) # rodorigues
         g = np.dot(rvec_matrix,vec).reshape(-1, 1)
         return g
 
@@ -48,9 +47,9 @@ class ARPowerPlanner():
             if self.arm_id in ar_info.keys():
                 marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
             else:
-                marker_1 = np.array([0.02523,-0.01075,0.1740])
+                marker_1 = np.array([0.02588,0.00300,0.10540])
         else:
-            marker_1 = np.array([0.01523,-0.01075,0.1690])
+            marker_1 = np.array([0.005751,-0.02424,0.10233])
         vec, distance = self.__targetting(marker_1,goal_point)
         vec[2] = self.calc_t_distance(id,ar_info, vec, distance)
         goal_area = {"x":[-0.005,0.005],"z":[-0.005,0.005]}
@@ -115,11 +114,28 @@ class ARPowerPlanner():
         return {"R":power_R,"L":power_L,"aprc_state":self.aprc_state,"move":move}
 
     def calc_t_distance(self,id,ar_info, vec, distance):
-        y_m = self.rot_vec(ar_info[id]['roll'],ar_info[id]['pitch'],ar_info[id]['yaw'],[0,1,0])
-        vec_normalize = vec.reshape(3,1)/np.linalg.norm(vec)
-        cos_argment = np.dot(y_m.T,vec_normalize)
+        y_m = self.rot_vec(ar_info[id]['rvec'],[0,-0.01,0])
+        vec_normalize = vec.reshape(3,1)/np.linalg.norm(vec[1:3])
+        print(vec_normalize)
+        cos_argment = np.dot(y_m[1:3].T,vec_normalize[1:3])
+        #print(cos_argment)
         ultraman = distance*np.sqrt(1-cos_argment**2)
         return ultraman
+        
+    def rotation_matrix(self, axis, theta):
+        """
+        Return the rotation matrix associated with counterclockwise rotation about
+        the given axis by theta radians.
+        """
+        axis = np.asarray(axis)
+        axis = axis / np.sqrt(np.dot(axis, axis))
+        a = np.cos(theta / 2.0)
+        b, c, d = -axis * np.sin(theta / 2.0)
+        aa, bb, cc, dd = a * a, b * b, c * c, d * d
+        bc, ad, ac, ab, bd, cd = b * c, a * d, a * c, a * b, b * d, c * d
+        return np.array([[aa + bb - cc - dd, 2 * (bc + ad), 2 * (bd - ac)],
+                         [2 * (bc - ad), aa + cc - bb - dd, 2 * (cd + ab)],
+                         [2 * (bd + ac), 2 * (cd - ab), aa + dd - bb - cc]])
 
 
     def __targetting(self,marker_1:np.ndarray=np.zeros(3), marker_2:np.ndarray=np.zeros(3)):
