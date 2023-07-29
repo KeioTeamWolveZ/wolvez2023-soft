@@ -33,6 +33,7 @@ class ARPowerPlanner():
 
         goal = self.rot_vec(rvec,bias)+np.array([[x],[y],[z]])
         goal= goal.T
+        print(goal) ###warning too big
         
         return goal.reshape(1,3)
     
@@ -51,6 +52,7 @@ class ARPowerPlanner():
         else:
             marker_1 = np.array([0.005751,-0.02424,0.10233])
         vec, distance = self.__targetting(marker_1,goal_point)
+        #print(f"vec:{vec[2]}")
         vec[2] = self.calc_t_distance(id,ar_info, vec, distance)
         goal_area = {"x":[-0.005,0.005],"z":[-0.005,0.005]}
         print(f"distance:{distance},vec:{vec}")
@@ -114,9 +116,9 @@ class ARPowerPlanner():
         return {"R":power_R,"L":power_L,"aprc_state":self.aprc_state,"move":move}
 
     def calc_t_distance(self,id,ar_info, vec, distance):
-        y_m = self.rot_vec(ar_info[id]['rvec'],[0,-0.01,0])
+        y_m = self.rot_vec(ar_info[id]['rvec'],[0,-1,0])
         vec_normalize = vec.reshape(3,1)/np.linalg.norm(vec[1:3])
-        print(vec_normalize)
+        #print(vec_normalize)
         cos_argment = np.dot(y_m[1:3].T,vec_normalize[1:3])
         #print(cos_argment)
         ultraman = distance*np.sqrt(1-cos_argment**2)
@@ -144,9 +146,9 @@ class ARPowerPlanner():
         '''
         target_vec = marker_2 - marker_1
         target_vec = target_vec[0]
-        #print(target_vec)
-        # distance = (self.target_vec[2]/abs(target_vec[2]))*((target_vec[1]**2 + target_vec[2]**2)**0.5)
-        distance = np.sign(target_vec[2])*np.linalg.norm(target_vec[1:2])
+        # print(np.linalg.norm(target_vec))
+        #distance = (self.target_vec[2]/abs(target_vec[2]))*((target_vec[1]**2 + target_vec[2]**2)**0.5)
+        distance = np.sign(target_vec[2])*np.linalg.norm(target_vec[1:3])
         return target_vec, distance
     
 
