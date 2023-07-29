@@ -130,7 +130,7 @@ class Cansat():
         self.connected = False
         self.running_finish = False
         self.releasingstate = 0
-        self.connecting_state = 1
+        self.connecting_state = 0
         
         # state内変数初期設定
         self.estimate_norm = 100000
@@ -469,14 +469,14 @@ class Cansat():
                 self.RED_LED.led_off()
                 self.BLUE_LED.led_off()
                 self.GREEN_LED.led_on()
-                self.arm.middle()
+                self.arm.down()
             if self.connecting_state == 1:
                 self.RED_LED.led_off()
                 self.BLUE_LED.led_on()
                 self.GREEN_LED.led_off()
                 self.arm.up()
             # capture and detect markers
-            self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":10})
+            self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":9})
             self.cameraCount += 1
             self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
             self.blk = self.pc2.red2blk(self.img)
@@ -621,7 +621,7 @@ class Cansat():
         self.arm.down()
         self.arm.move(1050)
         time.sleep(3)
-        for i in range(1050,1500,15):
+        for i in range(1050,1650,15):
             self.arm.move(i)
             time.sleep(0.1)
         time.sleep(1)
@@ -632,8 +632,8 @@ class Cansat():
         # except:
             # pass
         time.sleep(3)
-        for i in range(1,300,20):
-            self.arm.move(1500-i)
+        for i in range(1,600,20):
+            self.arm.move(1650-i)
             time.sleep(0.1)
         time.sleep(1)
     

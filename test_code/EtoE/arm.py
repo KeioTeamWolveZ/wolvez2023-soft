@@ -16,7 +16,7 @@ class Arm():
 		
 	def up(self,buff=0):
 		self.pi.write(self.servo_pin,1)
-		self.pi.set_servo_pulsewidth(self.servo_pin,1500)
+		self.pi.set_servo_pulsewidth(self.servo_pin,1650)
 		time.sleep(0.5)
 		self.pi.set_servo_pulsewidth(self.servo_pin,0)
 		self.pi.write(self.servo_pin,0)
@@ -83,6 +83,7 @@ if __name__ == "__main__":
 	arm.setup()
 	arm.up()
 	#arm.move(1800)
+	#arm.middle()
 	arm.down()
 	start = time.time()
 	while True:

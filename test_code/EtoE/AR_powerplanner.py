@@ -10,7 +10,7 @@ class ARPowerPlanner():
     def __init__(self):
         self.arm_id = "1"
         # 各マーカーに対するxg,yg,zg
-        self.marker_goal = {"3":[0.0,0.01,-0.015],"4":[0.0,0.01,-0.015],"5":[0.0,0.01,-0.015],"6":[0.0,0.01,-0.015],"10":[1,1,1]}
+        self.marker_goal = {"2":[0.0,0.0,0.0],"3":[0.0,0.01,-0.015],"4":[0.0,0.01,-0.015],"5":[0.0,0.01,-0.015],"6":[0.0,0.01,-0.015],"10":[1,1,1]}
         # 参照するマーカーの優先度順
         self.marker_ref = ["10","5","3","6","4"]
 
@@ -48,7 +48,7 @@ class ARPowerPlanner():
             if self.arm_id in ar_info.keys():
                 marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
             else:
-                marker_1 = np.array([0.002157,0.008755,0.18084])
+                marker_1 = np.array([0.02523,-0.01075,0.1740])
         else:
             marker_1 = np.array([0.01523,-0.01075,0.1740])
         vec, distance = self.__targetting(marker_1,goal_point)
