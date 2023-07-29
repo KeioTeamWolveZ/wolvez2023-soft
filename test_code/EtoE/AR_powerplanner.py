@@ -50,7 +50,7 @@ class ARPowerPlanner():
             else:
                 marker_1 = np.array([0.02523,-0.01075,0.1740])
         else:
-            marker_1 = np.array([0.01523,-0.01075,0.1740])
+            marker_1 = np.array([0.01523,-0.01075,0.1690])
         vec, distance = self.__targetting(marker_1,goal_point)
         vec[2] = self.calc_t_distance(id,ar_info, vec, distance)
         goal_area = {"x":[-0.005,0.005],"z":[-0.005,0.005]}
