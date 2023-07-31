@@ -111,7 +111,7 @@ class Ar_cansat():
                     rvec_matrix = rvec_matrix[0] # rodoriguesから抜き出し
                     # 並進ベクトルの転置
                     transpose_tvec = tvec[np.newaxis, :].T
-                    # 合成
+                    # 合成（通称外部パラメータと呼ばれる，回転行列と並進ベクトルを列方向に結合）
                     proj_matrix = np.hstack((rvec_matrix, transpose_tvec))
                     # オイラー角への変換
                     euler_angle = cv2.decomposeProjectionMatrix(proj_matrix)[6] # [deg]
