@@ -431,7 +431,7 @@ class Cansat():
             #焼き切りによるパラ分離
             if self.releasingstate == 0:
                 GPIO.output(ct.const.SEPARATION_MOD2,1) #電圧をHIGHにして焼き切りを行う
-                if time.time()-self.modu_sepaTime > ct.const.SEPARATION_TIME_THRE:
+                if time.time()-self.modu_sepaTime > ct.const.SEPARATION_TIME_THRE-5:
                     GPIO.output(ct.const.SEPARATION_MOD2,0) #焼き切りが危ないのでlowにしておく
                     self.releasingstate = 1
         
@@ -505,7 +505,7 @@ class Cansat():
                             print("Back!")
                             #arm_grasping()
                         else:
-                            self.move(AR_powerplan["R"],AR_powerplan["L"],0.03)
+                            self.move(AR_powerplan["R"],AR_powerplan["L"],0.02)
                             print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"])
                     else:
                         self.move(0,0,0.2)
