@@ -130,7 +130,7 @@ class Cansat():
         self.connected = False
         self.running_finish = False
         self.releasingstate = 0
-        self.connecting_state = 1
+        self.connecting_state = 0
         
         # state内変数初期設定
         self.estimate_norm = 100000
@@ -632,7 +632,7 @@ class Cansat():
             # arm.setup()
         # except:
             # pass
-        arm_range = pre_arm -1000
+        arm_range = pre_arm -1100
         time.sleep(3)
         for i in range(1,arm_range,20):
             self.arm.move(pre_arm-i)

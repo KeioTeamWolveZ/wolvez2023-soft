@@ -1,6 +1,8 @@
 import numpy as np
 import cv2
 
+from numpy import sin, cos, arccos
+
 class ARPowerPlanner():
 
     #速度の設定
@@ -10,7 +12,7 @@ class ARPowerPlanner():
     def __init__(self):
         self.arm_id = "1"
         # 各マーカーに対するxg,yg,zg
-        self.marker_goal = {"2":[0.0,0.0,0.0],"3":[0.005,-0.03,0.015],"4":[0.005,-0.03,0.015],"5":[0.005,-0.03,0.015],"6":[0.005,-0.03,0.015],"10":[1,1,1]}
+        self.marker_goal = {"2":[0.0,0.0,0.01],"3":[0,0,0],"4":[0,0.042,-0.005],"5":[0,0.042,-0.005],"6":[0,0.042,-0.005],"10":[1,1,1]}
         # 参照するマーカーの優先度順
         self.marker_ref = ["10","5","3","6","4"]
 
@@ -32,25 +34,28 @@ class ARPowerPlanner():
         bias = self.marker_goal[id] # マーカーからゴールまでのベクトル
 
         goal = self.rot_vec(rvec,bias)+np.array([[x],[y],[z]])
+        print(f"TARGETVEC: {bias}, goalpoint: {self.rot_vec(rvec,bias)}")
         goal= goal.T
         print(goal) ###warning too big
         
         return goal.reshape(1,3)
     
     def rot_vec(self,rvec,vec):
-        rvec_norm = np.linalg.norm(rvec)
-        rvec_matrix = self.rotation_matrix(rvec/rvec_norm,rvec_norm) # rodorigues
-        g = np.dot(rvec_matrix,vec).reshape(-1, 1)
+        #rvec_norm = np.linalg.norm(rvec)
+        rvec_matrix = cv2.Rodrigues(rvec)
+        rvec_matrix = rvec_matrix[0] # rodoriguesから抜き出し
+        g = np.dot((rvec_matrix),vec).reshape(-1, 1)
         return g
 
     def goalvec_maker(self,ar_info,goal_point,connecting_state,id):
+        self.connecting_state = connecting_state
         if connecting_state == 0:
             if self.arm_id in ar_info.keys():
                 marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
             else:
-                marker_1 = np.array([0.02588,0.00300,0.10540])
+                marker_1 = np.array([0.017379,0.008159,0.149640])
         else:
-            marker_1 = np.array([0.005751,-0.02424,0.10233])
+            marker_1 = np.array([0.003606,-0.015277,0.138732])
         vec, distance = self.__targetting(marker_1,goal_point)
         #print(f"vec:{vec[2]}")
         vec[2] = self.calc_t_distance(id,ar_info, vec, distance)
@@ -116,13 +121,18 @@ class ARPowerPlanner():
         return {"R":power_R,"L":power_L,"aprc_state":self.aprc_state,"move":move}
 
     def calc_t_distance(self,id,ar_info, vec, distance):
-        y_m = self.rot_vec(ar_info[id]['rvec'],[0,-1,0])
+        if self.connecting_state == 0:
+            y_m = self.rot_vec(ar_info[id]['rvec'],[0,0,1])
+        else:
+            y_m = self.rot_vec(ar_info[id]['rvec'],[0,1,0])
         vec_normalize = vec.reshape(3,1)/np.linalg.norm(vec[1:3])
         #print(vec_normalize)
         cos_argment = np.dot(y_m[1:3].T,vec_normalize[1:3])
         #print(cos_argment)
         ultraman = distance*np.sqrt(1-cos_argment**2)
-        return ultraman
+        #ultraman = distance*sin(arccos(y_m[1:3].T/vec_normalize[1:3]))
+        print("Ultraman: ",ultraman) 
+        return ultraman[0][0]
         
     def rotation_matrix(self, axis, theta):
         """
