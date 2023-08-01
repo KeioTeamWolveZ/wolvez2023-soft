@@ -203,15 +203,18 @@ class Ar_cansat():
                 else:
                     norm = ar_info['4']['norm']
                     target_id = '4'
-            elif "5" in ar_info.keys() or "6" in ar_info.keys():
+            elif "5" in ar_info.keys() or "6" in ar_info.keys() or "7" in ar_info.keys():
                 self.aprc_AR = True
                 side = 'marker_L'
                 if "5" in ar_info.keys():
                     norm = ar_info['5']['norm']
                     target_id = '5'
-                else:
+                elif "6" in ar_info.keys():
                     norm = ar_info['6']['norm']
                     target_id = '6'
+                else:
+                    norm = ar_info['7']['norm']
+                    target_id = '7'
             else:
                 norm = 0
                 side = 'None'

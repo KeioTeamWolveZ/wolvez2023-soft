@@ -22,6 +22,10 @@ class ColorPowerPlanner():
     0 <= s <= 255 (彩度)　黒や白の値が抽出されるときはこの閾値を大きくする
     0 <= v <= 255 (明度)　これが大きいと明るく，小さいと暗い
     """
+    
+    # Coefficient between ewbsite and numpy
+    hsv_coef = np.array([1/2, 2.55, 2.55])
+    
     # 速度の設定
     STANDARD_POWER = 65
     POWER_RANGE = 15
@@ -35,13 +39,22 @@ class ColorPowerPlanner():
     # HIGH_COLOR = {0:np.array([[10, 255, 255],[179, 255, 255]]),1:np.array([140, 255, 255])}
 
     #{1:red,0:blue,99:orange}
-    LOW_COLOR = {1:np.array([150, 150, 115]),0:np.array([108, 185, 180]),99:np.array([18, 227, 217])}
-    HIGH_COLOR = {1:np.array([179, 255, 255]),0:np.array([112, 255, 255]),99:np.array([21, 255, 255])}
+    # h:0~360, s:0~100, v:0~100
+    LOW_COLOR_EDIT = {1:np.array([300, 59, 45]),0:np.array([200, 40, 70]),99:np.array([36, 90, 59])}
+    HIGH_COLOR_EDIT = {1:np.array([360, 100, 100]),0:np.array([250, 100, 100]),99:np.array([42, 100, 100])}
+    
+       
+
 
     # 抽出する色の塊のしきい値
     AREA_RATIO_THRESHOLD = 0.00003
     def __init__(self):
         self.pos = []
+        ## DO NOT TOUCH HERE
+        # h:1~179, s:1~255, v:1~255
+        self.LOW_COLOR = {k:np.round(self.LOW_COLOR_EDIT[k]*self.hsv_coef) for k in self.LOW_COLOR_EDIT.keys()}
+        self.HIGH_COLOR = {k:np.round(self.HIGH_COLOR_EDIT[k]*self.hsv_coef) for k in self.HIGH_COLOR_EDIT.keys()}
+    
 
     def find_specific_color(self,frame,AREA_RATIO_THRESHOLD,LOW_COLOR,HIGH_COLOR,connecting_state):
         # 高さ，幅，チャンネル数
@@ -176,7 +189,7 @@ class ColorPowerPlanner():
             detected = True
             print(self.pos[2])
             if connecting_state == 0:
-                if self.pos[2] > 700:   #2000 datta yo
+                if self.pos[2] > 9000:   #2000 datta yo
                     aprc_clear = True #これは目標に到達できたかのbool値
             else:
                 if self.pos[2] > 10000:

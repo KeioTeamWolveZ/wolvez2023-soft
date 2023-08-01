@@ -284,7 +284,7 @@ class Cansat():
             if time.time() - self.preparingTime > ct.const.PREPARING_TIME_THRE:
                 self.startlon=np.mean(self.startgps_lon)
                 self.startlat=np.mean(self.startgps_lat)
-                self.state = 7
+                self.state = 1
                 self.laststate = 1
     
     def flying(self): #フライトピンが外れる➡︎ボイド缶から放出されたことを検出するステート
@@ -297,7 +297,7 @@ class Cansat():
         if GPIO.input(ct.const.FLIGHTPIN_PIN) == GPIO.HIGH: #highかどうか＝フライトピンが外れているかチェック
             self.countFlyLoop+=1
             if self.countFlyLoop > ct.const.FLYING_FLIGHTPIN_COUNT_THRE: #一定時間HIGHだったらステート移行
-                self.state = 7
+                self.state = 2
                 self.laststate = 2       
         else:
             self.countFlyLoop = 0 #何故かLOWだったときカウントをリセット
@@ -367,9 +367,9 @@ class Cansat():
         elif self.landstate == 2: #アームのキャリブレーション
             print("calib arm")
             if self.arm_calibTime == 0:
-                self.arm.move(850)
-                self.arm.move(1800)
+                self.arm.up()
                 self.arm.down()
+                self.arm.middle()
                 self.arm_calibTime = time.time()
 
             if time.time() - self.arm_calibTime < ct.const.ARM_CARIBRATION_THRE:
@@ -407,7 +407,7 @@ class Cansat():
         
         if self.releasingstate == 1:
             self.MotorR.go(ct.const.RELEASING_MOTOR_VREF)
-            self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
+            self.MotorL.go(ct.const.RUNNING_MOTOR_VREF-20)
             self.pre_motorTime = time.time()
             self.releasingstate = 2
         
@@ -437,7 +437,7 @@ class Cansat():
         
         if self.releasingstate == 1:
             self.MotorR.go(ct.const.RELEASING_MOTOR_VREF)
-            self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
+            self.MotorL.go(ct.const.RUNNING_MOTOR_VREF-20)
             self.pre_motorTime = time.time()
             self.releasingstate = 2
         
@@ -461,8 +461,8 @@ class Cansat():
         if self.connecting_state == 2:
             SorF = self.checking(self.img,self.connecting_state-1)
             if SorF["Time_clear"]:
-                self.state = 8
-                self.laststate = 8
+                self.state = 7
+                self.laststate = 7
         else:
             self.done_approach = False
             if self.connecting_state == 0:
@@ -646,6 +646,7 @@ class Cansat():
             color_num = connecting_state
         else:
             color_num = 99 # 色変えるならここ変更(cppも)
+            self.cpp.AREA_RATIO_THRESHOLD = 0.0000005
             #time.sleep(10.0) # 焼き切り時間用いつか変更する
         # try:
             # arm.setup()

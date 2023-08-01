@@ -85,6 +85,7 @@ if __name__ == "__main__":
 	#arm.move(1800)
 	#arm.middle()
 	arm.down()
+	arm.middle()
 	start = time.time()
 	while True:
 		end = time.time()

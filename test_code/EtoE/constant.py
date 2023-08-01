@@ -31,8 +31,8 @@ const.FLIGHTPIN_PIN = 4
 
 ## Variables
 # Goal information
-const.GPS_GOAL_LAT = 35.55463167  # 南緯は負の値で与える
-const.GPS_GOAL_LON = 139.65625333 # 西経は負の値で与える
+const.GPS_GOAL_LAT = 35.55599500  # 南緯は負の値で与える
+const.GPS_GOAL_LON = 139.65258333 # 西経は負の値で与える
 const.GOAL_DISTANCE_THRE = 0.0005 # [km] (50 [cm])
 const.f1 = 1 # 136
 const.f2 = 50 # 196
@@ -56,7 +56,7 @@ const.DROPPING_ACC_THRE = 1 #加速度の値
 const.SEPARATION_TIME_THRE = 10 #焼き切り時間
 const.ARM_CARIBRATION_THRE = 5 #アームのマーカーが認識できるまで繰り返す時間
 const.LANDING_MOTOR_TIME_THRE = 5 #分離シートから離れるためにモータを回転させる時間
-const.RELEASING_MOTOR_TIME_THRE = 1 #放出と放出の間にモータを回転させる時間
+const.RELEASING_MOTOR_TIME_THRE = 0.7 #放出と放出の間にモータを回転させる時間
 const.TURNING_MOTOR_TIME_THRE = 1.5 #turning time after the end of second-releasing
 const.MODULE_SEPARATION_TIME_THRE = 15 # モジュール同士の接続の際の焼き切り時間
 
