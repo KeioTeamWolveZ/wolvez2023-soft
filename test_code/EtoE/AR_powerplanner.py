@@ -34,9 +34,7 @@ class ARPowerPlanner():
         bias = self.marker_goal[id] # マーカーからゴールまでのベクトル
 
         goal = self.rot_vec(rvec,bias)+np.array([[x],[y],[z]])
-        print(f"TARGETVEC: {bias}, goalpoint: {self.rot_vec(rvec,bias)}")
         goal= goal.T
-        print(goal) ###warning too big
         
         return goal.reshape(1,3)
     
@@ -92,7 +90,7 @@ class ARPowerPlanner():
                 # When z is satisfying the thresholds, cansat changes just orientation
                 motor_ouput = self.STANDARD_POWER - self.POWER_RANGE
                 if vec[0] > goal_area["x"][0] and vec[0] < goal_area["x"][1]:
-                    print("finish")
+                    print("Approach Finished")
                     power_R = 0
                     power_L = 0
                     self.aprc_state = True
@@ -131,7 +129,6 @@ class ARPowerPlanner():
         #print(cos_argment)
         ultraman = distance*np.sqrt(1-cos_argment**2)
         #ultraman = distance*sin(arccos(y_m[1:3].T/vec_normalize[1:3]))
-        print("Ultraman: ",ultraman) 
         return ultraman[0][0]
         
     def rotation_matrix(self, axis, theta):
