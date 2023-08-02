@@ -140,6 +140,7 @@ class Cansat():
         self.move_clplan = 'none'
         self.goaldis = 0
         self.goalphi = 0
+        self.rv, self.lv = 0, 0
         
         self.dict_list = {}
         self.goallat = ct.const.GPS_GOAL_LAT
@@ -187,16 +188,18 @@ class Cansat():
                   + "ay:"+str(self.bno055.ay).rjust(6) + ","\
                   + "az:"+str(self.bno055.az).rjust(6) + ","\
                   + "q:"+str(self.bno055.ex).rjust(6) + ","\
-                  + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
-                  + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
                   + "Camera:" + str(self.cameraCount)
         if self.state == 3:
             datalog = datalog + ","\
+                 + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
+                 + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
                  + "Color-Approach:" + str(self.cl_checker) + ","\
                  + "Color-data: x:" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
                  + "Color-move:" + str(self.move_clplan)
         elif self.state == 6:
            datalog = datalog + ","\
+                 + "rV:"+str(round(self.rv,3)).rjust(6) + ","\
+                 + "lV:"+str(round(self.lv,3)).rjust(6) + ","\
                  + "ConnectingState:" + str(self.connecting_state) + ","\
                  + "AR-Approach:" + str(self.ar_checker) + ","\
                  + "AR-info:" + str(self.ar_info) + ","\
@@ -208,6 +211,8 @@ class Cansat():
                  + "Done-Connect:" + str(self.connected)
         elif self.state == 7 or self.state == 8:
             datalog = datalog + ","\
+                 + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
+                 + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
                  + "DistanceToGoal:" + str(self.goaldis) + ","\
                  + "ArgumentToGoal:" + str(self.goalphi)+ ","\
                  + "GoalCheck:" + str(self.running_finish)
@@ -510,8 +515,10 @@ class Cansat():
                         else:
                             self.move(AR_powerplan["R"],AR_powerplan["L"],0.02)
                             print("-AR- R:",AR_powerplan["R"],"L:",AR_powerplan["L"])
+                        self.rv, self.lv = AR_powerplan["R"],AR_powerplan["L"]
                     else:
                         self.move(0,0,0.2)
+                        self.rv, self.lv = 0,0
                         print('state_change')
                         self.estimate_norm = 100000
                         self.done_approach = True
@@ -577,6 +584,7 @@ class Cansat():
                             else:
                                 self.move(plan_color["R"],plan_color["L"],0.04)
                                 # if more than once AR could be seen
+                            self.rv, self.lv = plan_color["R"],plan_color["R"]
                             
                     else :
                         if self.vanish_c > 10 and not self.aprc_clear:
@@ -589,6 +597,7 @@ class Cansat():
                             print("-R:35-")
                             if self.estimate_norm > 0.5:
                                 self.move(90,-90,0.03)
+                                self.rv, self.lv = 90,-90
                                 print('sleeptime : 0.2')
                                 self.vanish_c = 0
                             else:
@@ -598,6 +607,7 @@ class Cansat():
                                 else:
                                     vanish_sleep = 0.1
                                 self.move(40,-40,vanish_sleep)
+                                self.rv, self.lv = 40,-40
                                 print('sleeptime : vanish_sleep')
 
                         self.vanish_c += 1
