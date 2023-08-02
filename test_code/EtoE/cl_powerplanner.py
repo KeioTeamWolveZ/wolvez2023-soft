@@ -192,7 +192,8 @@ class ColorPowerPlanner():
                 if self.pos[2] > 7500:   #2000 datta yo
                     aprc_clear = True #これは目標に到達できたかのbool値
             else:
-                if self.pos[2] > 9500:
+                #print(self.pos[2])
+                if self.pos[2] > 12000:
                 # arm temae : 28000
                 # arm red : 25000
                     aprc_clear = True #これは目標に到達できたかのbool値

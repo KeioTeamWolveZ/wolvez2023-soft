@@ -19,7 +19,7 @@ try:
     GPIO.cleanup()
     print("Separation done")
 
-except:
+except KeyboardInterrupt:
     print("Separation Canceled")
     GPIO.output(pin1,0) #電圧をLOWにして焼き切りを終了
     GPIO.cleanup()

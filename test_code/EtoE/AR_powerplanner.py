@@ -51,7 +51,7 @@ class ARPowerPlanner():
             if self.arm_id in ar_info.keys():
                 marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
             else:
-                marker_1 = np.array([0.017379,0.008159,0.149640])
+                marker_1 = np.array([0.0353238,0.00329190,0.15313373])
         else:
             marker_1 = np.array([0.003606,-0.015277,0.138732])
         vec, distance = self.__targetting(marker_1,goal_point)
