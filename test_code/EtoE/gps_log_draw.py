@@ -18,6 +18,8 @@ def gpslogger(start_time):
     time = [dt.strptime(s[5:], '%H:%M:%S') for s in lines if 'Time' in s]
     print(time[-1]-time[0])
     
+    Lat.pop(Lat==0)
+    Lng.pop(Lng==0)
     plt.figure()
     plt.plot(Lng,Lat,color='blue')
     plt.scatter(Lng[0],Lat[0],marker='s',s=30,color='black')

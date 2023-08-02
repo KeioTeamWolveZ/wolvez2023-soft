@@ -461,6 +461,9 @@ class Cansat():
         if self.connecting_state == 2:
             SorF = self.checking(self.img,self.connecting_state-1)
             if SorF["Time_clear"]:
+                self.arm.up()
+                self.arm.down()
+                self.arm.up()
                 self.state = 7
                 self.laststate = 7
         else:
@@ -531,9 +534,9 @@ class Cansat():
                             self.checking_time = time.time()
                             SorF = self.checking(self.img,self.connecting_state)
                             self.connecting_state += 1
-                            self.arm.up()
-                            self.arm.down()
-                            self.arm.up()
+                            # self.arm.up()
+                            # self.arm.down()
+                            # self.arm.up()
                             print(f'connect_clear: {SorF["clear"]}')
                             # if not SorF["clear"]:
                                 # self.connecting_state -= 2
@@ -654,7 +657,7 @@ class Cansat():
             # pass
         #time.sleep(1.0)
         time_clear = False
-        if time.time() - self.checking_time > 180:
+        if time.time() - self.checking_time > const.MODULE_SEPARATION_TIME_THRE:
             time_clear = True
             pos = self.cpp.find_specific_color(frame,self.cpp.AREA_RATIO_THRESHOLD,self.cpp.LOW_COLOR,self.cpp.HIGH_COLOR,color_num)
             if pos is not None:

@@ -189,10 +189,10 @@ class ColorPowerPlanner():
             detected = True
             print(self.pos[2])
             if connecting_state == 0:
-                if self.pos[2] > 9000:   #2000 datta yo
+                if self.pos[2] > 7500:   #2000 datta yo
                     aprc_clear = True #これは目標に到達できたかのbool値
             else:
-                if self.pos[2] > 10000:
+                if self.pos[2] > 9500:
                 # arm temae : 28000
                 # arm red : 25000
                     aprc_clear = True #これは目標に到達できたかのbool値
