@@ -3,6 +3,9 @@
 
 echo -e "<<CAUTION!!!!>>\nThis device will be rebooted soon\nOr CTRL+C for cancel\n\n"
 
+## system
+sudo bash .setup_sys/setup_sys.sh
+
 ## libcamera
 sudo bash .camera/inst_libcamera.sh
 

@@ -7,6 +7,7 @@ kernel=$(uname -r)
 arch=$(arch)
 pkg_version=$code_name
 rpi_kernel=$(dpkg-query -f '${Version}' --show raspberrypi-kernel)
+BLACKLIST=/etc/modprobe.d/raspi-blacklist.conf
 
 $(dpkg-architecture -earm64)
 if [ $? == 0 ]; then
@@ -61,7 +62,7 @@ helpFunction()
     echo -e "Options:"
     echo -e "\t-p <package name>\tSpecify the package name."
     echo -e "\t-h \t\t\tShow this information."
-    echo -e "\t-l \t\t\tAuto detect camera and install the corresponding driver."
+    echo -e "\t-d \t\t\tAuto detect camera and install the corresponding driver."
     echo -e "\t-l \t\t\tUpdate and list available packages."
     echo ""
     listPackages
@@ -80,13 +81,13 @@ initAutodetect() {
     PrintCamera=
 }
 
-removeDtoverlay() {
-    sudo dtoverlay -r imx519>/dev/null 2>&1
-    sudo dtoverlay -r arducam>/dev/null 2>&1
-    sudo dtoverlay -r arducam-pivariety>/dev/null 2>&1
-    sudo dtoverlay -r arducam_64mp>/dev/null 2>&1
-    sudo dtoverlay -r arducam-64mp>/dev/null 2>&1
-}
+# removeDtoverlay() {
+#     sudo dtoverlay -r imx519>/dev/null 2>&1
+#     sudo dtoverlay -r arducam>/dev/null 2>&1
+#     sudo dtoverlay -r arducam-pivariety>/dev/null 2>&1
+#     sudo dtoverlay -r arducam_64mp>/dev/null 2>&1
+#     sudo dtoverlay -r arducam-64mp>/dev/null 2>&1
+# }
 
 configCheck() {
 
@@ -268,11 +269,23 @@ camera() {
     fi
 }
 
-
 openCamera() {
     if [ -n "$OpenCameraName" ]; then
         sudo dtoverlay $OpenCameraName>/dev/null 2>&1
     fi
+}
+
+do_i2c() {
+  if ! [ -e $BLACKLIST ]; then
+    touch $BLACKLIST
+  fi
+  sudo sed $BLACKLIST -i -e "s/^\(blacklist[[:space:]]*i2c[-_]bcm2708\)/#\1/"
+  sudo sed /etc/modules -i -e "s/^#[[:space:]]*\(i2c[-_]dev\)/\1/"
+  if ! grep -q "^i2c[-_]dev" /etc/modules; then
+    printf "i2c-dev\n" >> /etc/modules
+  fi
+  sudo dtparam i2c_arm=on
+  sudo modprobe i2c-dev
 }
 
 verlte() {
@@ -308,6 +321,12 @@ source $CONFIG_FILE_NAME
 
 if [ -z $package ]; then
     helpFunction
+fi
+
+ls /dev/i2c-0 > /dev/null 2>&1
+if [ $? != 0 ]; then
+  echo "Set i2c"
+  do_i2c
 fi
 
 echo "kernel:$kernel"
@@ -359,29 +378,41 @@ else
     pkg_name=${package_names[$pkg_version]}
 fi
 
-
 if [[ (-z $pkg_name) || (-z $download_link) ]]; then
-    echo -e "${RED}"
-	echo -e "Cannot find the corresponding package, please send the following information to support@arducam.com"
-    echo -e "Hardware Revision: ${rev}"
-    echo -e "Kernel Version: ${kernel}"
-    echo -e "Package: ${package} -- ${pkg_version}"
+    verlte '6.1.19' $VERSION
+    if [ $? == 0 ]; then
+        package=$(echo $package | cut -d'_' -f1)
+        if [ $package == "imx519" ]; then
+            sudo sh -c 'echo dtoverlay=imx519 >> /boot/config.txt'
+        elif [ $package == "64mp" ]; then
+            sudo sh -c 'echo dtoverlay=arducam-64mp >> /boot/config.txt'
+        elif [ $package == "kernel" ]; then
+            sudo sh -c 'echo dtoverlay=arducam-pivariety >> /boot/config.txt'
+        fi
+        exit -1
+    else
+        echo -e "${RED}"
+        echo -e "Cannot find the corresponding package, please send the following information to support@arducam.com"
+        echo -e "Hardware Revision: ${rev}"
+        echo -e "Kernel Version: ${kernel}"
+        echo -e "Package: ${package} -- ${pkg_version}"
 
-    if [[ $package == *"kernel_driver"* ]]; then
-        echo -e "You are using an unsupported kernel version, please install the official SD Card image(do not execute rpi-update):"
-        echo -e "https://www.raspberrypi.com/software/operating-systems/"
+        if [[ $package == *"kernel_driver"* ]]; then
+            echo -e "You are using an unsupported kernel version, please install the official SD Card image(do not execute rpi-update):"
+            echo -e "https://www.raspberrypi.com/software/operating-systems/"
+        fi
+
+        echo -e "${NC}"
+        exit -1
     fi
-
-    echo -e "${NC}"
-	exit -1
 fi
 
 rm -rf $pkg_name
 wget -O $pkg_name $download_link
 
 if [[ ( $? -ne 0) || (! -f "${pkg_name}") ]]; then
-	echo -e "${RED}download failed${NC}"
-	exit -1
+    echo -e "${RED}download failed${NC}"
+    exit -1
 fi
 
 if [[ $package == *"kernel_driver"* ]]; then
@@ -422,6 +453,6 @@ fi
 
 if [ $? -ne 0 ]; then
     echo ""
-	echo -e "${RED}Unknown error, please send the error message to support@arducam.com${NC}"
-	exit -1
+    echo -e "${RED}Unknown error, please send the error message to support@arducam.com${NC}"
+    exit -1
 fi

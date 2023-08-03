@@ -15,7 +15,7 @@ class lora:
         set_mode = ['1', 'd', '15', 'e', '0001', 'f', '0002', 'g', '0001',
                     'n', '2', 'l', '2', 'p', '1', 'y', 'z']
         # LoRa設定
-        # self.sendDevice.setup_lora()
+        self.sendDevice.setup_lora()
         
     def sendData(self, datalog):
         print(datalog)

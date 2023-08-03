@@ -1,0 +1,72 @@
+# -*- coding: utf-8 -*-
+import serial
+import time
+import RPi.GPIO as GPIO
+
+
+# LoRa設定用クラス
+class LoraSettingClass:
+
+    def __init__(self, serial_device=''):
+        self.serial_device=serial_device
+        try:  # インスタンス変数 serialDevice を生成
+            print(f'### {serial_device}')
+            self.device = serial.Serial(serial_device, 9600)
+            print("device recognized")
+        except Exception as e:
+            error_mes = '{0}'.format(e)
+            print(error_mes)
+        self.cmd = None
+        self.reset_pin = 18
+        self.set_mode = None
+
+    # LoRaに対して命令コマンドを入力する
+    def cmd_lora(self, cmd=''):
+        if not cmd:  # cmdが未入力の場合は終了
+            print('cmdが入力されていません')
+            return
+        self.cmd = '{0}\r\n'.format(cmd)
+        self.device.write(self.cmd.encode())
+
+    # LoRaリセット
+    def reset_lora(self,lora_device='/dev/ttyAMA1'):
+        pass
+#         GPIO.setmode(GPIO.BOARD)
+#         GPIO.setup(self.reset_pin, GPIO.OUT)
+#         GPIO.output(self.reset_pin, GPIO.HIGH)
+#         time.sleep(0.1)
+#         GPIO.output(self.reset_pin, GPIO.LOW)
+#         time.sleep(0.1)
+#         GPIO.cleanup()
+#         time.sleep(0.1)
+
+    def setup_lora(self, set_mode=''):
+        # LoRa(ES920LR)設定
+        print("setting up lora")
+        self.set_mode = set_mode
+        # LoRa(ES9320LR)起動待機
+        print(self.serial_device)
+        while self.device.inWaiting() > 0:
+            try:
+                line = self.device.readline()
+                if line.find(b'Select'):
+                    line = line.decode("utf-8")
+                    print(line)
+            except Exception as e:
+                print(e)
+                continue
+        # LoRa(ES920LR)コマンド入力
+        for cmd in self.set_mode:
+            self.cmd_lora(cmd)
+            time.sleep(0.1)
+        while self.device.inWaiting() > 0:
+            try:
+                line = self.device.readline()
+                line = line.decode("utf-8")
+                print(line)
+            except Exception as e:
+                print(e)
+                continue
+
+    def close(self):
+        self.device.close()
