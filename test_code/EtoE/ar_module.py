@@ -191,7 +191,11 @@ class Ar_cansat():
                 target_id = 100
 
         else:
-            if "5" in ar_info.keys() or "6" in ar_info.keys() or "7" in ar_info.keys(): # マーカー追加予定(id:68)
+            if "2" in ar_info.keys():
+                self.aprc_AR = True
+                orm = ar_info['2']['norm']
+                target_id = '2'
+            elif "5" in ar_info.keys() or "6" in ar_info.keys() or "7" in ar_info.keys(): # マーカー追加予定(id:68)
                 self.aprc_AR = True
                 if "5" in ar_info.keys():
                     norm = ar_info['5']['norm']

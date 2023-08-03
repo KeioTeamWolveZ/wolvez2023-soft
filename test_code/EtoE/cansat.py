@@ -491,6 +491,7 @@ class Cansat():
             
             detected_img, self.ar_info = self.tg.detect_marker(self.img)
             self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
+            if self.connecting_state == 1 and self.AR_checker["id"] in ["2","11"]: self.connecting_state = 0 # 青モジュールを落とした場合(id:2と11)、connecting_stateを0に戻して再び拾う
             self.ar_checker = self.AR_checker["AR"]
             print(self.ar_info)
             if self.AR_checker["AR"]:
@@ -528,7 +529,6 @@ class Cansat():
                             self.GREEN_LED.led_off()
                             self.arm_release(1650)
                             self.arm_grasping()
-                            #SorF = self.checking(self.img,self.connecting_state)
                             self.connecting_state += 1
                             self.ar_count = 0
                             #if not SorF["clear"]:
