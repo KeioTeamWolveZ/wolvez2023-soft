@@ -526,7 +526,7 @@ class Cansat():
                             self.RED_LED.led_off()
                             self.BLUE_LED.led_on()
                             self.GREEN_LED.led_off()
-                            self.arm_release(1300)
+                            self.arm_release(1650)
                             self.arm_grasping()
                             #SorF = self.checking(self.img,self.connecting_state)
                             self.connecting_state += 1
