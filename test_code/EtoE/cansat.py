@@ -1,4 +1,4 @@
-#Last Update 2023/07/28
+#Last Update 2023/08/06
 #Author : Masato Inoue
 
 from tempfile import TemporaryDirectory
@@ -111,11 +111,14 @@ class Cansat():
         self.countDropLoop = 0
         self.countstuckLoop = 0
         self.cameraCount = 0
+        self.pint_count = 0
+        self.pint_change_loop_count = 0
         self.arm_calibCount = 0
         self.avoid_paraCount = 0
         self.ar_count = 0
         self.vanish_c = 0
         self.gpscount = 0
+        
         
         # state管理用変数初期化
         self.startgps_lon=[]
@@ -483,16 +486,50 @@ class Cansat():
                 self.BLUE_LED.led_on()
                 self.GREEN_LED.led_off()
                 self.arm.up()
-            # capture and detect markers
-            self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":9})
-            self.cameraCount += 1
-            self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
-            #self.blk = self.pc2.red2blk(self.img)
             
-            detected_img, self.ar_info = self.tg.detect_marker(self.img)
-            self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
-            if self.connecting_state == 1 and self.AR_checker["id"] in ["2","11"]: self.connecting_state = 0 # 青モジュールを落とした場合(id:2と11)、connecting_stateを0に戻して再び拾う
-            self.ar_checker = self.AR_checker["AR"]
+
+
+            # change camera pint loop
+            if self.aprc_clear and not self.AR_checker and self.pint_count > 5 :
+                self.pint_change_loop_count = 0
+                self.cam_pint = 10.5
+                while self.cam_pint > 5.0 and self.pint_change_loop_count < 3:
+                    if not self.ar_checker:
+                        self.cam_pint -= 0.5
+                        self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":self.cam_pint})
+                        
+                        # capture and detect markers
+                        # self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":9})
+                        self.cameraCount += 1
+                        self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
+                        #self.blk = self.pc2.red2blk(self.img)
+                        
+                        detected_img, self.ar_info = self.tg.detect_marker(self.img)
+                        self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
+                        self.ar_checker = self.AR_checker["AR"]
+                    else:
+                        break
+                    self.pint_change_loop_count += 1
+                if not self.ar_checker: # 探索しても見つからなかったとき
+                    self.cam_pint = 9
+                    self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":self.cam_pint})
+                
+                # ループを終えたら0に戻す 
+                self.pint_count = 0 
+                self.pint_change_loop_count = 0
+
+            else:
+                self.pint_count = 0
+                # capture and detect markers
+                # self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":9})
+                self.cameraCount += 1
+                self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
+                #self.blk = self.pc2.red2blk(self.img)
+                
+                detected_img, self.ar_info = self.tg.detect_marker(self.img)
+                self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
+                self.ar_checker = self.AR_checker["AR"]
+
             print(self.ar_info)
             if self.AR_checker["AR"]:
                 self.vanish_c = 0 #喪失カウントをリセット
@@ -580,8 +617,8 @@ class Cansat():
                                 '''
                                 色認識の出力の離散化：出力する時間を0.2秒に
                                 '''
-                                
                             else:
+                                self.pint_count += 1
                                 self.move(plan_color["R"],plan_color["L"],0.04)
                                 # if more than once AR could be seen
                             self.rv, self.lv = plan_color["R"],plan_color["R"]

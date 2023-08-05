@@ -22,7 +22,7 @@ class Picam():
 
         # Libcamera's setting to use AF mode (AFSpeed Fast)
         # self.picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous,"AfSpeed":controls.AfSpeedEnum.Fast})
-        self.picam2.set_controls({"AfMode":0,"LensPosition":4.5})
+        self.picam2.set_controls({"AfMode" : 0, "LensPosition" : 9})
         
     def capture(self, args, filename="test"):
         self.filename = filename
