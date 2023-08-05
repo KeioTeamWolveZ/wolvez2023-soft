@@ -12,7 +12,7 @@ class ARPowerPlanner():
     def __init__(self):
         self.arm_id = "1"
         # 各マーカーに対するxg,yg,zg
-        self.marker_goal = {"2":[0.0,0.0,0.01],"3":[0,0,0],"4":[0,0.042,-0.005],"5":[0,0.042,-0.005],"6":[0,0.042,-0.005],"7":[0,0.042,-0.005],"10":[1,1,1]}
+        self.marker_goal = {"2":[0.0,0.0,0.01],"3":[0,0.003,0.038],"4":[0,0.042,-0.005],"5":[0,0.042,-0.005],"6":[0,0.042,-0.005],"7":[0,0.042,-0.005],"10":[1,1,1],"68":[0,0,-0.06]}
         # 参照するマーカーの優先度順
         self.marker_ref = ["10","5","3","6","4"]
 
@@ -57,7 +57,7 @@ class ARPowerPlanner():
         vec, distance = self.__targetting(marker_1,goal_point)
         #print(f"vec:{vec[2]}")
         vec[2] = self.calc_t_distance(id,ar_info, vec, distance)
-        goal_area = {"x":[-0.005,0.005],"z":[-0.005,0.005]}
+        goal_area = {"x":[-0.004,0.004],"z":[-0.004,0.004]}
         print(f"distance:{distance},vec:{vec}")
 
         return vec,goal_area
@@ -119,7 +119,7 @@ class ARPowerPlanner():
         return {"R":power_R,"L":power_L,"aprc_state":self.aprc_state,"move":move}
 
     def calc_t_distance(self,id,ar_info, vec, distance):
-        if self.connecting_state == 0:
+        if id == "2" or id == "3" or id == "68": # 68は裏面のマーカー、青モジュールに追加するマーカーも必要
             y_m = self.rot_vec(ar_info[id]['rvec'],[0,0,1])
         else:
             y_m = self.rot_vec(ar_info[id]['rvec'],[0,1,0])
