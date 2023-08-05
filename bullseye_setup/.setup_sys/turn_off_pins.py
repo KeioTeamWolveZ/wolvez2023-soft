@@ -3,7 +3,7 @@ import time
 
 pin1 = 25
 pin2 = 24
-pin3 = 8
+pin3 = 17
 
 GPIO.setmode(GPIO.BCM)
 
