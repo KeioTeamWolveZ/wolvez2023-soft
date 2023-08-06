@@ -119,7 +119,7 @@ class ARPowerPlanner():
         return {"R":power_R,"L":power_L,"aprc_state":self.aprc_state,"move":move}
 
     def calc_t_distance(self,id,ar_info, vec, distance):
-        if if id == "2" or id == "3" or id == "68": # 68は裏面のマーカー、青モジュールに追加するマーカーも必要
+        if id == "2" or id == "3" or id == "68": # 68は裏面のマーカー、青モジュールに追加するマーカーも必要
             y_m = self.rot_vec(ar_info[id]['rvec'],[0,0,1])
         else:
             y_m = self.rot_vec(ar_info[id]['rvec'],[0,1,0])
