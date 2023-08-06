@@ -4,14 +4,12 @@ Wolvez2023/__init__.py
 Wolvez2023/ar_module.py
 Wolvez2023/arm.py
 Wolvez2023/bno055.py
-Wolvez2023/cl_powerplanner.py
 Wolvez2023/gps.py
 Wolvez2023/led.py
 Wolvez2023/libcam_module.py
 Wolvez2023/lora.py
-Wolvez2023/lora_setting.py
-Wolvez2023/micropyGPS.py
 Wolvez2023/motor.py
+Wolvez2023/motor_power_planner.py
 Wolvez2023.egg-info/PKG-INFO
 Wolvez2023.egg-info/SOURCES.txt
 Wolvez2023.egg-info/dependency_links.txt
