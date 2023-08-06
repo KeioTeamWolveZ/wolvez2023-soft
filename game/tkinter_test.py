@@ -9,11 +9,14 @@ import RPi.GPIO as GPIO
 
 class Tkmain():
     __run = False
+    __arm = True
     def __init__(self):
         GPIO.setwarnings(False)
         self.MotorR = Motor(6,5,13)
         self.MotorL = Motor(20,16,12)
         self.arm = Arm(23)
+        self.arm.setup()
+        self.arm.up()
         
         self.root = Tk()
         self.root.title('CONTROLLER')
@@ -102,6 +105,17 @@ class Tkmain():
             command=lambda: self.__left())
             # command=lambda: print('val:%4d' % self.val.get()))
         self.left.grid(row=2, column=1, padx=5, sticky=(E))
+        
+        
+        # Button
+        self.grasp = ttk.Button(
+            self.frame,
+            text='TRY!!',
+            width=10,
+            style="office.TButton",
+            command=lambda: self.arm_updown())
+            # command=lambda: print('val:%4d' % self.val.get()))
+        self.grasp.grid(row=2, column=2, padx=5, sticky=(E))
 
     def vup(self):
         if self.val.get() < 90:
@@ -118,6 +132,16 @@ class Tkmain():
         else:
             self.val.set(50)
             print(self.val.get())
+    
+    def arm_updown(self):
+        if not self.__arm:
+            self.__arm = True
+            print("ARM UP")
+            self.arm.up()
+        else:
+            self.__arm = False
+            print("ARM DOWN")
+            self.arm.down()
 
     def printer(self,a):
         print(a)
@@ -131,11 +155,13 @@ class Tkmain():
             self.__run = True
             self.MotorR.go(float(self.val.get()))
             self.MotorL.go(float(self.val.get()))
+            self.arm.up()
         else:
             print("STOP!")
             self.__run = False
             self.MotorR.stop()
             self.MotorL.stop()
+            self.arm.up()
 
     def __back(self):
         print("BACK!")
@@ -144,6 +170,7 @@ class Tkmain():
         time.sleep(0.05)
         self.MotorR.stop()
         self.MotorL.stop()
+        self.arm.up()
 
     def __right(self):
         print("TURN RIGHT!")
@@ -152,6 +179,7 @@ class Tkmain():
         time.sleep(0.05)
         self.MotorR.stop()
         self.MotorL.stop()
+        self.arm.up()
 
     def __left(self):
         print("TURN LEFT!")
@@ -160,6 +188,7 @@ class Tkmain():
         time.sleep(0.05)
         self.MotorR.stop()
         self.MotorL.stop()
+        self.arm.up()
         
     def tkstop(self):
         self.MotorR.stop()
