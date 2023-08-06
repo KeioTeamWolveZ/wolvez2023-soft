@@ -489,7 +489,7 @@ class Cansat():
             
 
             # change camera pint loop
-            if self.aprc_clear and not self.AR_checker and self.pint_count > 5 :
+            if self.aprc_clear and not self.ar_checker and self.pint_count > 5 :
                 self.pint_change_loop_count = 0
                 self.cam_pint = 10.5
                 while self.cam_pint > 5.0 and self.pint_change_loop_count < 3:
@@ -528,7 +528,7 @@ class Cansat():
                 detected_img, self.ar_info = self.tg.detect_marker(self.img)
                 self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
                 self.ar_checker = self.AR_checker["AR"]
-
+            if self.connecting_state == 1 and self.AR_checker["id"] in ["2","11"]: self.connecting_state = 0 # 青モジュールを落とした場合(id:2と11)、connecting_stateを0に戻して再び拾う
             print(self.ar_info)
             if self.AR_checker["AR"]:
                 self.vanish_c = 0 #喪失カウントをリセット
@@ -563,7 +563,7 @@ class Cansat():
                             self.RED_LED.led_off()
                             self.BLUE_LED.led_on()
                             self.GREEN_LED.led_off()
-                            self.arm_release(1300)
+                            self.arm_release(1650)
                             self.arm_grasping()
                             #SorF = self.checking(self.img,self.connecting_state)
                             self.connecting_state += 1

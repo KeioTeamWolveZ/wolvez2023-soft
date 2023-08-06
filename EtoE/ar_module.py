@@ -184,19 +184,20 @@ class Ar_cansat():
         if connecting_state == 0:
             if "2" in ar_info.keys():
                 self.aprc_AR = True
-                side = 'marker_R'
                 norm = ar_info['2']['norm']
                 target_id = '2'
             else: 
-                side = 'None'
                 norm = 0
                 self.aprc_AR = False
                 target_id = 100
 
         else:
-            if "5" in ar_info.keys() or "6" in ar_info.keys() or "7" in ar_info.keys():
+            if "2" in ar_info.keys():
                 self.aprc_AR = True
-                side = 'marker_L'
+                norm = ar_info['2']['norm']
+                target_id = '2'
+            elif "5" in ar_info.keys() or "6" in ar_info.keys() or "7" in ar_info.keys(): # マーカー追加予定(id:68)
+                self.aprc_AR = True
                 if "5" in ar_info.keys():
                     norm = ar_info['5']['norm']
                     target_id = '5'
@@ -208,7 +209,6 @@ class Ar_cansat():
                     target_id = '7'
             elif "3" in ar_info.keys() or "4" in ar_info.keys():
                 self.aprc_AR = True
-                side = 'marker_R'
                 if "4" in ar_info.keys():
                     norm = ar_info['4']['norm']
                     target_id = '4'
@@ -217,11 +217,10 @@ class Ar_cansat():
                     target_id = '3'
             else:
                 norm = 0
-                side = 'None'
                 self.aprc_AR = False
                 target_id = 100
         
-        return {"AR":self.aprc_AR, "side":side, "id":target_id, "norm":norm}
+        return {"AR":self.aprc_AR, "id":target_id, "norm":norm}
 
 
 class Target(Ar_cansat):
