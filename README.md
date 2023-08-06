@@ -55,7 +55,12 @@ git clone git@github.com:KeioTeamWolvez2023/wolvez2023-soft.git
   See details in [wiki](https://github.com/KeioTeamWolvez2023/wolvez2023-soft/wiki/%E6%96%B0%E8%A6%8FSD%E3%81%AE%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E6%96%B9%E6%B3%95#%E8%A8%AD%E5%AE%9A%E7%94%BB%E9%9D%A2%E3%81%A7%E3%81%AE%E8%A8%AD%E5%AE%9A) for setup.
 
 **3. Run**<br>
-If you want to run mission code, run `Testcode/EtoE/main.py`.<br>
+  Before run mission code, you may have to install our package `Wolvez2023`. <br>
+  Go to folder `EtoE/`, and enter bellow in terminal. <br>
+```
+  pip install -e ./wolvez2023_pkg/
+```
+  After all, if you want to run mission code, run `/EtoE/main.py`.<br>
 
 
 **4. Access Point Setup (When you need to connect with VNC viewer)**  
