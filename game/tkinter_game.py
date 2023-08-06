@@ -40,7 +40,7 @@ class Tkmain():
             length=200,
             from_=100,
             to=50,
-            command=lambda e: print('val:%4d' % self.val.get()))
+            command=lambda e: print('速度:%4d' % self.val.get()))
         self.sc.grid(row=2, column=0, sticky=(N, E, S, W))
         self.style = ttk.Style()
         self.style.configure("office.TButton", font=20, anchor="s")
@@ -106,48 +106,39 @@ class Tkmain():
             # command=lambda: print('val:%4d' % self.val.get()))
         self.left.grid(row=2, column=1, padx=5, sticky=(E))
         
-        
         # Button
         self.grasp = ttk.Button(
             self.frame,
             text='TRY!!',
             width=10,
             style="office.TButton",
-            command=lambda: self.arm_updown())
+            command=lambda: self.__arm_updown())
             # command=lambda: print('val:%4d' % self.val.get()))
         self.grasp.grid(row=2, column=2, padx=5, sticky=(E))
 
     def vup(self):
         if self.val.get() < 90:
             self.val.set(self.val.get() + 10)
-            print(self.val.get())
         else:
             self.val.set(100)
-            print(self.val.get())
+        print('速度:%4d' % self.val.get())
             
     def vdown(self):
         if self.val.get() > 50:
-            self.val.set(self.val.get() - 10)
             print(self.val.get())
         else:
             self.val.set(50)
-            print(self.val.get())
+        print('速度:%4d' % self.val.get())
     
-    def arm_updown(self):
+    def __arm_updown(self):
         if not self.__arm:
             self.__arm = True
-            print("ARM UP")
+            print("ARM UP!")
             self.arm.up()
         else:
             self.__arm = False
-            print("ARM DOWN")
+            print("ARM DOWN!")
             self.arm.down()
-
-    def printer(self,a):
-        print(a)
-
-    def tkstart(self):
-        self.root.mainloop()
 
     def __go(self):
         if not self.__run:
@@ -155,13 +146,12 @@ class Tkmain():
             self.__run = True
             self.MotorR.go(float(self.val.get()))
             self.MotorL.go(float(self.val.get()))
-            self.arm.up()
         else:
             print("STOP!")
             self.__run = False
             self.MotorR.stop()
             self.MotorL.stop()
-            self.arm.up()
+        self.arm.up()
 
     def __back(self):
         print("BACK!")
@@ -190,6 +180,9 @@ class Tkmain():
         self.MotorL.stop()
         self.arm.up()
         
+    def tkstart(self):
+        self.root.mainloop()
+
     def tkstop(self):
         self.MotorR.stop()
         self.MotorL.stop()

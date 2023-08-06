@@ -1,4 +1,4 @@
-from tkinter_test import Tkmain
+from tkinter_game import Tkmain
 import RPi.GPIO as GPIO
 
 if __name__ == '__main__':
