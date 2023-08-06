@@ -133,7 +133,7 @@ class Cansat():
         self.connected = False
         self.running_finish = False
         self.releasingstate = 0
-        self.connecting_state = 0
+        self.connecting_state = 1
         
         # state内変数初期設定
         self.estimate_norm = 100000
@@ -491,9 +491,10 @@ class Cansat():
 
             # change camera pint loop
             if self.aprc_clear and not self.ar_checker and self.pint_count > 5 :
+                print("here")
                 self.pint_change_loop_count = 0
                 self.cam_pint = 10.5
-                while self.cam_pint > 5.0 and self.pint_change_loop_count < 3:
+                while self.cam_pint > 3.0: # and self.pint_change_loop_count < 3:
                     if not self.ar_checker:
                         self.cam_pint -= 0.5
                         self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":self.cam_pint})
@@ -503,7 +504,7 @@ class Cansat():
                         self.cameraCount += 1
                         self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
                         #self.blk = self.pc2.red2blk(self.img)
-                        
+                        print(self.cam_pint)
                         detected_img, self.ar_info = self.tg.detect_marker(self.img)
                         self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
                         self.ar_checker = self.AR_checker["AR"]
@@ -519,7 +520,6 @@ class Cansat():
                 self.pint_change_loop_count = 0
 
             else:
-                self.pint_count = 0
                 # capture and detect markers
                 # self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":9})
                 self.cameraCount += 1
