@@ -1,5 +1,5 @@
 #Last Update 2023/08/06
-#Author : Masato Inoue
+#Author : MasatoInoue
 
 from tempfile import TemporaryDirectory
 from xml.dom.pulldom import default_bufsize
