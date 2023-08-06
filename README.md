@@ -3,7 +3,7 @@ Mission code in Python for Keio Wolve'Z CanSat project 2023
 
 ## Hardware Requirements
 - Microcomputer
-  - Raspberry Pi 4B
+  - [Raspberry Pi 4B](https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/spec.htm)
   <div align="left">
   <img src="https://www.iodata.jp/product/pc/raspberrypi/ud-rp4b/640/m.jpg" width="50%" title="Raspberry Pi 3B">
   </div>
