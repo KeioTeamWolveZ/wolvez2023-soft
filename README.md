@@ -5,7 +5,7 @@ Mission code in Python for Keio Wolve'Z CanSat project 2023
 - Microcomputer
   - Raspberry Pi 4B
   <div align="left">
-  <img src="https://user-images.githubusercontent.com/57528969/90947202-008d8980-e46f-11ea-964d-d67bf354345d.png" width="20%" title="Raspberry Pi 3B">
+  <img src="https://user-images.githubusercontent.com/57528969/90947202-008d8980-e46f-11ea-964d-d67bf354345d.png" width="50%" title="Raspberry Pi 3B">
   </div>
 - Sensors
     
