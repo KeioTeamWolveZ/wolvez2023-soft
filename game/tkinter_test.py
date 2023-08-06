@@ -1,15 +1,18 @@
 from tkinter import *
 from tkinter import ttk
+import time
 
 from motor import Motor
 from arm import Arm
+
+import RPi.GPIO as GPIO
 
 class Tkmain():
     __run = False
     def __init__(self):
         GPIO.setwarnings(False)
-        self.MotorR = motor.motor(6,5,13)
-        self.MotorL = motor.motor(20,16,12)
+        self.MotorR = Motor(6,5,13)
+        self.MotorL = Motor(20,16,12)
         self.arm = Arm(23)
         
         self.root = Tk()
@@ -38,6 +41,7 @@ class Tkmain():
         self.sc.grid(row=2, column=0, sticky=(N, E, S, W))
         self.style = ttk.Style()
         self.style.configure("office.TButton", font=20, anchor="s")
+        self.val.set(50)
 
         # Button
         self.faster = ttk.Button(
@@ -45,7 +49,7 @@ class Tkmain():
             text='はやい',
             width=10,
             style="office.TButton",
-            command=lambda: self.val)
+            command=lambda: self.vup())
             # command=lambda: print('val:%4d' % self.val.get()))
         self.faster.grid(row=0, column=0, padx=5, sticky=(E))
 
@@ -55,7 +59,7 @@ class Tkmain():
             text='おそい',
             width=10,
             style="office.TButton",
-            command=lambda: self.__go())
+            command=lambda: self.vdown())
             # command=lambda: print('val:%4d' % self.val.get()))
         self.slower.grid(row=4, column=0, padx=5, sticky=(E))
 
@@ -101,9 +105,19 @@ class Tkmain():
 
     def vup(self):
         if self.val.get() < 90:
-            self.val.value = self.val.get() + 10
+            self.val.set(self.val.get() + 10)
+            print(self.val.get())
         else:
-            self.val.value = 100
+            self.val.set(100)
+            print(self.val.get())
+            
+    def vdown(self):
+        if self.val.get() > 50:
+            self.val.set(self.val.get() - 10)
+            print(self.val.get())
+        else:
+            self.val.set(50)
+            print(self.val.get())
 
     def printer(self,a):
         print(a)
@@ -113,35 +127,49 @@ class Tkmain():
 
     def __go(self):
         if not self.__run:
-            MotorR.go(float(self.val.get()))
-            MotorL.go(float(self.val.get()))
+            print("RUN!")
+            self.__run = True
+            self.MotorR.go(float(self.val.get()))
+            self.MotorL.go(float(self.val.get()))
         else:
-            MotorR.stop()
-            MotorL.stop()
+            print("STOP!")
+            self.__run = False
+            self.MotorR.stop()
+            self.MotorL.stop()
 
     def __back(self):
-        MotorR.back(60)
-        MotorL.back(60)
+        print("BACK!")
+        self.MotorR.back(60)
+        self.MotorL.back(60)
         time.sleep(0.05)
-        MotorR.stop()
-        MotorL.stop()
+        self.MotorR.stop()
+        self.MotorL.stop()
 
     def __right(self):
-        MotorR.go(-float(self.val.get()))
-        MotorL.go(float(self.val.get()))
+        print("TURN RIGHT!")
+        self.MotorR.go(-float(self.val.get()))
+        self.MotorL.go(float(self.val.get()))
         time.sleep(0.05)
-        MotorR.stop()
-        MotorL.stop()
+        self.MotorR.stop()
+        self.MotorL.stop()
 
     def __left(self):
-        MotorR.go(float(self.val.get()))
-        MotorL.go(-float(self.val.get()))
+        print("TURN LEFT!")
+        self.MotorR.go(float(self.val.get()))
+        self.MotorL.go(-float(self.val.get()))
         time.sleep(0.05)
-        MotorR.stop()
-        MotorL.stop()
+        self.MotorR.stop()
+        self.MotorL.stop()
+        
+    def tkstop(self):
+        self.MotorR.stop()
+        self.MotorL.stop()
+        time.sleep(0.5)
+        GPIO.cleanup()
+        
 
 if __name__ == '__main__':
     tk = Tkmain()
     tk.scale_and_button()
     tk.tkstart()
-    print(tk.val.get())
+    tk.tkstop()
