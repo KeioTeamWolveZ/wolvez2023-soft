@@ -11,6 +11,7 @@ from typing import Union
 import sys
 import time
 import datetime
+from numpy import sin,cos,tan,pi
 
 arm_id = "1"
 
@@ -142,23 +143,7 @@ class Ar_cansat():
                                 color=(0,0,0),
                                 lineType=cv2.LINE_4)
                     
-                    cv2.putText(img,
-                                text = f"    x:{str(round(tvec[0]*100,2))} | y:{str(round(tvec[1]*100,2))} | z:{str(round(tvec[2]*100,2))}",
-                                org = (640,40+k*70),
-                                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                                fontScale = 0.5,
-                                thickness = 1,
-                                color=(0,0,0),
-                                lineType=cv2.LINE_4)
-                    
-                    cv2.putText(img,
-                                text = f"    roll:{str(round(rvec[0],2))} | pitch:{str(round(rvec[1],2))} | yaw:{str(round(rvec[2],2))}",
-                                org = (640,60+k*70),
-                                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                                fontScale = 0.5,
-                                thickness = 1,
-                                color=(0,0,0),
-                                lineType=cv2.LINE_4)"""
+                    """
                                 
                     #cv2.imshow('drawDetectedMarkers', img)
                     #cv2.waitKey(0)
@@ -181,40 +166,42 @@ class Ar_cansat():
         """
         side:str
         norm:float
+        self.aprc_AR = True
+        keys = ar_info.keys()
         if connecting_state == 0:
-            if "2" in ar_info.keys():
-                self.aprc_AR = True
+            if "2" in keys:
                 norm = ar_info['2']['norm']
                 target_id = '2'
+            elif "11" in keys:
+                norm = ar_info['11']['norm']
+                target_id = '11'
             else: 
                 norm = 0
                 self.aprc_AR = False
                 target_id = 100
 
         else:
-            if "2" in ar_info.keys():
-                self.aprc_AR = True
-                norm = ar_info['2']['norm']
-                target_id = '2'
-            elif "5" in ar_info.keys() or "6" in ar_info.keys() or "7" in ar_info.keys(): # マーカー追加予定(id:68)
-                self.aprc_AR = True
-                if "5" in ar_info.keys():
-                    norm = ar_info['5']['norm']
-                    target_id = '5'
-                elif "6" in ar_info.keys():
-                    norm = ar_info['6']['norm']
-                    target_id = '6'
-                else:
-                    norm = ar_info['7']['norm']
-                    target_id = '7'
-            elif "3" in ar_info.keys() or "4" in ar_info.keys():
-                self.aprc_AR = True
-                if "4" in ar_info.keys():
-                    norm = ar_info['4']['norm']
-                    target_id = '4'
-                else:
-                    norm = ar_info['3']['norm']
-                    target_id = '3'
+            if "2" in keys or "11" in keys:
+                if "2" in keys:
+                    norm = ar_info['2']['norm']
+                    target_id = '2'
+                elif "11" in keys:
+                    norm = ar_info['11']['norm']
+                    target_id = '11'
+            elif "4" in keys or "5" in keys or "6" in keys or "7" in keys: # マーカー追加予定(id:68)
+                if "3" in keys: ar_info.pop("3")
+                for i in ar_info.keys():
+                    facing = cos(ar_info[i]['roll']/180*pi)**2 + cos(ar_info[i]['yaw']/180*pi)**2
+                    dic = {i:facing}
+                ar_choice = max(dic.items(), key = lambda x:x[1])[0]
+                norm = ar_info[ar_choice]['norm']
+                target_id = ar_choice
+            elif "3" in keys:
+                norm = ar_info['3']['norm']
+                target_id = '3'
+            elif "68" in keys:
+                norm = ar_info['68']['norm']
+                target_id = '68'
             else:
                 norm = 0
                 self.aprc_AR = False
