@@ -12,8 +12,8 @@ class Tkmain():
     __arm = True
     def __init__(self):
         GPIO.setwarnings(False)
-        self.MotorR = Motor(6,5,13)
-        self.MotorL = Motor(20,16,12)
+        self.MotorL = Motor(6,5,13)
+        self.MotorR = Motor(20,16,12)
         self.arm = Arm(23)
         self.arm.setup()
         self.arm.up()
@@ -174,7 +174,7 @@ class Tkmain():
 
     def __right(self):
         print("TURN RIGHT!")
-        self.MotorR.go(-float(self.val.get()))
+        self.MotorR.back(float(self.val.get()))
         self.MotorL.go(float(self.val.get()))
         time.sleep(0.05)
         self.MotorR.stop()
@@ -184,7 +184,7 @@ class Tkmain():
     def __left(self):
         print("TURN LEFT!")
         self.MotorR.go(float(self.val.get()))
-        self.MotorL.go(-float(self.val.get()))
+        self.MotorL.back(float(self.val.get()))
         time.sleep(0.05)
         self.MotorR.stop()
         self.MotorL.stop()
