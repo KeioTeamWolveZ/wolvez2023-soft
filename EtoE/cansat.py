@@ -21,16 +21,6 @@ import shutil
 # import functions
 import Wolvez2023
 import constant as ct
-from cl_powerplanner import ColorPowerPlanner
-from AR_powerplanner import ARPowerPlanner
-from bno055 import BNO055
-from motor import motor
-from gps import GPS
-from lora import lora
-from led import led
-from arm import Arm
-from ar_module import Target
-from libcam_module import Picam
 
 """
 ステート説明
@@ -57,20 +47,7 @@ class Cansat():
         GPIO.setup(ct.const.SEPARATION_MOD1,GPIO.OUT) #焼き切り用のピンの設定
         GPIO.setup(ct.const.SEPARATION_MOD2,GPIO.OUT) #焼き切り用のピンの設定
         
-        # インスタンス生成用      
-        # self.bno055 = BNO055()
-        # self.MotorL = motor(ct.const.RIGHT_MOTOR_IN1_PIN,ct.const.RIGHT_MOTOR_IN2_PIN,ct.const.RIGHT_MOTOR_VREF_PIN)
-        # self.MotorR = motor(ct.const.LEFT_MOTOR_IN1_PIN,ct.const.LEFT_MOTOR_IN2_PIN, ct.const.LEFT_MOTOR_VREF_PIN)
-        # self.gps = GPS()
-        # self.lora = lora()
-        # self.arm = Arm(ct.const.SERVO_PIN)
-        # self.tg = Target()
-        # self.pc2 = Picam()
-        # self.cpp = ColorPowerPlanner()
-        # self.app = ARPowerPlanner()
-        # self.RED_LED = led(ct.const.RED_LED_PIN)
-        # self.BLUE_LED = led(ct.const.BLUE_LED_PIN)
-        # self.GREEN_LED = led(ct.const.GREEN_LED_PIN)
+        # インスタンス生成用
         self.bno055 = Wolvez2023.BNO055()
         self.MotorL = Wolvez2023.Motor(ct.const.RIGHT_MOTOR_IN1_PIN,ct.const.RIGHT_MOTOR_IN2_PIN,ct.const.RIGHT_MOTOR_VREF_PIN)
         self.MotorR = Wolvez2023.Motor(ct.const.LEFT_MOTOR_IN1_PIN,ct.const.LEFT_MOTOR_IN2_PIN, ct.const.LEFT_MOTOR_VREF_PIN)
