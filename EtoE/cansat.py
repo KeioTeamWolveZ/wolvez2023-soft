@@ -110,7 +110,8 @@ class Cansat():
         self.connected = False
         self.running_finish = False
         self.releasingstate = 0
-        self.connecting_state = 1
+        self.connecting_state = 0
+        self.change_size = 0 # new
         
         # state内変数初期設定
         self.estimate_norm = 100000
@@ -507,8 +508,17 @@ class Cansat():
                 self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
                 self.ar_checker = self.AR_checker["AR"]
             if self.connecting_state == 1 and self.AR_checker["id"] in ["2","11"]: self.connecting_state = 0 # 青モジュールを落とした場合(id:2と11)、connecting_stateを0に戻して再び拾う
+            
             print(self.ar_info)
+            print(f"id:{self.AR_checker['id']}")
+            
+            if self.change_size == 0 and pc2.size[1] != 1700:
+                self.pc2.change_size(1400, 1700, self.cam_pint)
+            elif self.change_size == 1 and pc2.size[1] != 1300:
+                self.pc2.change_size(1750, 1300, self.cam_pint)
+            
             if self.AR_checker["AR"]:
+                self.change_size += 1
                 self.vanish_c = 0 #喪失カウントをリセット
                 self.aprc_c = False #アプローチの仕方のbool
                 self.estimate_norm = self.AR_checker["norm"] #使u これself.いるん？？
@@ -547,6 +557,7 @@ class Cansat():
                             self.ar_count = 0
                             #if not SorF["clear"]:
                             #    self.connecting_state -= 1
+                            self.change_size = 0
                         elif self.connecting_state == 1:
                             self.RED_LED.led_on()
                             self.BLUE_LED.led_off()
@@ -596,6 +607,7 @@ class Cansat():
                                 '''
                             else:
                                 self.pint_count += 1
+                                self.change_size += 1
                                 self.move(plan_color["R"],plan_color["L"],0.04)
                                 # if more than once AR could be seen
                             self.rv, self.lv = plan_color["R"],plan_color["R"]
