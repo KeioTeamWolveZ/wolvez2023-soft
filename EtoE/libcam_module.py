@@ -24,6 +24,25 @@ class Picam():
         # self.picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous,"AfSpeed":controls.AfSpeedEnum.Fast})
         self.picam2.set_controls({"AfMode" : 0, "LensPosition" : 9})
         
+    def change_size(self,height, width, lensposition=9.5):
+        self.size - (height,width)
+        
+        self.stop()
+        
+        # setting picam2 up
+        self.picam2 = Picamera2()
+        config = self.picam2.create_preview_configuration(
+            main={"format": 'XRGB8888', "size": self.size})
+        self.picam2.align_configuration(config)
+        self.picam2.configure(config)
+        self.picam2.start()
+
+        # Libcamera's setting to use AF mode
+        self.picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous})
+
+        # Libcamera's setting to use AF mode (AFSpeed Fast)
+        self.picam2.set_controls({"AfMode" : 0, "LensPosition" : lensposition})
+        
     def capture(self, args, filename="test"):
         self.filename = filename
         """
