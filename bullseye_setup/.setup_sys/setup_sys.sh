@@ -3,7 +3,7 @@
 
 
 # turn pins off
-cp ./turn_off_pins.py /home/wolvez2023/Desktop/
+cp /home/wolvez2023/wolvez2023-soft/bullseye_setup/.setup_sys/turn_off_pins.py /home/wolvez2023/Desktop/
 touch /etc/systemd/system/pin_off.service
 
 sudo cat > /etc/systemd/system/pin_off.service <<EOF

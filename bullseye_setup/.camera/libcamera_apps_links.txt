@@ -17,3 +17,9 @@ package_download_links["bullseye-v5"]="https://github.com/ArduCAM/Arducam-Pivari
 
 package_names["bullseye-arm64-v5"]="libcamera-apps_0.git20230309+4def288-1_arm64.deb"
 package_download_links["bullseye-arm64-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-apps-v0.0.5/libcamera-apps_0.git20230309+4def288-1_arm64.deb"
+
+package_names["bullseye-v5"]="libcamera-apps_1.2.1-1_armhf.deb"
+package_download_links["bullseye-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-apps-v0.0.5/libcamera-apps_1.2.1-1_armhf.deb"
+
+package_names["bullseye-arm64-v5"]="libcamera-apps_1.2.1-1_arm64.deb"
+package_download_links["bullseye-arm64-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-apps-v0.0.5/libcamera-apps_1.2.1-1_arm64.deb"

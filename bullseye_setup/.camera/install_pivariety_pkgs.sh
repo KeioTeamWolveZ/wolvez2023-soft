@@ -379,31 +379,37 @@ else
 fi
 
 if [[ (-z $pkg_name) || (-z $download_link) ]]; then
-    verlte '6.1.19' $VERSION
-    if [ $? == 0 ]; then
-        package=$(echo $package | cut -d'_' -f1)
-        if [ $package == "imx519" ]; then
-            sudo sh -c 'echo dtoverlay=imx519 >> /boot/config.txt'
-        elif [ $package == "64mp" ]; then
-            sudo sh -c 'echo dtoverlay=arducam-64mp >> /boot/config.txt'
-        elif [ $package == "kernel" ]; then
-            sudo sh -c 'echo dtoverlay=arducam-pivariety >> /boot/config.txt'
-        fi
-        exit -1
+
+    package=$(echo $package | cut -d'_' -f1)
+    if [ $VERSION == '6.1.21' -a $package == "64mp" ]; then
+       echo "64mp pdaf"
     else
-        echo -e "${RED}"
-        echo -e "Cannot find the corresponding package, please send the following information to support@arducam.com"
-        echo -e "Hardware Revision: ${rev}"
-        echo -e "Kernel Version: ${kernel}"
-        echo -e "Package: ${package} -- ${pkg_version}"
+        verlte '6.1.19' $VERSION
+        if [ $? == 0 ]; then
+            package=$(echo $package | cut -d'_' -f1)
+            if [ $package == "imx519" ]; then
+                sudo sh -c 'echo dtoverlay=imx519 >> /boot/config.txt'
+            elif [ $package == "64mp" ]; then
+                sudo sh -c 'echo dtoverlay=arducam-64mp >> /boot/config.txt'
+            elif [ $package == "kernel" ]; then
+                sudo sh -c 'echo dtoverlay=arducam-pivariety >> /boot/config.txt'
+            fi
+            exit -1
+        else
+            echo -e "${RED}"
+            echo -e "Cannot find the corresponding package, please send the following information to support@arducam.com"
+            echo -e "Hardware Revision: ${rev}"
+            echo -e "Kernel Version: ${kernel}"
+            echo -e "Package: ${package} -- ${pkg_version}"
 
-        if [[ $package == *"kernel_driver"* ]]; then
-            echo -e "You are using an unsupported kernel version, please install the official SD Card image(do not execute rpi-update):"
-            echo -e "https://www.raspberrypi.com/software/operating-systems/"
+            if [[ $package == *"kernel_driver"* ]]; then
+                echo -e "You are using an unsupported kernel version, please install the official SD Card image(do not execute rpi-update):"
+                echo -e "https://www.raspberrypi.com/software/operating-systems/"
+            fi
+
+            echo -e "${NC}"
+            exit -1
         fi
-
-        echo -e "${NC}"
-        exit -1
     fi
 fi
 
@@ -456,3 +462,4 @@ if [ $? -ne 0 ]; then
     echo -e "${RED}Unknown error, please send the error message to support@arducam.com${NC}"
     exit -1
 fi
+

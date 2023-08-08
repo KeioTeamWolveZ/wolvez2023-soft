@@ -73,8 +73,20 @@ package_download_links["bullseye-v5"]="https://github.com/ArduCAM/Arducam-Pivari
 package_names["bullseye-arm64-v5"]="libcamera0_0.git20230321+74d023d8-1_arm64.deb"
 package_download_links["bullseye-arm64-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-v0.0.5/libcamera0_0.git20230321+74d023d8-1_arm64.deb"
 
-package_names["bullseye-v5"]="libcamera0_0_git20230512+8689dd6b-1_armhf.deb"
+package_names["bullseye-v5"]="libcamera0_0_git20230512+8689dd6b-1_armhf"
 package_download_links["bullseye-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-v0.0.5/libcamera0_0_git20230512+8689dd6b-1_armhf.deb"
 
-package_names["bullseye-arm64-v5"]="libcamera0_0_git20230512+8689dd6b-1_arm64.deb"
+package_names["bullseye-arm64-v5"]="libcamera0_0_git20230512+8689dd6b-1_arm64"
 package_download_links["bullseye-arm64-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-v0.0.5/libcamera0_0_git20230512+8689dd6b-1_arm64.deb"
+
+package_names["bullseye-v5"]="libcamera0_0_git20230720+d2ae87e6-1_armhf.deb"
+package_download_links["bullseye-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-v0.0.5/libcamera0_0_git20230720+d2ae87e6-1_armhf.deb"
+
+package_names["bullseye-arm64-v5"]="libcamera0_0_git20230720+d2ae87e6-1_arm64.deb"
+package_download_links["bullseye-arm64-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-v0.0.5/libcamera0_0_git20230720+d2ae87e6-1_arm64.deb"
+
+package_names["bullseye-v5"]="libcamera0_0_git20230724+ad9428b4-1_armhf.deb"
+package_download_links["bullseye-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-v0.0.5/libcamera0_0_git20230724+ad9428b4-1_armhf.deb"
+
+package_names["bullseye-arm64-v5"]="libcamera0_0_git20230724+ad9428b4-1_arm64.deb"
+package_download_links["bullseye-arm64-v5"]="https://github.com/ArduCAM/Arducam-Pivariety-V4L2-Driver/releases/download/libcamera-v0.0.5/libcamera0_0_git20230724+ad9428b4-1_arm64.deb"
