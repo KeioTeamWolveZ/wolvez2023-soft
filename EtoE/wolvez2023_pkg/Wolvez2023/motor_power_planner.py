@@ -12,7 +12,7 @@ class ARPowerPlanner():
     def __init__(self):
         self.arm_id = "1"
         # 各マーカーに対するxg,yg,zg
-        self.marker_goal = {"2":[0.0,0.0,0.01],"3":[0,0.001,0.038],"4":[0,0.042,-0.005],"5":[0,0.042,-0.005],"6":[0,0.042,-0.005],"7":[0,0.042,-0.005],"10":[1,1,1],"68":[0,0,-0.06]}
+        self.marker_goal = {"2":[0.0,0.025,-0.023],"3":[0,0.001,0.038],"4":[0.0,0.042,-0.005],"5":[0,0.042,-0.005],"6":[0,0.042,-0.005],"7":[0,0.043,-0.01],"11":[0.0,0.025,-0.0165],"68":[0,0,-0.06]}
 
     def goal(self,ar_info,id):
         """
@@ -50,7 +50,9 @@ class ARPowerPlanner():
             else:
                 marker_1 = np.array([0.0353238,0.00329190,0.15313373])
         else:
-            marker_1 = np.array([0.003606,-0.015277,0.138732])
+            # marker_1 = np.array([0.003606,-0.015277,0.138732])
+            marker_1 = np.array([0.01514905,-0.022143012,0.12747785])
+            # marker_1 = np.array([0.02100412,-0.01784624,0.130171312]) tansi zika
         vec, distance = self.__targetting(marker_1,goal_point)
         #print(f"vec:{vec[2]}")
         vec[2] = self.calc_t_distance(id,ar_info, vec, distance)

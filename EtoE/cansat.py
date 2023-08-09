@@ -114,6 +114,7 @@ class Cansat():
         self.change_size = 0 # new
         
         # state内変数初期設定
+        self.cam_pint = 9
         self.estimate_norm = 100000
         self.ar_info = {}
         self.cl_data = [0,0,0]
@@ -445,6 +446,10 @@ class Cansat():
 
     def connecting(self):
         if self.connecting_state == 2:
+            self.arm.middle()
+            self.cameraCount += 1
+            self.img = self.pc2.capture(0,self.results_img_dir+f'/{self.cameraCount}')
+            detected_img, self.ar_info = self.tg.detect_marker(self.img)
             SorF = self.checking(self.img,self.connecting_state-1)
             if SorF["Time_clear"]:
                 self.arm.up()
@@ -468,6 +473,10 @@ class Cansat():
 
 
             # change camera pint loop
+            # if self.change_size == 0 and self.pc2.size[1] != 1700:
+                # self.pc2.change_size(1400, 1700, self.cam_pint)
+            # elif self.change_size == 1 and self.pc2.size[1] != 1300:
+                # self.pc2.change_size(1750, 1300, self.cam_pint)
             if self.aprc_clear and not self.ar_checker and self.pint_count > 5 :
                 print("here")
                 self.pint_change_loop_count = 0
@@ -490,7 +499,7 @@ class Cansat():
                         break
                     self.pint_change_loop_count += 1
                 if not self.ar_checker: # 探索しても見つからなかったとき
-                    self.cam_pint = 9
+                    self.cam_pint = self.cam_pint
                     self.pc2.picam2.set_controls({"AfMode":0,"LensPosition":self.cam_pint})
                 
                 # ループを終えたら0に戻す 
@@ -511,11 +520,6 @@ class Cansat():
             
             print(self.ar_info)
             print(f"id:{self.AR_checker['id']}")
-            
-            if self.change_size == 0 and pc2.size[1] != 1700:
-                self.pc2.change_size(1400, 1700, self.cam_pint)
-            elif self.change_size == 1 and pc2.size[1] != 1300:
-                self.pc2.change_size(1750, 1300, self.cam_pint)
             
             if self.AR_checker["AR"]:
                 self.change_size += 1
@@ -555,24 +559,16 @@ class Cansat():
                             self.arm_grasping()
                             self.connecting_state += 1
                             self.ar_count = 0
-                            #if not SorF["clear"]:
-                            #    self.connecting_state -= 1
                             self.change_size = 0
                         elif self.connecting_state == 1:
                             self.RED_LED.led_on()
                             self.BLUE_LED.led_off()
                             self.GREEN_LED.led_off()
                             self.arm_release(1650)
+                            self.arm_grasping()
                             self.checking_time = time.time()
-                            SorF = self.checking(self.img,self.connecting_state)
                             self.connecting_state += 1
-                            self.arm.up()
-                            # self.arm.down()
-                            # self.arm.up()
-                            print(f'connect_clear: {SorF["clear"]}')
-                            # if not SorF["clear"]:
-                                # self.connecting_state -= 2
-                            # 焼き切りを待つ時間をここで使いたい（10秒）
+                            self.arm.middle()
                             
             else:
                 
@@ -681,11 +677,8 @@ class Cansat():
     def checking(self,frame,connecting_state):
         detected = False
         clear = False
-        if connecting_state == 0:
-            color_num = connecting_state
-        else:
-            color_num = 99 # 色変えるならここ変更(cppも)
-            self.cpp.AREA_RATIO_THRESHOLD = 0.0000005
+        color_num = 99 # 色変えるならここ変更(cppも)
+        self.cpp.AREA_RATIO_THRESHOLD = 0.0000005
             #time.sleep(10.0) # 焼き切り時間用いつか変更する
         # try:
             # arm.setup()
@@ -696,21 +689,12 @@ class Cansat():
         if time.time() - self.checking_time > ct.const.MODULE_SEPARATION_TIME_THRE:
             time_clear = True
             pos = self.cpp.find_specific_color(frame,self.cpp.AREA_RATIO_THRESHOLD,self.cpp.LOW_COLOR,self.cpp.HIGH_COLOR,color_num)
-            if pos is not None:
+            if pos is not None or "7" in self.ar_info.keys() :
                 self.cl_data = pos
                 print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
                 detected = True
-                if color_num == 0:
-                    if pos[1] > ct.const.CONNECTED_HEIGHT_THRE: # パラメータ未調整
-                        clear = True
-                        time.sleep(2.0)
-                        print('===========\nGRASPED\n===========')
-                    else:
-                        self.arm.middle()
-                        time.sleep(1)
-                        print('===========\nFAILED\n===========')
-                else:
-                    clear = True
+                clear = True
+                print('===========\nDone Connection\n===========')
             else:
                 self.cl_data = ["none", "none", "none"]
                 print('===========\nNO LOOK\n===========')
