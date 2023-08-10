@@ -46,6 +46,21 @@ class Tkmain():
         self.style.configure("office.TButton", font=20, anchor="s")
         self.val.set(50)
 
+        # スケールの作成
+        self.val_arm = DoubleVar()
+        self.sc_arm = ttk.Scale(
+            self.frame,
+            variable=self.val_arm,
+            orient=VERTICAL,
+            length=200,
+            from_=1650,
+            to=950,
+            command=lambda e: print('ARM HEIGHT:%4d' % self.val_arm.get()))
+        self.sc_arm.grid(row=2, column=4, sticky=(N, E, S, W))
+        self.style = ttk.Style()
+        self.style.configure("office.TButton", font=20, anchor="s")
+        self.val_arm.set(1650)
+
         # Button
         self.faster = ttk.Button(
             self.frame,
@@ -131,14 +146,15 @@ class Tkmain():
         print('速度:%4d' % self.val.get())
     
     def __arm_updown(self):
-        if not self.__arm:
-            self.__arm = True
-            print("ARM UP!")
-            self.arm.up()
-        else:
-            self.__arm = False
-            print("ARM DOWN!")
-            self.arm.down()
+        # if not self.__arm:
+            # self.__arm = True
+            # print("ARM UP!")
+            # self.arm.up()
+        # else:
+            # self.__arm = False
+            # print("ARM DOWN!")
+            # self.arm.down()
+        self.arm.move(self.val_arm.get())
 
     def __go(self):
         if not self.__run:
@@ -151,7 +167,8 @@ class Tkmain():
             self.__run = False
             self.MotorR.stop()
             self.MotorL.stop()
-        self.arm.up()
+        # self.arm.up()
+        self.arm.move(self.val_arm.get())
 
     def __back(self):
         print("BACK!")
@@ -160,7 +177,8 @@ class Tkmain():
         time.sleep(0.05)
         self.MotorR.stop()
         self.MotorL.stop()
-        self.arm.up()
+        # self.arm.up()
+        self.arm.move(self.val_arm.get())
 
     def __right(self):
         print("TURN RIGHT!")
@@ -169,7 +187,8 @@ class Tkmain():
         time.sleep(0.05)
         self.MotorR.stop()
         self.MotorL.stop()
-        self.arm.up()
+        # self.arm.up()
+        self.arm.move(self.val_arm.get())
 
     def __left(self):
         print("TURN LEFT!")
@@ -178,7 +197,8 @@ class Tkmain():
         time.sleep(0.05)
         self.MotorR.stop()
         self.MotorL.stop()
-        self.arm.up()
+        # self.arm.up()
+        self.arm.move(self.val_arm.get())
         
     def tkstart(self):
         self.root.mainloop()

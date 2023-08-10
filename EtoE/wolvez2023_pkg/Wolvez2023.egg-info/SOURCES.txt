@@ -1,5 +1,4 @@
 setup.py
-Wolvez2023/AR_powerplanner.py
 Wolvez2023/__init__.py
 Wolvez2023/ar_module.py
 Wolvez2023/arm.py
