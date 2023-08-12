@@ -22,8 +22,8 @@ import time
 """
 
 
-start_state = 6
-end_state = 8
+start_state = 0
+end_state = 6
 
 cansat = Cansat(start_state)
 #cansat.arm.setup()

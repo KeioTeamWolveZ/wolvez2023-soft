@@ -32,7 +32,7 @@ class Picam():
         self.lensposition = lensposition
         
         self.stop()
-        setup_cam()
+        self.setup_cam()
         
         # # setting picam2 up
         # self.picam2 = Picamera2()
