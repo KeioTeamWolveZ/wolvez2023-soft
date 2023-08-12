@@ -14,7 +14,7 @@ GPIO.output(pin1,0) #焼き切りが危ないのでlowにしておく
 try:
     print("Separating...")
     GPIO.output(pin1,1) #電圧をHIGHにして焼き切りを行う
-    time.sleep(8) #継続時間を指定
+    time.sleep(10) #継続時間を指定
     GPIO.output(pin1,0) #電圧をLOWにして焼き切りを終了する
     GPIO.cleanup()
     print("Separation done")
