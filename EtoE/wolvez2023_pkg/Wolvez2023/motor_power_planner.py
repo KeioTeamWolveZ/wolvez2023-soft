@@ -51,7 +51,7 @@ class ARPowerPlanner():
                 marker_1 = np.array([0.0353238,0.00329190,0.15313373])
         else:
             # marker_1 = np.array([0.003606,-0.015277,0.138732])
-            marker_1 = np.array([0.01514905,-0.022143012,0.12747785])
+            marker_1 = np.array([0.0139197,-0.0277264,0.1285234])
             # marker_1 = np.array([0.02100412,-0.01784624,0.130171312]) tansi zika
         vec, distance = self.__targetting(marker_1,goal_point)
         #print(f"vec:{vec[2]}")
