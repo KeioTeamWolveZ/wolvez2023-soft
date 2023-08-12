@@ -1,11 +1,11 @@
 import RPi.GPIO as GPIO
 import time
 
-#pin1 = 25
-#pin2 = 24
-#pin3 = 17
+#pin1 = 25 red
+#pin2 = 24 para
+#pin3 = 17 blue
 
-pin1 = 25
+pin1 = 17
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pin1,GPIO.OUT) #焼き切り用のピンの設定tv 
