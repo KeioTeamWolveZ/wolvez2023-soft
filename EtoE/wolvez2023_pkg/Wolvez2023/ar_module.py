@@ -26,7 +26,7 @@ class Ar_cansat():
     ## must be changed by id
 #     marker_length = 0.009 # [m]
     #marker_length = 0.02 # [m]
-    id_set = [1,2,3,4,5,6,7,8,9,10,11,68]
+    id_set = [1,2,3,4,5,6,7,8,9,10,11,16,68]
     def __init__(self):
         #レンズの性質などの内部パラメータ(今回はすでに行っている)
         self.camera_matrix = np.load("wolvez2023_pkg/Wolvez2023/mtx.npy")
@@ -34,7 +34,7 @@ class Ar_cansat():
         # マーカーの辞書選択
         self.dictionary = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)  #ARマーカーの生成に使用
         #aruco.customDictionary(nMakers(ID数),Markersize,baseDictionary(基本となるディクショナリ))で独自のディクショナリ作成も可能
-        self.id_size = {1:0.00998,2:0.00998,3:0.00998,4:0.00998,5:0.00998,6:0.00998,7:0.025,8:0.025,9:0.01,10:0.01,11:0.00998,68:0.00998}
+        self.id_size = {1:0.00998,2:0.00998,3:0.00998,4:0.00998,5:0.00998,6:0.00998,7:0.025,8:0.025,9:0.01,10:0.01,11:0.00998,16:0.00998,68:0.00998}
         self.debug_mode = False
         self.estimate_norm = 1
         self.aprc_AR = False
@@ -175,19 +175,25 @@ class Ar_cansat():
             elif "11" in keys:
                 norm = ar_info['11']['norm']
                 target_id = '11'
+            elif "16" in keys:
+                norm = ar_info['16']['norm']
+                target_id = '16'
             else: 
                 norm = 0
                 self.aprc_AR = False
                 target_id = 100
 
         else:
-            if "2" in keys or "11" in keys:
+            if "2" in keys or "11" in keys or "16" in keys:
                 if "2" in keys:
                     norm = ar_info['2']['norm']
                     target_id = '2'
                 elif "11" in keys:
                     norm = ar_info['11']['norm']
                     target_id = '11'
+                elif "16" in keys:
+                    norm = ar_info['16']['norm']
+                    target_id = '16'
             elif "4" in keys or "5" in keys or "6" in keys: # マーカー追加予定(id:68)
                 if "3" in keys: ar_info.pop("3")
                 if "7" in keys: ar_info.pop("7")

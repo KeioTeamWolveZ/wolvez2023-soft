@@ -516,8 +516,8 @@ class Cansat():
                 detected_img, self.ar_info = self.tg.detect_marker(self.img)
                 self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
                 self.ar_checker = self.AR_checker["AR"]
-            if self.connecting_state == 1 and self.AR_checker["id"] in ["2","11"]:
-                self.connecting_state = 0 # 青モジュールを落とした場合(id:2と11)、connecting_stateを0に戻して再び拾う
+            if self.connecting_state == 1 and self.AR_checker["id"] in ["2","11","16"]:
+                self.connecting_state = 0 # 青モジュールを落とした場合(id:2と11and16)、connecting_stateを0に戻して再び拾う
                 self.move(-60,-60,0.1) # back and retry
             
             print(self.ar_info)
