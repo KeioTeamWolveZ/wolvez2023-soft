@@ -144,13 +144,23 @@ class Ar_cansat():
                                 lineType=cv2.LINE_4)
                     
                     """
-                                
+                    
+                    
+                    if str(i) == "16" and "16" in self.ar_info.keys():
+                        norm_pre = self.ar_info["16"]["norm"]
+                        norm_new = self.norm_tvec
+                        if norm_pre >= norm_new:
+                            del self.ar_info["16"]
+                            self.ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2],'norm':self.norm_tvec,'rvec':rvec}
+                        else:
+                            pass
                     #cv2.imshow('drawDetectedMarkers', img)
                     #cv2.waitKey(0)
                     #cv2.destroyAllWindows()
-                    self.ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2],'norm':self.norm_tvec,'rvec':rvec}
+                    else:    
+                        self.ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2],'norm':self.norm_tvec,'rvec':rvec}
                     # self.ar_info.append(info)
-                    
+            
             
             # cv2.imwrite("detected.jpg",detected_img)
             # cv2.imwrite("axises.jpg",img)
