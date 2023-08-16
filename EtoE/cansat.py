@@ -516,7 +516,9 @@ class Cansat():
                 detected_img, self.ar_info = self.tg.detect_marker(self.img)
                 self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
                 self.ar_checker = self.AR_checker["AR"]
-            if self.connecting_state == 1 and self.AR_checker["id"] in ["2","11"]: self.connecting_state = 0 # 青モジュールを落とした場合(id:2と11)、connecting_stateを0に戻して再び拾う
+            if self.connecting_state == 1 and self.AR_checker["id"] in ["2","11"]:
+                self.connecting_state = 0 # 青モジュールを落とした場合(id:2と11)、connecting_stateを0に戻して再び拾う
+                self.move(-60,-60,0.1) # back and retry
             
             print(self.ar_info)
             print(f"id:{self.AR_checker['id']}")
@@ -650,6 +652,13 @@ class Cansat():
             return
     
     def arm_grasping(self):
+        arm_start, arm_end = 1300, 1300
+        if self.connecting_state == 0:
+            arm_start = 1000
+            arm_end = 1650
+        else:
+            arm_atart = 1100
+            arm_end = 1400
         # try:
             # arm.setup()
         # except:
@@ -657,7 +666,7 @@ class Cansat():
         self.arm.down()
         self.arm.move(1000)
         time.sleep(3)
-        for i in range(1000,1650,15):
+        for i in range(arm_start,arm_end,15):
             self.arm.move(i)
             time.sleep(0.1)
         time.sleep(1)
@@ -691,7 +700,7 @@ class Cansat():
             pos = self.cpp.find_specific_color(frame,self.cpp.AREA_RATIO_THRESHOLD,self.cpp.LOW_COLOR,self.cpp.HIGH_COLOR,color_num)
             if pos is not None or "7" in self.ar_info.keys() :
                 self.cl_data = pos
-                print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
+                #print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
                 detected = True
                 clear = True
                 print('===========\nDone Connection\n===========')
