@@ -49,10 +49,12 @@ class ARPowerPlanner():
             if self.arm_id in ar_info.keys():
                 marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
             else:
-                marker_1 = np.array([0.0353238,0.00329190,0.15313373])
+                # marker_1 = np.array([0.0353238,0.00329190,0.15313373])
+                marker_1 = np.array([0.03198910,-4.099522998271e-05,0.14049569])
+
         else:
             # marker_1 = np.array([0.003606,-0.015277,0.138732])
-            marker_1 = np.array([0.0139197,-0.0277264,0.1285234])
+            marker_1 = np.array([0.01506994,-0.025308714,0.131383294])
             # marker_1 = np.array([0.02100412,-0.01784624,0.130171312]) tansi zika
         vec, distance = self.__targetting(marker_1,goal_point)
         #print(f"vec:{vec[2]}")
