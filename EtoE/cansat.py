@@ -859,31 +859,6 @@ class Cansat():
 #             print("ゴール方向："+str(direction_goal)+" -> 左に曲がりたい")
         return direction_goal
     
-    def safe_or_not(self,lower_risk):
-        """
-        ・入力:下半分のwindowのリスク行列（3*1または1*3？ここはロバストに作ります）
-        ・出力:危険=1、安全=0の(入力と同じ次元)
-        """
-        self.threshold_risk = np.average(np.array(self.risk_list_below))+2*np.std(np.array(self.risk_list_below))
-#         if len(self.risk_list_below)<=100:
-#             self.threshold_risk = np.average(np.array(self.risk_list_below))+2*np.std(np.array(self.risk_list_below))
-#         else:
-#             self.threshold_risk = np.average(np.array(self.risk_list_below[-100:]))+2*np.std(np.array(self.risk_list_below[-100:]))
-        
-        try:
-            self.max_risk=np.max(np.array(self.risk_list_below))
-#             if len(self.risk_list_below)<=100:
-#                 self.max_risk=np.max(np.array(self.risk_list_below))
-#             else:
-#                 self.max_risk=np.max(np.array(self.risk_list_below[-100:]))
-            
-        except Exception:
-            self.max_risk=1000
-        answer_mtx=np.zeros(3)
-        for i, risk_scaler in enumerate(lower_risk):
-            if risk_scaler >= self.threshold_risk or risk_scaler >= self.max_risk:
-                answer_mtx[i]=1
-        return answer_mtx
      
     def sendLoRa(self): #通信モジュールの送信を行う関数
         datalog = str(self.state)+ ","\
