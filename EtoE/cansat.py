@@ -95,7 +95,7 @@ class Cansat():
         self.ar_count = 0
         self.vanish_c = 0
         self.gpscount = 0
-        
+        self.mirrer_count = 0
         
         # state管理用変数初期化
         self.startgps_lon=[]
@@ -112,6 +112,7 @@ class Cansat():
         self.releasingstate = 0
         self.connecting_state = 0
         self.change_size = 0 # new
+        self.mirrer = True 
         
         # state内変数初期設定
         self.cam_pint = 9
@@ -241,6 +242,9 @@ class Cansat():
         self.ax=round(self.bno055.ax,3)
         self.ay=round(self.bno055.ay,3)
         self.az=round(self.bno055.az,3)
+        self.gx=round(self.bno055.gx,3)
+        self.gy=round(self.bno055.gy,3)
+        self.gz=round(self.bno055.gz,3)
         self.ex=round(self.bno055.ex,3)
         self.lat = round(float(self.gps.Lat),5)
         self.lon = round(float(self.gps.Lon),5)
@@ -343,11 +347,20 @@ class Cansat():
 
                 self.stuck_detection()
 
-            if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #10秒間モータ回して分離シートから十分離れる
+            if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #15秒間モータ回して分離シートから十分離れる
                 self.MotorR.stop()
                 self.MotorL.stop()
-                self.landstate = 2
-                print("\n\n=====The arm was calibrated=====\n\n")
+                self.mirrer_checker()
+                if self.mirrer_count > ct.const.MIRRER_COUNT_THRE:
+                    self.stuck_detection()
+                    self.pre_motorTime = time.time()
+                    self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
+                    self.MotorL.go(ct.const.LANDING_MOTOR_VREF +7)
+                elif self.mirrer:
+                    pass
+                else:
+                    self.landstate = 2
+                    print("\n\n=====The arm was calibrated=====\n\n")
                 #self.state = 4
                 #self.laststate = 4
             
@@ -376,7 +389,15 @@ class Cansat():
             #        self.buff = -0.2
             #   else:
             #       self.arm_calibCount += 1
-  
+    def mirrer_checker(self):
+        if self.gy < 0:
+            self.mirrer_count += 1
+            self.mirrer = True 
+        else:
+            self.mirrer_count = 0
+            self.mirrer = False 
+        
+        
     def first_releasing(self):
         if self.modu_sepaTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
             self.modu_sepaTime = time.time()
