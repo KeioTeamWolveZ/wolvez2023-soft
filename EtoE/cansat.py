@@ -112,7 +112,7 @@ class Cansat():
         self.releasingstate = 0
         self.connecting_state = 0
         self.change_size = 0 # new
-        self.mirrer = True 
+        self.mirrer = False 
         
         # state内変数初期設定
         self.cam_pint = 9
@@ -155,6 +155,9 @@ class Cansat():
                   + "ax:"+str(round(self.ax,6)).rjust(6) + ","\
                   + "ay:"+str(round(self.ay,6)).rjust(6) + ","\
                   + "az:"+str(round(self.az,6)).rjust(6) + ","\
+                  + "gx:"+str(round(self.gx,6)).rjust(6) + ","\
+                  + "gy:"+str(round(self.gy,6)).rjust(6) + ","\
+                  + "gz:"+str(round(self.gz,6)).rjust(6) + ","\
                   + "q:" + str(self.ex).rjust(6) + ","\
                   + "rV:" + str(round(self.MotorR.velocity,2)).rjust(4) + ","\
                   + "lV:" + str(round(self.MotorL.velocity,2)).rjust(4) + ","\
@@ -174,11 +177,17 @@ class Cansat():
                   + "Camera:" + str(self.cameraCount)
         if self.state == 3:
             datalog = datalog + ","\
-                 + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
-                 + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
+                 + "rV:"+str(round(self.rv,3)).rjust(6) + ","\
+                 + "lV:"+str(round(self.lv,3)).rjust(6) + ","\
                  + "Color-Approach:" + str(self.cl_checker) + ","\
                  + "Color-data: x:" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
                  + "Color-move:" + str(self.move_clplan)
+            if self.landstate == 1:
+                datalog = datalog + ","\
+                     + "gx:"+str(self.bno055.gx).rjust(6) + ","\
+                     + "gy:"+str(self.bno055.gy).rjust(6) + ","\
+                     + "gz:"+str(self.bno055.gz).rjust(6) + ","\
+                     + "mirrer-detection:"+str(self.mirrer)
         elif self.state == 6:
            datalog = datalog + ","\
                  + "rV:"+str(round(self.rv,3)).rjust(6) + ","\
@@ -341,21 +350,28 @@ class Cansat():
             if not self.plan_color["Detected_tf"]:
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF +7)
+                self.rv = ct.const.LANDING_MOTOR_VREF
+                self.lv = ct.const.LANDING_MOTOR_VREF
             else:
                 self.MotorR.go(self.plan_color["R"])
                 self.MotorL.go(self.plan_color["L"])
-
+                self.rv = self.plan_color["R"]
+                self.lv = self.plan_color["L"]
                 self.stuck_detection()
 
-            if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #15秒間モータ回して分離シートから十分離れる
+            if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #10秒間モータ回して分離シートから十分離れる
                 self.MotorR.stop()
                 self.MotorL.stop()
+                self.rv = 0
+                self.lv = 0
                 self.mirrer_checker()
                 if self.mirrer_count > ct.const.MIRRER_COUNT_THRE:
+                    self.mirrer_count = 0
                     self.stuck_detection()
                     self.pre_motorTime = time.time()
                     self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                     self.MotorL.go(ct.const.LANDING_MOTOR_VREF +7)
+                    
                 elif self.mirrer:
                     pass
                 else:
@@ -390,7 +406,7 @@ class Cansat():
             #   else:
             #       self.arm_calibCount += 1
     def mirrer_checker(self):
-        if self.gy < 0:
+        if self.gz < 5:
             self.mirrer_count += 1
             self.mirrer = True 
         else:
@@ -881,7 +897,7 @@ class Cansat():
             if self.stuckTime == 0:
                 self.stuckTime = time.time()
             
-            if self.countstuckLoop > ct.const.STUCK_COUNT_THRE: #加速度が閾値以下になるケースがある程度続いたらスタックと判定
+            if self.countstuckLoop > ct.const.STUCK_COUNT_THRE or self.state == 3: #加速度が閾値以下になるケースがある程度続いたらスタックと判定
                 #トルネード実施
                 print("stuck")
                 self.MotorR.go(ct.const.STUCK_MOTOR_VREF)
@@ -889,6 +905,8 @@ class Cansat():
                 time.sleep(2)
                 self.MotorR.stop()
                 self.MotorL.stop()
+                self.rv = ct.const.STUCK_MOTOR_VREF
+                self.lv = -ct.const.STUCK_MOTOR_VREF
                 self.countstuckLoop = 0
                 self.stuckTime = 0
 
