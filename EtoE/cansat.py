@@ -508,12 +508,10 @@ class Cansat():
                 self.arm.up()
             
             # 前傾姿勢になってしまった場合
-            print("\nbefore\n")
             if self.gy > 4.5:
                 self.arm.down()
                 self.arm.up()
-                print("\nafter\n")
-
+                
             # change camera pint loop
             # if self.change_size == 0 and self.pc2.size[1] != 1700:
                 # self.pc2.change_size(1400, 1700, self.cam_pint)
