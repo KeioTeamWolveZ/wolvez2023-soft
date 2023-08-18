@@ -113,6 +113,7 @@ class Cansat():
         self.connecting_state = 0
         self.change_size = 0 # new
         self.mirrer = False 
+        self.distancing_finish = False
         
         # state内変数初期設定
         self.cam_pint = 9
@@ -336,6 +337,8 @@ class Cansat():
                         self.pre_motorTime = time.time()
                         self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                         self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
+                        self.landing_lat = round(float(self.gps.Lat),5)
+                        self.landing_lon = round(float(self.gps.Lon),5)
         
         #パラシュートの色を検知して離脱
         elif self.landstate == 1:
@@ -352,6 +355,7 @@ class Cansat():
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF +7)
                 self.rv = ct.const.LANDING_MOTOR_VREF
                 self.lv = ct.const.LANDING_MOTOR_VREF
+                self.stuck_detection()
             else:
                 self.MotorR.go(self.plan_color["R"])
                 self.MotorL.go(self.plan_color["L"])
@@ -376,11 +380,58 @@ class Cansat():
                     pass
                 else:
                     self.landstate = 2
-                    print("\n\n=====The arm was calibrated=====\n\n")
-                #self.state = 4
-                #self.laststate = 4
             
-        elif self.landstate == 2: #アームのキャリブレーション
+            
+        if self.landing_state == 2:
+            dlon = self.landing_lon - self.lon
+            # distance to the goal
+            self.startdis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.landing_lat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.landing_lat))*cos(deg2rad(dlon)))
+            print(f"Distance from landing: {round(self.startdis,4)} [km]")
+
+            # angular to the goal (North: 0, South: 180)
+            self.goalphi = 90 - rad2deg(arctan2(cos(deg2rad(self.lat))*tan(deg2rad(self.goallat)) - sin(deg2rad(self.lat))*cos(deg2rad(dlon)), sin(deg2rad(dlon))))
+            if self.goalphi < 0:
+                self.goalphi += 360
+            print(self.goalphi)
+            
+            self.arg_diff = self.goalphi - (self.ex-0)
+            if self.arg_diff < 0:
+                self.arg_diff += 360
+            
+            print(f"Argument to goal: {round(self.arg_diff,2)} [deg]")
+            
+            if self.runningTime == 0:
+                self.runningTime = time.time()
+                
+            elif time.time() - self.runningTime < 10:
+                print("run")
+                
+            elif self.startdis > ct.const.GOAL_DISTANCE_THRE*5:
+                self.MotorR.stop()
+                self.MotorL.stop()
+                self.goaltime = time.time()-self.runningTime
+                self.distancing_finish = True
+                self.landing_state = 3
+            
+            else:
+                
+                if self.arg_diff <= 180 and self.arg_diff > 20:
+                    self.MotorR.go(ct.const.RUNNING_MOTOR_VREF-15)
+                    self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
+                    
+                elif self.arg_diff > 180 and self.arg_diff < 340:
+                    self.MotorR.go(ct.const.RUNNING_MOTOR_VREF)
+                    self.MotorL.go(ct.const.RUNNING_MOTOR_VREF-15)
+                
+                else:
+                    self.MotorR.go(ct.const.RUNNING_MOTOR_VREF)
+                    self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
+                
+                self.stuck_detection()
+                    
+                    
+            
+        elif self.landstate == 3: #アームのキャリブレーション
             print("calib arm")
             if self.arm_calibTime == 0:
                 self.arm.up()
@@ -500,7 +551,7 @@ class Cansat():
                 self.RED_LED.led_off()
                 self.BLUE_LED.led_off()
                 self.GREEN_LED.led_on()
-                #self.arm.up()
+                self.arm.up()
             if self.connecting_state == 1:
                 self.RED_LED.led_off()
                 self.BLUE_LED.led_on()
