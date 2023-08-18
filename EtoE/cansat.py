@@ -500,14 +500,19 @@ class Cansat():
                 self.RED_LED.led_off()
                 self.BLUE_LED.led_off()
                 self.GREEN_LED.led_on()
-                #self.arm.up()
+                self.arm.up()
             if self.connecting_state == 1:
                 self.RED_LED.led_off()
                 self.BLUE_LED.led_on()
                 self.GREEN_LED.led_off()
                 self.arm.up()
             
-
+            # 前傾姿勢になってしまった場合
+            print("\nbefore\n")
+            if self.gy > 4.5:
+                self.arm.down()
+                self.arm.up()
+                print("\nafter\n")
 
             # change camera pint loop
             # if self.change_size == 0 and self.pc2.size[1] != 1700:
