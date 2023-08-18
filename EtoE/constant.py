@@ -34,9 +34,6 @@ const.FLIGHTPIN_PIN = 4
 const.GPS_GOAL_LAT = 40.142614  # 南緯は負の値で与える
 const.GPS_GOAL_LON = 139.987489 # 西経は負の値で与える
 const.GOAL_DISTANCE_THRE = 0.0005 # [km] (50 [cm])
-const.f1 = 1 # 136
-const.f2 = 50 # 196
-const.f3 = 776
 
 # Motor VREF
 const.LANDING_MOTOR_VREF = 90
