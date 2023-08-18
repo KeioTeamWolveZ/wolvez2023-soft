@@ -122,6 +122,7 @@ class Cansat():
         self.cl_data = [0,0,0]
         self.move_arplan = 'none'
         self.move_clplan = 'none'
+        self.vanish_stuck = 0
         self.goaldis = 0
         self.goalphi = 0
         self.rv, self.lv = 0, 0
@@ -403,8 +404,8 @@ class Cansat():
             if self.runningTime == 0:
                 self.runningTime = time.time()
                 
-            elif time.time() - self.runningTime < 10:
-                print("run")
+            # elif time.time() - self.runningTime < 10:
+                # print("inoue_run")
                 
             elif self.startdis > ct.const.GOAL_DISTANCE_THRE*5:
                 self.MotorR.stop()
@@ -614,6 +615,7 @@ class Cansat():
             if self.AR_checker["AR"]:
                 self.change_size += 1
                 self.vanish_c = 0 #喪失カウントをリセット
+                self.vanish_stuck = 0 #喪失カウントをリセット
                 self.aprc_c = False #アプローチの仕方のbool
                 self.estimate_norm = self.AR_checker["norm"] #使u これself.いるん？？
                 if not self.Flag_AR:
@@ -683,6 +685,7 @@ class Cansat():
                             5秒超えたら入ってくる
                             '''
                             self.vanish_c = 0 #喪失カウントをリセット
+                            self.vanish_stuck = 0 #喪失カウントをリセット
                             self.Flag_C = False #フラグをリセット
                             sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
                             if not self.aprc_clear:
@@ -699,7 +702,10 @@ class Cansat():
                             self.rv, self.lv = plan_color["R"],plan_color["R"]
                             
                     else :
-                        if self.vanish_c > 10 and not self.aprc_clear:
+                        if self.vanish_stuck > ct.const.VANISH_BY_STUCK_THRE:
+                            self.stuck_detection()
+                            self.vanish_stuck -= 40
+                        elif self.vanish_c > 10 and not self.aprc_clear:
                             '''
                             数を20に変更
                             '''
@@ -707,22 +713,22 @@ class Cansat():
                             self.Flag_AR = False #AR認識もリセット
                             self.aprc_clear = False #aprc_clearのリセット
                             print("-R:35-")
-                            if self.estimate_norm > 0.5:
-                                self.move(90,-90,0.03)
-                                self.rv, self.lv = 90,-90
-                                print('sleeptime : 0.2')
-                                self.vanish_c = 0
-                            else:
-                                if self.vanish_c >= 40:
-                                    vanish_sleep = 0.3
-                                    self.vanish_c = 0
-                                else:
-                                    vanish_sleep = 0.1
-                                self.move(40,-40,vanish_sleep)
-                                self.rv, self.lv = 40,-40
-                                print('sleeptime : vanish_sleep')
+                            self.move(90,-90,0.03)
+                            self.rv, self.lv = 90,-90
+                            print('sleeptime : 0.2')
+                            self.vanish_c = 0
+                            # else:
+                                # if self.vanish_c >= 40:
+                                    # vanish_sleep = 0.3
+                                    # self.vanish_c = 0
+                                # else:
+                                    # vanish_sleep = 0.1
+                                # self.move(40,-40,vanish_sleep)
+                                # self.rv, self.lv = 40,-40
+                                # print('sleeptime : vanish_sleep')
 
                         self.vanish_c += 1
+                        self.vanish_stuck += 1
                 else:
                     if self.vanish_c > 10:
                         self.aprc_c = True #色認識をさせる
@@ -923,7 +929,7 @@ class Cansat():
             if self.stuckTime == 0:
                 self.stuckTime = time.time()
             
-            if self.countstuckLoop > ct.const.STUCK_COUNT_THRE or self.state == 3: #加速度が閾値以下になるケースがある程度続いたらスタックと判定
+            if self.countstuckLoop > ct.const.STUCK_COUNT_THRE or self.landstate == 1 or self.state == 6: #加速度が閾値以下になるケースがある程度続いたらスタックと判定
                 #トルネード実施
                 print("stuck")
                 self.MotorR.go(ct.const.STUCK_MOTOR_VREF)

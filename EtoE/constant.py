@@ -31,8 +31,8 @@ const.FLIGHTPIN_PIN = 4
 
 ## Variables
 # Goal information
-const.GPS_GOAL_LAT = 35.55599500  # 南緯は負の値で与える
-const.GPS_GOAL_LON = 139.65258333 # 西経は負の値で与える
+const.GPS_GOAL_LAT = 40.142614  # 南緯は負の値で与える
+const.GPS_GOAL_LON = 139.987489 # 西経は負の値で与える
 const.GOAL_DISTANCE_THRE = 0.0005 # [km] (50 [cm])
 const.f1 = 1 # 136
 const.f2 = 50 # 196
@@ -72,3 +72,4 @@ const.EARTH_RADIUS = 6378.137 # [km]
 const.STUCK_ACC_THRE = 0.5
 const.STUCK_COUNT_THRE = 30
 const.MIRRER_COUNT_THRE = 10
+const.VANISH_BY_STUCK_THRE = 240 # ステート6で長時間何も見えなかった場合
