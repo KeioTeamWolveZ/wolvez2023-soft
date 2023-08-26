@@ -23,7 +23,7 @@ class Arm():
 	
 	def middle(self,buff=0):
 		self.pi.write(self.servo_pin,1)
-		self.pi.set_servo_pulsewidth(self.servo_pin,1300)
+		self.pi.set_servo_pulsewidth(self.servo_pin,1400)
 		time.sleep(0.5)
 		self.pi.set_servo_pulsewidth(self.servo_pin,0)
 		self.pi.write(self.servo_pin,0)

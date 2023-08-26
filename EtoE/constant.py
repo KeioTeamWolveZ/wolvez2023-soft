@@ -31,12 +31,9 @@ const.FLIGHTPIN_PIN = 4
 
 ## Variables
 # Goal information
-const.GPS_GOAL_LAT = 35.55599500  # 南緯は負の値で与える
-const.GPS_GOAL_LON = 139.65258333 # 西経は負の値で与える
+const.GPS_GOAL_LAT = 40.142614  # 南緯は負の値で与える
+const.GPS_GOAL_LON = 139.987489 # 西経は負の値で与える
 const.GOAL_DISTANCE_THRE = 0.0005 # [km] (50 [cm])
-const.f1 = 1 # 136
-const.f2 = 50 # 196
-const.f3 = 776
 
 # Motor VREF
 const.LANDING_MOTOR_VREF = 90
@@ -55,7 +52,7 @@ const.DROPPING_ACC_THRE = 1 #加速度の値
 
 const.SEPARATION_TIME_THRE = 10 #焼き切り時間
 const.ARM_CARIBRATION_THRE = 5 #アームのマーカーが認識できるまで繰り返す時間
-const.LANDING_MOTOR_TIME_THRE = 5 #分離シートから離れるためにモータを回転させる時間
+const.LANDING_MOTOR_TIME_THRE = 10 #分離シートから離れるためにモータを回転させる時間
 const.RELEASING_MOTOR_TIME_THRE = 0.7 #放出と放出の間にモータを回転させる時間
 const.TURNING_MOTOR_TIME_THRE = 1.5 #turning time after the end of second-releasing
 const.MODULE_SEPARATION_TIME_THRE = 30 # モジュール同士の接続の際の焼き切り時間
@@ -71,3 +68,5 @@ const.EARTH_RADIUS = 6378.137 # [km]
 # Stack
 const.STUCK_ACC_THRE = 0.5
 const.STUCK_COUNT_THRE = 30
+const.MIRRER_COUNT_THRE = 10
+const.VANISH_BY_STUCK_THRE = 240 # ステート6で長時間何も見えなかった場合
