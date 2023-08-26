@@ -785,17 +785,17 @@ class Cansat():
     def arm_grasping(self):
         arm_start, arm_end = 1300, 1300
         if self.connecting_state == 0:
-            arm_start = 1000
-            arm_end = 1650
+            arm_start = arm.down_value
+            arm_end = arm.up_value
         else:
-            arm_atart = 1100
-            arm_end = 1400
+            arm_atart = 1000
+            arm_end = arm.middle_value
         # try:
             # arm.setup()
         # except:
             # pass
         self.arm.down()
-        self.arm.move(1000)
+        self.arm.move(arm.down_value)
         time.sleep(3)
         for i in range(arm_start,arm_end,15):
             self.arm.move(i)
@@ -807,7 +807,7 @@ class Cansat():
             # arm.setup()
         # except:
             # pass
-        arm_range = pre_arm -1100
+        arm_range = pre_arm -900
         time.sleep(3)
         for i in range(1,arm_range,20):
             self.arm.move(pre_arm-i)
