@@ -95,7 +95,7 @@ class Cansat():
         self.ar_count = 0
         self.vanish_c = 0
         self.gpscount = 0
-        self.mirrer_count = 0
+        self.mirror_count = 0
         
         # state管理用変数初期化
         self.startgps_lon=[]
@@ -112,8 +112,10 @@ class Cansat():
         self.releasingstate = 0
         self.connecting_state = 0
         self.change_size = 0 # new
-        self.mirrer = False 
+        self.mirror = False 
         self.distancing_finish = False
+        self.releasing_01 = False
+        self.releasing_02 = False
         
         # state内変数初期設定
         self.cam_pint = 9
@@ -177,6 +179,9 @@ class Cansat():
                   + "az:"+str(self.bno055.az).rjust(6) + ","\
                   + "q:"+str(self.bno055.ex).rjust(6) + ","\
                   + "Camera:" + str(self.cameraCount)
+
+        mission_log = str(self.timer) + ","\
+                    + "state:"+str(self.state) 
         if self.state == 3:
             datalog = datalog + ","\
                  + "rV:"+str(round(self.rv,3)).rjust(6) + ","\
@@ -189,7 +194,10 @@ class Cansat():
                      + "gx:"+str(self.bno055.gx).rjust(6) + ","\
                      + "gy:"+str(self.bno055.gy).rjust(6) + ","\
                      + "gz:"+str(self.bno055.gz).rjust(6) + ","\
-                     + "mirrer-detection:"+str(self.mirrer)
+                     + "mirror-detection:"+str(self.mirror)
+            if self.landing_state == 2:
+                datalog = datalog +','\
+                    + "Para_distancing:"+str(self.distancing_finish)
         elif self.state == 6:
            datalog = datalog + ","\
                  + "rV:"+str(round(self.rv,3)).rjust(6) + ","\
@@ -213,6 +221,27 @@ class Cansat():
         
         with open(f'results/{self.startTime}/control_result.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
             test.write(datalog + '\n')
+
+    def writeMissionlog(self):
+        mission_log = str(self.timer) + ","\
+                + "state:"+str(self.state) 
+        if self.state == 3:
+            mission_log = mission_log + ","\
+                + "Para_distancing:" + str(self.distancing_finish) # パラから距離を取る
+        if self.state == 4:
+            mission_log = mission_log + ","\
+                + "Releasing_01:"  + str(self.releasing_01) # 電池モジュール焼き切り
+        if self.state == 5:
+            mission_log = mission_log + ","\
+                + "Releasing_02:"  + str(self.releasing_02) # 電力消費モジュール焼き切り
+        if self.state == 6:
+            mission_log = mission_log + ","\
+                + "ConnectingState:" + str(self.connecting_state) + ","\
+                + "Done-Approach:" + str(self.done_approach) + ","\
+                + "Done-Connect:" + str(self.connected)
+
+        with open(f'results/{self.startTime}/mission_log.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
+            test.write(mission_log + '\n')
 
     def sequence(self):
         if self.state == 0:   #センサ系の準備を行う段階。時間経過でステート移行
@@ -369,15 +398,15 @@ class Cansat():
                 self.MotorL.stop()
                 self.rv = 0
                 self.lv = 0
-                self.mirrer_checker()
-                if self.mirrer_count > ct.const.MIRRER_COUNT_THRE:
-                    self.mirrer_count = 0
+                self.mirror_checker()
+                if self.mirror_count > ct.const.mirror_COUNT_THRE:
+                    self.mirror_count = 0
                     self.stuck_detection()
                     self.pre_motorTime = time.time()
                     self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                     self.MotorL.go(ct.const.LANDING_MOTOR_VREF +7)
                     
-                elif self.mirrer:
+                elif self.mirror:
                     pass
                 else:
                     self.landstate = 2
@@ -412,6 +441,7 @@ class Cansat():
                 self.MotorL.stop()
                 self.goaltime = time.time()-self.runningTime
                 self.distancing_finish = True
+                self.writeMissionlog(self) # write mission log
                 self.landing_state = 3
             
             else:
@@ -457,13 +487,13 @@ class Cansat():
             #        self.buff = -0.2
             #   else:
             #       self.arm_calibCount += 1
-    def mirrer_checker(self):
+    def mirror_checker(self):
         if self.gz < 5:
-            self.mirrer_count += 1
-            self.mirrer = True 
+            self.mirror_count += 1
+            self.mirror = True 
         else:
-            self.mirrer_count = 0
-            self.mirrer = False 
+            self.mirror_count = 0
+            self.mirror = False 
         
         
     def first_releasing(self):
@@ -494,6 +524,8 @@ class Cansat():
                     self.modu_sepaTime = 0
                     self.releasingstate = 0
                     self.state = 5
+                    self.releasing_01 = True # mission_log
+                    self.writeMissionlog(self) # write mission log
                     self.laststate = 5
     
     def second_releasing(self):
@@ -531,6 +563,8 @@ class Cansat():
                     self.modu_sepaTime = 0
                     self.releasingstate = 0
                     self.state = 6
+                    self.releasing_02 = True #mission_log
+                    self.writeMissionlog(self) # write mission log
                     self.laststate = 6
 
     def connecting(self):
