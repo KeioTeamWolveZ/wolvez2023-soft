@@ -7,6 +7,9 @@ import time
 # 500 ~ 2500
 
 class Arm():
+	up_value = 1650
+	middle_value =1200
+	down_value = 750
 	def __init__(self,servo_pin):
 		self.servo_pin = servo_pin
 		
@@ -16,21 +19,21 @@ class Arm():
 		
 	def up(self,buff=0):
 		self.pi.write(self.servo_pin,1)
-		self.pi.set_servo_pulsewidth(self.servo_pin,1650)
+		self.pi.set_servo_pulsewidth(self.servo_pin,self.up_value)
 		time.sleep(0.5)
 		self.pi.set_servo_pulsewidth(self.servo_pin,0)
 		self.pi.write(self.servo_pin,0)
 	
 	def middle(self,buff=0):
 		self.pi.write(self.servo_pin,1)
-		self.pi.set_servo_pulsewidth(self.servo_pin,1400)
+		self.pi.set_servo_pulsewidth(self.servo_pin,self.middle_value)
 		time.sleep(0.5)
 		self.pi.set_servo_pulsewidth(self.servo_pin,0)
 		self.pi.write(self.servo_pin,0)
 		
 	def down(self,buff=0):
 		self.pi.write(self.servo_pin,1)
-		self.pi.set_servo_pulsewidth(self.servo_pin,1000)
+		self.pi.set_servo_pulsewidth(self.servo_pin,self.down_value)
 		time.sleep(0.5)
 		self.pi.set_servo_pulsewidth(self.servo_pin,0)
 		self.pi.write(self.servo_pin,0)
