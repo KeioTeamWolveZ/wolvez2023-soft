@@ -50,7 +50,7 @@ class ARPowerPlanner():
                 marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
             else:
                 # marker_1 = np.array([0.0353238,0.00329190,0.15313373])
-                marker_1 = np.array([0.0353238,0.00329190,0.15313373])
+                marker_1 = np.array([0.028160,0.0032412,0.144018])
         else:
             # marker_1 = np.array([0.003606,-0.015277,0.138732])
             marker_1 = np.array([0.0139197,-0.0277264,0.1285234])
