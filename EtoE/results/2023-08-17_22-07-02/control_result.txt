@@ -1,0 +1,1 @@
+5214,state:3,Time:09:24:57,Lat:0.00000000,Lng:0.00000000,ax:-0.025555555555555557,ay:0.13555555555555557,az:-0.09555555555555556,q:   0.0,Camera:0,rV:     0,lV:     0,Color-Approach:False,Color-data: x:0y:0Area:0,Color-move:none,gx:   0.0,gy:   0.0,gz:   0.0,mirrer-detection:False

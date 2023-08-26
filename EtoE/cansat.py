@@ -95,7 +95,7 @@ class Cansat():
         self.ar_count = 0
         self.vanish_c = 0
         self.gpscount = 0
-        
+        self.mirrer_count = 0
         
         # state管理用変数初期化
         self.startgps_lon=[]
@@ -112,6 +112,8 @@ class Cansat():
         self.releasingstate = 0
         self.connecting_state = 0
         self.change_size = 0 # new
+        self.mirrer = False 
+        self.distancing_finish = False
         
         # state内変数初期設定
         self.cam_pint = 9
@@ -120,6 +122,7 @@ class Cansat():
         self.cl_data = [0,0,0]
         self.move_arplan = 'none'
         self.move_clplan = 'none'
+        self.vanish_stuck = 0
         self.goaldis = 0
         self.goalphi = 0
         self.rv, self.lv = 0, 0
@@ -154,6 +157,9 @@ class Cansat():
                   + "ax:"+str(round(self.ax,6)).rjust(6) + ","\
                   + "ay:"+str(round(self.ay,6)).rjust(6) + ","\
                   + "az:"+str(round(self.az,6)).rjust(6) + ","\
+                  + "gx:"+str(round(self.gx,6)).rjust(6) + ","\
+                  + "gy:"+str(round(self.gy,6)).rjust(6) + ","\
+                  + "gz:"+str(round(self.gz,6)).rjust(6) + ","\
                   + "q:" + str(self.ex).rjust(6) + ","\
                   + "rV:" + str(round(self.MotorR.velocity,2)).rjust(4) + ","\
                   + "lV:" + str(round(self.MotorL.velocity,2)).rjust(4) + ","\
@@ -173,11 +179,17 @@ class Cansat():
                   + "Camera:" + str(self.cameraCount)
         if self.state == 3:
             datalog = datalog + ","\
-                 + "rV:"+str(round(self.MotorR.velocity,3)).rjust(6) + ","\
-                 + "lV:"+str(round(self.MotorL.velocity,3)).rjust(6) + ","\
+                 + "rV:"+str(round(self.rv,3)).rjust(6) + ","\
+                 + "lV:"+str(round(self.lv,3)).rjust(6) + ","\
                  + "Color-Approach:" + str(self.cl_checker) + ","\
                  + "Color-data: x:" + str(self.cl_data[0])+ "y:"+ str(self.cl_data[1]) + "Area:"+ str(self.cl_data[2]) + ","\
                  + "Color-move:" + str(self.move_clplan)
+            if self.landstate == 1:
+                datalog = datalog + ","\
+                     + "gx:"+str(self.bno055.gx).rjust(6) + ","\
+                     + "gy:"+str(self.bno055.gy).rjust(6) + ","\
+                     + "gz:"+str(self.bno055.gz).rjust(6) + ","\
+                     + "mirrer-detection:"+str(self.mirrer)
         elif self.state == 6:
            datalog = datalog + ","\
                  + "rV:"+str(round(self.rv,3)).rjust(6) + ","\
@@ -241,6 +253,9 @@ class Cansat():
         self.ax=round(self.bno055.ax,3)
         self.ay=round(self.bno055.ay,3)
         self.az=round(self.bno055.az,3)
+        self.gx=round(self.bno055.gx,3)
+        self.gy=round(self.bno055.gy,3)
+        self.gz=round(self.bno055.gz,3)
         self.ex=round(self.bno055.ex,3)
         self.lat = round(float(self.gps.Lat),5)
         self.lon = round(float(self.gps.Lon),5)
@@ -323,6 +338,8 @@ class Cansat():
                         self.pre_motorTime = time.time()
                         self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                         self.MotorL.go(ct.const.LANDING_MOTOR_VREF)
+                        self.landing_lat = round(float(self.gps.Lat),5)
+                        self.landing_lon = round(float(self.gps.Lon),5)
         
         #パラシュートの色を検知して離脱
         elif self.landstate == 1:
@@ -337,21 +354,85 @@ class Cansat():
             if not self.plan_color["Detected_tf"]:
                 self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF +7)
+                self.rv = ct.const.LANDING_MOTOR_VREF
+                self.lv = ct.const.LANDING_MOTOR_VREF
+                self.stuck_detection()
             else:
                 self.MotorR.go(self.plan_color["R"])
                 self.MotorL.go(self.plan_color["L"])
-
+                self.rv = self.plan_color["R"]
+                self.lv = self.plan_color["L"]
                 self.stuck_detection()
 
             if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #10秒間モータ回して分離シートから十分離れる
                 self.MotorR.stop()
                 self.MotorL.stop()
-                self.landstate = 2
-                print("\n\n=====The arm was calibrated=====\n\n")
-                #self.state = 4
-                #self.laststate = 4
+                self.rv = 0
+                self.lv = 0
+                self.mirrer_checker()
+                if self.mirrer_count > ct.const.MIRRER_COUNT_THRE:
+                    self.mirrer_count = 0
+                    self.stuck_detection()
+                    self.pre_motorTime = time.time()
+                    self.MotorR.go(ct.const.LANDING_MOTOR_VREF)
+                    self.MotorL.go(ct.const.LANDING_MOTOR_VREF +7)
+                    
+                elif self.mirrer:
+                    pass
+                else:
+                    self.landstate = 2
             
-        elif self.landstate == 2: #アームのキャリブレーション
+            
+        if self.landing_state == 2:
+            dlon = self.landing_lon - self.lon
+            # distance to the goal
+            self.startdis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.landing_lat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.landing_lat))*cos(deg2rad(dlon)))
+            print(f"Distance from landing: {round(self.startdis,4)} [km]")
+
+            # angular to the goal (North: 0, South: 180)
+            self.goalphi = 90 - rad2deg(arctan2(cos(deg2rad(self.lat))*tan(deg2rad(self.goallat)) - sin(deg2rad(self.lat))*cos(deg2rad(dlon)), sin(deg2rad(dlon))))
+            if self.goalphi < 0:
+                self.goalphi += 360
+            print(self.goalphi)
+            
+            self.arg_diff = self.goalphi - (self.ex-0)
+            if self.arg_diff < 0:
+                self.arg_diff += 360
+            
+            print(f"Argument to goal: {round(self.arg_diff,2)} [deg]")
+            
+            if self.runningTime == 0:
+                self.runningTime = time.time()
+                
+            # elif time.time() - self.runningTime < 10:
+                # print("inoue_run")
+                
+            elif self.startdis > ct.const.GOAL_DISTANCE_THRE*5:
+                self.MotorR.stop()
+                self.MotorL.stop()
+                self.goaltime = time.time()-self.runningTime
+                self.distancing_finish = True
+                self.landing_state = 3
+            
+            else:
+                
+                if self.arg_diff <= 180 and self.arg_diff > 20:
+                    self.MotorR.go(ct.const.RUNNING_MOTOR_VREF-15)
+                    self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
+                    
+                elif self.arg_diff > 180 and self.arg_diff < 340:
+                    self.MotorR.go(ct.const.RUNNING_MOTOR_VREF)
+                    self.MotorL.go(ct.const.RUNNING_MOTOR_VREF-15)
+                
+                else:
+                    self.MotorR.go(ct.const.RUNNING_MOTOR_VREF)
+                    self.MotorL.go(ct.const.RUNNING_MOTOR_VREF)
+                
+                self.stuck_detection()
+                    
+                    
+            
+        elif self.landstate == 3: #アームのキャリブレーション
             print("calib arm")
             if self.arm_calibTime == 0:
                 self.arm.up()
@@ -376,7 +457,15 @@ class Cansat():
             #        self.buff = -0.2
             #   else:
             #       self.arm_calibCount += 1
-  
+    def mirrer_checker(self):
+        if self.gz < 5:
+            self.mirrer_count += 1
+            self.mirrer = True 
+        else:
+            self.mirrer_count = 0
+            self.mirrer = False 
+        
+        
     def first_releasing(self):
         if self.modu_sepaTime == 0: #時刻を取得してLEDをステートに合わせて光らせる
             self.modu_sepaTime = time.time()
@@ -470,8 +559,11 @@ class Cansat():
                 self.GREEN_LED.led_off()
                 self.arm.up()
             
-
-
+            # 前傾姿勢になってしまった場合
+            if self.gy > 4.5:
+                self.arm.down()
+                self.arm.up()
+                
             # change camera pint loop
             # if self.change_size == 0 and self.pc2.size[1] != 1700:
                 # self.pc2.change_size(1400, 1700, self.cam_pint)
@@ -516,7 +608,9 @@ class Cansat():
                 detected_img, self.ar_info = self.tg.detect_marker(self.img)
                 self.AR_checker = self.tg.AR_decide(self.ar_info,self.connecting_state)
                 self.ar_checker = self.AR_checker["AR"]
-            if self.connecting_state == 1 and self.AR_checker["id"] in ["2","11"]: self.connecting_state = 0 # 青モジュールを落とした場合(id:2と11)、connecting_stateを0に戻して再び拾う
+            if self.connecting_state == 1 and self.AR_checker["id"] in ["2","11","16"]:
+                self.connecting_state = 0 # 青モジュールを落とした場合(id:2と11and16)、connecting_stateを0に戻して再び拾う
+                self.move(-60,-60,0.1) # back and retry
             
             print(self.ar_info)
             print(f"id:{self.AR_checker['id']}")
@@ -524,6 +618,7 @@ class Cansat():
             if self.AR_checker["AR"]:
                 self.change_size += 1
                 self.vanish_c = 0 #喪失カウントをリセット
+                self.vanish_stuck = 0 #喪失カウントをリセット
                 self.aprc_c = False #アプローチの仕方のbool
                 self.estimate_norm = self.AR_checker["norm"] #使u これself.いるん？？
                 if not self.Flag_AR:
@@ -593,6 +688,7 @@ class Cansat():
                             5秒超えたら入ってくる
                             '''
                             self.vanish_c = 0 #喪失カウントをリセット
+                            self.vanish_stuck = 0 #喪失カウントをリセット
                             self.Flag_C = False #フラグをリセット
                             sleep_time = plan_color["w_rate"] * 0.05 + 0.1 ### sleep zikan wo keisan
                             if not self.aprc_clear:
@@ -609,7 +705,10 @@ class Cansat():
                             self.rv, self.lv = plan_color["R"],plan_color["R"]
                             
                     else :
-                        if self.vanish_c > 10 and not self.aprc_clear:
+                        if self.vanish_stuck > ct.const.VANISH_BY_STUCK_THRE:
+                            self.stuck_detection()
+                            self.vanish_stuck -= 40
+                        elif self.vanish_c > 10 and not self.aprc_clear:
                             '''
                             数を20に変更
                             '''
@@ -617,22 +716,22 @@ class Cansat():
                             self.Flag_AR = False #AR認識もリセット
                             self.aprc_clear = False #aprc_clearのリセット
                             print("-R:35-")
-                            if self.estimate_norm > 0.5:
-                                self.move(90,-90,0.03)
-                                self.rv, self.lv = 90,-90
-                                print('sleeptime : 0.2')
-                                self.vanish_c = 0
-                            else:
-                                if self.vanish_c >= 40:
-                                    vanish_sleep = 0.3
-                                    self.vanish_c = 0
-                                else:
-                                    vanish_sleep = 0.1
-                                self.move(40,-40,vanish_sleep)
-                                self.rv, self.lv = 40,-40
-                                print('sleeptime : vanish_sleep')
+                            self.move(90,-90,0.03)
+                            self.rv, self.lv = 90,-90
+                            print('sleeptime : 0.2')
+                            self.vanish_c = 0
+                            # else:
+                                # if self.vanish_c >= 40:
+                                    # vanish_sleep = 0.3
+                                    # self.vanish_c = 0
+                                # else:
+                                    # vanish_sleep = 0.1
+                                # self.move(40,-40,vanish_sleep)
+                                # self.rv, self.lv = 40,-40
+                                # print('sleeptime : vanish_sleep')
 
                         self.vanish_c += 1
+                        self.vanish_stuck += 1
                 else:
                     if self.vanish_c > 10:
                         self.aprc_c = True #色認識をさせる
@@ -650,6 +749,13 @@ class Cansat():
             return
     
     def arm_grasping(self):
+        arm_start, arm_end = 1300, 1300
+        if self.connecting_state == 0:
+            arm_start = 1000
+            arm_end = 1650
+        else:
+            arm_atart = 1100
+            arm_end = 1400
         # try:
             # arm.setup()
         # except:
@@ -657,7 +763,7 @@ class Cansat():
         self.arm.down()
         self.arm.move(1000)
         time.sleep(3)
-        for i in range(1000,1650,15):
+        for i in range(arm_start,arm_end,15):
             self.arm.move(i)
             time.sleep(0.1)
         time.sleep(1)
@@ -691,7 +797,7 @@ class Cansat():
             pos = self.cpp.find_specific_color(frame,self.cpp.AREA_RATIO_THRESHOLD,self.cpp.LOW_COLOR,self.cpp.HIGH_COLOR,color_num)
             if pos is not None or "7" in self.ar_info.keys() :
                 self.cl_data = pos
-                print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
+                #print("pos:",pos[1],"\nTHRESHOLD:",ct.const.CONNECTED_HEIGHT_THRE)
                 detected = True
                 clear = True
                 print('===========\nDone Connection\n===========')
@@ -813,31 +919,6 @@ class Cansat():
 #             print("ゴール方向："+str(direction_goal)+" -> 左に曲がりたい")
         return direction_goal
     
-    def safe_or_not(self,lower_risk):
-        """
-        ・入力:下半分のwindowのリスク行列（3*1または1*3？ここはロバストに作ります）
-        ・出力:危険=1、安全=0の(入力と同じ次元)
-        """
-        self.threshold_risk = np.average(np.array(self.risk_list_below))+2*np.std(np.array(self.risk_list_below))
-#         if len(self.risk_list_below)<=100:
-#             self.threshold_risk = np.average(np.array(self.risk_list_below))+2*np.std(np.array(self.risk_list_below))
-#         else:
-#             self.threshold_risk = np.average(np.array(self.risk_list_below[-100:]))+2*np.std(np.array(self.risk_list_below[-100:]))
-        
-        try:
-            self.max_risk=np.max(np.array(self.risk_list_below))
-#             if len(self.risk_list_below)<=100:
-#                 self.max_risk=np.max(np.array(self.risk_list_below))
-#             else:
-#                 self.max_risk=np.max(np.array(self.risk_list_below[-100:]))
-            
-        except Exception:
-            self.max_risk=1000
-        answer_mtx=np.zeros(3)
-        for i, risk_scaler in enumerate(lower_risk):
-            if risk_scaler >= self.threshold_risk or risk_scaler >= self.max_risk:
-                answer_mtx[i]=1
-        return answer_mtx
      
     def sendLoRa(self): #通信モジュールの送信を行う関数
         datalog = str(self.state)+ ","\
@@ -851,7 +932,7 @@ class Cansat():
             if self.stuckTime == 0:
                 self.stuckTime = time.time()
             
-            if self.countstuckLoop > ct.const.STUCK_COUNT_THRE: #加速度が閾値以下になるケースがある程度続いたらスタックと判定
+            if self.countstuckLoop > ct.const.STUCK_COUNT_THRE or self.landstate == 1 or self.state == 6: #加速度が閾値以下になるケースがある程度続いたらスタックと判定
                 #トルネード実施
                 print("stuck")
                 self.MotorR.go(ct.const.STUCK_MOTOR_VREF)
@@ -859,6 +940,8 @@ class Cansat():
                 time.sleep(2)
                 self.MotorR.stop()
                 self.MotorL.stop()
+                self.rv = ct.const.STUCK_MOTOR_VREF
+                self.lv = -ct.const.STUCK_MOTOR_VREF
                 self.countstuckLoop = 0
                 self.stuckTime = 0
 

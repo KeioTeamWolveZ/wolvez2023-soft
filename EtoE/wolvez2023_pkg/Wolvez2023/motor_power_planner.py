@@ -12,7 +12,8 @@ class ARPowerPlanner():
     def __init__(self):
         self.arm_id = "1"
         # 各マーカーに対するxg,yg,zg
-        self.marker_goal = {"2":[0.0,0.025,-0.023],"3":[0,0.001,0.038],"4":[0.0,0.042,-0.005],"5":[0,0.042,-0.005],"6":[0,0.042,-0.005],"7":[0,0.043,-0.01],"11":[0.0,0.025,-0.0165],"68":[-0.005,0.01,-0.055]}
+        self.marker_goal = {"2":[0.0,0.025,-0.023],"3":[0,0.001,0.038],"4":[0.0,0.042,-0.005],"5":[0,0.042,-0.005],\
+            "6":[0,0.042,-0.005],"7":[0,0.043,-0.01],"11":[0.0,0.025,-0.0165],"16":[0.014,0.0105,0.022],"68":[-0.005,0.01,-0.055]}
 
     def goal(self,ar_info,id):
         """
@@ -48,10 +49,11 @@ class ARPowerPlanner():
             if self.arm_id in ar_info.keys():
                 marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
             else:
+                # marker_1 = np.array([0.0353238,0.00329190,0.15313373])
                 marker_1 = np.array([0.0353238,0.00329190,0.15313373])
         else:
             # marker_1 = np.array([0.003606,-0.015277,0.138732])
-            marker_1 = np.array([0.01514905,-0.022143012,0.12747785])
+            marker_1 = np.array([0.0139197,-0.0277264,0.1285234])
             # marker_1 = np.array([0.02100412,-0.01784624,0.130171312]) tansi zika
         vec, distance = self.__targetting(marker_1,goal_point)
         #print(f"vec:{vec[2]}")
@@ -165,8 +167,14 @@ class ColorPowerPlanner():
 
     #{1:red,0:blue,99:orange}
     # h:0~360, s:0~100, v:0~100
+    
+    ##orange
     LOW_COLOR_EDIT = {1:np.array([300, 59, 45]),0:np.array([200, 40, 70]),99:np.array([36, 90, 59])}
     HIGH_COLOR_EDIT = {1:np.array([360, 100, 100]),0:np.array([250, 100, 100]),99:np.array([42, 100, 100])}
+    
+    ##purple
+    #LOW_COLOR_EDIT = {1:np.array([300, 59, 45]),0:np.array([200, 40, 70]),99:np.array([,,])}
+    #HIGH_COLOR_EDIT = {1:np.array([360, 100, 100]),0:np.array([250, 100, 100]),99:np.array([,,)}
     
 
     # 抽出する色の塊のしきい値
