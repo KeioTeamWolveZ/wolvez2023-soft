@@ -42,8 +42,43 @@ class ARPowerPlanner():
         rvec_matrix = rvec_matrix[0] # rodoriguesから抜き出し
         g = np.dot((rvec_matrix),vec).reshape(-1, 1)
         return g
+        
+    # def arm_ref(self,goal_y):
+        # if self.connecting_state == 0:
+            # normal_y = 0.00324128
+            # a_high_x = 0.5326995111489172
+            # b_high_x = -0.025198152589482
+            # a_high_z = 0.3007670676823178
+            # b_high_z = -0.05713972299054073
+            # a_low_x = 0.8948315595389549
+            # b_low_x = -0.017355877276581146
+            # a_low_z = -0.10133101696485919
+            # b_low_z = 0.04069127582154732
+        # else:
+            # normal_y = -0.01904927
+            # a_high_x = 0.6571145219203942
+            # b_high_x = -0.02929475486492132
+            # a_high_z = 0.47718110056167956
+            # b_high_z = -0.09062050520170216
+            # a_low_x = 0.5769225937464898
+            # b_low_x = -0.018491211975063995
+            # a_low_z = 0.46703847010300253
+            # b_low_z = -0.07648348582896586
+
+        
+        # if goal_y > normal_y:
+            # marker_1 = np.array([a_high_x*goal_y + b_high_x, goal_y,a_high_z*goal_y + b_high_z])
+        # else:
+            # marker_1 = np.array([a_low_x*goal_y + b_low_x, goal_y,a_low_z*goal_y + b_low_z])
+        # return marker_1
 
     def goalvec_maker(self,ar_info,goal_point,connecting_state,id):
+        """
+        def arm_orbit(x1,x2,y1,y2,goal_y):
+        a = (x1-x2)/(y1-y2)
+        b = y1 - a*x1
+        return a*goal_y + b 
+        """
         self.connecting_state = connecting_state
         if connecting_state == 0:
             if self.arm_id in ar_info.keys():
@@ -51,9 +86,11 @@ class ARPowerPlanner():
             else:
                 # marker_1 = np.array([0.0353238,0.00329190,0.15313373])
                 marker_1 = np.array([0.028160,0.0032412,0.144018])
+                # marker_1 = self.arm_ref(goal_point[0][1])
         else:
             # marker_1 = np.array([0.003606,-0.015277,0.138732])
             marker_1 = np.array([0.0139197,-0.0277264,0.1285234])
+            # marker_1 = self.arm_ref(goal_point[0][1])
             # marker_1 = np.array([0.02100412,-0.01784624,0.130171312]) tansi zika
         vec, distance = self.__targetting(marker_1,goal_point)
         #print(f"vec:{vec[2]}")

@@ -26,10 +26,9 @@ start_state = 6
 end_state = 6
 
 cansat = Cansat(start_state)
-#cansat.arm.setup()
-cansat.setup()
-
 try:
+#cansat.arm.setup()
+    cansat.setup()
     while True:
         cansat.sensor()
         time.sleep(0.03)

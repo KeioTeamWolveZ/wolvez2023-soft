@@ -586,7 +586,7 @@ class Cansat():
                 self.RED_LED.led_off()
                 self.BLUE_LED.led_off()
                 self.GREEN_LED.led_on()
-                self.arm.up()
+                #self.arm.up()
             if self.connecting_state == 1:
                 self.RED_LED.led_off()
                 self.BLUE_LED.led_on()
@@ -785,17 +785,17 @@ class Cansat():
     def arm_grasping(self):
         arm_start, arm_end = 1300, 1300
         if self.connecting_state == 0:
-            arm_start = arm.down_value
-            arm_end = arm.up_value
+            arm_start = self.arm.down_value
+            arm_end = self.arm.up_value
         else:
             arm_atart = 1000
-            arm_end = arm.middle_value
+            arm_end = self.arm.middle_value
         # try:
             # arm.setup()
         # except:
             # pass
         self.arm.down()
-        self.arm.move(arm.down_value)
+        self.arm.move(self.arm.down_value)
         time.sleep(3)
         for i in range(arm_start,arm_end,15):
             self.arm.move(i)
@@ -807,7 +807,7 @@ class Cansat():
             # arm.setup()
         # except:
             # pass
-        arm_range = pre_arm -900
+        arm_range = pre_arm - self.arm.down_value
         time.sleep(3)
         for i in range(1,arm_range,20):
             self.arm.move(pre_arm-i)
