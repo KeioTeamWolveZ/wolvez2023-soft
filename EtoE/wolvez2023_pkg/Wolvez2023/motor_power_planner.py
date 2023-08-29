@@ -85,7 +85,8 @@ class ARPowerPlanner():
                 marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
             else:
                 # marker_1 = np.array([0.0353238,0.00329190,0.15313373])
-                marker_1 = np.array([0.028160,0.0032412,0.144018])
+                # marker_1 = np.array([0.028160,0.0032412,0.144018])
+                marker_1 = np.array([0.0168503,-0.0101923,0.1415139]) # スタビ変更
                 # marker_1 = self.arm_ref(goal_point[0][1])
         else:
             # marker_1 = np.array([0.003606,-0.015277,0.138732])
@@ -94,8 +95,8 @@ class ARPowerPlanner():
             # marker_1 = np.array([0.02100412,-0.01784624,0.130171312]) tansi zika
         vec, distance = self.__targetting(marker_1,goal_point)
         #print(f"vec:{vec[2]}")
-        vec[2] = self.calc_t_distance(id,ar_info, vec, distance)
-        goal_area = {"x":[-0.004,0.004],"z":[-0.004,0.004]}
+        vec[1], vec[2] = self.calc_t_distance(id,ar_info, vec, distance) # new
+        goal_area = {"x":[-0.004,0.004],"z":[-0.004,0.004]} # koko henka sasetai !!!!!!!!!!!
         print(f"distance:{distance},vec:{vec}")
 
         return vec,goal_area
@@ -157,7 +158,7 @@ class ARPowerPlanner():
         return {"R":power_R,"L":power_L,"aprc_state":self.aprc_state,"move":move}
 
     def calc_t_distance(self,id,ar_info, vec, distance):
-        if id == "2" or id == "3" or id == "68": # 68は裏面のマーカー、青モジュールに追加するマーカーも必要
+        if id == "16" or id == "3" or id == "68": # 68は裏面のマーカー、青モジュールに追加するマーカーも必要
             y_m = self.rot_vec(ar_info[id]['rvec'],[0,0,1])
         else:
             y_m = self.rot_vec(ar_info[id]['rvec'],[0,1,0])
@@ -165,8 +166,9 @@ class ARPowerPlanner():
         #print(vec_normalize)
         cos_argment = np.dot(y_m[1:3].T,vec_normalize[1:3])
         #print(cos_argment)
-        ultraman = distance*np.sqrt(1-cos_argment**2)
-        return ultraman[0][0]
+        ultraman_wide = distance*np.sqrt(1-cos_argment**2)
+        ultraman_height = distance*cos_argment #new
+        return ultraman_wide[0][0],ultraman_wide[0][0]
 
 
     def __targetting(self,marker_1:np.ndarray=np.zeros(3), marker_2:np.ndarray=np.zeros(3)):
