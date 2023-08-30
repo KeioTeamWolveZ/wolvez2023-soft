@@ -441,7 +441,7 @@ class Cansat():
                 self.MotorL.stop()
                 self.goaltime = time.time()-self.runningTime
                 self.distancing_finish = True
-                self.writeMissionlog(self) # write mission log
+                self.writeMissionlog() # write mission log
                 self.landing_state = 3
             
             else:
@@ -525,7 +525,7 @@ class Cansat():
                     self.releasingstate = 0
                     self.state = 5
                     self.releasing_01 = True # mission_log
-                    self.writeMissionlog(self) # write mission log
+                    self.writeMissionlog() # write mission log
                     self.laststate = 5
     
     def second_releasing(self):
@@ -564,7 +564,7 @@ class Cansat():
                     self.releasingstate = 0
                     self.state = 6
                     self.releasing_02 = True #mission_log
-                    self.writeMissionlog(self) # write mission log
+                    self.writeMissionlog() # write mission log
                     self.laststate = 6
 
     def connecting(self):
