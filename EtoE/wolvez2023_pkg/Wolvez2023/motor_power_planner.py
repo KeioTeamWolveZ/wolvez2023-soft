@@ -97,7 +97,8 @@ class ARPowerPlanner():
         #print(f"vec:{vec[2]}")
         vec[1], vec[2] = self.calc_t_distance(id,ar_info, vec, distance) # new
         goal_area = {"x":[-0.004,0.004],"z":[-0.004,0.004]} # koko henka sasetai !!!!!!!!!!!
-        print(f"distance:{distance},vec:{vec}")
+        # print(f"distance:{distance},vec:{vec}")
+        print(f"vec:{vec}")
 
         return vec,goal_area
 
@@ -167,7 +168,7 @@ class ARPowerPlanner():
         cos_argment = np.dot(y_m[1:3].T,vec_normalize[1:3])
         #print(cos_argment)
         ultraman_wide = distance*np.sqrt(1-cos_argment**2)
-        ultraman_height = distance*cos_argment #new
+        ultraman_height = abs(distance)*cos_argment #new
         return ultraman_wide[0][0],ultraman_wide[0][0]
 
 
