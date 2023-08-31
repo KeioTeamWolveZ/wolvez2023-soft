@@ -74,36 +74,57 @@ class ARPowerPlanner():
 
     def goal_ref(self,height):
         if self.connecting_state == 0:
-            normal_y = -9.27936187e-03
-            a_high_x = -7.870311316732634
-            b_high_x = -0.14029717416704213
-            a_high_z = 11.655252041789202
-            b_high_z = -0.32801135428184514
-            a_low_x = 1.4310741727905496
-            b_low_x = -0.028682774111048713
-            a_low_z = -1.9223500855679658
-            b_low_z = -0.054460936150568955
-
+            normal_y = 2.52990947e-03
+            a_high_x = -0.6752587836379779
+            b_high_x = 0.01610554447400752
+            a_high_z = 0.08579823039558136
+            b_high_z = 0.02814279374704041
+            a_low_x = -0.7444399350224147
+            b_low_x = -0.013409712535219085
+            a_low_z = -0.520196611172697
+            b_low_z = -0.028330394426818596
+            
+            if height > 0.015 and height < 0.02753068:
+                x_center = a_high_x*height + b_high_x
+                z_center = a_high_z*height + b_high_z
+            elif height < -0.015 and height > -0.03316158:
+                x_center = a_low_x*height + b_low_x
+                z_center = a_low_z*height + b_low_z
+            else:
+                x_center = 0
+                z_center = 0
         else:
-            # not renew yet
-            normal_y = -0.01904927
-            a_high_x = 0.6571145219203942
-            b_high_x = -0.02929475486492132
-            a_high_z = 0.47718110056167956
-            b_high_z = -0.09062050520170216
-            a_low_x = 0.5769225937464898
-            b_low_x = -0.018491211975063995
-            a_low_z = 0.46703847010300253
-            b_low_z = -0.07648348582896586
+            normal_y = -0.00740776
+            a_high_x = -0.18618890517392606
+            b_high_x = 0.014982413805605698
+            a_high_z = -0.35481782934432143
+            b_high_z = 0.013938927622533539
+            a_low_x = -0.5307702287007255
+            b_low_x = -0.031381077264362754
+            a_low_z = -0.03769886257386489
+            b_low_z = -0.041449232159423734
+            
+            if height > 0.008 and height < 0.01556493:
+                x_center = a_high_x*height + b_high_x
+                z_center = a_high_z*height + b_high_z
+            elif height < -0.02 and height > -0.0416324:
+                x_center = a_low_x*height + b_low_x
+                z_center = a_low_z*height + b_low_z
+            else:
+                x_center = 0
+                z_center = 0
 
-        
-        if height > normal_y:
-            x_center = a_high_x*height + b_high_x
-            z_center = a_high_z*height + b_high_z
-        else:
-            x_center = a_low_x*height + b_low_x
-            z_center = a_low_z*height + b_low_z
-        goal_area = {"x":[x_center-0.004,x_center+0.004],"z":[z_center-0.004,z_center+0.004]}
+        # if height < -0.03316158 or height > 0.02753068:
+            # x_center = 0
+            # z_center = 0
+        # elif height > normal_y:
+            # x_center = a_high_x*height + b_high_x
+            # z_center = a_high_z*height + b_high_z
+        # else:
+            # x_center = a_low_x*height + b_low_x
+            # z_center = a_low_z*height + b_low_z
+            
+        goal_area = {"x":[x_center-0.002,x_center+0.002],"z":[z_center-0.003,z_center+0.002]}
         return goal_area
 
     def goalvec_maker(self,ar_info,goal_point,connecting_state,id):
@@ -123,16 +144,18 @@ class ARPowerPlanner():
                 # marker_1 = self.arm_ref(goal_point[0][1])
         else:
             # marker_1 = np.array([0.003606,-0.015277,0.138732])
-            marker_1 = np.array([0.0139197,-0.0277264,0.1285234])
+            # marker_1 = np.array([0.0139197,-0.0277264,0.1285234])
+            marker_1 = np.array([0.0076714287,-0.02322507,0.13185442])
             # marker_1 = self.arm_ref(goal_point[0][1])
             # marker_1 = np.array([0.02100412,-0.01784624,0.130171312]) tansi zika
         vec, distance = self.__targetting(marker_1,goal_point)
         #print(f"vec:{vec[2]}")
-        vec[1], vec[2] = self.calc_t_distance(id,ar_info, vec, distance) # new
-        goal_area =  self.goal_ref(vec[1]) # koko henka sasetai !!!!!!!!!!!
+        vec[2], vec[1] = self.calc_t_distance(id,ar_info, vec, distance) # new
+        # goal_area = {"x":[-0.004,0.004],"z":[-0.004,0.004]} # koko henka sasetai !!!!!!!!!!!
+        goal_area =  self.goal_ref(vec[1])
         # print(f"distance:{distance},vec:{vec}")
         print(f"vec:{vec}")
-
+        print(f"goal_area:{goal_area}")
         return vec,goal_area
 
     def ar_powerplanner(self,ar_info,connecting_state,ar_checker):
