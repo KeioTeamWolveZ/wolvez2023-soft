@@ -72,6 +72,40 @@ class ARPowerPlanner():
             # marker_1 = np.array([a_low_x*goal_y + b_low_x, goal_y,a_low_z*goal_y + b_low_z])
         # return marker_1
 
+    def goal_ref(self,height):
+        if self.connecting_state == 0:
+            normal_y = -9.27936187e-03
+            a_high_x = -7.870311316732634
+            b_high_x = -0.14029717416704213
+            a_high_z = 11.655252041789202
+            b_high_z = -0.32801135428184514
+            a_low_x = 1.4310741727905496
+            b_low_x = -0.028682774111048713
+            a_low_z = -1.9223500855679658
+            b_low_z = -0.054460936150568955
+
+        else:
+            # not renew yet
+            normal_y = -0.01904927
+            a_high_x = 0.6571145219203942
+            b_high_x = -0.02929475486492132
+            a_high_z = 0.47718110056167956
+            b_high_z = -0.09062050520170216
+            a_low_x = 0.5769225937464898
+            b_low_x = -0.018491211975063995
+            a_low_z = 0.46703847010300253
+            b_low_z = -0.07648348582896586
+
+        
+        if height > normal_y:
+            x_center = a_high_x*height + b_high_x
+            z_center = a_high_z*height + b_high_z
+        else:
+            x_center = a_low_x*height + b_low_x
+            z_center = a_low_z*height + b_low_z
+        goal_area = {"x":[x_center-0.004,x_center+0.004],"z":[z_center-0.004,z_center+0.004]}
+        return goal_area
+
     def goalvec_maker(self,ar_info,goal_point,connecting_state,id):
         """
         def arm_orbit(x1,x2,y1,y2,goal_y):
@@ -85,8 +119,7 @@ class ARPowerPlanner():
                 marker_1 = np.array([ar_info[self.arm_id]["x"],ar_info[self.arm_id]["y"],ar_info[self.arm_id]["z"]])
             else:
                 # marker_1 = np.array([0.0353238,0.00329190,0.15313373])
-                # marker_1 = np.array([0.028160,0.0032412,0.144018])
-                marker_1 = np.array([0.0168503,-0.0101923,0.1415139]) # スタビ変更
+                marker_1 = np.array([0.026156,0.0042723,0.142367])
                 # marker_1 = self.arm_ref(goal_point[0][1])
         else:
             # marker_1 = np.array([0.003606,-0.015277,0.138732])
@@ -96,7 +129,7 @@ class ARPowerPlanner():
         vec, distance = self.__targetting(marker_1,goal_point)
         #print(f"vec:{vec[2]}")
         vec[1], vec[2] = self.calc_t_distance(id,ar_info, vec, distance) # new
-        goal_area = {"x":[-0.004,0.004],"z":[-0.004,0.004]} # koko henka sasetai !!!!!!!!!!!
+        goal_area =  self.goal_ref(vec[1]) # koko henka sasetai !!!!!!!!!!!
         # print(f"distance:{distance},vec:{vec}")
         print(f"vec:{vec}")
 
@@ -169,7 +202,7 @@ class ARPowerPlanner():
         #print(cos_argment)
         ultraman_wide = distance*np.sqrt(1-cos_argment**2)
         ultraman_height = abs(distance)*cos_argment #new
-        return ultraman_wide[0][0],ultraman_wide[0][0]
+        return ultraman_wide[0][0],ultraman_height[0][0]
 
 
     def __targetting(self,marker_1:np.ndarray=np.zeros(3), marker_2:np.ndarray=np.zeros(3)):

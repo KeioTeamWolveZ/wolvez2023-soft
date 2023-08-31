@@ -15,15 +15,15 @@ def arm_orbit(xz1,xz2,y1,y2):
 # low_y = 0.0263349
 # low_z = 0.141678
 
-normal_x =  0.008422007
-normal_y = -0.01904927
-normal_z = 0.13656804
-high_x = 0.0029735104
-high_y = -0.027340818
-high_z = 0.13261147
-low_x = 0.013106240
-low_y = -0.010929926
-low_z = 0.140360086
+normal_x =  -3.76501019e-05
+normal_y = -9.27936187e-03
+normal_z = 2.52990947e-03
+high_x = -0.01691964
+high_y = -0.00713434
+high_z = 0.02753068
+low_x = 0.02653252
+low_y = 0.00928723
+low_z = -0.03316158
 
 a_high_x = arm_orbit(high_x,normal_x,high_y,normal_y)[0]
 b_high_x = arm_orbit(high_x,normal_x,high_y,normal_y)[1]
