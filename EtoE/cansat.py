@@ -195,7 +195,7 @@ class Cansat():
                      + "gy:"+str(self.bno055.gy).rjust(6) + ","\
                      + "gz:"+str(self.bno055.gz).rjust(6) + ","\
                      + "mirror-detection:"+str(self.mirror)
-            if self.landing_state == 2:
+            if self.landstate == 2:
                 datalog = datalog +','\
                     + "Para_distancing:"+str(self.distancing_finish)
         elif self.state == 6:
@@ -412,7 +412,7 @@ class Cansat():
                     self.landstate = 2
             
             
-        if self.landing_state == 2:
+        if self.landstate == 2:
             dlon = self.landing_lon - self.lon
             # distance to the goal
             self.startdis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.landing_lat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.landing_lat))*cos(deg2rad(dlon)))
@@ -442,7 +442,7 @@ class Cansat():
                 self.goaltime = time.time()-self.runningTime
                 self.distancing_finish = True
                 self.writeMissionlog() # write mission log
-                self.landing_state = 3
+                self.landstate = 3
             
             else:
                 
