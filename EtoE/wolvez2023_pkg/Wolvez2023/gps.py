@@ -62,7 +62,7 @@ class GPS(object):
              self.Time = h + ":" + m + ":" + s
          
              self.Lat = str('%2.8f' % (self.mgps.latitude[0]))
-             self.Lon = str('%2.8f' % (self.mgps.longitude[0]))
+             self.Lon = str('%2.8f' % (-self.mgps.longitude[0]))
  
              #print('時間：', self.Time, ",", end='')     #main.pyで格納を確認するため、最後は消す
              #print('緯度：', self.Lat, ",", end='')
