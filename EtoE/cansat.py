@@ -399,7 +399,7 @@ class Cansat():
                 self.rv = 0
                 self.lv = 0
                 self.mirror_checker()
-                if self.mirror_count > ct.const.mirror_COUNT_THRE:
+                if self.mirror_count > ct.const.MIRROR_COUNT_THRE:
                     self.mirror_count = 0
                     self.stuck_detection()
                     self.pre_motorTime = time.time()
@@ -957,8 +957,8 @@ class Cansat():
      
     def sendLoRa(self): #通信モジュールの送信を行う関数
         datalog = str(self.state)+ ","\
-            + str(round(self.lat,3)) + ","\
-            + str(round(self.lon,3))
+            + str(round(self.lat,5)) + ","\
+            + str(round(self.lon,5))
         
         self.lora.sendData(datalog) #データを送信
         

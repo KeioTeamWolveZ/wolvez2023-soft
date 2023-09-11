@@ -68,5 +68,5 @@ const.EARTH_RADIUS = 6378.137 # [km]
 # Stack
 const.STUCK_ACC_THRE = 0.5
 const.STUCK_COUNT_THRE = 30
-const.MIRRER_COUNT_THRE = 10
+const.MIRROR_COUNT_THRE = 10
 const.VANISH_BY_STUCK_THRE = 240 # ステート6で長時間何も見えなかった場合

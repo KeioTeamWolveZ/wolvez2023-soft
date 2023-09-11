@@ -65,4 +65,4 @@ class lora:
         self.sendDevice = LoraSettingClass(self.lora_device)
         
     def sendData(self, datalog):
-        self.sendDevice.cmd_lora("00010002{}".format(datalog))
+        self.sendDevice.cmd_lora("{}".format(datalog))
