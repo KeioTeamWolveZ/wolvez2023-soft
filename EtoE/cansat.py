@@ -195,7 +195,7 @@ class Cansat():
                      + "gy:"+str(self.bno055.gy).rjust(6) + ","\
                      + "gz:"+str(self.bno055.gz).rjust(6) + ","\
                      + "mirror-detection:"+str(self.mirror)
-            if self.landing_state == 2:
+            if self.landstate == 2:
                 datalog = datalog +','\
                     + "Para_distancing:"+str(self.distancing_finish)
         elif self.state == 6:
@@ -412,7 +412,7 @@ class Cansat():
                     self.landstate = 2
             
             
-        if self.landing_state == 2:
+        if self.landstate == 2:
             dlon = self.landing_lon - self.lon
             # distance to the goal
             self.startdis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.landing_lat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.landing_lat))*cos(deg2rad(dlon)))
@@ -442,7 +442,7 @@ class Cansat():
                 self.goaltime = time.time()-self.runningTime
                 self.distancing_finish = True
                 self.writeMissionlog() # write mission log
-                self.landing_state = 3
+                self.landstate = 3
             
             else:
                 
@@ -576,8 +576,9 @@ class Cansat():
             SorF = self.checking(self.img,self.connecting_state-1)
             if SorF["Time_clear"]:
                 self.arm.up()
-                self.arm.down()
-                self.arm.up()
+                # self.MotorR.go(-100)
+                # self.MotorL.go(100)
+                # time.sleep(5.0)
                 self.state = 7
                 self.laststate = 7
         else:
@@ -875,7 +876,7 @@ class Cansat():
         self.MotorL.stop()
 
     def running(self):
-            
+        self.arm.up()
         dlon = self.goallon - self.lon
         # distance to the goal
         self.goaldis = ct.const.EARTH_RADIUS * arccos(sin(deg2rad(self.lat))*sin(deg2rad(self.goallat)) + cos(deg2rad(self.lat))*cos(deg2rad(self.goallat))*cos(deg2rad(dlon)))
@@ -896,8 +897,8 @@ class Cansat():
         if self.runningTime == 0:
             self.runningTime = time.time()
             
-        elif time.time() - self.runningTime < 10:
-            print("run")
+        # elif time.time() - self.runningTime < 10:
+            # print("run")
             
         elif self.goaldis < ct.const.GOAL_DISTANCE_THRE:
             self.MotorR.stop()
