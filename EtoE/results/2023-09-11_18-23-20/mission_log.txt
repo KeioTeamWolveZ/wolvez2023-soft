@@ -1,0 +1,1 @@
+40743,state:3,Para_distancing:True

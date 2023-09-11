@@ -385,13 +385,13 @@ class Cansat():
                 self.MotorL.go(ct.const.LANDING_MOTOR_VREF +7)
                 self.rv = ct.const.LANDING_MOTOR_VREF
                 self.lv = ct.const.LANDING_MOTOR_VREF
-                self.stuck_detection()
+                #self.stuck_detection()
             else:
                 self.MotorR.go(self.plan_color["R"])
                 self.MotorL.go(self.plan_color["L"])
                 self.rv = self.plan_color["R"]
                 self.lv = self.plan_color["L"]
-                self.stuck_detection()
+                #self.stuck_detection()
 
             if time.time()-self.pre_motorTime > ct.const.LANDING_MOTOR_TIME_THRE: #10秒間モータ回して分離シートから十分離れる
                 self.MotorR.stop()
