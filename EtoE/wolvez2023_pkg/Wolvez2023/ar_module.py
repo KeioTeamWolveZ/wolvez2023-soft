@@ -145,12 +145,13 @@ class Ar_cansat():
                     
                     """
                     
-                    
-                    if str(i) == "16" and "16" in self.ar_info.keys():
-                        norm_pre = self.ar_info["16"]["norm"]
+                    bool_16 = str(i) == "16" and "16" in self.ar_info.keys()
+                    bool_3 = str(i) == "3" and "3" in self.ar_info.keys()
+                    if bool_16 or bool_3:
+                        norm_pre = self.ar_info[str(i)]["norm"]
                         norm_new = self.norm_tvec
                         if norm_pre >= norm_new:
-                            del self.ar_info["16"]
+                            del self.ar_info[str(i)]
                             self.ar_info[str(i)] = {'x':tvec[0],'y':tvec[1],'z':tvec[2],'roll':euler[0],'pitch':euler[1],'yaw':euler[2],'norm':self.norm_tvec,'rvec':rvec}
                         else:
                             pass

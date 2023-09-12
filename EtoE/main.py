@@ -23,7 +23,7 @@ import time
 
 
 start_state = 6
-end_state = 6
+end_state = 8
 
 cansat = Cansat(start_state)
 try:

@@ -1,0 +1,3 @@
+53878,state:3,Para_distancing:True
+71246,state:5,Releasing_02:False
+78505,state:6,ConnectingState:0,Done-Approach:False,Done-Connect:False
