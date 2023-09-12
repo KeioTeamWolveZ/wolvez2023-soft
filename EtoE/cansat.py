@@ -110,7 +110,7 @@ class Cansat():
         self.connected = False
         self.running_finish = False
         self.releasingstate = 0
-        self.connecting_state = 0
+        self.connecting_state = 1
         self.change_size = 0 # new
         self.mirror = False 
         self.distancing_finish = False

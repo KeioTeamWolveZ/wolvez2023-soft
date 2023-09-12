@@ -34,8 +34,8 @@ try:
         image = cv2.imread(fname)  # 画像ファイル名を適切に変更
         hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
-        LOW_COLOR_EDIT = {1:np.array([300, 59, 45]),0:np.array([200, 40, 70]),99:np.array([36, 90, 59])}
-        HIGH_COLOR_EDIT = {1:np.array([360, 100, 100]),0:np.array([250, 100, 100]),99:np.array([42, 100, 100])}
+        LOW_COLOR_EDIT = {1:np.array([300, 59, 45]),0:np.array([200, 40, 70]),99:np.array([41, 60, 60])}
+        HIGH_COLOR_EDIT = {1:np.array([360, 100, 100]),0:np.array([250, 100, 100]),99:np.array([43, 90, 100])}
 
         hsv_coef = np.array([1/2, 2.55, 2.55])
 
@@ -43,8 +43,8 @@ try:
         HIGH_COLOR = {k:np.round(HIGH_COLOR_EDIT[k]*hsv_coef) for k in HIGH_COLOR_EDIT.keys()}
             
 
-        lower_range = np.array(LOW_COLOR[0])  # 下限のHSV値
-        upper_range = np.array(HIGH_COLOR[0])  # 上限のHSV値
+        lower_range = np.array(LOW_COLOR[99])  # 下限のHSV値
+        upper_range = np.array(HIGH_COLOR[99])  # 上限のHSV値
 
 
         mask = cv2.inRange(hsv_image, lower_range, upper_range)

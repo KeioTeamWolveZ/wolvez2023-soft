@@ -1,0 +1,2 @@
+15897,state:5,Releasing_02:False
+23173,state:6,ConnectingState:0,Done-Approach:False,Done-Connect:False
