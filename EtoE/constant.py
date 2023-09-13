@@ -63,6 +63,8 @@ const.AVOID_COLOR_THRE = 20 #色認識されなかった合計回数の閾値
 
 const.CONNECTED_HEIGHT_THRE = 700 #アームを上げた場合に接続できていることを確認する時の色の高さの閾値
 
+const.CONNECTING_TIME_LIMIT = 900 # time that decide giving up connecting
+
 const.EARTH_RADIUS = 6378.137 # [km]
 
 # Stack

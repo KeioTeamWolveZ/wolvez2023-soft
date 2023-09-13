@@ -1,0 +1,1 @@
+5300,state:6,Time:0,Lat:     0,Lng:     0,ax:-0.0033333333333333335,ay:-0.0022222222222222222,az:0.0033333333333333335,q:   0.0,Camera:0,rV:     0,lV:     0,ConnectingState:0,AR-Approach:False,AR-info:{},AR-move:none,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none,Done-Approach:False,Done-Connect:False

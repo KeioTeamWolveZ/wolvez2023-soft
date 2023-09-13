@@ -1,0 +1,18 @@
+5191,state:6,Time:0,Lat:     0,Lng:     0,ax:-0.0022222222222222222,ay:0.0011111111111111111,az:0.005555555555555556,q:   0.0,Camera:0,rV:     0,lV:     0,ConnectingState:0,AR-Approach:False,AR-info:{},AR-move:none,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none,Done-Approach:False,Done-Connect:False
+
+Gave up connecting and move on to the running state
+
+6474,state:7,Time:0,Lat:     0,Lng:     0,ax:   0.0,ay:   0.0,az:-0.0011111111111111111,q:0.0625,Camera:1,rV:     0,lV:     0,DistanceToGoal:0,ArgumentToGoal:0,GoalCheck:False
+7010,state:7,Time:0,Lat:     0,Lng:     0,ax:   0.0,ay:0.0011111111111111111,az:   0.0,q:0.0625,Camera:1,rV:     0,lV:     0,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+7546,state:7,Time:0,Lat:     0,Lng:     0,ax:0.0022222222222222222,ay:-0.0011111111111111111,az:0.0011111111111111111,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+8083,state:7,Time:0,Lat:     0,Lng:     0,ax:-0.0022222222222222222,ay:   0.0,az:-0.0022222222222222222,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+8621,state:7,Time:0,Lat:     0,Lng:     0,ax:0.0022222222222222222,ay:-0.0011111111111111111,az:0.0011111111111111111,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+9158,state:7,Time:0,Lat:     0,Lng:     0,ax:   0.0,ay:   0.0,az:0.0011111111111111111,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+9696,state:7,Time:0,Lat:     0,Lng:     0,ax:   0.0,ay:   0.0,az:0.0011111111111111111,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+10232,state:7,Time:0,Lat:     0,Lng:     0,ax:   0.0,ay:0.0011111111111111111,az:-0.0011111111111111111,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+10784,state:7,Time:0,Lat:     0,Lng:     0,ax:-0.0011111111111111111,ay:-0.0033333333333333335,az:0.0011111111111111111,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+11323,state:7,Time:0,Lat:     0,Lng:     0,ax:-0.0022222222222222222,ay:-0.0022222222222222222,az:   0.0,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+11859,state:7,Time:0,Lat:     0,Lng:     0,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:-0.0011111111111111111,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+12398,state:7,Time:0,Lat:     0,Lng:     0,ax:   0.0,ay:   0.0,az:   0.0,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+12934,state:7,Time:0,Lat:     0,Lng:     0,ax:0.0011111111111111111,ay:-0.0011111111111111111,az:0.0011111111111111111,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False
+13470,state:7,Time:0,Lat:     0,Lng:     0,ax:   0.0,ay:-0.0011111111111111111,az:-0.0011111111111111111,q:0.0625,Camera:1,rV:   100,lV:    85,DistanceToGoal:12420.63112884896,ArgumentToGoal:314.7476587867741,GoalCheck:False

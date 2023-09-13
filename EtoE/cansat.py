@@ -79,6 +79,7 @@ class Cansat():
         self.starttime_color = time.time()
         self.starttime_AR = time.time()
         self.checking_time = 0
+        self.connecting_time = 0
         self.runningTime = 0
         self.finishTime = 0
         self.stuckTime = 0
@@ -477,6 +478,7 @@ class Cansat():
                 self.arm.calibration()  # 関数内でキャリブレーションを行う
             else:
                 print("\n\n=====The arm was calibrated=====\n\n")
+                self.connecting_time = time.time()
                 self.state = 4
                 self.laststate = 4
 
@@ -568,6 +570,16 @@ class Cansat():
                     self.laststate = 6
 
     def connecting(self):
+        # if time over cansat will give up connecting
+        if time.time() - self.connecting_time > ct.const.CONNECTING_TIME_LIMIT:
+            self.state = 7
+            self.laststate = 7
+            print("\nGave up connecting and move on to the running state\n\n")
+            self.lora.sendData("GaveUpConnecting")
+            with open(f'results/{self.startTime}/control_result.txt',"a")  as test: # [mode] x:ファイルの新規作成、r:ファイルの読み込み、w:ファイルへの書き込み、a:ファイルへの追記
+                test.write('\nGave up connecting and move on to the running state\n\n')
+            time.sleep(3)
+            
         if self.connecting_state == 2:
             self.arm.middle()
             self.cameraCount += 1

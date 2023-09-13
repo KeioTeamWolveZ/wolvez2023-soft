@@ -1,0 +1,5 @@
+5236,state:6,Time:0,Lat:     0,Lng:     0,ax:-0.0044444444444444444,ay:0.0011111111111111111,az:0.0044444444444444444,q:   0.0,Camera:0,rV:     0,lV:     0,ConnectingState:0,AR-Approach:False,AR-info:{},AR-move:none,Color-Approach:False,Color-data:x0y:0Area:0,Color-move:none,Done-Approach:False,Done-Connect:False
+
+Gave up connecting and move on to the running state
+
+9444,state:7,Time:0,Lat:     0,Lng:     0,ax:0.0077777777777777776,ay:0.0044444444444444444,az:-0.0077777777777777776,q:359.9375,Camera:1,rV:     0,lV:     0,DistanceToGoal:0,ArgumentToGoal:0,GoalCheck:False
