@@ -79,6 +79,6 @@ sudo bash setup_ap.sh
 - Software (★: Part leader)  
   ★Masato Inoue, Ko Ota, Yuma Suzuki
 - Hardware (★: Part leader)  
-  ★Shingo Murayama, Arisa Shindo, Yukino Ot, Aine Koyama, Karin Yoshino
+  ★Shingo Murayama, Arisa Shindo, Yukino Ota, Aine Koyama, Karin Yoshino
 - Circuit (★: Part leader)  
   ★Shingo Murayam, Ko Ota
