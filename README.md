@@ -11,7 +11,7 @@ Mission code in Python for Keio Wolve'Z CanSat project 2023
     
     |**Sensor**|**Products**|**image**|
     |:---:|:---:|:---:|
-    |Camera|[High resolution Auto-Focus-Camera for Raspberry Pi](https://www.switch-science.com/products/7681)|<img src="https://www.switch-science.com/cdn/shop/products/fd232008-dcf5-4002-9068-5b61865480b0_9df2ed2d-08cc-4924-a8a1-8da612fa3c71_700x700.jpg?v=1687511163" width="20%" title="High resolution Auto-Focus-Camera for Raspberry Pi">|
+    |Camera|[High resolution Auto-Focus-Camera for Raspberry Pi](https://www.switch-science.com/products/7681)|<img src="https://www.switch-science.com/cdn/shop/products/fd232008-dcf5-4002-9068-5b61865480b0_7b9141d9-dce3-44d5-ba6e-3f8635db8324_700x700.jpg?v=1699715090" width="20%" title="High resolution Auto-Focus-Camera for Raspberry Pi">|
     |Communication Module|[ES920LR](https://easel5.com/products/es920lr/)|<img src="https://user-images.githubusercontent.com/57528969/90114355-92b9d180-dd8d-11ea-8565-76540eea0920.png" width="20%" title="Communication Module">|
     |GPS module|[GYSFDMAXB](http://akizukidenshi.com/catalog/g/gK-09991/)|<img src="https://user-images.githubusercontent.com/57528969/90114335-89c90000-dd8d-11ea-82d3-70ab748fa5f2.png" width="20%" title="GPS Module">|
     |Accelaration Sensor|[BNO055](https://www.switch-science.com/catalog/5511/)|<img src="https://user-images.githubusercontent.com/57528969/90114534-ce549b80-dd8d-11ea-81fd-3569fe0b1477.png" width="20%" title="Accelaration Sensor">|
