@@ -15,8 +15,9 @@ Mission code in Python for Keio Wolve'Z CanSat project 2023
     |Communication Module|[ES920LR](https://easel5.com/products/es920lr/)|<img src="https://user-images.githubusercontent.com/57528969/90114355-92b9d180-dd8d-11ea-8565-76540eea0920.png" width="20%" title="Communication Module">|
     |GPS module|[GYSFDMAXB](http://akizukidenshi.com/catalog/g/gK-09991/)|<img src="https://user-images.githubusercontent.com/57528969/90114335-89c90000-dd8d-11ea-82d3-70ab748fa5f2.png" width="20%" title="GPS Module">|
     |Accelaration Sensor|[BNO055](https://www.switch-science.com/catalog/5511/)|<img src="https://user-images.githubusercontent.com/57528969/90114534-ce549b80-dd8d-11ea-81fd-3569fe0b1477.png" width="20%" title="Accelaration Sensor">|
-    |Motor|[75:1 Metal Gearmotor 25Dx69L mm HP 6V with 48 CPR Encoder](https://www.pololu.com/product/4806)|<img src="https://a.pololu-files.com/picture/0J9890.600x480.jpg?c6dfea6448bb8ef0cef701de2d59b4d6" width="20%" title="Motor">|
-    |Motor Driver|[TB6612FNG](https://toshiba.semicon-storage.com/jp/semiconductor/product/motor-driver-ics/brushed-dc-motor-driver-ics/detail.TB6612FNG.html)|<img src= "https://user-images.githubusercontent.com/63459574/114264109-faf7aa80-9a23-11eb-8417-c08905610e5e.png" width="20%" title="Motor Driver">|
+    |Servo Motor (arm)|[EMAX ES08MA II](https://www.kkhobby.com/SHOP/SV070.html)|<img src="https://m.media-amazon.com/images/I/516tIofUUTL._SL1001_.jpg" width="20%" title="Accelaration Sensor">|
+    |Motor (wheel)|[75:1 Metal Gearmotor 25Dx69L mm HP 6V with 48 CPR Encoder](https://www.pololu.com/product/4806)|<img src="https://a.pololu-files.com/picture/0J9890.600x480.jpg?c6dfea6448bb8ef0cef701de2d59b4d6" width="20%" title="Motor">|
+    |Motor Driver (wheel)|[TB6612FNG](https://toshiba.semicon-storage.com/jp/semiconductor/product/motor-driver-ics/brushed-dc-motor-driver-ics/detail.TB6612FNG.html)|<img src= "https://user-images.githubusercontent.com/63459574/114264109-faf7aa80-9a23-11eb-8417-c08905610e5e.png" width="20%" title="Motor Driver">|
 
 ## Software Requirements
 Firstly, you need to clone this repository
